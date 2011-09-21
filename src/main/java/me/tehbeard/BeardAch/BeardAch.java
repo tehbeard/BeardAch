@@ -41,7 +41,9 @@ public class BeardAch extends JavaPlugin {
 		// TODO Auto-generated method stub
 		stats = (BeardStat)getServer().getPluginManager().getPlugin("BeardStat");
 		if(stats==null){
-			
+			printCon("BeardStat NOT FOUND, DISABLING PLUGIN!");
+			onDisable();
+			return;
 		}
 	}
 
