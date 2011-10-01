@@ -1,4 +1,4 @@
-package me.tehbeard.BeardAch.triggers;
+package me.tehbeard.BeardAch.achievement.triggers;
 
 import org.bukkit.entity.Player;
 

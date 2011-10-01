@@ -11,7 +11,7 @@ public class BeardAch extends JavaPlugin {
 	public static Configuration config;
 	BeardStat stats = null;
 	
-	private static final String PERM_PREFIX = "stat";
+	private static final String PERM_PREFIX = "ach";
 
 	public static boolean hasPermission(Player player,String node){
 
@@ -40,11 +40,12 @@ public class BeardAch extends JavaPlugin {
 	public void onEnable() {
 		// TODO Auto-generated method stub
 		stats = (BeardStat)getServer().getPluginManager().getPlugin("BeardStat");
-		if(stats==null){
+		if(stats==null || !stats.isEnabled()){
 			printCon("BeardStat NOT FOUND, DISABLING PLUGIN!");
 			onDisable();
 			return;
 		}
+		
 	}
 
 }

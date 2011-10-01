@@ -1,4 +1,4 @@
-package me.tehbeard.BeardAch.triggers;
+package me.tehbeard.BeardAch.achievement.triggers;
 
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 
@@ -30,9 +30,8 @@ public class statCheckTrigger extends Trigger {
 		//if player has stat
 		if(PlayerStatManager.findPlayerBlob(player.getName()).hasStat(cat, stat)){
 			//if player exceeds threshold
-			if(PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()>=threshold){
-				return true;
-			}
+			
+			return (PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()>=threshold);
 		}
 		return false;
 	}

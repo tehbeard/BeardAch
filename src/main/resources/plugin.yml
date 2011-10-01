@@ -1,0 +1,8 @@
+name: BeardAch
+main: me.tehbeard.BeardAch.BeardAch
+version: 0.2
+depend: [Permissions,BeardStat]
+commands:
+    ach:
+        description: Show your achievements
+        usage: /<command>
