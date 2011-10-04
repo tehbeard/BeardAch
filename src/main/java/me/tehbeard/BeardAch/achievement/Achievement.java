@@ -46,13 +46,14 @@ public class Achievement {
 			return false;
 		}
 		for(ITrigger trigger:triggers){
-			if(trigger.checkAchievement(player)){
+			if(!trigger.checkAchievement(player)){
 				return false;
 			}
 		}
 		for(IReward reward:rewards){
 			reward.giveReward(player);
 		}
+		player.sendMessage("ACHGET!=>"+name);
 		return true;
 	}
 }

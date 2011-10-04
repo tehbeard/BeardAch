@@ -3,8 +3,12 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
+import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
+import me.tehbeard.BeardAch.dataSource.NullDataSource;
 /**
  * Manages the link between achievements and players
  * @author James
@@ -17,12 +21,14 @@ public class AchievementManager {
 
 
 	private static HashMap<String,Achievement> achievements = new HashMap<String,Achievement>();
-	private static IDataSource database = null;
+	private static IDataSource database = new NullDataSource();
+	
+	
 	/**
 	 * Add achievement to the manager
 	 * @param ach
 	 */
-	static void addAchievement(Achievement ach){
+	public static void addAchievement(Achievement ach){
 		achievements.put(ach.getName(),ach);
 	}
 
@@ -30,7 +36,7 @@ public class AchievementManager {
 	 * Load the achievements for a player
 	 * @param player
 	 */
-	static void loadAchievements(String player){
+	public static void loadAchievements(String player){
 		HashSet<String> got = database.getPlayersAchievements(player);
 		//put to cache
 		playerHasCache.put(player,got);
@@ -45,24 +51,57 @@ public class AchievementManager {
 				}
 				//add player to cache
 				playerCheckCache.get(ach).add(player);
-
-
 			}
 		}
 	}
 
-	static void checkPlayers(){
+
+
+	/**
+	 * Check all players online
+	 */
+	public static void checkPlayers(){
+
+		//wipe players not online
+		//for each achievement
 		for( Entry<Achievement, HashSet<String>> entry : playerCheckCache.entrySet()){
+			BeardAch.printDebugCon("ach:"+entry.getKey().getName());
+			//loop all players, check them.
 			Iterator<String> it = entry.getValue().iterator();
 			String ply;
+			Player p;
 			while(it.hasNext()){
 				ply = it.next();
-				if(entry.getKey().checkAchievement(Bukkit.getPlayer(ply))){
-					it.remove();
+
+				//get player object for offline detection
+				p =Bukkit.getPlayer(ply);
+				if(p instanceof Player){
+					BeardAch.printDebugCon("Player "+ply+" online");
+					//check for bleep bloop
+					if(entry.getKey().checkAchievement(p)){
+						BeardAch.printDebugCon("Achievement Get! " + ply + "=>" + entry.getKey().getName());
+						playerHasCache.get(ply).add(entry.getKey().getName());
+						it.remove();
+					}
+
 				}
+
 			}
 
 
+		}
+	}
+
+
+
+	/**
+	 * Unload players who are not on
+	 */
+	public static void unloadOfflinePlayers(){
+		for(Entry<String, HashSet<String>> e :playerHasCache.entrySet()){
+			if(Bukkit.getPlayer(e.getKey()) == null){
+				database.setPlayersAchievements(e.getKey(),e.getValue());
+			}
 		}
 	}
 

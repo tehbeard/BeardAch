@@ -9,7 +9,10 @@ public abstract class Trigger implements ITrigger {
 	 * @param config config string to use
 	 * @return
 	 */
-	public abstract ITrigger newInstance(String config);
+	public static ITrigger newInstance(String config){
+		
+		return null;
+	}
 	
 	public abstract boolean checkAchievement(Player player);
 }

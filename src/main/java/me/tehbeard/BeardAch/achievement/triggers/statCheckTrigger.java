@@ -14,15 +14,16 @@ public class statCheckTrigger extends Trigger {
 	String cat;
 	String stat;
 	int threshold;
-	@Override
-	public ITrigger newInstance(String config) {
+
+	public static ITrigger newInstance(String config) {
+		statCheckTrigger n =new statCheckTrigger();
 		String[] opt = config.split("\\:");
 		if(opt.length==3){
-			cat = opt[0];
-			stat = opt[1];
-			threshold = Integer.parseInt(opt[2]);
+			n.cat = opt[0];
+			n.stat = opt[1];
+			n.threshold = Integer.parseInt(opt[2]);
 		}
-		return null;
+		return n;
 	}
 
 	@Override
@@ -30,8 +31,9 @@ public class statCheckTrigger extends Trigger {
 		//if player has stat
 		if(PlayerStatManager.findPlayerBlob(player.getName()).hasStat(cat, stat)){
 			//if player exceeds threshold
-			
-			return (PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()>=threshold);
+			if(PlayerStatManager.findPlayerBlob(player.getName()).hasStat(cat, stat)){
+				return (PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()>=threshold);
+			}
 		}
 		return false;
 	}
