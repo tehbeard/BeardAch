@@ -12,7 +12,7 @@ public class PermCheckTrigger extends Trigger {
 
 	String perm;
 
-	public static ITrigger newInstance(String config) {
+	public static ITrigger getInstance(String config) {
 		PermCheckTrigger n =new PermCheckTrigger();
 			n.perm = config;
 			

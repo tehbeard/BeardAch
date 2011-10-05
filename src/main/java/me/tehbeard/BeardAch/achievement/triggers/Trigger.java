@@ -9,7 +9,7 @@ public abstract class Trigger implements ITrigger {
 	 * @param config config string to use
 	 * @return
 	 */
-	public static ITrigger newInstance(String config){
+	public static ITrigger getInstance(String config){
 		
 		return null;
 	}

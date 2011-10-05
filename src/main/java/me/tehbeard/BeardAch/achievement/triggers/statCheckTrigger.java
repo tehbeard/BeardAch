@@ -9,14 +9,14 @@ import org.bukkit.entity.Player;
  * @author James
  *
  */
-public class statCheckTrigger extends Trigger {
+public class StatCheckTrigger extends Trigger {
 
 	String cat;
 	String stat;
 	int threshold;
 
-	public static ITrigger newInstance(String config) {
-		statCheckTrigger n =new statCheckTrigger();
+	public static ITrigger getInstance(String config) {
+		StatCheckTrigger n =new StatCheckTrigger();
 		String[] opt = config.split("\\:");
 		if(opt.length==3){
 			n.cat = opt[0];

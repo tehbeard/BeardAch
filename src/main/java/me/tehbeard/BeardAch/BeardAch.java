@@ -7,7 +7,8 @@ import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.rewards.CommandReward;
 import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
-import me.tehbeard.BeardAch.achievement.triggers.statCheckTrigger;
+import me.tehbeard.BeardAch.achievement.triggers.PermCheckTrigger;
+import me.tehbeard.BeardAch.achievement.triggers.StatCheckTrigger;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 
@@ -60,6 +61,7 @@ public class BeardAch extends JavaPlugin {
 	}
 
 	public void onEnable() {
+		
 		// TODO Auto-generated method stub
 		BeardStat stats = (BeardStat)getServer().getPluginManager().getPlugin("BeardStat");
 		if(!checkBeardStat()){
@@ -68,6 +70,12 @@ public class BeardAch extends JavaPlugin {
 			return;
 		}
 
+		
+		
+		
+		
+		
+		//setup events
 		getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, new BeardAchPlayerListener(), Priority.Highest, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_LOGIN, new BeardAchPlayerListener(), Priority.Highest, this);
 		
@@ -76,28 +84,18 @@ public class BeardAch extends JavaPlugin {
 		//TEST ACHIEVEMENTS, DELETE ONCE DATASOURCE'S COMPLETE
 		
 
-		Achievement ach  = new Achievement("BleepBloop", "got a bleep bloop");
-		ach.addTrigger(statCheckTrigger.newInstance("stats:playedfor:2000"));
-		ach.addTrigger(CuboidCheckTrigger.newInstance("world:0:0:0:128:128:128"));
-		ach.addReward(CommandReward.newInstance("me is proud of <PLAYER>"));
-		AchievementManager.addAchievement(ach);
 		
-		ach  = new Achievement("test", "test descrip");
-		ach.addTrigger(statCheckTrigger.newInstance("stats:notthere:2000"));
-		ach.addTrigger(CuboidCheckTrigger.newInstance("world:0:0:0:128:128:128"));
-		ach.addReward(CommandReward.newInstance("cp promote <PLAYER> veteran"));
-		AchievementManager.addAchievement(ach);
 		
 		
 		//Load config
-		printCon("Starting BeardStat");
-		if(!(new File(getDataFolder(),"BeardStat.yml")).exists()){
+		printCon("Starting BeardAch");
+		if(!(new File(getDataFolder(),"BeardAch.yml")).exists()){
 			initalConfig();
 		}
-		config = new Configuration(new File(getDataFolder(),"BeardStat.yml"));
+		config = new Configuration(new File(getDataFolder(),"BeardAch.yml"));
 		config.load();
 		
-		
+		AchievementManager.database.getAchievements();
 		
 		
 		}
@@ -110,5 +108,22 @@ public class BeardAch extends JavaPlugin {
 			AchievementManager.unloadOfflinePlayers();
 		
 		return true;
+	}
+	
+	
+	/**
+	 * Creates the inital config
+	 */
+	private void initalConfig() {
+		printCon("Generating Inital config");
+		config = new Configuration(new File(getDataFolder(),"BeardAch.yml"));
+		config.load();
+		config.setProperty("ach.database.type", "mysql");
+		config.setProperty("ach.database.host", "localhost");
+		config.setProperty("ach.database.username", "Beardstats");
+		config.setProperty("ach.database.password", "changeme");
+		config.setProperty("ach.database.database", "stats");
+		config.setProperty("achievements", null);
+		config.save();
 	}
 }

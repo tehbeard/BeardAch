@@ -9,7 +9,7 @@ public abstract class Reward implements IReward{
 	 * @param config config string to use
 	 * @return
 	 */
-	public static IReward newInstance(String config){
+	public static IReward getInstance(String config){
 		return null;
 	}
 	

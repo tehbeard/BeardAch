@@ -21,9 +21,9 @@ public class AchievementManager {
 
 
 	private static HashMap<String,Achievement> achievements = new HashMap<String,Achievement>();
-	private static IDataSource database = new NullDataSource();
-	
-	
+	public static IDataSource database = new NullDataSource();
+
+
 	/**
 	 * Add achievement to the manager
 	 * @param ach
@@ -98,11 +98,22 @@ public class AchievementManager {
 	 * Unload players who are not on
 	 */
 	public static void unloadOfflinePlayers(){
-		for(Entry<String, HashSet<String>> e :playerHasCache.entrySet()){
+		Iterator<Entry<String, HashSet<String>>> it = playerHasCache.entrySet().iterator();
+		while(it.hasNext()){
+			Entry<String, HashSet<String>> e = it.next();
 			if(Bukkit.getPlayer(e.getKey()) == null){
 				database.setPlayersAchievements(e.getKey(),e.getValue());
+				it.remove();
 			}
 		}
+	}
+	
+	public static HashSet<String> getAchievements(String player){
+		if(playerHasCache.containsKey(player)){
+			return playerHasCache.get(player);
+		}
+		return null;
+		
 	}
 
 }

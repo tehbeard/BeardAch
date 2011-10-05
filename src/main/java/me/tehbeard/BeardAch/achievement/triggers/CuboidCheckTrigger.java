@@ -17,7 +17,7 @@ public class CuboidCheckTrigger extends Trigger {
 	Vector v2 = null;
 
 	
-	public static ITrigger newInstance(String config) {
+	public static ITrigger getInstance(String config) {
 		CuboidCheckTrigger n =new CuboidCheckTrigger();
 		
 		String[] opt = config.split("\\:");

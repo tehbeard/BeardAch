@@ -9,10 +9,10 @@ import org.bukkit.entity.Player;
 public class CommandReward extends Reward{
 
 	String command = "";
-	public static IReward newInstance(String config) {
+	public static IReward getInstance(String config) {
 		CommandReward n = new CommandReward();
 		n.command = config;
-		return (IReward) n;
+		return n;
 	}
 
 	@Override
