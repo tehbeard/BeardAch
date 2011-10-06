@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
 import me.tehbeard.BeardAch.dataSource.NullDataSource;
+import me.tehbeard.BeardAch.dataSource.SqlDataSource;
 /**
  * Manages the link between achievements and players
  * @author James
@@ -21,7 +22,8 @@ public class AchievementManager {
 
 
 	private static HashMap<String,Achievement> achievements = new HashMap<String,Achievement>();
-	public static IDataSource database = new NullDataSource();
+	
+	public static IDataSource database = null;
 
 
 	/**
@@ -80,33 +82,28 @@ public class AchievementManager {
 					//check for bleep bloop
 					if(entry.getKey().checkAchievement(p)){
 						BeardAch.printDebugCon("Achievement Get! " + ply + "=>" + entry.getKey().getName());
+						//push to cache
 						playerHasCache.get(ply).add(entry.getKey().getName());
+						//push to DB
+						database.setPlayersAchievements(ply, entry.getKey().getName());
 						it.remove();
 					}
 
+				}else{
+					it.remove();
 				}
 
 			}
 
 
 		}
+		
+		
 	}
 
 
 
-	/**
-	 * Unload players who are not on
-	 */
-	public static void unloadOfflinePlayers(){
-		Iterator<Entry<String, HashSet<String>>> it = playerHasCache.entrySet().iterator();
-		while(it.hasNext()){
-			Entry<String, HashSet<String>> e = it.next();
-			if(Bukkit.getPlayer(e.getKey()) == null){
-				database.setPlayersAchievements(e.getKey(),e.getValue());
-				it.remove();
-			}
-		}
-	}
+
 	
 	public static HashSet<String> getAchievements(String player){
 		if(playerHasCache.containsKey(player)){

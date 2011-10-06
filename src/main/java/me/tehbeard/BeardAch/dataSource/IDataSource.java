@@ -13,7 +13,7 @@ public interface IDataSource {
 	
 	public HashSet<String> getPlayersAchievements(String Player);
 	
-	public void setPlayersAchievements(String player,HashSet<String> achievements);
+	public void setPlayersAchievements(String player,String achievement);
 	
     	
 }

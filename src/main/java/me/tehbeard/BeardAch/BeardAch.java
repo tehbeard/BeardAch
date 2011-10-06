@@ -1,6 +1,7 @@
 package me.tehbeard.BeardAch;
 
 import java.io.File;
+import java.sql.SQLException;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
@@ -9,6 +10,7 @@ import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.achievement.triggers.PermCheckTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.StatCheckTrigger;
+import me.tehbeard.BeardAch.dataSource.SqlDataSource;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 
@@ -26,7 +28,7 @@ import org.bukkit.util.config.Configuration;
 public class BeardAch extends JavaPlugin {
 
 	public static Configuration config;
-	
+	public static BeardAch self;
 
 	private static final String PERM_PREFIX = "ach";
 
@@ -61,7 +63,7 @@ public class BeardAch extends JavaPlugin {
 	}
 
 	public void onEnable() {
-		
+		self = this;
 		// TODO Auto-generated method stub
 		BeardStat stats = (BeardStat)getServer().getPluginManager().getPlugin("BeardStat");
 		if(!checkBeardStat()){
@@ -95,8 +97,17 @@ public class BeardAch extends JavaPlugin {
 		config = new Configuration(new File(getDataFolder(),"BeardAch.yml"));
 		config.load();
 		
+		AchievementManager.database = new SqlDataSource();
 		AchievementManager.database.getAchievements();
 		
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
+
+			public void run() {
+				// TODO Auto-generated method stub
+				AchievementManager.checkPlayers();
+			}
+			
+		}, 600L,600L);
 		
 		}
 
@@ -104,8 +115,7 @@ public class BeardAch extends JavaPlugin {
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
 
-			AchievementManager.checkPlayers();
-			AchievementManager.unloadOfflinePlayers();
+			
 		
 		return true;
 	}
@@ -123,6 +133,10 @@ public class BeardAch extends JavaPlugin {
 		config.setProperty("ach.database.username", "Beardstats");
 		config.setProperty("ach.database.password", "changeme");
 		config.setProperty("ach.database.database", "stats");
+		config.setProperty("ach.msg.person", "Achievement Unlocked: <ACH>");
+		config.setProperty("ach.msg.broadcast", "<PLAYER> Unlocked: <ACH>");
+		config.setProperty("ach.msg.send.person", true);
+		config.setProperty("ach.msg.send.broadcast", false);
 		config.setProperty("achievements", null);
 		config.save();
 	}

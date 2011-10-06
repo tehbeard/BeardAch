@@ -76,12 +76,11 @@ public class NullDataSource implements IDataSource{
 	}
 
 	public void setPlayersAchievements(String player,
-			HashSet<String> achievements) {
+			String achievement) {
 		// TODO Auto-generated method stub
 		BeardAch.printCon("[" + player + "]");
-		for(String a:achievements){
-			BeardAch.printCon(a);
-		}
+		BeardAch.printCon(achievement);
+		
 	}
 
 }
