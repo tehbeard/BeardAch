@@ -25,11 +25,15 @@ import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
+import de.hydrox.bukkit.DroxPerms.DroxPerms;
+import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
+
 public class BeardAch extends JavaPlugin {
 
 	public static Configuration config;
 	public static BeardAch self;
 
+	public static DroxPermsAPI droxAPI = null;
 	private static final String PERM_PREFIX = "ach";
 
 	public static boolean hasPermission(Player player,String node){
@@ -53,7 +57,9 @@ public class BeardAch extends JavaPlugin {
 
 	public void onDisable() {
 		// TODO Auto-generated method stub
-
+		BeardAch.printCon("Flushing to database");
+		AchievementManager.database.flush();
+		BeardAch.printCon("Flushed to database");
 	}
 	
 	public static boolean checkBeardStat(){
@@ -73,13 +79,20 @@ public class BeardAch extends JavaPlugin {
 		}
 
 		
+		//check DroxPerms
+		
+		DroxPerms droxPerms = ((DroxPerms) this.getServer().getPluginManager().getPlugin("DroxPerms"));
+		if (droxPerms != null) {
+		    droxAPI = droxPerms.getAPI();
+		}
+		
 		
 		
 		
 		
 		//setup events
 		getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, new BeardAchPlayerListener(), Priority.Highest, this);
-		getServer().getPluginManager().registerEvent(Type.PLAYER_LOGIN, new BeardAchPlayerListener(), Priority.Highest, this);
+		getServer().getPluginManager().registerEvent(Type.PLAYER_JOIN, new BeardAchPlayerListener(), Priority.Highest, this);
 		
 
 		

@@ -19,5 +19,12 @@
   		<type>jar</type>
   		<scope>import</scope>
   	</dependency>
+  	<dependency>
+  		<groupId>de.hydrox.bukkit</groupId>
+  		<artifactId>DroxPerms</artifactId>
+  		<version>0.3.0-escapecraft-SNAPSHOT</version>
+  		<type>jar</type>
+  		<scope>import</scope>
+  	</dependency>
   </dependencies>
 </project>

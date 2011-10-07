@@ -15,5 +15,5 @@ public interface IDataSource {
 	
 	public void setPlayersAchievements(String player,String achievement);
 	
-    	
+    public void flush();
 }

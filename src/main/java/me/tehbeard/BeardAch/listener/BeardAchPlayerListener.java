@@ -5,6 +5,7 @@ import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -20,7 +21,7 @@ public class BeardAchPlayerListener extends PlayerListener {
 	}
 	
 	@Override
-	public void onPlayerLogin(PlayerLoginEvent event) {
+	public void onPlayerJoin(PlayerJoinEvent event) {
 		// TODO Auto-generated method stub
 		AchievementManager.loadAchievements(event.getPlayer().getName());
 		

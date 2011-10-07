@@ -10,6 +10,7 @@ import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.rewards.CommandReward;
+import me.tehbeard.BeardAch.achievement.rewards.DroxTrackReward;
 import me.tehbeard.BeardAch.achievement.triggers.*;
 
 public class NullDataSource implements IDataSource{
@@ -54,6 +55,8 @@ public class NullDataSource implements IDataSource{
 					
 					if(part[0].equals("comm")){
 					ach.addReward(CommandReward.getInstance(part[1]));
+					}else if(part[0].equals("promote")){
+						ach.addReward(DroxTrackReward.getInstance(part[1]));
 					}
 				}
 				else
@@ -80,6 +83,11 @@ public class NullDataSource implements IDataSource{
 		// TODO Auto-generated method stub
 		BeardAch.printCon("[" + player + "]");
 		BeardAch.printCon(achievement);
+		
+	}
+
+	public void flush() {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -170,4 +170,11 @@ public class SqlDataSource extends NullDataSource{
 		}
 
 	}
+	
+	public void flush() {
+		// TODO Auto-generated method stub
+		(new sqlFlusher(writeCache)).run();
+		writeCache = new HashMap<String,HashSet<String>>();
+
+	}
 }
