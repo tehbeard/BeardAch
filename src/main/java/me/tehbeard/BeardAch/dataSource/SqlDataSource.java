@@ -49,15 +49,22 @@ public class SqlDataSource extends NullDataSource{
 	public SqlDataSource() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+			BeardAch.printCon("SQL INFO");
+			BeardAch.printCon(BeardAch.config.getValues(true).toString());
+			
+			/*BeardAch.printCon(BeardAch.config.getString("ach.database.database"));
+			BeardAch.printCon(BeardAch.config.getString("ach.database.username"));
+			BeardAch.printCon(BeardAch.config.getString("ach.database.password"));*/
+			System.out.println(BeardAch.config);
 				String conStr = String.format("jdbc:mysql://%s/%s",
 				BeardAch.config.getString("ach.database.host"), 
 				BeardAch.config.getString("ach.database.database"));
 
 		BeardAch.printCon("Connecting....");
 		conn = DriverManager.getConnection(conStr,
-				BeardAch.config.getString("ach.database.username"),
-				BeardAch.config.getString("ach.database.password"));
-
+				BeardAch.config.getString("ach.database.username",""),
+				BeardAch.config.getString("ach.database.password",""));
+		
 		BeardAch.printCon("Checking for table");
 
 		ResultSet rs = conn.getMetaData().getTables(null, null, "achievements", null);
@@ -99,6 +106,7 @@ public class SqlDataSource extends NullDataSource{
 
 		}catch (SQLException e){
 			BeardAch.printCon("Something went derp.");
+			e.printStackTrace();
 		}
 
 
@@ -118,6 +126,9 @@ public class SqlDataSource extends NullDataSource{
 				c.add(rs.getString(1));
 			}
 			rs.close();
+			if(writeCache.containsKey(player)){
+				c.addAll(writeCache.get(player));
+			}
 			return c;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

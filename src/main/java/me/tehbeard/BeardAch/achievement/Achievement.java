@@ -48,6 +48,10 @@ public class Achievement {
 		if(player==null){
 			return false;
 		}
+
+		if(AchievementManager.playerHasCache.get(player.getName()).contains(name)){
+			return false;
+		}
 		for(ITrigger trigger:triggers){
 			if(!trigger.checkAchievement(player)){
 				return false;
@@ -64,6 +68,11 @@ public class Achievement {
 		if(BeardAch.config.getBoolean("ach.msg.send.person", true)){
 			player.sendRawMessage(BeardAch.config.getString("ach.msg.person", "Achievement Unlocked: <ACH>").replace("<ACH>", name).replace("<PLAYER>",player.getName()));
 		}
-		return true;
-	}
+	
+	return true;
+}
+
+public HashSet<ITrigger> getTrigs(){
+	return triggers;
+}
 }

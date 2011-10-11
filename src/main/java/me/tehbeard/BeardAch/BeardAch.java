@@ -1,6 +1,7 @@
 package me.tehbeard.BeardAch;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
@@ -18,19 +19,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.config.Configuration;
 
 import de.hydrox.bukkit.DroxPerms.DroxPerms;
 import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
 
 public class BeardAch extends JavaPlugin {
 
-	public static Configuration config;
+	public static YamlConfiguration config;
 	public static BeardAch self;
 
 	public static DroxPermsAPI droxAPI = null;
@@ -107,8 +108,7 @@ public class BeardAch extends JavaPlugin {
 		if(!(new File(getDataFolder(),"BeardAch.yml")).exists()){
 			initalConfig();
 		}
-		config = new Configuration(new File(getDataFolder(),"BeardAch.yml"));
-		config.load();
+		config =YamlConfiguration.loadConfiguration(new File(getDataFolder(),"BeardAch.yml"));
 		
 		AchievementManager.database = new SqlDataSource();
 		AchievementManager.database.getAchievements();
@@ -122,6 +122,9 @@ public class BeardAch extends JavaPlugin {
 			
 		}, 600L,600L);
 		
+		for(Player p :getServer().getOnlinePlayers()){
+			AchievementManager.loadAchievements(p.getName());
+		}
 		}
 
 	@Override
@@ -139,18 +142,24 @@ public class BeardAch extends JavaPlugin {
 	 */
 	private void initalConfig() {
 		printCon("Generating Inital config");
-		config = new Configuration(new File(getDataFolder(),"BeardAch.yml"));
-		config.load();
-		config.setProperty("ach.database.type", "mysql");
-		config.setProperty("ach.database.host", "localhost");
-		config.setProperty("ach.database.username", "Beardstats");
-		config.setProperty("ach.database.password", "changeme");
-		config.setProperty("ach.database.database", "stats");
-		config.setProperty("ach.msg.person", "Achievement Unlocked: <ACH>");
-		config.setProperty("ach.msg.broadcast", "<PLAYER> Unlocked: <ACH>");
-		config.setProperty("ach.msg.send.person", true);
-		config.setProperty("ach.msg.send.broadcast", false);
-		config.setProperty("achievements", null);
-		config.save();
+		File f = new File(getDataFolder(),"BeardAch.yml");
+		config = YamlConfiguration.loadConfiguration(f);
+		
+		config.set("ach.database.type", "mysql");
+		config.set("ach.database.host", "localhost");
+		config.set("ach.database.username", "Beardstats");
+		config.set("ach.database.password", "changeme");
+		config.set("ach.database.database", "stats");
+		config.set("ach.msg.person", "Achievement Unlocked: <ACH>");
+		config.set("ach.msg.broadcast", "<PLAYER> Unlocked: <ACH>");
+		config.set("ach.msg.send.person", true);
+		config.set("ach.msg.send.broadcast", false);
+		config.set("achievements", null);
+		try {
+			config.save(f);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

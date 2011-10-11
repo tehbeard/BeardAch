@@ -2,10 +2,11 @@ package me.tehbeard.BeardAch.dataSource;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.bukkit.util.config.ConfigurationNode;
-
+import org.bukkit.configuration.ConfigurationSection;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
@@ -17,18 +18,24 @@ public class NullDataSource implements IDataSource{
 
 
 
+	
 	public HashSet<Achievement> getAchievements() {
 		// TODO Auto-generated method stub
-		for(Entry<String, ConfigurationNode> e : BeardAch.config.getNodes("achievements").entrySet()){
+		//BeardAch.config.getList("achievements");
+		
+		for(String s : BeardAch.config.getConfigurationSection("achievements").getKeys(false)){
+			ConfigurationSection e = BeardAch.config.getConfigurationSection("achievements").getConfigurationSection(s);
+			if(e==null){
+				continue;
+			}
 
-
-			String name = e.getValue().getString("name");
-			String descrip = e.getValue().getString("descrip");
+			String name = e.getString("name");
+			String descrip = e.getString("descrip");
 			BeardAch.printDebugCon("Loading achievement " + name);
 
 			Achievement ach = new Achievement(name, descrip);
 			
-			for(String trig: e.getValue().getStringList("triggers", new LinkedList<String>())){
+			for(String trig: ((List<String>)e.getList("triggers", new LinkedList<String>()))){
 				String[] part = trig.split("\\|");
 				if(part.length==2){
 					BeardAch.printDebugCon("Trigger => " + trig); 
@@ -48,7 +55,7 @@ public class NullDataSource implements IDataSource{
 				}
 			}
 
-			for(String reward: e.getValue().getStringList("rewards", new LinkedList<String>())){
+			for(String reward: ((List<String>)e.getList("rewards", new LinkedList<String>()))){
 				String[] part = reward.split("\\|");
 				if(part.length==2){
 					BeardAch.printDebugCon("Reward => " + reward); 
