@@ -55,7 +55,7 @@ public class Cuboid {
 	 * @return true if inside
 	 */
 	public boolean isInside(Location l){
-		return (l.toVector().isInAABB(Vector.getMinimum(v1, v2),Vector.getMaximum(v1, v2)) &&
+		return (l.toVector().isInAABB(Vector.getMinimum(v1, v2).add(new Vector(-1, -1, -1)),Vector.getMaximum(v1, v2).add(new Vector(1, 1, 1))) &&
 				l.getWorld().getName().equals(world));
 		
 	}

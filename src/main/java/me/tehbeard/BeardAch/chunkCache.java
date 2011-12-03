@@ -12,7 +12,7 @@ import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 
 /**
  * handles cuboid checking
- * @author James
+ * @author Tehbeard
  *
  */
 public class chunkCache {
@@ -37,12 +37,15 @@ public class chunkCache {
 		String cx = "" + player.getLocation().getBlockX() / 16;
 		String cz = "" + player.getLocation().getBlockZ() / 16;
 
+		BeardAch.printDebugCon("Location: " + player.getLocation().toString() );
 		if(cache.containsKey(""+world+","+cx+","+cz)){
+			BeardAch.printDebugCon("Chunk cache found records, checking....");
 			for(Achievement a : cache.get(""+world+","+cx+","+cz)){
 
 
-
+				BeardAch.printDebugCon("Checking "+a.getName());
 				if(a.checkAchievement(player)){
+					BeardAch.printDebugCon("Achievement Got!");
 					AchievementManager.playerCheckCache.get(a).remove(player.getName());
 					AchievementManager.playerHasCache.get(player.getName()).add(a.getName());
 					AchievementManager.database.setPlayersAchievements(player.getName(),a.getName());
