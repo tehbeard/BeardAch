@@ -106,7 +106,7 @@ public class BeardAch extends JavaPlugin {
 		//Load config
 		printCon("Starting BeardAch");
 		if(!(new File(getDataFolder(),"BeardAch.yml")).exists()){
-			initalConfig();
+			initialConfig();
 		}
 		config =YamlConfiguration.loadConfiguration(new File(getDataFolder(),"BeardAch.yml"));
 		
@@ -140,7 +140,7 @@ public class BeardAch extends JavaPlugin {
 	/**
 	 * Creates the inital config
 	 */
-	private void initalConfig() {
+	private void initialConfig() {
 		printCon("Generating Inital config");
 		File f = new File(getDataFolder(),"BeardAch.yml");
 		config = YamlConfiguration.loadConfiguration(f);
