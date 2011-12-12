@@ -1,7 +1,7 @@
 name: BeardAch
 main: me.tehbeard.BeardAch.BeardAch
-version: 0.2
-depend: [Permissions,BeardStat]
+version: 0.2.1
+depend: [BeardStat]
 softdepend: [DroxPerms]
 commands:
     ach:

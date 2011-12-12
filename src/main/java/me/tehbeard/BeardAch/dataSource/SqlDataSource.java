@@ -27,29 +27,13 @@ public class SqlDataSource extends NullDataSource{
 
 
 
-
-
-	/*
-  try {
-
-		} catch(SQLException e){
-			BeardAch.printCon("Failed to initaise MySQL Data Provider. Dumping error.");
-			e.printStackTrace();
-			BeardAch.printCon("Shutting down BeardAch");
-		}
-	 */
-
-
-
 	public SqlDataSource() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			BeardAch.printCon("SQL INFO");
 			BeardAch.printCon(BeardAch.config.getValues(true).toString());
 			
-			/*BeardAch.printCon(BeardAch.config.getString("ach.database.database"));
-			BeardAch.printCon(BeardAch.config.getString("ach.database.username"));
-			BeardAch.printCon(BeardAch.config.getString("ach.database.password"));*/
+			
 			System.out.println(BeardAch.config);
 				String conStr = String.format("jdbc:mysql://%s/%s",
 				BeardAch.config.getString("ach.database.host"), 
@@ -64,8 +48,8 @@ public class SqlDataSource extends NullDataSource{
 
 		ResultSet rs = conn.getMetaData().getTables(null, null, "achievements", null);
 		if (!rs.next()) {
-			BeardAch.printCon("Stats table not found, creating table");
-			PreparedStatement ps = conn.prepareStatement("");
+			BeardAch.printCon("Achievements table not found, creating table");
+			PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `achievements` (`player` varchar(32) NOT NULL, `achievement` varchar(32) NOT NULL,  UNIQUE KEY `player` (`player`,`achievement`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 			ps.executeUpdate();
 			ps.close();
 			BeardAch.printCon("created table");
@@ -86,8 +70,7 @@ public class SqlDataSource extends NullDataSource{
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.self, new Runnable(){
 
 			public void run() {
-				// TODO Auto-generated method stub
-				Runnable r = new sqlFlusher(writeCache);
+				Runnable r = new SqlFlusher(writeCache);
 				writeCache = new HashMap<String,HashSet<String>>();
 				Bukkit.getScheduler().scheduleAsyncDelayedTask(BeardAch.self, r);
 			}
@@ -95,7 +78,6 @@ public class SqlDataSource extends NullDataSource{
 		}, 2400L, 2400L);
 		BeardAch.printCon("Initaised MySQL Data Provider.");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			BeardAch.printCon("MySQL Library not found!");
 
 
@@ -112,7 +94,7 @@ public class SqlDataSource extends NullDataSource{
 
 
 	public HashSet<String> getPlayersAchievements(String player) {
-		// TODO Auto-generated method stub
+		
 		try {
 			prepGetAllPlayerAch.setString(1, player);
 			ResultSet rs = prepGetAllPlayerAch.executeQuery();
@@ -126,7 +108,6 @@ public class SqlDataSource extends NullDataSource{
 			}
 			return c;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -137,7 +118,6 @@ public class SqlDataSource extends NullDataSource{
 			String achievements) {
 
 
-		// TODO Auto-generated method stub
 		if(!writeCache.containsKey(player)){
 			writeCache.put(player, new HashSet<String>());
 		}
@@ -146,16 +126,15 @@ public class SqlDataSource extends NullDataSource{
 	}
 
 
-	class sqlFlusher implements Runnable {
+	class SqlFlusher implements Runnable {
 
 		private HashMap<String, HashSet<String>> write;
-		sqlFlusher(HashMap<String,HashSet<String>> toWrite){
+		SqlFlusher(HashMap<String,HashSet<String>> toWrite){
 			 write = toWrite;
 		}
 		
 		public void run() {
 			BeardAch.printCon("Flushing to database");
-			// TODO Auto-generated method stub
 			try {
 			for( Entry<String, HashSet<String>> es :write.entrySet()){
 				
@@ -170,7 +149,6 @@ public class SqlDataSource extends NullDataSource{
 			prepAddPlayerAch.clearBatch();
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -178,8 +156,7 @@ public class SqlDataSource extends NullDataSource{
 	}
 	
 	public void flush() {
-		// TODO Auto-generated method stub
-		(new sqlFlusher(writeCache)).run();
+		(new SqlFlusher(writeCache)).run();
 		writeCache = new HashMap<String,HashSet<String>>();
 
 	}

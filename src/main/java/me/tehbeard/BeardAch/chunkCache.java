@@ -15,7 +15,7 @@ import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
  * @author Tehbeard
  *
  */
-public class chunkCache {
+public class ChunkCache {
 
 	public static HashMap<String,HashSet<Achievement>> cache = new HashMap<String,HashSet<Achievement>>();
 

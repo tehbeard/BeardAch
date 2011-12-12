@@ -1,7 +1,7 @@
 package me.tehbeard.BeardAch.listener;
 
 import me.tehbeard.BeardAch.BeardAch;
-import me.tehbeard.BeardAch.chunkCache;
+import me.tehbeard.BeardAch.ChunkCache;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
@@ -20,7 +20,7 @@ public class BeardAchPlayerListener extends PlayerListener {
 				event.getTo().getBlockZ() != event.getFrom().getBlockZ()
 				){
 			BeardAch.printDebugCon("Player moved, checking chunk Cache");
-			chunkCache.checkLocation(event.getPlayer());
+			ChunkCache.checkLocation(event.getPlayer());
 		}
 	}
 	

@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
+import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.hydrox.bukkit.DroxPerms.DroxPerms;
@@ -31,13 +32,13 @@ import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
 
 public class BeardAch extends JavaPlugin {
 
-	public static YamlConfiguration config;
+	public static YamlConfiguration config = null;
 	public static BeardAch self;
 
 	public static DroxPermsAPI droxAPI = null;
 	private static final String PERM_PREFIX = "ach";
 
-	public static boolean hasPermission(Player player,String node){
+	public static boolean hasPermission(Permissible player,String node){
 
 		return (player.hasPermission(PERM_PREFIX + "." + node) || player.isOp());
 
@@ -48,12 +49,12 @@ public class BeardAch extends JavaPlugin {
 	}
 
 	public static void printDebugCon(String line){
-		//if(config!=null){
-			//if(config.getBoolean("general.debug", false)){
+		if(config!=null){
+			if(config.getBoolean("general.debug", false)){
 				System.out.println("[BeardAch][DEBUG] " + line);
 
-		//	}
-		//}
+			}
+		}
 	}
 
 	public void onDisable() {
@@ -63,7 +64,7 @@ public class BeardAch extends JavaPlugin {
 		BeardAch.printCon("Flushed to database");
 	}
 	
-	public static boolean checkBeardStat(){
+	private static boolean checkBeardStat(){
 		BeardStat stats = (BeardStat) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
 		return (stats!=null && stats.isEnabled());
 		
@@ -144,7 +145,7 @@ public class BeardAch extends JavaPlugin {
 		printCon("Generating Inital config");
 		File f = new File(getDataFolder(),"BeardAch.yml");
 		config = YamlConfiguration.loadConfiguration(f);
-		
+		config.set("general.debug", false);
 		config.set("ach.database.type", "mysql");
 		config.set("ach.database.host", "localhost");
 		config.set("ach.database.username", "Beardstats");

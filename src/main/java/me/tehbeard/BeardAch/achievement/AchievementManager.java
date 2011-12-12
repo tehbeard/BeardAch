@@ -7,7 +7,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import me.tehbeard.BeardAch.BeardAch;
-import me.tehbeard.BeardAch.chunkCache;
+import me.tehbeard.BeardAch.ChunkCache;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
 import me.tehbeard.BeardAch.dataSource.NullDataSource;
 import me.tehbeard.BeardAch.dataSource.SqlDataSource;
@@ -33,7 +33,7 @@ public class AchievementManager {
 	 */
 	public static void addAchievement(Achievement ach){
 		achievements.put(ach.getName(),ach);
-		chunkCache.addAchievement(ach);
+		ChunkCache.addAchievement(ach);
 	}
 
 	/**
