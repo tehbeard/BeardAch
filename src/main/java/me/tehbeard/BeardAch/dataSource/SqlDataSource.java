@@ -30,9 +30,6 @@ public class SqlDataSource extends NullDataSource{
 	public SqlDataSource() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			BeardAch.printCon("SQL INFO");
-			BeardAch.printCon(BeardAch.config.getValues(true).toString());
-			
 			
 			System.out.println(BeardAch.config);
 				String conStr = String.format("jdbc:mysql://%s/%s",
