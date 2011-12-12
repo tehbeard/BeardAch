@@ -2,26 +2,17 @@ package me.tehbeard.BeardAch;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
-
-import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
-import me.tehbeard.BeardAch.achievement.rewards.CommandReward;
-import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
-import me.tehbeard.BeardAch.achievement.triggers.PermCheckTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.StatCheckTrigger;
 import me.tehbeard.BeardAch.dataSource.SqlDataSource;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
+
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.permissions.Permissible;
@@ -63,11 +54,11 @@ public class BeardAch extends JavaPlugin {
 		AchievementManager.database.flush();
 		BeardAch.printCon("Flushed to database");
 	}
-	
+
 	private static boolean checkBeardStat(){
 		BeardStat stats = (BeardStat) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
 		return (stats!=null && stats.isEnabled());
-		
+
 	}
 
 	public void onEnable() {
@@ -80,64 +71,69 @@ public class BeardAch extends JavaPlugin {
 			return;
 		}
 
-		
+
 		//check DroxPerms
-		
+
 		DroxPerms droxPerms = ((DroxPerms) this.getServer().getPluginManager().getPlugin("DroxPerms"));
 		if (droxPerms != null) {
-		    droxAPI = droxPerms.getAPI();
+			droxAPI = droxPerms.getAPI();
 		}
-		
-		
-		
-		
-		
+
+
+
+
+
 		//setup events
 		getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, new BeardAchPlayerListener(), Priority.Highest, this);
 		getServer().getPluginManager().registerEvent(Type.PLAYER_JOIN, new BeardAchPlayerListener(), Priority.Highest, this);
-		
 
-		
+
+
 		//TEST ACHIEVEMENTS, DELETE ONCE DATASOURCE'S COMPLETE
-		
 
-		
-		
-		
+
+
+
+
 		//Load config
 		printCon("Starting BeardAch");
 		if(!(new File(getDataFolder(),"BeardAch.yml")).exists()){
 			initialConfig();
 		}
 		config =YamlConfiguration.loadConfiguration(new File(getDataFolder(),"BeardAch.yml"));
-		
+
 		AchievementManager.database = new SqlDataSource();
 		AchievementManager.database.getAchievements();
-		
+
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
 			public void run() {
 				// TODO Auto-generated method stub
 				AchievementManager.checkPlayers();
 			}
-			
+
 		}, 600L,600L);
-		
+
 		for(Player p :getServer().getOnlinePlayers()){
 			AchievementManager.loadAchievements(p.getName());
 		}
-		}
+	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
 
-			
-		
+		if(sender instanceof Player){
+			Player player = (Player)sender;
+			for( String a:AchievementManager.getAchievements(player.getName())){
+				player.sendMessage(a);
+			}
+		}
+
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Creates the inital config
 	 */
