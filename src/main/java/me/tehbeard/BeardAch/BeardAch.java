@@ -8,6 +8,7 @@ import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -125,8 +126,10 @@ public class BeardAch extends JavaPlugin {
 
 		if(sender instanceof Player){
 			Player player = (Player)sender;
+			player.sendMessage(ChatColor.AQUA + "Unlocked Achievements:");
 			for( String a:AchievementManager.getAchievements(player.getName())){
-				player.sendMessage(a);
+				
+				player.sendMessage(ChatColor.GOLD + a);
 			}
 		}
 
