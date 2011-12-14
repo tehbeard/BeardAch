@@ -86,8 +86,8 @@ public class BeardAch extends JavaPlugin {
 
 
 
-		
-	
+
+
 
 		//setup events
 		PlayerListener pl = new BeardAchPlayerListener();
@@ -132,12 +132,22 @@ public class BeardAch extends JavaPlugin {
 
 		if(sender instanceof Player){
 			Player player = (Player)sender;
-			player.sendMessage(ChatColor.AQUA + "Unlocked Achievements:");
-			for( Achievement a:AchievementManager.getAchievements(player.getName())){
+			if(args.length == 0){
 				
-				
-				player.sendMessage(ChatColor.WHITE + "#" + a.getId() + ChatColor.GOLD + a.getName());
+				player.sendMessage(ChatColor.AQUA + "Unlocked Achievements:");
+				for( Achievement a:AchievementManager.getAchievements(player.getName())){
+
+
+					player.sendMessage(ChatColor.WHITE + "#" + a.getId() + " "+ ChatColor.GOLD + a.getName());
+				}
+			}else if(args.length ==1){
+				Achievement a = AchievementManager.getAchievement(Integer.parseInt(args[0]));
+				if(a!=null){
+					player.sendMessage(ChatColor.GOLD + a.getName());
+					player.sendMessage(ChatColor.BLUE + a.getDescrip());
+				}
 			}
+
 		}
 
 		return true;

@@ -20,7 +20,7 @@ public class Achievement {
 	private String name;
 	private String descrip;
 	private int id = 0;
-	private static int nextId = 0;
+	private static int nextId = 1;
 	private HashSet<ITrigger> triggers = new HashSet<ITrigger>();
 	private HashSet<IReward> rewards = new HashSet<IReward>();
 	public Achievement(String name,String descrip) {
