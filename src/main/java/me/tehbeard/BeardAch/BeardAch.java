@@ -2,6 +2,8 @@ package me.tehbeard.BeardAch;
 
 import java.io.File;
 import java.io.IOException;
+
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.dataSource.SqlDataSource;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
@@ -131,10 +133,10 @@ public class BeardAch extends JavaPlugin {
 		if(sender instanceof Player){
 			Player player = (Player)sender;
 			player.sendMessage(ChatColor.AQUA + "Unlocked Achievements:");
-			for( String a:AchievementManager.getAchievements(player.getName())){
+			for( Achievement a:AchievementManager.getAchievements(player.getName())){
 				
 				
-				player.sendMessage(ChatColor.WHITE + "#" + AchievementManager.getAchievementsList().get(a).getId() + ". " + ChatColor.GOLD + a);
+				player.sendMessage(ChatColor.WHITE + "#" + a.getId() + ChatColor.GOLD + a.getName());
 			}
 		}
 

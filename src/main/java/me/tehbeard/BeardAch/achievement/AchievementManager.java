@@ -3,14 +3,12 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.ChunkCache;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
-import me.tehbeard.BeardAch.dataSource.NullDataSource;
-import me.tehbeard.BeardAch.dataSource.SqlDataSource;
+
 /**
  * Manages the link between achievements and players
  * @author James
@@ -22,25 +20,29 @@ public class AchievementManager {
 	public static HashMap<Achievement,HashSet<String>> playerCheckCache = new  HashMap<Achievement,HashSet<String>>();
 
 
-	private static HashMap<String,Achievement> achievements = new HashMap<String,Achievement>();
+	private static List<Achievement> achievements = new LinkedList<Achievement>();
 	
-	public static HashMap<String, Achievement> getAchievementsList() {
+	public static List<Achievement> getAchievementsList() {
 		return achievements;
 	}
-
-
-
-
 
 	public static IDataSource database = null;
 
 
+	public static Achievement getAchievement(String name){
+		for(Achievement a :achievements){
+			if(a.getName().equals(name)){
+				return a;
+			}
+		}
+		return null;
+	}
 	/**
 	 * Add achievement to the manager
 	 * @param ach
 	 */
 	public static void addAchievement(Achievement ach){
-		achievements.put(ach.getName(),ach);
+		achievements.add(ach);
 		ChunkCache.addAchievement(ach);
 	}
 
@@ -53,7 +55,7 @@ public class AchievementManager {
 		//put to cache
 		playerHasCache.put(player,got);
 		//cycle all loaded achievements
-		for(Achievement ach :achievements.values()){
+		for(Achievement ach :achievements){
 
 			//if they don't have that achievement, add them to the check cache
 			if(!got.contains(ach.getName())){
@@ -115,9 +117,23 @@ public class AchievementManager {
 
 
 	
-	public static HashSet<String> getAchievements(String player){
+	public static List<Achievement> getAchievements(String player){
 		if(playerHasCache.containsKey(player)){
-			return playerHasCache.get(player);
+			List<Achievement> l = new LinkedList<Achievement>();
+			for(String s:playerHasCache.get(player)){
+				Achievement a = getAchievement(s);
+				if(a!=null){
+					l.add(a);
+					Collections.sort(l,new Comparator<Achievement>() {
+
+						public int compare(Achievement o1, Achievement o2) {
+							int res = o1.getId() - o2.getId();
+							return res/Math.abs(res);
+						}
+					});
+				}
+			}
+			 return l;
 		}
 		return null;
 		

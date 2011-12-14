@@ -2,7 +2,9 @@ package me.tehbeard.BeardAch.achievement.triggers;
 
 
 import java.util.HashSet;
+import java.util.List;
 
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
 
 import org.bukkit.entity.Player;
@@ -28,9 +30,12 @@ public class AchCheckTrigger extends Trigger {
 	@Override
 	public boolean checkAchievement(Player player) {
 		//if player has an acheivement
-		HashSet<String> achs = AchievementManager.getAchievements(player.getName());
+		List<Achievement> achs = AchievementManager.getAchievements(player.getName());
 		if(achs !=null){
-			return achs.contains(ach);
+			for(Achievement a: achs){
+				if(a.getName().equals(ach)){return true;}
+			}
+			
 		}
 		return false;
 	}
