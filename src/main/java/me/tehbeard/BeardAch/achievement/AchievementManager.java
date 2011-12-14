@@ -24,6 +24,14 @@ public class AchievementManager {
 
 	private static HashMap<String,Achievement> achievements = new HashMap<String,Achievement>();
 	
+	public static HashMap<String, Achievement> getAchievementsList() {
+		return achievements;
+	}
+
+
+
+
+
 	public static IDataSource database = null;
 
 

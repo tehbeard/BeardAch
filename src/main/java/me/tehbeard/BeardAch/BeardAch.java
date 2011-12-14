@@ -16,8 +16,10 @@ import org.bukkit.entity.Player;
 
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
+import org.bukkit.event.player.PlayerListener;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 import de.hydrox.bukkit.DroxPerms.DroxPerms;
 import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
@@ -82,11 +84,13 @@ public class BeardAch extends JavaPlugin {
 
 
 
-
+		
+	
 
 		//setup events
-		getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, new BeardAchPlayerListener(), Priority.Highest, this);
-		getServer().getPluginManager().registerEvent(Type.PLAYER_JOIN, new BeardAchPlayerListener(), Priority.Highest, this);
+		PlayerListener pl = new BeardAchPlayerListener();
+		getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, pl, Priority.Highest, this);
+		getServer().getPluginManager().registerEvent(Type.PLAYER_JOIN, pl, Priority.Highest, this);
 
 
 
@@ -129,7 +133,8 @@ public class BeardAch extends JavaPlugin {
 			player.sendMessage(ChatColor.AQUA + "Unlocked Achievements:");
 			for( String a:AchievementManager.getAchievements(player.getName())){
 				
-				player.sendMessage(ChatColor.GOLD + a);
+				
+				player.sendMessage(ChatColor.WHITE + "#" + AchievementManager.getAchievementsList().get(a).getId() + ". " + ChatColor.GOLD + a);
 			}
 		}
 

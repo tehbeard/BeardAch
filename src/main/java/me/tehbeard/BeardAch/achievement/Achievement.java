@@ -19,11 +19,19 @@ public class Achievement {
 
 	private String name;
 	private String descrip;
+	private int id = 0;
+	private static int nextId = 0;
 	private HashSet<ITrigger> triggers = new HashSet<ITrigger>();
 	private HashSet<IReward> rewards = new HashSet<IReward>();
 	public Achievement(String name,String descrip) {
 		this.name = name;
 		this.descrip = descrip;
+		id = nextId;
+		nextId ++;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	public String getName(){
@@ -68,11 +76,14 @@ public class Achievement {
 		if(BeardAch.config.getBoolean("ach.msg.send.person", true)){
 			player.sendRawMessage(BeardAch.config.getString("ach.msg.person", "Achievement Unlocked: " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>",player.getName()));
 		}
-	
-	return true;
-}
 
-public HashSet<ITrigger> getTrigs(){
-	return triggers;
-}
+		return true;
+	}
+
+	public HashSet<ITrigger> getTrigs(){
+		return triggers;
+	}
+
+
+
 }

@@ -3,13 +3,10 @@ package me.tehbeard.BeardAch.listener;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.ChunkCache;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
-import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 
-import org.bukkit.entity.Player;
+
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class BeardAchPlayerListener extends PlayerListener {
@@ -30,6 +27,9 @@ public class BeardAchPlayerListener extends PlayerListener {
 		AchievementManager.loadAchievements(event.getPlayer().getName());
 		
 	}
+	
+	
+
 	
 	
 }
