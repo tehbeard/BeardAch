@@ -3,16 +3,14 @@ package me.tehbeard.BeardAch;
 import java.io.File;
 import java.io.IOException;
 
-import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.AchievementManager;
-import me.tehbeard.BeardAch.dataSource.SqlDataSource;
+import me.tehbeard.BeardAch.achievement.*;
+import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -21,7 +19,6 @@ import org.bukkit.event.Event.Type;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
 import de.hydrox.bukkit.DroxPerms.DroxPerms;
 import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
@@ -109,7 +106,19 @@ public class BeardAch extends JavaPlugin {
 		}
 		config =YamlConfiguration.loadConfiguration(new File(getDataFolder(),"BeardAch.yml"));
 
+		if(config.getString("ach.database.type","").equalsIgnoreCase("mysql")){
 		AchievementManager.database = new SqlDataSource();
+		}
+		if(config.getString("ach.database.type","").equalsIgnoreCase("null")){
+		{
+			AchievementManager.database = new NullDataSource();	
+		}
+		if(AchievementManager.database == null){
+			printCon("NO SUITABLE DATABASE SELECTED!!");
+		
+			onDisable();
+			return;
+		}
 		AchievementManager.database.loadAchievements();
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
