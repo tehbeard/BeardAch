@@ -20,7 +20,7 @@ public class NullDataSource implements IDataSource{
 
 
 	
-	public HashSet<Achievement> loadAchievements() {
+	public void loadAchievements() {
 		// TODO Auto-generated method stub
 		//BeardAch.config.getList("achievements");
 		
@@ -78,7 +78,6 @@ public class NullDataSource implements IDataSource{
 			AchievementManager.addAchievement(ach);
 			BeardAch.printDebugCon("Loaded achievement " + name);
 		}
-		return null;
 	}
 
 	public HashSet<String> getPlayersAchievements(String Player) {

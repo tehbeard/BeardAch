@@ -107,19 +107,19 @@ public class BeardAch extends JavaPlugin {
 		config =YamlConfiguration.loadConfiguration(new File(getDataFolder(),"BeardAch.yml"));
 
 		if(config.getString("ach.database.type","").equalsIgnoreCase("mysql")){
-		AchievementManager.database = new SqlDataSource();
+			AchievementManager.database = new SqlDataSource();
 		}
 		if(config.getString("ach.database.type","").equalsIgnoreCase("null")){
-		{
+
 			AchievementManager.database = new NullDataSource();	
 		}
 		if(AchievementManager.database == null){
 			printCon("NO SUITABLE DATABASE SELECTED!!");
-		
+
 			onDisable();
 			return;
 		}
-		AchievementManager.database.loadAchievements();
+		AchievementManager.loadAchievements();
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
@@ -130,9 +130,8 @@ public class BeardAch extends JavaPlugin {
 
 		}, 600L,600L);
 
-		for(Player p :getServer().getOnlinePlayers()){
-			AchievementManager.loadAchievements(p.getName());
-		}
+		
+
 	}
 
 	@Override
@@ -142,7 +141,7 @@ public class BeardAch extends JavaPlugin {
 		if(sender instanceof Player){
 			Player player = (Player)sender;
 			if(args.length == 0){
-				
+
 				player.sendMessage(ChatColor.AQUA + "Unlocked Achievements:");
 				for( Achievement a:AchievementManager.getAchievements(player.getName())){
 

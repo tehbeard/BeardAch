@@ -24,7 +24,7 @@ public class BeardAchPlayerListener extends PlayerListener {
 	@Override
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		// TODO Auto-generated method stub
-		AchievementManager.loadAchievements(event.getPlayer().getName());
+		AchievementManager.loadPlayersAchievements(event.getPlayer().getName());
 		
 	}
 	

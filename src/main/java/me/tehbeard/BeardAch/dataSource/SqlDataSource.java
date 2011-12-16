@@ -173,7 +173,7 @@ public class SqlDataSource implements IDataSource{
 
 
 
-	public HashSet<Achievement> loadAchievements() {
+	public void loadAchievements() {
 		// TODO Auto-generated method stub
 		//BeardAch.config.getList("achievements");
 		
@@ -231,7 +231,7 @@ public class SqlDataSource implements IDataSource{
 			AchievementManager.addAchievement(ach);
 			BeardAch.printDebugCon("Loaded achievement " + name);
 		}
-		return null;
+		
 	}
 
 

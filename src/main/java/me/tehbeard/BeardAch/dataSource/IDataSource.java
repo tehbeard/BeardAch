@@ -9,7 +9,7 @@ import me.tehbeard.BeardAch.achievement.*;
  */
 public interface IDataSource {
 
-	public HashSet<Achievement> loadAchievements();
+	public void loadAchievements();
 	
 	public HashSet<String> getPlayersAchievements(String Player);
 	
