@@ -19,6 +19,9 @@ public class NullDataSource implements IDataSource{
 
 
 
+	public NullDataSource(){
+		BeardAch.printCon("Loading Null DataSource");
+	}
 	
 	public void loadAchievements() {
 		// TODO Auto-generated method stub

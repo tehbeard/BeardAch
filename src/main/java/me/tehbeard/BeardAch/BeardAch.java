@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import me.tehbeard.BeardAch.achievement.*;
+import me.tehbeard.BeardAch.commands.AchReloadCommand;
 import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
@@ -131,6 +132,10 @@ public class BeardAch extends JavaPlugin {
 		}, 600L,600L);
 
 		
+		//commands
+		
+		getCommand("ach-reload").setExecutor(new AchReloadCommand());
+
 
 	}
 

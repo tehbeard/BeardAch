@@ -17,8 +17,11 @@ import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
  */
 public class ChunkCache {
 
-	public static HashMap<String,HashSet<Achievement>> cache = new HashMap<String,HashSet<Achievement>>();
+	private static HashMap<String,HashSet<Achievement>> cache = new HashMap<String,HashSet<Achievement>>();
 
+	public static void clearCache(){
+		 cache = new HashMap<String,HashSet<Achievement>>();
+	}
 	public static void addAchievement(Achievement a){
 		for(ITrigger t :a.getTrigs()){
 			if(t instanceof CuboidCheckTrigger){

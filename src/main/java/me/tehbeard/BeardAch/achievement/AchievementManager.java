@@ -39,6 +39,7 @@ public class AchievementManager {
 	 * Clear the caches.
 	 */
 	public static void clearAchievements(){
+		ChunkCache.clearCache();
 		playerHasCache = new HashMap<String,HashSet<String>>();
 		achievements = new LinkedList<Achievement>();
 		playerCheckCache = new HashMap<Achievement,HashSet<String>>();	

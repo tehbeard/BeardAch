@@ -7,3 +7,6 @@ commands:
     ach:
         description: Show your achievements
         usage: /<command>
+    ach-reload:
+        description: reloads the achievements
+        usage: /<command>
