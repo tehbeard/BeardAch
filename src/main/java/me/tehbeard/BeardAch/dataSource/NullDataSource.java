@@ -20,7 +20,7 @@ public class NullDataSource implements IDataSource{
 
 
 	
-	public HashSet<Achievement> getAchievements() {
+	public HashSet<Achievement> loadAchievements() {
 		// TODO Auto-generated method stub
 		//BeardAch.config.getList("achievements");
 		
@@ -91,12 +91,16 @@ public class NullDataSource implements IDataSource{
 	public void setPlayersAchievements(String player,
 			String achievement) {
 		// TODO Auto-generated method stub
-		BeardAch.printCon("[" + player + "]");
-		BeardAch.printCon(achievement);
+		BeardAch.printCon("[" + player + "] stored "+ achievement);
 		
 	}
 
 	public void flush() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void clearAchievements(String player) {
 		// TODO Auto-generated method stub
 		
 	}

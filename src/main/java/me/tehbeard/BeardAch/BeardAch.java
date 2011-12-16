@@ -110,7 +110,7 @@ public class BeardAch extends JavaPlugin {
 		config =YamlConfiguration.loadConfiguration(new File(getDataFolder(),"BeardAch.yml"));
 
 		AchievementManager.database = new SqlDataSource();
-		AchievementManager.database.getAchievements();
+		AchievementManager.database.loadAchievements();
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
