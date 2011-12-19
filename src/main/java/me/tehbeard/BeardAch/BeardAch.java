@@ -175,7 +175,7 @@ public class BeardAch extends JavaPlugin {
 		File f = new File(getDataFolder(),"BeardAch.yml");
 		config = YamlConfiguration.loadConfiguration(f);
 		config.set("general.debug", false);
-		config.set("ach.database.type", "mysql");
+		config.set("ach.database.type", "null");
 		config.set("ach.database.host", "localhost");
 		config.set("ach.database.username", "Beardstats");
 		config.set("ach.database.password", "changeme");
