@@ -26,7 +26,8 @@ public class AchievementManager {
 	public static void loadAchievements(){
 		//clear cache
 		clearAchievements();
-
+		//reset Achievement Id's
+		Achievement.resetId();
 		//load achievements
 		database.loadAchievements();
 

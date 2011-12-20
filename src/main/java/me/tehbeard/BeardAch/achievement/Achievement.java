@@ -30,6 +30,9 @@ public class Achievement {
 		nextId ++;
 	}
 	
+	public static void resetId(){
+	  nextId = 1;
+	}
 	public int getId() {
 		return id;
 	}
