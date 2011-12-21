@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.bukkit.util.config.ConfigurationNode;
+import org.bukkit.util.config.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 
@@ -23,9 +23,12 @@ import me.tehbeard.BeardAch.achievement.triggers.*;
 public class YamlDataSource implements IDataSource{
 
 
-
+        Map<String,Set<String>> cache;
+        YamlConfiguration db;
 	public YamlDataSource(){
 		BeardAch.printCon("Loading Yaml DataSource");
+                db = YamlConfiguration.LoadConfiguration(new File(BeardAch.self.getDataFolder(),"YamlDB.yml"));
+                cache = new HashMap<String,HashSet<String>>();
 	}
 
 	public void loadAchievements() {
@@ -103,9 +106,15 @@ public class YamlDataSource implements IDataSource{
 		}
 	}
 
-	public HashSet<String> getPlayersAchievements(String Player) {
+	public HashSet<String> getPlayersAchievements(String player) {
 		// TODO Auto-generated method stub
+                List<String> ach = (List<String>)db.getList("db." + player);
 		HashSet<String> d = new HashSet<String>();
+                for(String a : ach){
+                  d.add(a);
+                }
+                //add to cache
+                cache.put(player,d);
 		//d.add("test");
 		return d;
 	}
@@ -113,17 +122,30 @@ public class YamlDataSource implements IDataSource{
 	public void setPlayersAchievements(String player,
 			String achievement) {
 		// TODO Auto-generated method stub
-		BeardAch.printCon("[" + player + "] stored "+ achievement);
+		//BeardAch.printCon("[" + player + "] stored "+ achievement);
+		cache.get(player).add(achievement);
 
 	}
 
 	public void flush() {
 		// TODO Auto-generated method stub
+	        List<String> l;
 
+		for(Entry<String,Set<String>> entry : cache.entries()){
+		  l = new LinkedList<String>();
+
+		  for(String a : entry.value()){
+              	    l.add(a);
+              	  }
+		  db.setProperty("db."+entry.key(),l);
+		  l = null;
+		}
+                db.save(new File(BeardAch.self.getDataFolder(),"YamlDB.yml"));
 	}
 
 	public void clearAchievements(String player) {
 		// TODO Auto-generated method stub
+		cache.putt(player,new HashSet<String>());
 
 	}
 
