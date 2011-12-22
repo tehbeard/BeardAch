@@ -31,7 +31,7 @@ import me.tehbeard.BeardAch.achievement.triggers.PermCheckTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.StatCheckTrigger;
 
 
-public class SqlDataSource implements IDataSource{
+public class SqlDataSource extends AbstractDataSource{
 
 	private HashMap<String,HashSet<String>> writeCache = new HashMap<String,HashSet<String>>();
 	Connection conn;
@@ -173,84 +173,6 @@ public class SqlDataSource implements IDataSource{
 		writeCache = new HashMap<String,HashSet<String>>();
 
 	}
-
-
-
-
-	public void loadAchievements() {
-		// TODO Auto-generated method stub
-		//BeardAch.config.getList("achievements");
-
-		try {
-			BeardAch.config.load(new File(BeardAch.self.getDataFolder(),"BeardAch.yml"));
-
-			for(String s : BeardAch.config.getConfigurationSection("achievements").getKeys(false)){
-				ConfigurationSection e = BeardAch.config.getConfigurationSection("achievements").getConfigurationSection(s);
-				if(e==null){
-					continue;
-				}
-
-				String name = e.getString("name");
-				String descrip = e.getString("descrip");
-				BeardAch.printDebugCon("Loading achievement " + name);
-
-				Achievement ach = new Achievement(name, descrip);
-
-				for(String trig: ((List<String>)e.getList("triggers", new LinkedList<String>()))){
-					String[] part = trig.split("\\|");
-					if(part.length==2){
-						BeardAch.printDebugCon("Trigger => " + trig); 
-						if(part[0].equals("stat")){
-							ach.addTrigger(StatCheckTrigger.getInstance(part[1]));
-						}else if(part[0].equals("perm")){
-							ach.addTrigger(PermCheckTrigger.getInstance(part[1]));
-						}else if(part[0].equals("cuboid")){
-							ach.addTrigger(CuboidCheckTrigger.getInstance(part[1]));
-						}else if(part[0].equals("ach")){
-							ach.addTrigger(AchCheckTrigger.getInstance(part[1]));
-						}
-					}
-					else
-					{
-						BeardAch.printCon("ERROR! MALFORMED TRIGGER FOR ACHIEVEMENT " + name);
-					}
-				}
-
-				for(String reward: ((List<String>)e.getList("rewards", new LinkedList<String>()))){
-					String[] part = reward.split("\\|");
-					if(part.length==2){
-						BeardAch.printDebugCon("Reward => " + reward); 
-
-						if(part[0].equals("comm")){
-							ach.addReward(CommandReward.getInstance(part[1]));
-						}else if(part[0].equals("promote")){
-							ach.addReward(DroxTrackReward.getInstance(part[1]));
-						}else if(part[0].equals("subgroup")){
-							ach.addReward(DroxSubGroupReward.getInstance(part[1]));
-						}
-					}
-					else
-					{
-						BeardAch.printCon("ERROR! MALFORMED REWARD FOR ACHIEVEMENT " + name);
-					}
-				}
-
-				AchievementManager.addAchievement(ach);
-				BeardAch.printDebugCon("Loaded achievement " + name);
-			}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvalidConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
-
-
 
 
 	public void clearAchievements(String player) {
