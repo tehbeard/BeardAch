@@ -1,8 +1,6 @@
 package me.tehbeard.BeardAch.dataSource;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,24 +9,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.InvalidConfigurationException;
 
 import me.tehbeard.BeardAch.BeardAch;
-import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.AchievementManager;
-import me.tehbeard.BeardAch.achievement.rewards.CommandReward;
-import me.tehbeard.BeardAch.achievement.rewards.DroxSubGroupReward;
-import me.tehbeard.BeardAch.achievement.rewards.DroxTrackReward;
-import me.tehbeard.BeardAch.achievement.triggers.AchCheckTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.PermCheckTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.StatCheckTrigger;
 
 
 public class SqlDataSource extends AbstractDataSource{
@@ -48,15 +34,19 @@ public class SqlDataSource extends AbstractDataSource{
 			Class.forName("com.mysql.jdbc.Driver");
 
 			System.out.println(BeardAch.config);
-			String conStr = String.format("jdbc:mysql://%s/%s",
+			String conUrl = String.format("jdbc:mysql://%s/%s",
 					BeardAch.config.getString("ach.database.host"), 
 					BeardAch.config.getString("ach.database.database"));
-
+			BeardAch.printCon("Configuring....");
+			Properties conStr = new Properties();
+			conStr.put("user",BeardAch.config.getString("ach.database.username",""));
+			conStr.put("password",BeardAch.config.getString("ach.database.password",""));
+			conStr.put("autoReconnect","true");
+			conStr.put("maxReconnects","6");
 			BeardAch.printCon("Connecting....");
-			conn = DriverManager.getConnection(conStr,
-					BeardAch.config.getString("ach.database.username",""),
-					BeardAch.config.getString("ach.database.password",""));
-
+			conn = DriverManager.getConnection(conUrl,conStr);
+			
+			
 			BeardAch.printCon("Checking for table");
 
 			ResultSet rs = conn.getMetaData().getTables(null, null, "achievements", null);
