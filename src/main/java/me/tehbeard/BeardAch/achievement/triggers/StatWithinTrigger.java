@@ -12,7 +12,7 @@ public class StatWithinTrigger extends Trigger {
 	String cat;
 	String stat;
 	int lowerThreshold;
-	int upperrThreshold;
+	int upperThreshold;
 
 	public static ITrigger getInstance(String config) {
 		StatWithinTrigger n =new StatWithinTrigger();
@@ -32,7 +32,11 @@ public class StatWithinTrigger extends Trigger {
 		if(PlayerStatManager.findPlayerBlob(player.getName()).hasStat(cat, stat)){
 			//if player exceeds threshold
 			if(PlayerStatManager.findPlayerBlob(player.getName()).hasStat(cat, stat)){
-				return ((PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()>=lowerThreshold) && (PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()<=upperThreshold));
+				return (
+						(PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()>=lowerThreshold) 
+						&&
+						(PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()<=upperThreshold)
+						);
 			}
 		}
 		return false;
