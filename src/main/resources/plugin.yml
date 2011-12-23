@@ -1,8 +1,8 @@
 name: BeardAch
 main: me.tehbeard.BeardAch.BeardAch
-version: 0.2.1
+version: 0.3-apple
 depend: [BeardStat]
-softdepend: [DroxPerms]
+softdepend: [DroxPerms,worldguard]
 commands:
     ach:
         description: Show your achievements
