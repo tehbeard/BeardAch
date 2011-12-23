@@ -46,6 +46,8 @@ public abstract class AbstractDataSource implements IDataSource{
 						BeardAch.printDebugCon("Trigger => " + trig); 
 						if(part[0].equals("stat")){
 							ach.addTrigger(StatCheckTrigger.getInstance(part[1]));
+						}else if(part[0].equals("statwithin")){
+							ach.addTrigger(StatWithinTrigger.getInstance(part[1]));
 						}else if(part[0].equals("perm")){
 							ach.addTrigger(PermCheckTrigger.getInstance(part[1]));
 						}else if(part[0].equals("cuboid")){

@@ -52,7 +52,7 @@ public class BeardAch extends JavaPlugin {
 	}
 
 	public void onDisable() {
-		// TODO Auto-generated method stub
+
 		BeardAch.printCon("Flushing to database");
 		AchievementManager.database.flush();
 		BeardAch.printCon("Flushed to database");
