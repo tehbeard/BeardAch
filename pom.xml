@@ -6,13 +6,21 @@
   <name>BearchAch</name>
   <description>Achievements plugin for BeardStat</description>
   <dependencies>
+        <dependency>
+          <groupId>com.sk89q</groupId>
+          <artifactId>worldguard</artifactId>
+          <version>5.5-SNAPSHOT</version>    
+	  <type>jar</type>
+          <scope>compile</scope>
+        </dependency>
+
   	<dependency>
   		<groupId>org.bukkit</groupId>
   		<artifactId>bukkit</artifactId>
   		<version>1.0.1-R1</version>
   		<type>jar</type>
   		<scope>compile</scope>
-  	</dependency>
+    	</dependency>
   	<dependency>
   		<groupId>me.tehbeard</groupId>
   		<artifactId>BeardStat</artifactId>
