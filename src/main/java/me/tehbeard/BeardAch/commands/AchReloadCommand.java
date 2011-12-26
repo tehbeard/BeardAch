@@ -11,6 +11,7 @@ public class AchReloadCommand implements CommandExecutor{
 
 	public boolean onCommand(CommandSender sender, Command cmd, String lbl,
 			String[] args) {
+		if(!sender.hasPermission("beardach.reload")){return true;}
 		sender.sendMessage("Reloading Achievements");
 		AchievementManager.loadAchievements();
 		sender.sendMessage("Reloaded Achievements");
