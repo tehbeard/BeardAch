@@ -13,7 +13,13 @@
 	  <type>jar</type>
           <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.sk89q</groupId>
+            <artifactId>worldedit</artifactId>
+            <version>5.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>    
+        </dependency>
   	<dependency>
   		<groupId>org.bukkit</groupId>
   		<artifactId>bukkit</artifactId>

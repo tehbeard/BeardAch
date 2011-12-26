@@ -15,6 +15,7 @@ import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.rewards.CommandReward;
+import me.tehbeard.BeardAch.achievement.rewards.CounterReward;
 import me.tehbeard.BeardAch.achievement.rewards.DroxSubGroupReward;
 import me.tehbeard.BeardAch.achievement.rewards.DroxTrackReward;
 import me.tehbeard.BeardAch.achievement.triggers.*;
@@ -83,6 +84,8 @@ public abstract class AbstractDataSource implements IDataSource{
 							ach.addReward(DroxTrackReward.getInstance(part[1]));
 						}else if(part[0].equals("subgroup")){
 							ach.addReward(DroxSubGroupReward.getInstance(part[1]));
+						}else if(part[0].equals("counter")){
+							ach.addReward(CounterReward.getInstance(part[1]));
 						}
 					}
 					else
