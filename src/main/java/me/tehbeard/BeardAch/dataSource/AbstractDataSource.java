@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -28,7 +29,11 @@ public abstract class AbstractDataSource implements IDataSource{
 		try {
 			BeardAch.config.load(new File(BeardAch.self.getDataFolder(),"BeardAch.yml"));
 
-			for(String s : BeardAch.config.getConfigurationSection("achievements").getKeys(false)){
+			Set<String> achs = BeardAch.config.getConfigurationSection("achievements").getKeys(false);
+			if(achs==null){
+				BeardAch.printCon("NO ACHIEVEMENTS FOUND");
+			}
+			for(String s : achs){
 				ConfigurationSection e = BeardAch.config.getConfigurationSection("achievements").getConfigurationSection(s);
 				if(e==null){
 					continue;
