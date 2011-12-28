@@ -168,7 +168,7 @@ public class AchievementManager {
 	}
 
 	public static Achievement getAchievement(int i) {
-		if(i>0 && i<achievements.size()){
+		if(i>0 && i<=achievements.size()){
 			return achievements.get(i-1);
 		}
 		return null;
