@@ -28,27 +28,28 @@ public class SqlDataSource extends AbstractDataSource{
 	protected static PreparedStatement prepAddPlayerAch;
 
 
-
-	public SqlDataSource() {
+	protected void createConnection(){
+		String conUrl = String.format("jdbc:mysql://%s/%s",
+				BeardAch.config.getString("ach.database.host"), 
+				BeardAch.config.getString("ach.database.database"));
+		BeardAch.printCon("Configuring....");
+		Properties conStr = new Properties();
+		conStr.put("user",BeardAch.config.getString("ach.database.username",""));
+		conStr.put("password",BeardAch.config.getString("ach.database.password",""));
+		conStr.put("autoReconnect","true");
+		conStr.put("maxReconnects","600");
+		BeardAch.printCon("Connecting....");
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
-			System.out.println(BeardAch.config);
-			String conUrl = String.format("jdbc:mysql://%s/%s",
-					BeardAch.config.getString("ach.database.host"), 
-					BeardAch.config.getString("ach.database.database"));
-			BeardAch.printCon("Configuring....");
-			Properties conStr = new Properties();
-			conStr.put("user",BeardAch.config.getString("ach.database.username",""));
-			conStr.put("password",BeardAch.config.getString("ach.database.password",""));
-			conStr.put("autoReconnect","true");
-			conStr.put("maxReconnects","600");
-			BeardAch.printCon("Connecting....");
 			conn = DriverManager.getConnection(conUrl,conStr);
-			
-			
-			BeardAch.printCon("Checking for table");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
+	protected void checkAndBuildTable(){
+		try{
+			BeardAch.printCon("Checking for table");
 			ResultSet rs = conn.getMetaData().getTables(null, null, "achievements", null);
 			if (!rs.next()) {
 				BeardAch.printCon("Achievements table not found, creating table");
@@ -62,16 +63,35 @@ public class SqlDataSource extends AbstractDataSource{
 				BeardAch.printCon("Table found");
 			}
 			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-			BeardAch.printDebugCon("Preparing statements");
-			//prepGetPlayerStat = conn.prepareStatement("SELECT * FROM stats WHERE player=?");
+	protected void prepareStatements(){
+		BeardAch.printDebugCon("Preparing statements");
+		try{
 			prepGetAllPlayerAch = conn.prepareStatement("SELECT `achievement` FROM `achievements` WHERE player=?");
-
-
 			prepAddPlayerAch = conn.prepareStatement("INSERT INTO `achievements` values (?,?)",Statement.RETURN_GENERATED_KEYS);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public SqlDataSource() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+
+			createConnection();
+			checkAndBuildTable();
+			prepareStatements();
+
 
 			Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.self, new Runnable(){
-
 				public void run() {
 					Runnable r = new SqlFlusher(writeCache);
 					writeCache = new HashMap<String,HashSet<String>>();
@@ -82,15 +102,7 @@ public class SqlDataSource extends AbstractDataSource{
 			BeardAch.printCon("Initaised MySQL Data Provider.");
 		} catch (ClassNotFoundException e) {
 			BeardAch.printCon("MySQL Library not found!");
-
-
-		}catch (SQLException e){
-			BeardAch.printCon("Something went derp.");
-			e.printStackTrace();
 		}
-
-
-
 	}
 
 
@@ -139,18 +151,28 @@ public class SqlDataSource extends AbstractDataSource{
 		public void run() {
 			BeardAch.printCon("Flushing to database");
 			try {
-				for( Entry<String, HashSet<String>> es :write.entrySet()){
-
-					prepAddPlayerAch.setString(1, es.getKey());
-
-					for(String val : es.getValue()){
-						prepAddPlayerAch.setString(2,val);
-						prepAddPlayerAch.addBatch();
-					}
+				//if connection is closed, attempt to rebuild connection
+				if(conn.isClosed()){
+					BeardAch.printCon("Connection Could not be established, attempting to reconnect...");
+					createConnection();
+					prepareStatements();
 				}
-				prepAddPlayerAch.executeBatch();
-				prepAddPlayerAch.clearBatch();
+				else
+				{
+					for( Entry<String, HashSet<String>> es :write.entrySet()){
 
+						prepAddPlayerAch.setString(1, es.getKey());
+
+						for(String val : es.getValue()){
+							prepAddPlayerAch.setString(2,val);
+							prepAddPlayerAch.addBatch();
+						}
+					}
+					prepAddPlayerAch.executeBatch();
+					prepAddPlayerAch.clearBatch();
+					BeardAch.printCon("Flushed to database");
+				}
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
