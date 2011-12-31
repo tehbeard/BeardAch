@@ -53,7 +53,7 @@ public class SqlDataSource extends AbstractDataSource{
 			ResultSet rs = conn.getMetaData().getTables(null, null, "achievements", null);
 			if (!rs.next()) {
 				BeardAch.printCon("Achievements table not found, creating table");
-				PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `achievements` (`player` varchar(32) NOT NULL, `achievement` varchar(32) NOT NULL,  UNIQUE KEY `player` (`player`,`achievement`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+				PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `achievements` ( `player` varchar(32) NOT NULL,  `achievement` varchar(255) NOT NULL,  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  UNIQUE KEY `player` (`player`,`achievement`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 				ps.executeUpdate();
 				ps.close();
 				BeardAch.printCon("created table");
@@ -72,8 +72,8 @@ public class SqlDataSource extends AbstractDataSource{
 	protected void prepareStatements(){
 		BeardAch.printDebugCon("Preparing statements");
 		try{
-			prepGetAllPlayerAch = conn.prepareStatement("SELECT `achievement` FROM `achievements` WHERE player=?");
-			prepAddPlayerAch = conn.prepareStatement("INSERT INTO `achievements` values (?,?)",Statement.RETURN_GENERATED_KEYS);
+			prepGetAllPlayerAch = conn.prepareStatement("SELECT `achievement` FROM `achievements`,`timestamp` WHERE `player`=?");
+			prepAddPlayerAch = conn.prepareStatement("INSERT INTO `achievements` (`player` ,`achievement`) values (?,?)",Statement.RETURN_GENERATED_KEYS);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
