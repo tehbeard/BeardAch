@@ -53,9 +53,8 @@ public class BeardAch extends JavaPlugin {
 
 	public void onDisable() {
 
-		BeardAch.printCon("Flushing to database");
 		AchievementManager.database.flush();
-		BeardAch.printCon("Flushed to database");
+
 	}
 
 	private static boolean checkBeardStat(){
@@ -131,9 +130,9 @@ public class BeardAch extends JavaPlugin {
 
 		}, 600L,600L);
 
-		
+
 		//commands
-		
+
 		getCommand("ach-reload").setExecutor(new AchReloadCommand());
 
 		printCon("Loaded Version:" + getDescription().getVersion());
