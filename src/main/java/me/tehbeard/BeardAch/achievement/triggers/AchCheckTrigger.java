@@ -6,6 +6,7 @@ import java.util.List;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
+import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 
 import org.bukkit.entity.Player;
 
@@ -30,10 +31,10 @@ public class AchCheckTrigger extends Trigger {
 	@Override
 	public boolean checkAchievement(Player player) {
 		//if player has an acheivement
-		List<Achievement> achs = AchievementManager.getAchievements(player.getName());
+		List<AchievementPlayerLink> achs = AchievementManager.getAchievements(player.getName());
 		if(achs !=null){
-			for(Achievement a: achs){
-				if(a.getName().equals(ach)){return true;}
+			for(AchievementPlayerLink a: achs){
+				if(a.getSlug().equals(ach)){return true;}
 			}
 			
 		}

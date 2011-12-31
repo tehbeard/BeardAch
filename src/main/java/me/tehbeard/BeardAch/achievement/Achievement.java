@@ -66,8 +66,10 @@ public class Achievement {
 			return false;
 		}
 
-		if(AchievementManager.playerHasCache.get(player.getName()).contains(name)){
-			return false;
+		for(AchievementPlayerLink link : AchievementManager.playerHasCache.get(player.getName())){
+			if(link.getSlug().equals(slug)){
+				return false;
+			}
 		}
 		for(ITrigger trigger:triggers){
 			if(!trigger.checkAchievement(player)){

@@ -14,6 +14,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
+import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 import me.tehbeard.BeardAch.achievement.rewards.CommandReward;
 import me.tehbeard.BeardAch.achievement.rewards.CounterReward;
 import me.tehbeard.BeardAch.achievement.rewards.DroxSubGroupReward;
@@ -112,7 +113,7 @@ public abstract class AbstractDataSource implements IDataSource{
 		}
 	}
 
-	public abstract HashSet<String> getPlayersAchievements(String Player);
+	public abstract HashSet<AchievementPlayerLink> getPlayersAchievements(String Player);
 
 	public abstract void setPlayersAchievements(String player,
 			String achievement);

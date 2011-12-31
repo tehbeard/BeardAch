@@ -11,7 +11,7 @@ public interface IDataSource {
 
 	public void loadAchievements();
 	
-	public HashSet<String> getPlayersAchievements(String Player);
+	public HashSet<AchievementPlayerLink> getPlayersAchievements(String Player);
 	
 	public void setPlayersAchievements(String player,String achievement);
 	

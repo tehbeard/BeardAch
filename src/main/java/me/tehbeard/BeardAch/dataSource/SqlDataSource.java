@@ -2,6 +2,7 @@ package me.tehbeard.BeardAch.dataSource;
 
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,11 +16,12 @@ import java.util.Properties;
 import org.bukkit.Bukkit;
 
 import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 
 
 public class SqlDataSource extends AbstractDataSource{
 
-	private HashMap<String,HashSet<String>> writeCache = new HashMap<String,HashSet<String>>();
+	private HashMap<String,HashSet<AchievementPlayerLink>> writeCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
 	Connection conn;
 
 
@@ -72,8 +74,8 @@ public class SqlDataSource extends AbstractDataSource{
 	protected void prepareStatements(){
 		BeardAch.printDebugCon("Preparing statements");
 		try{
-			prepGetAllPlayerAch = conn.prepareStatement("SELECT `achievement` FROM `achievements`,`timestamp` WHERE `player`=?");
-			prepAddPlayerAch = conn.prepareStatement("INSERT INTO `achievements` (`player` ,`achievement`) values (?,?)",Statement.RETURN_GENERATED_KEYS);
+			prepGetAllPlayerAch = conn.prepareStatement("SELECT `achievement`,`timestamp` FROM `achievements` WHERE player=?");
+			prepAddPlayerAch = conn.prepareStatement("INSERT INTO `achievements` (`player` ,`achievement`,`timestamp`) values (?,?,?)",Statement.RETURN_GENERATED_KEYS);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,7 +96,7 @@ public class SqlDataSource extends AbstractDataSource{
 			Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.self, new Runnable(){
 				public void run() {
 					Runnable r = new SqlFlusher(writeCache);
-					writeCache = new HashMap<String,HashSet<String>>();
+					writeCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
 					Bukkit.getScheduler().scheduleAsyncDelayedTask(BeardAch.self, r);
 				}
 
@@ -108,14 +110,15 @@ public class SqlDataSource extends AbstractDataSource{
 
 
 
-	public HashSet<String> getPlayersAchievements(String player) {
+	public HashSet<AchievementPlayerLink> getPlayersAchievements(String player) {
 
 		try {
 			prepGetAllPlayerAch.setString(1, player);
 			ResultSet rs = prepGetAllPlayerAch.executeQuery();
-			HashSet<String> c = new HashSet<String>();
+			HashSet<AchievementPlayerLink> c = new HashSet<AchievementPlayerLink>();
 			while(rs.next()){
-				c.add(rs.getString(1));
+				c.add(new AchievementPlayerLink(rs.getString(1),rs.getDate(2)));
+				
 			}
 			rs.close();
 			if(writeCache.containsKey(player)){
@@ -134,18 +137,18 @@ public class SqlDataSource extends AbstractDataSource{
 
 
 		if(!writeCache.containsKey(player)){
-			writeCache.put(player, new HashSet<String>());
+			writeCache.put(player, new HashSet<AchievementPlayerLink>());
 		}
-		writeCache.get(player).add(achievements);
+		writeCache.get(player).add(new AchievementPlayerLink(achievements,new Date((new java.util.Date()).getTime())));
 
 	}
 
 
 	class SqlFlusher implements Runnable {
 
-		private HashMap<String, HashSet<String>> write;
-		SqlFlusher(HashMap<String,HashSet<String>> toWrite){
-			write = toWrite;
+		private HashMap<String, HashSet<AchievementPlayerLink>> write;
+		SqlFlusher(HashMap<String, HashSet<AchievementPlayerLink>> writeCache){
+			write = writeCache;
 		}
 
 		public void run() {
@@ -154,12 +157,13 @@ public class SqlDataSource extends AbstractDataSource{
 			try {
 				//if connection is closed, attempt to rebuild connection
 				
-					for( Entry<String, HashSet<String>> es :write.entrySet()){
+					for( Entry<String, HashSet<AchievementPlayerLink>> es :write.entrySet()){
 
 						prepAddPlayerAch.setString(1, es.getKey());
 
-						for(String val : es.getValue()){
-							prepAddPlayerAch.setString(2,val);
+						for(AchievementPlayerLink val : es.getValue()){
+							prepAddPlayerAch.setString(2,val.getSlug());
+							prepAddPlayerAch.setDate(3,val.getDate());
 							prepAddPlayerAch.addBatch();
 						}
 					}
@@ -179,7 +183,7 @@ public class SqlDataSource extends AbstractDataSource{
 
 	public void flush() {
 		(new SqlFlusher(writeCache)).run();
-		writeCache = new HashMap<String,HashSet<String>>();
+		writeCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
 
 	}
 

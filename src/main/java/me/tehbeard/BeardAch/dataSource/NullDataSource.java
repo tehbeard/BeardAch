@@ -3,6 +3,7 @@ package me.tehbeard.BeardAch.dataSource;
 import java.util.HashSet;
 
 import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 
 
 public class NullDataSource extends AbstractDataSource{
@@ -14,9 +15,9 @@ public class NullDataSource extends AbstractDataSource{
 	}
 
 
-	public HashSet<String> getPlayersAchievements(String Player) {
+	public HashSet<AchievementPlayerLink> getPlayersAchievements(String Player) {
 		// TODO Auto-generated method stub
-		HashSet<String> d = new HashSet<String>();
+		HashSet<AchievementPlayerLink> d = new HashSet<AchievementPlayerLink>();
 		//d.add("test");
 		return d;
 	}
