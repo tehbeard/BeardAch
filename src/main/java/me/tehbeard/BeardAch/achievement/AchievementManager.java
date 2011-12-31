@@ -56,9 +56,9 @@ public class AchievementManager {
 
 
 
-	public static Achievement getAchievement(String name){
+	public static Achievement getAchievementSlug(String slug){
 		for(Achievement a :achievements){
-			if(a.getName().equals(name)){
+			if(a.getSlug().equals(slug)){
 				return a;
 			}
 		}
@@ -149,7 +149,7 @@ public class AchievementManager {
 		if(playerHasCache.containsKey(player)){
 			List<Achievement> l = new LinkedList<Achievement>();
 			for(String s:playerHasCache.get(player)){
-				Achievement a = getAchievement(s);
+				Achievement a = getAchievementSlug(s);
 				if(a!=null){
 					l.add(a);
 					Collections.sort(l,new Comparator<Achievement>() {
