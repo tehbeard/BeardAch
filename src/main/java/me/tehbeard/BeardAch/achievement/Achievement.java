@@ -38,6 +38,10 @@ public class Achievement {
 	public int getId() {
 		return id;
 	}
+	
+	public String getSlug() {
+		return slug;
+	}
 
 	public String getName(){
 		return name;
