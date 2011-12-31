@@ -150,15 +150,10 @@ public class SqlDataSource extends AbstractDataSource{
 
 		public void run() {
 			BeardAch.printCon("Flushing to database");
+			
 			try {
 				//if connection is closed, attempt to rebuild connection
-				if(conn.isClosed()){
-					BeardAch.printCon("Connection Could not be established, attempting to reconnect...");
-					createConnection();
-					prepareStatements();
-				}
-				else
-				{
+				
 					for( Entry<String, HashSet<String>> es :write.entrySet()){
 
 						prepAddPlayerAch.setString(1, es.getKey());
@@ -171,10 +166,12 @@ public class SqlDataSource extends AbstractDataSource{
 					prepAddPlayerAch.executeBatch();
 					prepAddPlayerAch.clearBatch();
 					BeardAch.printCon("Flushed to database");
-				}
+				
 				
 			} catch (SQLException e) {
-				e.printStackTrace();
+				BeardAch.printCon("Connection Could not be established, attempting to reconnect...");
+				createConnection();
+				prepareStatements();
 			}
 		}
 
