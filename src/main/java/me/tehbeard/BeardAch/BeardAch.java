@@ -150,7 +150,7 @@ public class BeardAch extends JavaPlugin {
 				for( AchievementPlayerLink a:AchievementManager.getAchievements(player.getName())){
 
 
-					player.sendMessage(ChatColor.WHITE + "#" + a.getAch().getId() + " "+ ChatColor.GOLD + a.getAch().getName() + " - " + ChatColor.WHITE + a.getDate().toString() );
+					player.sendMessage(ChatColor.WHITE + "#" + a.getAch().getId() + " "+ ChatColor.GOLD + a.getAch().getName() + " - " + ChatColor.WHITE + a.getDate().toString());
 				}
 			}else if(args.length ==1){
 				Achievement a = AchievementManager.getAchievement(Integer.parseInt(args[0]));

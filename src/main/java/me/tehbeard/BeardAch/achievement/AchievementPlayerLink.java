@@ -1,6 +1,7 @@
 package me.tehbeard.BeardAch.achievement;
 
-import java.sql.Date;
+
+import java.sql.Timestamp;
 
 import me.tehbeard.BeardAch.BeardAch;
 
@@ -8,16 +9,16 @@ public class AchievementPlayerLink {
 
 
 	private String slug;
-	private Date date;
+	private Timestamp date;
 
 
 	public String getSlug() {
 		return slug;
 	}
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
-	public AchievementPlayerLink(String slug, Date date) {
+	public AchievementPlayerLink(String slug, Timestamp date) {
 
 		BeardAch.printDebugCon("CREATING LINK");
 
@@ -28,7 +29,8 @@ public class AchievementPlayerLink {
 	public AchievementPlayerLink(String slug) {
 		BeardAch.printDebugCon("CREATING LINK NO DATE SPECIFIED");
 		this.slug = slug;
-		this.date = new Date((new java.util.Date()).getTime());
+		
+		this.date = new Timestamp((new java.util.Date()).getTime());
 	}
 
 	public Achievement getAch(){

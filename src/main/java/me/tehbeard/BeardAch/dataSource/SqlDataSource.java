@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
@@ -117,7 +118,7 @@ public class SqlDataSource extends AbstractDataSource{
 			ResultSet rs = prepGetAllPlayerAch.executeQuery();
 			HashSet<AchievementPlayerLink> c = new HashSet<AchievementPlayerLink>();
 			while(rs.next()){
-				c.add(new AchievementPlayerLink(rs.getString(1),rs.getDate(2)));
+				c.add(new AchievementPlayerLink(rs.getString(1),rs.getTimestamp(2)));
 				
 			}
 			rs.close();
@@ -139,7 +140,7 @@ public class SqlDataSource extends AbstractDataSource{
 		if(!writeCache.containsKey(player)){
 			writeCache.put(player, new HashSet<AchievementPlayerLink>());
 		}
-		writeCache.get(player).add(new AchievementPlayerLink(achievements,new Date((new java.util.Date()).getTime())));
+		writeCache.get(player).add(new AchievementPlayerLink(achievements,new Timestamp((new java.util.Date()).getTime())));
 
 	}
 
@@ -163,7 +164,7 @@ public class SqlDataSource extends AbstractDataSource{
 
 						for(AchievementPlayerLink val : es.getValue()){
 							prepAddPlayerAch.setString(2,val.getSlug());
-							prepAddPlayerAch.setDate(3,val.getDate());
+							prepAddPlayerAch.setTimestamp(3,val.getDate());
 							prepAddPlayerAch.addBatch();
 						}
 					}
