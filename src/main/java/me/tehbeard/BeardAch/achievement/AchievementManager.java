@@ -91,7 +91,7 @@ public class AchievementManager {
 		for(Achievement ach :achievements){
 
 			//if they don't have that achievement, add them to the check cache
-			if(!playerHasCache.get(player).contains(ach.getName())){
+			if(!playerHasCache.get(player).contains(ach.getSlug())){
 				//push key if it doesn't exist
 				if(!playerCheckCache.containsKey(ach)){
 					playerCheckCache.put(ach, new HashSet<String>());
@@ -127,9 +127,9 @@ public class AchievementManager {
 					if(entry.getKey().checkAchievement(p)){
 						BeardAch.printDebugCon("Achievement Get! " + ply + "=>" + entry.getKey().getName());
 						//push to cache
-						playerHasCache.get(ply).add(entry.getKey().getName());
+						playerHasCache.get(ply).add(entry.getKey().getSlug());
 						//push to DB
-						database.setPlayersAchievements(ply, entry.getKey().getName());
+						database.setPlayersAchievements(ply, entry.getKey().getSlug());
 						it.remove();
 					}
 
