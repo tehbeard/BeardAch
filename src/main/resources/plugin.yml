@@ -1,6 +1,6 @@
 name: BeardAch
 main: me.tehbeard.BeardAch.BeardAch
-version: 0.3-apple
+version: 0.3-banana
 depend: [BeardStat]
 softdepend: [DroxPerms,worldguard]
 commands:
