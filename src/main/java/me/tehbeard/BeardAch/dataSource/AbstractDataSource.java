@@ -34,8 +34,8 @@ public abstract class AbstractDataSource implements IDataSource{
 			if(achs==null){
 				BeardAch.printCon("NO ACHIEVEMENTS FOUND");
 			}
-			for(String s : achs){
-				ConfigurationSection e = BeardAch.config.getConfigurationSection("achievements").getConfigurationSection(s);
+			for(String slug : achs){
+				ConfigurationSection e = BeardAch.config.getConfigurationSection("achievements").getConfigurationSection(slug);
 				if(e==null){
 					continue;
 				}
@@ -44,7 +44,7 @@ public abstract class AbstractDataSource implements IDataSource{
 				String descrip = e.getString("descrip");
 				BeardAch.printDebugCon("Loading achievement " + name);
 
-				Achievement ach = new Achievement(name, descrip);
+				Achievement ach = new Achievement(slug,name, descrip);
 
 				for(String trig: ((List<String>)e.getList("triggers", new LinkedList<String>()))){
 					String[] part = trig.split("\\|");

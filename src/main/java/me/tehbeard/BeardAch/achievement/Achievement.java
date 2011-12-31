@@ -17,13 +17,15 @@ import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
  */
 public class Achievement {
 
+	private String slug;
 	private String name;
 	private String descrip;
 	private int id = 0;
 	private static int nextId = 1;
 	private HashSet<ITrigger> triggers = new HashSet<ITrigger>();
 	private HashSet<IReward> rewards = new HashSet<IReward>();
-	public Achievement(String name,String descrip) {
+	public Achievement(String slug,String name,String descrip) {
+		this.slug = slug;
 		this.name = name;
 		this.descrip = descrip;
 		id = nextId;
