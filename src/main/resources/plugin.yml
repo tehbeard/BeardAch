@@ -10,3 +10,7 @@ commands:
     ach-reload:
         description: reloads the achievements
         usage: /<command>
+    ach-fancy:
+        description: Use to update any output displays slug->fancy DB
+        usage: /<command>
+        

@@ -18,4 +18,6 @@ public interface IDataSource {
     public void flush();
     
     public void clearAchievements(String player);
+    
+    public void dumpFancy();
 }
