@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import me.tehbeard.BeardAch.achievement.*;
-import me.tehbeard.BeardAch.commands.AchReloadCommand;
+import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
@@ -134,6 +134,7 @@ public class BeardAch extends JavaPlugin {
 		//commands
 
 		getCommand("ach-reload").setExecutor(new AchReloadCommand());
+		getCommand("ach").setExecutor(new AchCommand());
 
 		printCon("Loaded Version:" + getDescription().getVersion());
 	}
@@ -142,26 +143,7 @@ public class BeardAch extends JavaPlugin {
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
 
-		if(sender instanceof Player){
-			Player player = (Player)sender;
-			if(args.length == 0){
-
-				player.sendMessage(ChatColor.AQUA + "Unlocked Achievements:");
-				for( AchievementPlayerLink a:AchievementManager.getAchievements(player.getName())){
-
-
-					player.sendMessage(ChatColor.WHITE + "#" + a.getAch().getId() + " "+ ChatColor.GOLD + a.getAch().getName() + " - " + ChatColor.WHITE + a.getDate().toString());
-				}
-			}else if(args.length ==1){
-				Achievement a = AchievementManager.getAchievement(Integer.parseInt(args[0]));
-				if(a!=null){
-					player.sendMessage(ChatColor.GOLD + a.getName());
-					player.sendMessage(ChatColor.BLUE + a.getDescrip());
-				}
-			}
-
-		}
-
+		sender.sendMessage("COMMAND NOT IMPLEMENTED");
 		return true;
 	}
 
