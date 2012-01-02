@@ -59,10 +59,10 @@ public abstract class AbstractDataSource implements IDataSource{
 							ach.addTrigger(PermCheckTrigger.getInstance(part[1]));
 						}else if(part[0].equals("cuboid")){
 							ach.addTrigger(CuboidCheckTrigger.getInstance(part[1]));
-						}else if(part[0].equals("wgregion")){
-							ach.addTrigger(worldGuardRegionCheckTrigger.getInstance(part[1]));
 						}else if(part[0].equals("ach")){
 							ach.addTrigger(AchCheckTrigger.getInstance(part[1]));
+						}else if(part[0].equals("locked")){
+							ach.addTrigger(LockedTrigger.getInstance(part[1]));
 						}
 						
 						
