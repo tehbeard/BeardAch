@@ -7,6 +7,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+
+/**
+ * Controls reloading the achievements list
+ * @author james
+ *
+ */
 public class AchReloadCommand implements CommandExecutor{
 
 	public boolean onCommand(CommandSender sender, Command cmd, String lbl,
