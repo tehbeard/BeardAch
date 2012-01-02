@@ -17,6 +17,8 @@ import java.util.Properties;
 import org.bukkit.Bukkit;
 
 import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 
 
@@ -52,20 +54,39 @@ public class SqlDataSource extends AbstractDataSource{
 
 	protected void checkAndBuildTable(){
 		try{
-			BeardAch.printCon("Checking for table");
+			BeardAch.printCon("Checking for storage table");
 			ResultSet rs = conn.getMetaData().getTables(null, null, "achievements", null);
 			if (!rs.next()) {
 				BeardAch.printCon("Achievements table not found, creating table");
 				PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `achievements` ( `player` varchar(32) NOT NULL,  `achievement` varchar(255) NOT NULL,  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  UNIQUE KEY `player` (`player`,`achievement`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 				ps.executeUpdate();
 				ps.close();
-				BeardAch.printCon("created table");
+				BeardAch.printCon("created storage table");
 			}
 			else
 			{
 				BeardAch.printCon("Table found");
 			}
 			rs.close();
+			
+			BeardAch.printCon("Checking for meta table");
+			rs = conn.getMetaData().getTables(null, null, "ach_map", null);
+			if (!rs.next()) {
+				BeardAch.printCon("meta table not found, creating table");
+				PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `ach_map` (`slug` char(255) NOT NULL,`name` char(255) NOT NULL,`description` char(255) NOT NULL,UNIQUE KEY `slug` (`slug`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+				ps.executeUpdate();
+				ps.close();
+				BeardAch.printCon("created meta table");
+			}
+			else
+			{
+				BeardAch.printCon("Table found");
+			}
+			rs.close();
+		
+			
+		
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -192,5 +213,28 @@ public class SqlDataSource extends AbstractDataSource{
 	public void clearAchievements(String player) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void dumpFancy() {
+		// TODO Auto-generated method stub
+		try {
+			conn.prepareStatement("DELETE FROM `ach_map`").execute();
+			PreparedStatement fancyStat = conn.prepareStatement("INSERT INTO `ach_map`  values (?,?,?)");
+			
+			fancyStat.clearBatch();
+			
+			
+			for(Achievement ach : AchievementManager.getAchievementsList()){
+				fancyStat.setString(1, ach.getSlug());
+				fancyStat.setString(2, ach.getName());
+				fancyStat.setString(3, ach.getDescrip());
+				fancyStat.addBatch();
+			}
+			fancyStat.executeBatch();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

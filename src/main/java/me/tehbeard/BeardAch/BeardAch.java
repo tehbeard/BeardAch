@@ -135,7 +135,7 @@ public class BeardAch extends JavaPlugin {
 
 		getCommand("ach-reload").setExecutor(new AchReloadCommand());
 		getCommand("ach").setExecutor(new AchCommand());
-
+		getCommand("ach-fancy").setExecutor(new AchFancyCommand());
 		printCon("Loaded Version:" + getDescription().getVersion());
 	}
 

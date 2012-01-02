@@ -39,4 +39,10 @@ public class NullDataSource extends AbstractDataSource{
 
 	}
 
+
+	public void dumpFancy() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -51,7 +51,7 @@ public class ChunkCache {
 				if(a.checkAchievement(player)){
 					AchievementManager.playerCheckCache.get(a).remove(player.getName());
 					AchievementManager.playerHasCache.get(player.getName()).add(new AchievementPlayerLink(a.getSlug()));
-					AchievementManager.database.setPlayersAchievements(player.getName(),a.getName());
+					AchievementManager.database.setPlayersAchievements(player.getName(),a.getSlug());
 				}
 
 			}
