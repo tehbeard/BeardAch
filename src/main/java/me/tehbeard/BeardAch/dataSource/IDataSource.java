@@ -11,11 +11,13 @@ public interface IDataSource {
 
 	public void loadAchievements();
 	
-	public HashSet<String> getPlayersAchievements(String Player);
+	public HashSet<AchievementPlayerLink> getPlayersAchievements(String Player);
 	
 	public void setPlayersAchievements(String player,String achievement);
 	
     public void flush();
     
     public void clearAchievements(String player);
+    
+    public void dumpFancy();
 }

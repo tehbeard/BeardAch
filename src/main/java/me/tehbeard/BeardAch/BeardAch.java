@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import me.tehbeard.BeardAch.achievement.*;
-import me.tehbeard.BeardAch.commands.AchReloadCommand;
+import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
@@ -52,10 +52,9 @@ public class BeardAch extends JavaPlugin {
 	}
 
 	public void onDisable() {
-		// TODO Auto-generated method stub
-		BeardAch.printCon("Flushing to database");
+
 		AchievementManager.database.flush();
-		BeardAch.printCon("Flushed to database");
+
 	}
 
 	private static boolean checkBeardStat(){
@@ -67,7 +66,7 @@ public class BeardAch extends JavaPlugin {
 	public void onEnable() {
 		self = this;
 		// TODO Auto-generated method stub
-		BeardStat stats = (BeardStat)getServer().getPluginManager().getPlugin("BeardStat");
+		//BeardStat stats = (BeardStat)getServer().getPluginManager().getPlugin("BeardStat");
 		if(!checkBeardStat()){
 			printCon("BeardStat NOT FOUND, DISABLING PLUGIN!");
 			onDisable();
@@ -131,38 +130,20 @@ public class BeardAch extends JavaPlugin {
 
 		}, 600L,600L);
 
-		
+
 		//commands
-		
+
 		getCommand("ach-reload").setExecutor(new AchReloadCommand());
-
-
+		getCommand("ach").setExecutor(new AchCommand());
+		getCommand("ach-fancy").setExecutor(new AchFancyCommand());
+		printCon("Loaded Version:" + getDescription().getVersion());
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
 
-		if(sender instanceof Player){
-			Player player = (Player)sender;
-			if(args.length == 0){
-
-				player.sendMessage(ChatColor.AQUA + "Unlocked Achievements:");
-				for( Achievement a:AchievementManager.getAchievements(player.getName())){
-
-
-					player.sendMessage(ChatColor.WHITE + "#" + a.getId() + " "+ ChatColor.GOLD + a.getName());
-				}
-			}else if(args.length ==1){
-				Achievement a = AchievementManager.getAchievement(Integer.parseInt(args[0]));
-				if(a!=null){
-					player.sendMessage(ChatColor.GOLD + a.getName());
-					player.sendMessage(ChatColor.BLUE + a.getDescrip());
-				}
-			}
-
-		}
-
+		sender.sendMessage("COMMAND NOT IMPLEMENTED");
 		return true;
 	}
 
@@ -175,7 +156,7 @@ public class BeardAch extends JavaPlugin {
 		File f = new File(getDataFolder(),"BeardAch.yml");
 		config = YamlConfiguration.loadConfiguration(f);
 		config.set("general.debug", false);
-		config.set("ach.database.type", "mysql");
+		config.set("ach.database.type", "null");
 		config.set("ach.database.host", "localhost");
 		config.set("ach.database.username", "Beardstats");
 		config.set("ach.database.password", "changeme");

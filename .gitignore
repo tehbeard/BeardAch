@@ -1,3 +1,6 @@
 .project
 .classpath
 target
+bin
+*~
+plugin.yml

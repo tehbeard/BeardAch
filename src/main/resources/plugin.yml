@@ -1,8 +1,8 @@
 name: BeardAch
 main: me.tehbeard.BeardAch.BeardAch
-version: 0.2.1
+version: {VERSION}
 depend: [BeardStat]
-softdepend: [DroxPerms]
+softdepend: [DroxPerms,worldguard]
 commands:
     ach:
         description: Show your achievements
@@ -10,3 +10,7 @@ commands:
     ach-reload:
         description: reloads the achievements
         usage: /<command>
+    ach-fancy:
+        description: Use to update any output displays slug->fancy DB
+        usage: /<command>
+        

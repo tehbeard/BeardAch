@@ -16,7 +16,7 @@ import me.tehbeard.BeardAch.dataSource.IDataSource;
  */
 public class AchievementManager {
 
-	public static HashMap<String,HashSet<String>> playerHasCache = new  HashMap<String,HashSet<String>>();
+	public static HashMap<String,HashSet<AchievementPlayerLink>> playerHasCache = new  HashMap<String,HashSet<AchievementPlayerLink>>();
 	public static HashMap<Achievement,HashSet<String>> playerCheckCache = new  HashMap<Achievement,HashSet<String>>();
 	public static IDataSource database = null;
 
@@ -26,7 +26,8 @@ public class AchievementManager {
 	public static void loadAchievements(){
 		//clear cache
 		clearAchievements();
-
+		//reset Achievement Id's
+		Achievement.resetId();
 		//load achievements
 		database.loadAchievements();
 
@@ -40,7 +41,7 @@ public class AchievementManager {
 	 */
 	public static void clearAchievements(){
 		ChunkCache.clearCache();
-		playerHasCache = new HashMap<String,HashSet<String>>();
+		playerHasCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
 		achievements = new LinkedList<Achievement>();
 		playerCheckCache = new HashMap<Achievement,HashSet<String>>();	
 	}
@@ -55,9 +56,9 @@ public class AchievementManager {
 
 
 
-	public static Achievement getAchievement(String name){
+	public static Achievement getAchievementSlug(String slug){
 		for(Achievement a :achievements){
-			if(a.getName().equals(name)){
+			if(a.getSlug().equals(slug)){
 				return a;
 			}
 		}
@@ -78,7 +79,7 @@ public class AchievementManager {
 	 * @param player
 	 */
 	public static void loadPlayersAchievements(String player){
-		HashSet<String> got = database.getPlayersAchievements(player);
+		HashSet<AchievementPlayerLink> got = database.getPlayersAchievements(player);
 		//put to cache
 		playerHasCache.put(player,got);
 		//cycle all loaded achievements
@@ -90,7 +91,11 @@ public class AchievementManager {
 		for(Achievement ach :achievements){
 
 			//if they don't have that achievement, add them to the check cache
-			if(!playerHasCache.get(player).contains(ach.getName())){
+			HashSet<String> slugs = new HashSet<String>();
+			for(AchievementPlayerLink link : playerHasCache.get(player)){
+				slugs.add(link.getSlug());
+			}
+			if(!slugs.contains(ach.getSlug())){
 				//push key if it doesn't exist
 				if(!playerCheckCache.containsKey(ach)){
 					playerCheckCache.put(ach, new HashSet<String>());
@@ -126,9 +131,9 @@ public class AchievementManager {
 					if(entry.getKey().checkAchievement(p)){
 						BeardAch.printDebugCon("Achievement Get! " + ply + "=>" + entry.getKey().getName());
 						//push to cache
-						playerHasCache.get(ply).add(entry.getKey().getName());
+						playerHasCache.get(ply).add(new AchievementPlayerLink(entry.getKey().getSlug()));
 						//push to DB
-						database.setPlayersAchievements(ply, entry.getKey().getName());
+						database.setPlayersAchievements(ply, entry.getKey().getSlug());
 						it.remove();
 					}
 
@@ -144,22 +149,26 @@ public class AchievementManager {
 
 	}
 
-	public static List<Achievement> getAchievements(String player){
+	public static List<AchievementPlayerLink> getAchievements(String player){
 		if(playerHasCache.containsKey(player)){
-			List<Achievement> l = new LinkedList<Achievement>();
-			for(String s:playerHasCache.get(player)){
-				Achievement a = getAchievement(s);
-				if(a!=null){
-					l.add(a);
-					Collections.sort(l,new Comparator<Achievement>() {
+			List<AchievementPlayerLink> l = new LinkedList<AchievementPlayerLink>();
 
-						public int compare(Achievement o1, Achievement o2) {
-							int res = o1.getId() - o2.getId();
-							return res/Math.abs(res);
-						}
-					});
+			for(AchievementPlayerLink link : playerHasCache.get(player)){
+				Achievement a = getAchievementSlug(link.getSlug());
+				if(a!=null){
+					l.add(link);
 				}
 			}
+			Collections.sort(l,new Comparator<AchievementPlayerLink>() {
+
+				public int compare(AchievementPlayerLink o1, AchievementPlayerLink o2) {
+					long res = o1.getDate().getTime() - o2.getDate().getTime();
+					if(res==0){
+						return 0;
+					}
+					if(res>0){return 1;}else{return -1;}
+				}						
+			});
 			return l;
 		}
 		return null;
@@ -167,7 +176,7 @@ public class AchievementManager {
 	}
 
 	public static Achievement getAchievement(int i) {
-		if(i>0 && i<achievements.size()){
+		if(i>0 && i<=achievements.size()){
 			return achievements.get(i-1);
 		}
 		return null;

@@ -17,21 +17,30 @@ import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
  */
 public class Achievement {
 
+	private String slug;
 	private String name;
 	private String descrip;
 	private int id = 0;
 	private static int nextId = 1;
 	private HashSet<ITrigger> triggers = new HashSet<ITrigger>();
 	private HashSet<IReward> rewards = new HashSet<IReward>();
-	public Achievement(String name,String descrip) {
+	public Achievement(String slug,String name,String descrip) {
+		this.slug = slug;
 		this.name = name;
 		this.descrip = descrip;
 		id = nextId;
 		nextId ++;
 	}
 	
+	public static void resetId(){
+	  nextId = 1;
+	}
 	public int getId() {
 		return id;
+	}
+	
+	public String getSlug() {
+		return slug;
 	}
 
 	public String getName(){
@@ -57,8 +66,10 @@ public class Achievement {
 			return false;
 		}
 
-		if(AchievementManager.playerHasCache.get(player.getName()).contains(name)){
-			return false;
+		for(AchievementPlayerLink link : AchievementManager.playerHasCache.get(player.getName())){
+			if(link.getSlug().equals(slug)){
+				return false;
+			}
 		}
 		for(ITrigger trigger:triggers){
 			if(!trigger.checkAchievement(player)){

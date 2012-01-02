@@ -1,39 +1,30 @@
 package me.tehbeard.BeardAch.dataSource;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.InvalidConfigurationException;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
-import me.tehbeard.BeardAch.achievement.rewards.CommandReward;
-import me.tehbeard.BeardAch.achievement.rewards.DroxSubGroupReward;
-import me.tehbeard.BeardAch.achievement.rewards.DroxTrackReward;
-import me.tehbeard.BeardAch.achievement.triggers.AchCheckTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.PermCheckTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.StatCheckTrigger;
+import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 
 
-public class SqlDataSource implements IDataSource{
+public class SqlDataSource extends AbstractDataSource{
 
-	private HashMap<String,HashSet<String>> writeCache = new HashMap<String,HashSet<String>>();
+	private HashMap<String,HashSet<AchievementPlayerLink>> writeCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
 	Connection conn;
 
 
@@ -42,49 +33,92 @@ public class SqlDataSource implements IDataSource{
 	protected static PreparedStatement prepAddPlayerAch;
 
 
-
-	public SqlDataSource() {
+	protected void createConnection(){
+		String conUrl = String.format("jdbc:mysql://%s/%s",
+				BeardAch.config.getString("ach.database.host"), 
+				BeardAch.config.getString("ach.database.database"));
+		BeardAch.printCon("Configuring....");
+		Properties conStr = new Properties();
+		conStr.put("user",BeardAch.config.getString("ach.database.username",""));
+		conStr.put("password",BeardAch.config.getString("ach.database.password",""));
+		conStr.put("autoReconnect","true");
+		conStr.put("maxReconnects","600");
+		BeardAch.printCon("Connecting....");
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(conUrl,conStr);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-			System.out.println(BeardAch.config);
-			String conStr = String.format("jdbc:mysql://%s/%s",
-					BeardAch.config.getString("ach.database.host"), 
-					BeardAch.config.getString("ach.database.database"));
-
-			BeardAch.printCon("Connecting....");
-			conn = DriverManager.getConnection(conStr,
-					BeardAch.config.getString("ach.database.username",""),
-					BeardAch.config.getString("ach.database.password",""));
-
-			BeardAch.printCon("Checking for table");
-
+	protected void checkAndBuildTable(){
+		try{
+			BeardAch.printCon("Checking for storage table");
 			ResultSet rs = conn.getMetaData().getTables(null, null, "achievements", null);
 			if (!rs.next()) {
 				BeardAch.printCon("Achievements table not found, creating table");
-				PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `achievements` (`player` varchar(32) NOT NULL, `achievement` varchar(32) NOT NULL,  UNIQUE KEY `player` (`player`,`achievement`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+				PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `achievements` ( `player` varchar(32) NOT NULL,  `achievement` varchar(255) NOT NULL,  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  UNIQUE KEY `player` (`player`,`achievement`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 				ps.executeUpdate();
 				ps.close();
-				BeardAch.printCon("created table");
+				BeardAch.printCon("created storage table");
 			}
 			else
 			{
 				BeardAch.printCon("Table found");
 			}
 			rs.close();
+			
+			BeardAch.printCon("Checking for meta table");
+			rs = conn.getMetaData().getTables(null, null, "ach_map", null);
+			if (!rs.next()) {
+				BeardAch.printCon("meta table not found, creating table");
+				PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `ach_map` (`slug` char(255) NOT NULL,`name` char(255) NOT NULL,`description` char(255) NOT NULL,UNIQUE KEY `slug` (`slug`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+				ps.executeUpdate();
+				ps.close();
+				BeardAch.printCon("created meta table");
+			}
+			else
+			{
+				BeardAch.printCon("Table found");
+			}
+			rs.close();
+		
+			
+		
 
-			BeardAch.printDebugCon("Preparing statements");
-			//prepGetPlayerStat = conn.prepareStatement("SELECT * FROM stats WHERE player=?");
-			prepGetAllPlayerAch = conn.prepareStatement("SELECT `achievement` FROM `achievements` WHERE player=?");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	protected void prepareStatements(){
+		BeardAch.printDebugCon("Preparing statements");
+		try{
+			prepGetAllPlayerAch = conn.prepareStatement("SELECT `achievement`,`timestamp` FROM `achievements` WHERE player=?");
+			prepAddPlayerAch = conn.prepareStatement("INSERT INTO `achievements` (`player` ,`achievement`,`timestamp`) values (?,?,?)",Statement.RETURN_GENERATED_KEYS);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public SqlDataSource() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
 
 
-			prepAddPlayerAch = conn.prepareStatement("INSERT INTO `achievements` values (?,?)",Statement.RETURN_GENERATED_KEYS);
+			createConnection();
+			checkAndBuildTable();
+			prepareStatements();
+
 
 			Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.self, new Runnable(){
-
 				public void run() {
 					Runnable r = new SqlFlusher(writeCache);
-					writeCache = new HashMap<String,HashSet<String>>();
+					writeCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
 					Bukkit.getScheduler().scheduleAsyncDelayedTask(BeardAch.self, r);
 				}
 
@@ -92,28 +126,21 @@ public class SqlDataSource implements IDataSource{
 			BeardAch.printCon("Initaised MySQL Data Provider.");
 		} catch (ClassNotFoundException e) {
 			BeardAch.printCon("MySQL Library not found!");
-
-
-		}catch (SQLException e){
-			BeardAch.printCon("Something went derp.");
-			e.printStackTrace();
 		}
-
-
-
 	}
 
 
 
 
-	public HashSet<String> getPlayersAchievements(String player) {
+	public HashSet<AchievementPlayerLink> getPlayersAchievements(String player) {
 
 		try {
 			prepGetAllPlayerAch.setString(1, player);
 			ResultSet rs = prepGetAllPlayerAch.executeQuery();
-			HashSet<String> c = new HashSet<String>();
+			HashSet<AchievementPlayerLink> c = new HashSet<AchievementPlayerLink>();
 			while(rs.next()){
-				c.add(rs.getString(1));
+				c.add(new AchievementPlayerLink(rs.getString(1),rs.getTimestamp(2)));
+				
 			}
 			rs.close();
 			if(writeCache.containsKey(player)){
@@ -132,37 +159,45 @@ public class SqlDataSource implements IDataSource{
 
 
 		if(!writeCache.containsKey(player)){
-			writeCache.put(player, new HashSet<String>());
+			writeCache.put(player, new HashSet<AchievementPlayerLink>());
 		}
-		writeCache.get(player).add(achievements);
+		writeCache.get(player).add(new AchievementPlayerLink(achievements,new Timestamp((new java.util.Date()).getTime())));
 
 	}
 
 
 	class SqlFlusher implements Runnable {
 
-		private HashMap<String, HashSet<String>> write;
-		SqlFlusher(HashMap<String,HashSet<String>> toWrite){
-			write = toWrite;
+		private HashMap<String, HashSet<AchievementPlayerLink>> write;
+		SqlFlusher(HashMap<String, HashSet<AchievementPlayerLink>> writeCache){
+			write = writeCache;
 		}
 
 		public void run() {
 			BeardAch.printCon("Flushing to database");
+			
 			try {
-				for( Entry<String, HashSet<String>> es :write.entrySet()){
+				//if connection is closed, attempt to rebuild connection
+				
+					for( Entry<String, HashSet<AchievementPlayerLink>> es :write.entrySet()){
 
-					prepAddPlayerAch.setString(1, es.getKey());
+						prepAddPlayerAch.setString(1, es.getKey());
 
-					for(String val : es.getValue()){
-						prepAddPlayerAch.setString(2,val);
-						prepAddPlayerAch.addBatch();
+						for(AchievementPlayerLink val : es.getValue()){
+							prepAddPlayerAch.setString(2,val.getSlug());
+							prepAddPlayerAch.setTimestamp(3,val.getDate());
+							prepAddPlayerAch.addBatch();
+						}
 					}
-				}
-				prepAddPlayerAch.executeBatch();
-				prepAddPlayerAch.clearBatch();
-
+					prepAddPlayerAch.executeBatch();
+					prepAddPlayerAch.clearBatch();
+					BeardAch.printCon("Flushed to database");
+				
+				
 			} catch (SQLException e) {
-				e.printStackTrace();
+				BeardAch.printCon("Connection Could not be established, attempting to reconnect...");
+				createConnection();
+				prepareStatements();
 			}
 		}
 
@@ -170,91 +205,36 @@ public class SqlDataSource implements IDataSource{
 
 	public void flush() {
 		(new SqlFlusher(writeCache)).run();
-		writeCache = new HashMap<String,HashSet<String>>();
+		writeCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
 
 	}
-
-
-
-
-	public void loadAchievements() {
-		// TODO Auto-generated method stub
-		//BeardAch.config.getList("achievements");
-
-		try {
-			BeardAch.config.load(new File(BeardAch.self.getDataFolder(),"BeardAch.yml"));
-
-			for(String s : BeardAch.config.getConfigurationSection("achievements").getKeys(false)){
-				ConfigurationSection e = BeardAch.config.getConfigurationSection("achievements").getConfigurationSection(s);
-				if(e==null){
-					continue;
-				}
-
-				String name = e.getString("name");
-				String descrip = e.getString("descrip");
-				BeardAch.printDebugCon("Loading achievement " + name);
-
-				Achievement ach = new Achievement(name, descrip);
-
-				for(String trig: ((List<String>)e.getList("triggers", new LinkedList<String>()))){
-					String[] part = trig.split("\\|");
-					if(part.length==2){
-						BeardAch.printDebugCon("Trigger => " + trig); 
-						if(part[0].equals("stat")){
-							ach.addTrigger(StatCheckTrigger.getInstance(part[1]));
-						}else if(part[0].equals("perm")){
-							ach.addTrigger(PermCheckTrigger.getInstance(part[1]));
-						}else if(part[0].equals("cuboid")){
-							ach.addTrigger(CuboidCheckTrigger.getInstance(part[1]));
-						}else if(part[0].equals("ach")){
-							ach.addTrigger(AchCheckTrigger.getInstance(part[1]));
-						}
-					}
-					else
-					{
-						BeardAch.printCon("ERROR! MALFORMED TRIGGER FOR ACHIEVEMENT " + name);
-					}
-				}
-
-				for(String reward: ((List<String>)e.getList("rewards", new LinkedList<String>()))){
-					String[] part = reward.split("\\|");
-					if(part.length==2){
-						BeardAch.printDebugCon("Reward => " + reward); 
-
-						if(part[0].equals("comm")){
-							ach.addReward(CommandReward.getInstance(part[1]));
-						}else if(part[0].equals("promote")){
-							ach.addReward(DroxTrackReward.getInstance(part[1]));
-						}else if(part[0].equals("subgroup")){
-							ach.addReward(DroxSubGroupReward.getInstance(part[1]));
-						}
-					}
-					else
-					{
-						BeardAch.printCon("ERROR! MALFORMED REWARD FOR ACHIEVEMENT " + name);
-					}
-				}
-
-				AchievementManager.addAchievement(ach);
-				BeardAch.printDebugCon("Loaded achievement " + name);
-			}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvalidConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
-
-
 
 
 	public void clearAchievements(String player) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void dumpFancy() {
+		// TODO Auto-generated method stub
+		try {
+			conn.prepareStatement("DELETE FROM `ach_map`").execute();
+			PreparedStatement fancyStat = conn.prepareStatement("INSERT INTO `ach_map`  values (?,?,?)");
+			
+			fancyStat.clearBatch();
+			
+			
+			for(Achievement ach : AchievementManager.getAchievementsList()){
+				fancyStat.setString(1, ach.getSlug());
+				fancyStat.setString(2, ach.getName());
+				fancyStat.setString(3, ach.getDescrip());
+				fancyStat.addBatch();
+			}
+			fancyStat.executeBatch();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
