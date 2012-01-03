@@ -163,6 +163,7 @@ public class BeardAch extends JavaPlugin {
 		config.set("ach.database.database", "stats");
 		config.set("ach.msg.person", "Achievement Unlocked: <ACH>");
 		config.set("ach.msg.broadcast", "<PLAYER> Unlocked: <ACH>");
+		config.set("ach.msg.ach", "Visit our website to view all your achievements.");
 		config.set("ach.msg.send.person", true);
 		config.set("ach.msg.send.broadcast", false);
 		config.set("achievements", null);

@@ -2,6 +2,7 @@ package me.tehbeard.BeardAch.commands;
 
 import java.util.List;
 
+import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
@@ -31,6 +32,11 @@ public class AchCommand implements CommandExecutor{
 				for(int i=list.size()-pageSize;i<list.size();i++){
 					a = list.get(i);
 					player.sendMessage(ChatColor.WHITE + "#" + a.getAch().getId() + " "+ ChatColor.GOLD + a.getAch().getName() + " - " + ChatColor.WHITE + a.getDate().toString());
+				}
+				String msg = BeardAch.config.getString("ach.msg.ach", null);
+				
+				if(msg!=null){
+					player.sendMessage(msg);
 				}
 				
 			}else if(args.length ==1){
