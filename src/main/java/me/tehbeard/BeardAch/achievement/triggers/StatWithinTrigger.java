@@ -11,8 +11,8 @@ public class StatWithinTrigger extends Trigger {
 
 	String cat;
 	String stat;
-	int threshold;
-
+	int lowerThreshold;
+	int upperThreshold;
 
 	public static ITrigger getInstance(String config) {
 		StatWithinTrigger n =new StatWithinTrigger();
@@ -20,8 +20,8 @@ public class StatWithinTrigger extends Trigger {
 		if(opt.length==4){
 			n.cat = opt[0];
 			n.stat = opt[1];
-			n.threshold = Integer.parseInt(opt[2]);
-			
+			n.lowerThreshold = Integer.parseInt(opt[2]);
+			n.upperThreshold = Integer.parseInt(opt[3]);
 		}
 		return n;
 	}
@@ -33,8 +33,9 @@ public class StatWithinTrigger extends Trigger {
 			//if player exceeds threshold
 			if(PlayerStatManager.findPlayerBlob(player.getName()).hasStat(cat, stat)){
 				return (
-						(PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()>=threshold) 
-						
+						(PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()>=lowerThreshold) 
+						&&
+						(PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()<=upperThreshold)
 						);
 			}
 		}

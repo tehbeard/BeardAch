@@ -9,19 +9,20 @@ import org.bukkit.entity.Player;
  */
 public class StatCheckTrigger extends Trigger {
 
+	
 	String cat;
 	String stat;
-	int lowerThreshold;
-	int upperThreshold;
+	int threshold;
+
 
 	public static ITrigger getInstance(String config) {
 		StatCheckTrigger n =new StatCheckTrigger();
 		String[] opt = config.split("\\:");
-		if(opt.length==4){
+		if(opt.length==3){
 			n.cat = opt[0];
 			n.stat = opt[1];
-			n.lowerThreshold = Integer.parseInt(opt[2]);
-			n.upperThreshold = Integer.parseInt(opt[3]);
+			n.threshold = Integer.parseInt(opt[2]);
+			
 		}
 		return n;
 	}
@@ -31,14 +32,9 @@ public class StatCheckTrigger extends Trigger {
 		//if player has stat
 		if(PlayerStatManager.findPlayerBlob(player.getName()).hasStat(cat, stat)){
 			//if player exceeds threshold
-			if(PlayerStatManager.findPlayerBlob(player.getName()).hasStat(cat, stat)){
-				return (
-						(PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()>=lowerThreshold) 
-						&&
-						(PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()<=upperThreshold)
-						);
-			}
+			return PlayerStatManager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()>=threshold;
 		}
 		return false;
 	}
+	
 }
