@@ -61,6 +61,8 @@ public abstract class AbstractDataSource implements IDataSource{
 							ach.addTrigger(CuboidCheckTrigger.getInstance(part[1]));
 						}else if(part[0].equals("ach")){
 							ach.addTrigger(AchCheckTrigger.getInstance(part[1]));
+						}else if(part[0].equals("noach")){
+							ach.addTrigger(NoAchCheckTrigger.getInstance(part[1]));
 						}else if(part[0].equals("locked")){
 							ach.addTrigger(LockedTrigger.getInstance(part[1]));
 						}
