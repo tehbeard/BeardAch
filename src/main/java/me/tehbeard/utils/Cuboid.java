@@ -15,40 +15,39 @@ public class Cuboid {
 
 	Vector v1,v2=null;
 	String world = null;
-	
+
 	public String getWorld(){
 		return world;
 	}
 
 
-	
+
 
 	public Cuboid(){
-		
+
 	}
-	
+
 	public void setCuboid(String line){
 		String[] l = line.split(":");
 		world=l[0];
 		v1 = new Vector(
-				Integer.parseInt(l[1]), 
-				Integer.parseInt(l[2]), 
-				Integer.parseInt(l[3]));
+				Math.min(Integer.parseInt(l[1]),Integer.parseInt(l[4])), 
+				Math.min(Integer.parseInt(l[2]),Integer.parseInt(l[5])), 
+				Math.min(Integer.parseInt(l[3]),Integer.parseInt(l[6])));
 		v2 = new Vector(
-				Integer.parseInt(l[4]), 
-				Integer.parseInt(l[5]), 
-				Integer.parseInt(l[6]));
-		
-		
-		
+				Math.max(Integer.parseInt(l[1]),Integer.parseInt(l[4])), 
+				Math.max(Integer.parseInt(l[2]),Integer.parseInt(l[5])), 
+				Math.max(Integer.parseInt(l[3]),Integer.parseInt(l[6])));
+
+
 	}
-	
+
 	public void setCuboid(Vector c1,Vector c2,String world){
 		v1=c1;
 		v2=c2;
 		this.world = world;
 	}
-	
+
 	/**
 	 * is a location inside this cuboid
 	 * @param l
@@ -57,10 +56,10 @@ public class Cuboid {
 	public boolean isInside(Location l){
 		return (l.toVector().isInAABB(Vector.getMinimum(v1, v2),Vector.getMaximum(v1, v2).add(new Vector(1, 1, 1))) &&
 				l.getWorld().getName().equals(world));
-		
+
 	}
-	
-	
+
+
 	public ArrayList<String> getChunks(){
 		ArrayList<String> chunks = new ArrayList<String>();
 		int cx1 = v1.getBlockX()/16;
@@ -68,17 +67,17 @@ public class Cuboid {
 		int cx2 = v2.getBlockX()/16;
 		int cz2 = v2.getBlockZ()/16;
 		int cx,cz;
-		
+
 		for(cx=cx1;cx<=cx2;cx++){
 			for(cz=cz1;cz<=cz2;cz++){
 				chunks.add(""+world+","+cx+","+cz);
 			}
 		}
 		return chunks;
-		
-		
+
+
 	}
-	
+
 	public Vector[] getCorners(){
 		Vector[] c = new Vector[2];
 		c[0]=v1;
