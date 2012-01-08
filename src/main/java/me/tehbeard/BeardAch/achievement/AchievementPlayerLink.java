@@ -31,6 +31,7 @@ public class AchievementPlayerLink {
 		this.slug = slug;
 		
 		this.date = new Timestamp((new java.util.Date()).getTime());
+		date.setNanos(0);
 	}
 
 	public Achievement getAch(){
