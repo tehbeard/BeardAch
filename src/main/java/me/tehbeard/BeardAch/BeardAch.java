@@ -104,6 +104,7 @@ public class BeardAch extends JavaPlugin {
 		if(!(new File(getDataFolder(),"BeardAch.yml")).exists()){
 			initialConfig();
 		}
+		
 		config =YamlConfiguration.loadConfiguration(new File(getDataFolder(),"BeardAch.yml"));
 
 		if(config.getString("ach.database.type","").equalsIgnoreCase("mysql")){
@@ -158,22 +159,11 @@ public class BeardAch extends JavaPlugin {
 	 */
 	private void initialConfig() {
 		printCon("Generating Inital config");
-		File f = new File(getDataFolder(),"BeardAch.yml");
-		config = YamlConfiguration.loadConfiguration(f);
-		config.set("general.debug", false);
-		config.set("ach.database.type", "null");
-		config.set("ach.database.host", "localhost");
-		config.set("ach.database.username", "Beardstats");
-		config.set("ach.database.password", "changeme");
-		config.set("ach.database.database", "stats");
-		config.set("ach.msg.person", "Achievement Unlocked: <ACH>");
-		config.set("ach.msg.broadcast", "<PLAYER> Unlocked: <ACH>");
-		config.set("ach.msg.ach", "Visit our website to view all your achievements.");
-		config.set("ach.msg.send.person", true);
-		config.set("ach.msg.send.broadcast", false);
-		config.set("achievements", null);
+		YamlConfiguration nc = YamlConfiguration.loadConfiguration(new File(getDataFolder(),"BeardAch.yml"));
+		nc.setDefaults(getConfig().getDefaults());
+		nc.options().copyDefaults(true);
 		try {
-			config.save(f);
+			nc.save(new File(getDataFolder(),"BeardAch.yml"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
