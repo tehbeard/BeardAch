@@ -113,6 +113,11 @@ public class BeardAch extends JavaPlugin {
 
 			AchievementManager.database = new NullDataSource();	
 		}
+		if(config.getString("ach.database.type","").equalsIgnoreCase("file")){
+
+			AchievementManager.database = new YamlDataSource(this);	
+		}
+		
 		if(AchievementManager.database == null){
 			printCon("NO SUITABLE DATABASE SELECTED!!");
 
