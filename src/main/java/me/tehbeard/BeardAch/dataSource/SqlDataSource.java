@@ -40,8 +40,6 @@ public class SqlDataSource extends AbstractDataSource{
 		Properties conStr = new Properties();
 		conStr.put("user",BeardAch.config.getString("ach.database.username",""));
 		conStr.put("password",BeardAch.config.getString("ach.database.password",""));
-		conStr.put("autoReconnect","true");
-		conStr.put("maxReconnects","600");
 		BeardAch.printCon("Connecting....");
 		try {
 			conn = DriverManager.getConnection(conUrl,conStr);
