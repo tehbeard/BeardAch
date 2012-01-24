@@ -92,7 +92,8 @@ public class Achievement {
 
 		}
 		if(BeardAch.config.getBoolean("ach.msg.send.person", true)){
-			player.sendRawMessage(BeardAch.config.getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name  + ChatColor.WHITE + " - " + ChatColor.BLUE + descrip).replace("<PLAYER>",player.getName()));
+			player.sendMessage(BeardAch.config.getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>",player.getName()));
+			player.sendMessage(ChatColor.BLUE + descrip);
 		}
 
 		return true;
