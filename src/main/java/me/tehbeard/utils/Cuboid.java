@@ -3,8 +3,6 @@ package me.tehbeard.utils;
 import java.util.ArrayList;
 
 import org.bukkit.Location;
-import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.util.Vector;
 /**
  * Represents a cuboid of space

@@ -2,12 +2,11 @@ package me.tehbeard.BeardAch.achievement.triggers;
 
 import java.util.ArrayList;
 
-import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import me.tehbeard.utils.Cuboid;
 
-import org.bukkit.Location;
+
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
+
 /**
  * Checks if a players is in a cuboid
  * @author James

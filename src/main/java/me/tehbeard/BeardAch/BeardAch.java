@@ -10,10 +10,9 @@ import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
+
 
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -130,7 +129,6 @@ public class BeardAch extends JavaPlugin {
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
 			public void run() {
-				// TODO Auto-generated method stub
 				AchievementManager.checkPlayers();
 			}
 

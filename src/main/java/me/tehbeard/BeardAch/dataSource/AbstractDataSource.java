@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -43,11 +42,13 @@ public abstract class AbstractDataSource implements IDataSource{
 
 				String name = e.getString("name");
 				String descrip = e.getString("descrip");
+				boolean broadcast = e.getBoolean("broadcast",false);
 				BeardAch.printDebugCon("Loading achievement " + name);
 
-				Achievement ach = new Achievement(slug,name, descrip);
+				Achievement ach = new Achievement(slug,name, descrip,broadcast);
 
-				for(String trig: ((List<String>)e.getList("triggers", new LinkedList<String>()))){
+				List<String> triggers = e.getStringList("triggers");
+				for(String trig: triggers){
 					String[] part = trig.split("\\|");
 					if(part.length==2){
 						BeardAch.printDebugCon("Trigger => " + trig); 
@@ -75,8 +76,8 @@ public abstract class AbstractDataSource implements IDataSource{
 						BeardAch.printCon("ERROR! MALFORMED TRIGGER FOR ACHIEVEMENT " + name);
 					}
 				}
-
-				for(String reward: ((List<String>)e.getList("rewards", new LinkedList<String>()))){
+				List<String> rewards = e.getStringList("rewards");
+				for(String reward: rewards){
 					String[] part = reward.split("\\|");
 					if(part.length==2){
 						BeardAch.printDebugCon("Reward => " + reward); 

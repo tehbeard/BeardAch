@@ -1,10 +1,8 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 
 
-import java.util.HashSet;
-import java.util.List;
 
-import me.tehbeard.BeardAch.achievement.Achievement;
+import java.util.List;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 

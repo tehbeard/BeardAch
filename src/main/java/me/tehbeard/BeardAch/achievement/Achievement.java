@@ -24,12 +24,15 @@ public class Achievement {
 	private static int nextId = 1;
 	private HashSet<ITrigger> triggers = new HashSet<ITrigger>();
 	private HashSet<IReward> rewards = new HashSet<IReward>();
-	public Achievement(String slug,String name,String descrip) {
+	boolean broadcast;
+	public Achievement(String slug,String name,String descrip,boolean broadcast) {
 		this.slug = slug;
 		this.name = name;
 		this.descrip = descrip;
-		id = nextId;
+		this.broadcast = broadcast;
+		this.id = nextId;
 		nextId ++;
+		
 	}
 	
 	public static void resetId(){

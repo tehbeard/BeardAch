@@ -3,7 +3,6 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 import me.tehbeard.BeardAch.BeardAch;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class DroxTrackReward extends Reward{
