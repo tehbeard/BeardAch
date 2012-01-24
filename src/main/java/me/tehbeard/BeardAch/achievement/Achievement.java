@@ -32,16 +32,16 @@ public class Achievement {
 		this.broadcast = broadcast;
 		this.id = nextId;
 		nextId ++;
-		
+
 	}
-	
+
 	public static void resetId(){
-	  nextId = 1;
+		nextId = 1;
 	}
 	public int getId() {
 		return id;
 	}
-	
+
 	public String getSlug() {
 		return slug;
 	}
@@ -84,11 +84,15 @@ public class Achievement {
 		}
 
 		if(broadcast || (BeardAch.config.getBoolean("ach.msg.send.broadcast", false) && !BeardAch.config.getBoolean("ach.msg.send.person", true))){
-			Bukkit.broadcastMessage(BeardAch.config.getString("ach.msg.broadcast", (ChatColor.AQUA + "<PLAYER> " + ChatColor.WHITE + "Unlocked: " + ChatColor.GOLD + "<ACH>")).replace("<ACH>", name + " - " + descrip).replace("<PLAYER>",player.getName()));
+			Bukkit.broadcastMessage(
+					BeardAch.config.getString("ach.msg.broadcast", 
+							(ChatColor.AQUA + "<PLAYER> " + ChatColor.WHITE + "Unlocked: " + ChatColor.GOLD + "<ACH>")).replace("<ACH>", name ).replace("<PLAYER>",player.getName()
+									)
+					);
 
 		}
 		if(BeardAch.config.getBoolean("ach.msg.send.person", true)){
-			player.sendRawMessage(BeardAch.config.getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name + " - " + descrip).replace("<PLAYER>",player.getName()));
+			player.sendRawMessage(BeardAch.config.getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name  + ChatColor.WHITE + " - " + ChatColor.BLUE + descrip).replace("<PLAYER>",player.getName()));
 		}
 
 		return true;
