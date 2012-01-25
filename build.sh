@@ -51,3 +51,4 @@ cp target/BeardAch-0.0.1-SNAPSHOT.jar $TARGET_DIR
 echo "Done"
 echo "Version: " $VERSION
 echo "Source file size: "` du -hs src/`
+echo "jar file size: "`du -hs target/BeardAch-0.0.1-SNAPSHOT.jar`
