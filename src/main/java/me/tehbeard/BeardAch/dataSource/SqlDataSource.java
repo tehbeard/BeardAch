@@ -34,12 +34,12 @@ public class SqlDataSource extends AbstractDataSource{
 
 	protected void createConnection(){
 		String conUrl = String.format("jdbc:mysql://%s/%s",
-				BeardAch.config.getString("ach.database.host"), 
-				BeardAch.config.getString("ach.database.database"));
+				BeardAch.self.getConfig().getString("ach.database.host"), 
+				BeardAch.self.getConfig().getString("ach.database.database"));
 		BeardAch.printCon("Configuring....");
 		Properties conStr = new Properties();
-		conStr.put("user",BeardAch.config.getString("ach.database.username",""));
-		conStr.put("password",BeardAch.config.getString("ach.database.password",""));
+		conStr.put("user",BeardAch.self.getConfig().getString("ach.database.username",""));
+		conStr.put("password",BeardAch.self.getConfig().getString("ach.database.password",""));
 		BeardAch.printCon("Connecting....");
 		try {
 			conn = DriverManager.getConnection(conUrl,conStr);

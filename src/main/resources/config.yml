@@ -1,22 +1,22 @@
 general:
-    debug: false
+  debug: false
 ach:
-    database:
-        type: file
-        host: localhost
-		username: Beardstats
-		password: changeme
-		database: stats
-	msg:
-	    person: "Achievement Unlocked: <ACH>"
-		broadcast: "<PLAYER> Unlocked: <ACH>"
-		ach: "Visit our website to view all your achievements."
-		send:
-		    person: true
-		    broadcast", false);
+  database:
+    type: file
+    host: localhost
+    username: Beardstats
+    password: changeme
+    database: stats
+  msg:
+    person: "Achievement Unlocked: <ACH>"
+    broadcast: "<PLAYER> Unlocked: <ACH>"
+    ach: "Visit our website to view all your achievements."
+    send:
+      person: true
+      broadcast: false
 achievements:
     old_timer:
-        name: "Old Timer"
-        descrip: "Been on here a while, ain't ya?"
-        triggers:
-            - "stat|stats:playedother:54000"
+      name: "Old Timer"
+      descrip: "Been on here a while, ain't ya?"
+      triggers:
+        - "stat|stats:playedother:54000"

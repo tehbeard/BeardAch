@@ -23,7 +23,6 @@ import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
 
 public class BeardAch extends JavaPlugin {
 
-	public static YamlConfiguration config = null;
 	public static BeardAch self;
 
 	public static DroxPermsAPI droxAPI = null;
@@ -40,12 +39,7 @@ public class BeardAch extends JavaPlugin {
 	}
 
 	public static void printDebugCon(String line){
-		if(config!=null){
-			if(config.getBoolean("general.debug", false)){
-				System.out.println("[BeardAch][DEBUG] " + line);
-
-			}
-		}
+		//System.out.println("[BeardAch][DEBUG] " + line);
 	}
 
 	public void onDisable() {
@@ -62,6 +56,15 @@ public class BeardAch extends JavaPlugin {
 
 	public void onEnable() {
 		self = this;
+
+		//Load config
+		printCon("Starting BeardAch");
+		getConfig().options().copyDefaults(true);
+		saveConfig();
+		reloadConfig();
+		updateConfig();
+		reloadConfig();
+		
 		// TODO Auto-generated method stub
 		//BeardStat stats = (BeardStat)getServer().getPluginManager().getPlugin("BeardStat");
 		if(!checkBeardStat()){
@@ -83,26 +86,18 @@ public class BeardAch extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(pl, this);
 
 
-		//Load config
-		printCon("Starting BeardAch");
-		if(!(new File(getDataFolder(),"BeardAch.yml")).exists()){
-			initialConfig();
-		}
-		
-		config =YamlConfiguration.loadConfiguration(new File(getDataFolder(),"BeardAch.yml"));
-
-		if(config.getString("ach.database.type","").equalsIgnoreCase("mysql")){
+		if(getConfig().getString("ach.database.type","").equalsIgnoreCase("mysql")){
 			AchievementManager.database = new SqlDataSource();
 		}
-		if(config.getString("ach.database.type","").equalsIgnoreCase("null")){
+		if(getConfig().getString("ach.database.type","").equalsIgnoreCase("null")){
 
 			AchievementManager.database = new NullDataSource();	
 		}
-		if(config.getString("ach.database.type","").equalsIgnoreCase("file")){
+		if(getConfig().getString("ach.database.type","").equalsIgnoreCase("file")){
 
 			AchievementManager.database = new YamlDataSource(this);	
 		}
-		
+
 		if(AchievementManager.database == null){
 			printCon("NO SUITABLE DATABASE SELECTED!!");
 
@@ -137,19 +132,19 @@ public class BeardAch extends JavaPlugin {
 	}
 
 
-	/**
-	 * Creates the inital config
-	 */
-	private void initialConfig() {
-		printCon("Generating Inital config");
-		YamlConfiguration nc = YamlConfiguration.loadConfiguration(new File(getDataFolder(),"BeardAch.yml"));
-		nc.setDefaults(getConfig().getDefaults());
-		nc.options().copyDefaults(true);
-		try {
-			nc.save(new File(getDataFolder(),"BeardAch.yml"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+
+	private void updateConfig(){
+		File f = new File(getDataFolder(),"BeardAch.yml");
+		
+		if(f.exists()){
+			try {
+				YamlConfiguration.loadConfiguration(f).save(new File(getDataFolder(),"config.yml"));
+				f.renameTo(new File(getDataFolder(),"BeardAch.yml.old"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
