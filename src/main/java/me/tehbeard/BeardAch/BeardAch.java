@@ -14,9 +14,7 @@ import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
-import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -80,22 +78,9 @@ public class BeardAch extends JavaPlugin {
 			droxAPI = droxPerms.getAPI();
 		}
 
-
-
-
-
-
 		//setup events
-		PlayerListener pl = new BeardAchPlayerListener();
-		getServer().getPluginManager().registerEvent(Type.PLAYER_MOVE, pl, Priority.Highest, this);
-		getServer().getPluginManager().registerEvent(Type.PLAYER_JOIN, pl, Priority.Highest, this);
-
-
-
-		//TEST ACHIEVEMENTS, DELETE ONCE DATASOURCE'S COMPLETE
-
-
-
+		Listener pl = new BeardAchPlayerListener();
+		getServer().getPluginManager().registerEvents(pl, this);
 
 
 		//Load config
