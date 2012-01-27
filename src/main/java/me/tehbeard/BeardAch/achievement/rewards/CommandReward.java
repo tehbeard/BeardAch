@@ -6,7 +6,7 @@ import me.tehbeard.BeardAch.BeardAch;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class CommandReward implements  IReward{
+public class CommandReward implements IReward{
 
 	String command = "";
 	public void configure(String config) {

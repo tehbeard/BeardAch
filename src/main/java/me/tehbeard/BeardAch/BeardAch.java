@@ -6,6 +6,7 @@ import java.io.IOException;
 import me.tehbeard.BeardAch.achievement.*;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.*;
+import me.tehbeard.BeardAch.achievement.rewards.*;
 import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
@@ -117,8 +118,13 @@ public class BeardAch extends JavaPlugin {
 		addTrigger(PermCheckTrigger.class);
 		addTrigger(StatCheckTrigger.class);
 		addTrigger(StatWithinTrigger.class);
-		//load installed rewards
 		
+		
+		//load installed rewards
+		addReward(CommandReward.class);
+		addReward(CounterReward.class);
+		addReward(DroxSubGroupReward.class);
+		addReward(DroxTrackReward.class);
 		
 		AchievementManager.loadAchievements();
 
