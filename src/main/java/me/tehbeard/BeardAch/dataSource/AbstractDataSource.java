@@ -10,19 +10,19 @@ import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
-import me.tehbeard.BeardAch.achievement.rewards.CommandReward;
-import me.tehbeard.BeardAch.achievement.rewards.CounterReward;
-import me.tehbeard.BeardAch.achievement.rewards.DroxSubGroupReward;
-import me.tehbeard.BeardAch.achievement.rewards.DroxTrackReward;
-import me.tehbeard.BeardAch.achievement.triggers.*;
+import me.tehbeard.BeardAch.achievement.rewards.IReward;
+import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
+
+import me.tehbeard.BeardAch.dataSource.configurable.ConfigurableFactory;
 
 public abstract class AbstractDataSource implements IDataSource{
 
-
+	public static final ConfigurableFactory triggerFactory = new ConfigurableFactory();
+	public static final ConfigurableFactory rewardFactory = new ConfigurableFactory();
+	
+	
 
 	public void loadAchievements() {
-		// TODO Auto-generated method stub
-		//BeardAch.config.getList("achievements");
 
 
 		Set<String> achs = BeardAch.self.getConfig().getConfigurationSection("achievements").getKeys(false);
@@ -47,6 +47,8 @@ public abstract class AbstractDataSource implements IDataSource{
 				String[] part = trig.split("\\|");
 				if(part.length==2){
 					BeardAch.printDebugCon("Trigger => " + trig); 
+					ach.addTrigger((ITrigger) triggerFactory.getPart(part[0],part[1]));
+					/*
 					if(part[0].equals("stat")){
 						ach.addTrigger(StatCheckTrigger.getInstance(part[1]));
 					}else if(part[0].equals("statwithin")){
@@ -61,7 +63,7 @@ public abstract class AbstractDataSource implements IDataSource{
 						ach.addTrigger(NoAchCheckTrigger.getInstance(part[1]));
 					}else if(part[0].equals("locked")){
 						ach.addTrigger(LockedTrigger.getInstance(part[1]));
-					}
+					}*/
 
 
 
@@ -77,6 +79,8 @@ public abstract class AbstractDataSource implements IDataSource{
 				if(part.length==2){
 					BeardAch.printDebugCon("Reward => " + reward); 
 
+					ach.addReward((IReward) rewardFactory.getPart(part[0],part[1]));
+					/*
 					if(part[0].equals("comm")){
 						ach.addReward(CommandReward.getInstance(part[1]));
 					}else if(part[0].equals("promote")){
@@ -85,7 +89,7 @@ public abstract class AbstractDataSource implements IDataSource{
 						ach.addReward(DroxSubGroupReward.getInstance(part[1]));
 					}else if(part[0].equals("counter")){
 						ach.addReward(CounterReward.getInstance(part[1]));
-					}
+					}*/
 				}
 				else
 				{

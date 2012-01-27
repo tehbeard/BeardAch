@@ -2,6 +2,7 @@ package me.tehbeard.BeardAch.achievement.triggers;
 
 import java.util.ArrayList;
 
+import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.utils.Cuboid;
 
 
@@ -12,21 +13,17 @@ import org.bukkit.entity.Player;
  * @author James
  *
  */
-public class CuboidCheckTrigger extends Trigger {
+@Configurable(tag="cuboid")
+public class CuboidCheckTrigger implements ITrigger {
 
 	String world = null;
 
 	Cuboid c = new Cuboid();
 
-	public static ITrigger getInstance(String config) {
-		CuboidCheckTrigger n =new CuboidCheckTrigger();
-
-			n.c.setCuboid(config);
-		
-		return n;
+	public void configure(String config) {
+			c.setCuboid(config);
 	}
 
-	@Override
 	public boolean checkAchievement(Player player) {
 		//if player has stat
 		//if(player.getWorld().getName().equals(world)){

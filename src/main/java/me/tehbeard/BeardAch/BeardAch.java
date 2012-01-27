@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.IOException;
 
 import me.tehbeard.BeardAch.achievement.*;
+import me.tehbeard.BeardAch.achievement.rewards.IReward;
+import me.tehbeard.BeardAch.achievement.triggers.*;
 import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
+import me.tehbeard.BeardStat.containers.PlayerStatManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
@@ -24,7 +27,12 @@ import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
 public class BeardAch extends JavaPlugin {
 
 	public static BeardAch self;
-
+	private PlayerStatManager stats = null;
+	
+	public PlayerStatManager getStats(){
+		return stats;
+		
+	}
 	public static DroxPermsAPI droxAPI = null;
 	private static final String PERM_PREFIX = "ach";
 
@@ -48,9 +56,11 @@ public class BeardAch extends JavaPlugin {
 
 	}
 
-	private static boolean checkBeardStat(){
-		BeardStat stats = (BeardStat) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
-		return (stats!=null && stats.isEnabled());
+	private void EnableBeardStat(){
+		BeardStat bs = (BeardStat) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
+		if(bs!=null && bs.isEnabled()){
+			stats = bs.getStatManager();
+		}
 
 	}
 
@@ -65,18 +75,11 @@ public class BeardAch extends JavaPlugin {
 		updateConfig();
 		reloadConfig();
 		
-		// TODO Auto-generated method stub
-		//BeardStat stats = (BeardStat)getServer().getPluginManager().getPlugin("BeardStat");
-		if(!checkBeardStat()){
-			printCon("BeardStat NOT FOUND, DISABLING PLUGIN!");
-			onDisable();
-			return;
-		}
+		EnableBeardStat();
 
 
 		//check DroxPerms
-
-		DroxPerms droxPerms = ((DroxPerms) this.getServer().getPluginManager().getPlugin("DroxPerms"));
+    	DroxPerms droxPerms = ((DroxPerms) this.getServer().getPluginManager().getPlugin("DroxPerms"));
 		if (droxPerms != null) {
 			droxAPI = droxPerms.getAPI();
 		}
@@ -104,6 +107,19 @@ public class BeardAch extends JavaPlugin {
 			onDisable();
 			return;
 		}
+		
+		//TODO, HERE IS WHERE TO IMPLEMENT ADDON LOADING
+		//Load installed triggers
+		addTrigger(AchCheckTrigger.class);
+		addTrigger(CuboidCheckTrigger.class);
+		addTrigger(LockedTrigger.class);
+		addTrigger(NoAchCheckTrigger.class);
+		addTrigger(PermCheckTrigger.class);
+		addTrigger(StatCheckTrigger.class);
+		addTrigger(StatWithinTrigger.class);
+		//load installed rewards
+		
+		
 		AchievementManager.loadAchievements();
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
@@ -146,5 +162,12 @@ public class BeardAch extends JavaPlugin {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void addTrigger(Class<? extends ITrigger > trigger){
+		AbstractDataSource.triggerFactory.addPart(trigger);
+	}
+	public void addReward(Class<? extends IReward >  reward){
+		AbstractDataSource.rewardFactory.addPart(reward);
 	}
 }

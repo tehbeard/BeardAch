@@ -1,6 +1,8 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 
 
+import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+
 import org.bukkit.entity.Player;
 
 /**
@@ -8,20 +10,16 @@ import org.bukkit.entity.Player;
  * @author James
  *
  */
-public class PermCheckTrigger extends Trigger {
+@Configurable(tag="perm")
+public class PermCheckTrigger implements ITrigger {
 
 	String perm;
 
-	public static ITrigger getInstance(String config) {
-		PermCheckTrigger n =new PermCheckTrigger();
-			n.perm = config;
-			
-			
-		
-		return n;
+	public void configure(String config) {
+		perm = config;
 	}
 
-	@Override
+	
 	public boolean checkAchievement(Player player) {
 		//if player has stat
 		return player.hasPermission(perm);

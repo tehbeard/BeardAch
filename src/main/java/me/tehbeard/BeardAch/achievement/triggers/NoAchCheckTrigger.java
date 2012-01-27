@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
+import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
 
@@ -13,20 +14,15 @@ import org.bukkit.entity.Player;
  * @author James
  *
  */
-public class NoAchCheckTrigger extends Trigger {
+@Configurable(tag="noach")
+public class NoAchCheckTrigger implements ITrigger {
 
 	String ach;
 
-	public static ITrigger getInstance(String config) {
-		NoAchCheckTrigger n =new NoAchCheckTrigger();
-			n.ach = config;
-			
-			
-		
-		return n;
+	public void configure(String config) {
+		ach = config;
 	}
 
-	@Override
 	public boolean checkAchievement(Player player) {
 		//if player has an acheivement, return false
 		List<AchievementPlayerLink> achs = AchievementManager.getAchievements(player.getName());

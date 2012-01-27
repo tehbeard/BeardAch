@@ -6,16 +6,14 @@ import me.tehbeard.BeardAch.BeardAch;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class CommandReward extends Reward{
+public class CommandReward implements  IReward{
 
 	String command = "";
-	public static IReward getInstance(String config) {
-		CommandReward n = new CommandReward();
-		n.command = config;
-		return n;
+	public void configure(String config) {
+		command = config;
+		
 	}
 
-	@Override
 	public void giveReward(Player player) {
 		
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(),command.replace("<PLAYER>", player.getName()));

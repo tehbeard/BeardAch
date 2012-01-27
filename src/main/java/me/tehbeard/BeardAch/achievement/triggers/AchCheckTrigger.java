@@ -5,6 +5,7 @@ package me.tehbeard.BeardAch.achievement.triggers;
 import java.util.List;
 import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
+import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
 
@@ -13,20 +14,15 @@ import org.bukkit.entity.Player;
  * @author James
  *
  */
-public class AchCheckTrigger extends Trigger {
+@Configurable(tag="ach")
+public class AchCheckTrigger implements ITrigger {
 
 	String ach;
 
-	public static ITrigger getInstance(String config) {
-		AchCheckTrigger n =new AchCheckTrigger();
-			n.ach = config;
-			
-			
-		
-		return n;
+	public void configure(String config) {
+		ach = config;
 	}
 
-	@Override
 	public boolean checkAchievement(Player player) {
 		//if player has an acheivement
 		List<AchievementPlayerLink> achs = AchievementManager.getAchievements(player.getName());

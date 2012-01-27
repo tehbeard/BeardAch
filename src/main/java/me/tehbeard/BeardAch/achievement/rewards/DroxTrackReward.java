@@ -5,16 +5,16 @@ import me.tehbeard.BeardAch.BeardAch;
 
 import org.bukkit.entity.Player;
 
-public class DroxTrackReward extends Reward{
+public class DroxTrackReward implements IReward{
 
 	String track = "";
-	public static IReward getInstance(String config) {
-		DroxTrackReward n = new DroxTrackReward();
-		n.track = config;
-		return n;
+	public void configure(String config) {
+		
+		track = config;
+	
 	}
 
-	@Override
+	
 	public void giveReward(Player player) {
 		if(BeardAch.droxAPI!=null){
 			BeardAch.droxAPI.promotePlayer(player.getName(), track);

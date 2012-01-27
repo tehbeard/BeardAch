@@ -5,16 +5,14 @@ import me.tehbeard.BeardAch.BeardAch;
 
 import org.bukkit.entity.Player;
 
-public class DroxSubGroupReward extends Reward{
+public class DroxSubGroupReward implements IReward{
 
 	String subgroup = "";
-	public static IReward getInstance(String config) {
-		DroxSubGroupReward n = new DroxSubGroupReward();
-		n.subgroup = config;
-		return n;
+	public void configure(String config) {
+		subgroup = config;
 	}
 
-	@Override
+
 	public void giveReward(Player player) {
 		if(BeardAch.droxAPI!=null){
 			BeardAch.droxAPI.addPlayerSubgroup(player.getName(), subgroup);

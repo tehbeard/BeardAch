@@ -1,5 +1,7 @@
 package me.tehbeard.BeardAch.achievement.rewards;
 
+import me.tehbeard.BeardAch.achievement.IConfigurable;
+
 import org.bukkit.entity.Player;
 
 /**
@@ -7,7 +9,7 @@ import org.bukkit.entity.Player;
  * @author James
  *
  */
-public interface IReward {
+public interface IReward extends IConfigurable{
 	public void giveReward(Player player);
 	
 }

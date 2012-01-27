@@ -1,6 +1,8 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 
 
+import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+
 import org.bukkit.entity.Player;
 
 /**
@@ -8,15 +10,14 @@ import org.bukkit.entity.Player;
  * @author James
  *
  */
-public class LockedTrigger extends Trigger {
+@Configurable(tag="locked")
+public class LockedTrigger implements ITrigger {
 
 
-	public static ITrigger getInstance(String config) {
-		LockedTrigger n =new LockedTrigger();
-		return n;
+	public void configure(String config) {
 	}
 
-	@Override
+
 	public boolean checkAchievement(Player player) {
 
 		return false;
