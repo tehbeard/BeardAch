@@ -120,7 +120,7 @@ public class BeardAch extends JavaPlugin {
 		addTrigger(PermCheckTrigger.class);
 		addTrigger(StatCheckTrigger.class);
 		addTrigger(StatWithinTrigger.class);
-		
+		addTrigger(EconomyTrigger.class);
 		
 		//load installed rewards
 		addReward(CommandReward.class);
