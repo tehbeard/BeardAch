@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.tehbeard</groupId>
   <artifactId>BeardAch</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.4</version>
   <name>BearchAch</name>
   <description>Achievements plugin for BeardStat</description>
     <repositories>
