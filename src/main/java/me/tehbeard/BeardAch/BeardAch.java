@@ -127,6 +127,7 @@ public class BeardAch extends JavaPlugin {
 		addReward(CounterReward.class);
 		addReward(DroxSubGroupReward.class);
 		addReward(DroxTrackReward.class);
+		addReward(EconomyReward.class);
 		
 		
 		//TODO, HERE IS WHERE TO IMPLEMENT ADDON LOADING
