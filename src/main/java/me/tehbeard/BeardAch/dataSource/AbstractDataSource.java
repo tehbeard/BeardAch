@@ -8,7 +8,6 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
@@ -97,7 +96,7 @@ public abstract class AbstractDataSource implements IDataSource{
 				}
 			}
 
-			AchievementManager.addAchievement(ach);
+			BeardAch.self.getAchievementManager().addAchievement(ach);
 			BeardAch.printDebugCon("Loaded achievement " + name);
 		}
 

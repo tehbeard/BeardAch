@@ -69,7 +69,7 @@ public class Achievement {
 			return false;
 		}
 
-		for(AchievementPlayerLink link : AchievementManager.playerHasCache.get(player.getName())){
+		for(AchievementPlayerLink link : BeardAch.self.getAchievementManager().playerHasCache.get(player.getName())){
 			if(link.getSlug().equals(slug)){
 				return false;
 			}

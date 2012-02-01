@@ -6,7 +6,6 @@ import java.util.HashSet;
 import org.bukkit.entity.Player;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
@@ -49,9 +48,9 @@ public class ChunkCache {
 
 				//BeardAch.printDebugCon("Checking "+a.getName());
 				if(a.checkAchievement(player)){
-					AchievementManager.playerCheckCache.get(a).remove(player.getName());
-					AchievementManager.playerHasCache.get(player.getName()).add(new AchievementPlayerLink(a.getSlug()));
-					AchievementManager.database.setPlayersAchievements(player.getName(),a.getSlug());
+					BeardAch.self.getAchievementManager().playerCheckCache.get(a).remove(player.getName());
+					BeardAch.self.getAchievementManager().playerHasCache.get(player.getName()).add(new AchievementPlayerLink(a.getSlug()));
+					BeardAch.self.getAchievementManager().database.setPlayersAchievements(player.getName(),a.getSlug());
 				}
 
 			}

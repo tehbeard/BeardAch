@@ -17,7 +17,6 @@ import org.bukkit.Bukkit;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 
 
@@ -221,7 +220,7 @@ public class SqlDataSource extends AbstractDataSource{
 			fancyStat.clearBatch();
 			
 			
-			for(Achievement ach : AchievementManager.getAchievementsList()){
+			for(Achievement ach : BeardAch.self.getAchievementManager().getAchievementsList()){
 				fancyStat.setString(1, ach.getSlug());
 				fancyStat.setString(2, ach.getName());
 				fancyStat.setString(3, ach.getDescrip());

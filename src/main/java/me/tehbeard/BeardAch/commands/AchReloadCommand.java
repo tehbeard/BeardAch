@@ -1,6 +1,6 @@
 package me.tehbeard.BeardAch.commands;
 
-import me.tehbeard.BeardAch.achievement.AchievementManager;
+import me.tehbeard.BeardAch.BeardAch;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,7 +19,7 @@ public class AchReloadCommand implements CommandExecutor{
 
 		if(!sender.hasPermission("beardach.reload")){return true;}
 		sender.sendMessage("Reloading Achievements");
-		AchievementManager.loadAchievements();
+		BeardAch.self.getAchievementManager().loadAchievements();
 		sender.sendMessage("Reloaded Achievements");
 		return true;
 	}

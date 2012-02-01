@@ -3,10 +3,11 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 
 import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 
 import org.bukkit.entity.Player;
-
+@Configurable(tag="counter")
 public class CounterReward implements  IReward{
 
 	String name = "";

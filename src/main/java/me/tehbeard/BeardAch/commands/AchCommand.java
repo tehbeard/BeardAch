@@ -4,7 +4,6 @@ import java.util.List;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.AchievementManager;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 
 import org.bukkit.ChatColor;
@@ -23,7 +22,7 @@ public class AchCommand implements CommandExecutor{
 			if(args.length == 0){
 
 				//SIMPLE PAGINATION, ONLY SHOW LAST 5 ACHIEVEMENTS
-				List<AchievementPlayerLink> list = AchievementManager.getAchievements(player.getName());
+				List<AchievementPlayerLink> list = BeardAch.self.getAchievementManager().getAchievements(player.getName());
 				AchievementPlayerLink a;
 				
 				int pageSize = Math.min(5, list.size());
@@ -40,13 +39,13 @@ public class AchCommand implements CommandExecutor{
 				}
 				
 			}else if(args.length ==1){
-				Achievement a = AchievementManager.getAchievement(Integer.parseInt(args[0]));
+				Achievement a = BeardAch.self.getAchievementManager().getAchievement(Integer.parseInt(args[0]));
 				if(a!=null){
 					player.sendMessage(ChatColor.GOLD + a.getName());
 					player.sendMessage(ChatColor.BLUE + a.getDescrip());
 
 					//if they have unlocked it, tell them when they did
-					for( AchievementPlayerLink aLink:AchievementManager.getAchievements(player.getName())){
+					for( AchievementPlayerLink aLink:BeardAch.self.getAchievementManager().getAchievements(player.getName())){
 						if(aLink.getSlug().equals(a.getSlug())){
 						player.sendMessage(ChatColor.WHITE  + "You Unlocked this: " + aLink.getDate().toString());
 						}

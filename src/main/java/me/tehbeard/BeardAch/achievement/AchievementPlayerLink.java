@@ -35,7 +35,7 @@ public class AchievementPlayerLink {
 	}
 
 	public Achievement getAch(){
-		return AchievementManager.getAchievementSlug(slug);	
+		return BeardAch.self.getAchievementManager().getAchievementSlug(slug);	
 	}
 
 

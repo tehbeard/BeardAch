@@ -16,14 +16,14 @@ import me.tehbeard.BeardAch.dataSource.IDataSource;
  */
 public class AchievementManager {
 
-	public static HashMap<String,HashSet<AchievementPlayerLink>> playerHasCache = new  HashMap<String,HashSet<AchievementPlayerLink>>();
-	public static HashMap<Achievement,HashSet<String>> playerCheckCache = new  HashMap<Achievement,HashSet<String>>();
-	public static IDataSource database = null;
+	public HashMap<String,HashSet<AchievementPlayerLink>> playerHasCache = new  HashMap<String,HashSet<AchievementPlayerLink>>();
+	public HashMap<Achievement,HashSet<String>> playerCheckCache = new  HashMap<Achievement,HashSet<String>>();
+	public IDataSource database = null;
 
 
-	private static List<Achievement> achievements = new LinkedList<Achievement>();
+	private List<Achievement> achievements = new LinkedList<Achievement>();
 
-	public static void loadAchievements(){
+	public void loadAchievements(){
 		//clear cache
 		clearAchievements();
 		//reset Achievement Id's
@@ -33,13 +33,13 @@ public class AchievementManager {
 
 		//load each players 
 		for(Player p :Bukkit.getOnlinePlayers()){
-			AchievementManager.loadPlayersAchievements(p.getName());
+			loadPlayersAchievements(p.getName());
 		}
 	}
 	/**
 	 * Clear the caches.
 	 */
-	public static void clearAchievements(){
+	public void clearAchievements(){
 		ChunkCache.clearCache();
 		playerHasCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
 		achievements = new LinkedList<Achievement>();
@@ -50,13 +50,13 @@ public class AchievementManager {
 	 * Return the list of loaded achievements
 	 * @return
 	 */
-	public static List<Achievement> getAchievementsList() {
+	public List<Achievement> getAchievementsList() {
 		return achievements;
 	}
 
 
 
-	public static Achievement getAchievementSlug(String slug){
+	public Achievement getAchievementSlug(String slug){
 		for(Achievement a :achievements){
 			if(a.getSlug().equals(slug)){
 				return a;
@@ -69,7 +69,7 @@ public class AchievementManager {
 	 * Add achievement to the manager
 	 * @param ach
 	 */
-	public static void addAchievement(Achievement ach){
+	public void addAchievement(Achievement ach){
 		achievements.add(ach);
 		ChunkCache.addAchievement(ach);
 	}
@@ -78,7 +78,7 @@ public class AchievementManager {
 	 * Load the achievements for a player
 	 * @param player
 	 */
-	public static void loadPlayersAchievements(String player){
+	public void loadPlayersAchievements(String player){
 		HashSet<AchievementPlayerLink> got = database.getPlayersAchievements(player);
 		//put to cache
 		playerHasCache.put(player,got);
@@ -86,7 +86,7 @@ public class AchievementManager {
 		buildPlayerCheckCache(player);
 	}
 
-	private static void buildPlayerCheckCache(String player){
+	private void buildPlayerCheckCache(String player){
 
 		for(Achievement ach :achievements){
 
@@ -110,7 +110,7 @@ public class AchievementManager {
 	/**
 	 * Check all players online
 	 */
-	public static void checkPlayers(){
+	public void checkPlayers(){
 
 		//wipe players not online
 		//for each achievement
@@ -149,7 +149,7 @@ public class AchievementManager {
 
 	}
 
-	public static List<AchievementPlayerLink> getAchievements(String player){
+	public List<AchievementPlayerLink> getAchievements(String player){
 		if(playerHasCache.containsKey(player)){
 			List<AchievementPlayerLink> l = new LinkedList<AchievementPlayerLink>();
 
@@ -175,7 +175,7 @@ public class AchievementManager {
 
 	}
 
-	public static Achievement getAchievement(int i) {
+	public Achievement getAchievement(int i) {
 		if(i>0 && i<=achievements.size()){
 			return achievements.get(i-1);
 		}

@@ -3,7 +3,8 @@ package me.tehbeard.BeardAch.achievement.triggers;
 
 
 import java.util.List;
-import me.tehbeard.BeardAch.achievement.AchievementManager;
+
+import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
@@ -25,7 +26,7 @@ public class AchCheckTrigger implements ITrigger {
 
 	public boolean checkAchievement(Player player) {
 		//if player has an acheivement
-		List<AchievementPlayerLink> achs = AchievementManager.getAchievements(player.getName());
+		List<AchievementPlayerLink> achs = BeardAch.self.getAchievementManager().getAchievements(player.getName());
 		if(achs !=null){
 			for(AchievementPlayerLink a: achs){
 				if(a.getSlug().equals(ach)){return true;}

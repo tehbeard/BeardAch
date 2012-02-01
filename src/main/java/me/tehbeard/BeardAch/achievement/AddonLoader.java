@@ -17,7 +17,7 @@ import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 
 /**
- * Loads achievements from a directory of JAR's
+ * Loads achievements triggers and rewards from a directory of JAR's
  */
 public class AddonLoader {
 

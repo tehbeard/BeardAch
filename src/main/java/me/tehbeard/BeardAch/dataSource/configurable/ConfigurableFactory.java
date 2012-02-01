@@ -15,6 +15,7 @@ public class ConfigurableFactory {
 	public void addPart(Class<? extends IConfigurable> part){
 		Configurable tag = part.getAnnotation(Configurable.class);
 		if(tag!=null){
+			System.out.println("Adding " + tag.tag() + " to factory.");
 			parts.put(tag.tag(),part);
 		}
 	}

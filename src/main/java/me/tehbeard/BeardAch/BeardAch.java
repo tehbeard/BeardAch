@@ -29,6 +29,7 @@ public class BeardAch extends JavaPlugin {
 
 	public static BeardAch self;
 	private PlayerStatManager stats = null;
+	private AchievementManager achievementManager;
 	
 	public PlayerStatManager getStats(){
 		return stats;
@@ -48,12 +49,14 @@ public class BeardAch extends JavaPlugin {
 	}
 
 	public static void printDebugCon(String line){
-		//System.out.println("[BeardAch][DEBUG] " + line);
+		if(self.getConfig().getBoolean("general.debug")){
+		  System.out.println("[BeardAch][DEBUG] " + line);
+		}
 	}
 
 	public void onDisable() {
 
-		AchievementManager.database.flush();
+		achievementManager.database.flush();
 
 	}
 
@@ -67,7 +70,7 @@ public class BeardAch extends JavaPlugin {
 
 	public void onEnable() {
 		self = this;
-
+		achievementManager = new AchievementManager();
 		//Load config
 		printCon("Starting BeardAch");
 		getConfig().options().copyDefaults(true);
@@ -91,25 +94,24 @@ public class BeardAch extends JavaPlugin {
 
 
 		if(getConfig().getString("ach.database.type","").equalsIgnoreCase("mysql")){
-			AchievementManager.database = new SqlDataSource();
+			achievementManager.database = new SqlDataSource();
 		}
 		if(getConfig().getString("ach.database.type","").equalsIgnoreCase("null")){
 
-			AchievementManager.database = new NullDataSource();	
+			achievementManager.database = new NullDataSource();	
 		}
 		if(getConfig().getString("ach.database.type","").equalsIgnoreCase("file")){
 
-			AchievementManager.database = new YamlDataSource(this);	
+			achievementManager.database = new YamlDataSource(this);	
 		}
 
-		if(AchievementManager.database == null){
+		if(achievementManager.database == null){
 			printCon("NO SUITABLE DATABASE SELECTED!!");
 
 			onDisable();
 			return;
 		}
 		
-		//TODO, HERE IS WHERE TO IMPLEMENT ADDON LOADING
 		//Load installed triggers
 		addTrigger(AchCheckTrigger.class);
 		addTrigger(CuboidCheckTrigger.class);
@@ -126,12 +128,17 @@ public class BeardAch extends JavaPlugin {
 		addReward(DroxSubGroupReward.class);
 		addReward(DroxTrackReward.class);
 		
-		AchievementManager.loadAchievements();
+		
+		//TODO, HERE IS WHERE TO IMPLEMENT ADDON LOADING
+		
+		
+		
+		achievementManager.loadAchievements();
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
 			public void run() {
-				AchievementManager.checkPlayers();
+				achievementManager.checkPlayers();
 			}
 
 		}, 600L,600L);
@@ -175,5 +182,10 @@ public class BeardAch extends JavaPlugin {
 	}
 	public void addReward(Class<? extends IReward >  reward){
 		AbstractDataSource.rewardFactory.addPart(reward);
+	}
+	
+	public AchievementManager getAchievementManager(){
+		return achievementManager;
+		
 	}
 }

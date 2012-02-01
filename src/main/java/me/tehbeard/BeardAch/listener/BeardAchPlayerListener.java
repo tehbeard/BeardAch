@@ -2,7 +2,6 @@ package me.tehbeard.BeardAch.listener;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.ChunkCache;
-import me.tehbeard.BeardAch.achievement.AchievementManager;
 
 
 import org.bukkit.event.EventHandler;
@@ -28,7 +27,7 @@ public class BeardAchPlayerListener implements Listener {
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		// TODO Auto-generated method stub
-		AchievementManager.loadPlayersAchievements(event.getPlayer().getName());
+		BeardAch.self.getAchievementManager().loadPlayersAchievements(event.getPlayer().getName());
 		
 	}
 	

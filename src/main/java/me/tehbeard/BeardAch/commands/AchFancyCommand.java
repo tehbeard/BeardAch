@@ -1,6 +1,6 @@
 package me.tehbeard.BeardAch.commands;
 
-import me.tehbeard.BeardAch.achievement.AchievementManager;
+import me.tehbeard.BeardAch.BeardAch;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,7 +19,7 @@ public class AchFancyCommand implements CommandExecutor {
 		// TODO Auto-generated method stub
 		if(!sender.hasPermission("beardach.reload.fancy")){return true;}
 		sender.sendMessage("Dumping fancy achievement names");
-		AchievementManager.database.dumpFancy();
+		BeardAch.self.getAchievementManager().database.dumpFancy();
 		return true;
 	}
 
