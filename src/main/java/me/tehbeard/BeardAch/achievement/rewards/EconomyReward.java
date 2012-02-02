@@ -8,11 +8,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-@Configurable(tag="economy")
+@Configurable(tag="money")
 public class EconomyReward implements IReward {
 
 	private static Economy economy = null;
-	private double amount;
+	private double amount = 0.0D;
 
 	private static Boolean setupEconomy() {
 		if(economy==null){

@@ -3,7 +3,7 @@ echo "Building BeardAch"
 
 #Get Initial version
 VERSION=`git describe --tags`
-TARGET_DIR="/home/james/bukkit/plugins/BeardAch-0.0.1-SNAPSHOT.jar"
+TARGET_DIR="/home/james/bukkit/plugins/BeardAch.jar"
 
 #Add Uncommited  and DEV tags
 # Update the index
@@ -46,9 +46,9 @@ mvn package
 cp plugin.yml src/main/resources/plugin.yml
 
 echo "Installing to local bukkit server"
-cp target/BeardAch-0.0.1-SNAPSHOT.jar $TARGET_DIR
+cp target/BeardAch-0.4.jar $TARGET_DIR
 
 echo "Done"
 echo "Version: " $VERSION
 echo "Source file size: "` du -hs src/`
-echo "jar file size: "`du -hs target/BeardAch-0.0.1-SNAPSHOT.jar`
+echo "jar file size: "`du -hs target/BeardAch-0.4.jar`
