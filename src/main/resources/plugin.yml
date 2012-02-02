@@ -13,4 +13,12 @@ commands:
     ach-fancy:
         description: Use to update any output displays slug->fancy DB
         usage: /<command>
-        
+permissions:
+  beardach.reload:
+    description: Allows you to reload the achievements list
+    default: op
+    children:
+      beardach.reload.fancy: true
+  beardach.reload.fancy:
+    description: allows you to use /ach-fancy to make external ach displays
+    default: false
