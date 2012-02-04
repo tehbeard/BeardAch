@@ -30,10 +30,10 @@ public class BeardAch extends JavaPlugin {
 	public static BeardAch self;
 	private PlayerStatManager stats = null;
 	private AchievementManager achievementManager;
-	
+
 	public PlayerStatManager getStats(){
 		return stats;
-		
+
 	}
 	public static DroxPermsAPI droxAPI = null;
 	private static final String PERM_PREFIX = "ach";
@@ -50,7 +50,7 @@ public class BeardAch extends JavaPlugin {
 
 	public static void printDebugCon(String line){
 		if(self.getConfig().getBoolean("general.debug")){
-		  System.out.println("[BeardAch][DEBUG] " + line);
+			System.out.println("[BeardAch][DEBUG] " + line);
 		}
 	}
 
@@ -73,17 +73,19 @@ public class BeardAch extends JavaPlugin {
 		achievementManager = new AchievementManager();
 		//Load config
 		printCon("Starting BeardAch");
-		getConfig().options().copyDefaults(true);
+		if(!getConfig().getKeys(false).contains("achievements")){
+			getConfig().options().copyDefaults(true);
+		}
 		saveConfig();
 		reloadConfig();
 		updateConfig();
 		reloadConfig();
-		
+
 		EnableBeardStat();
 
 
 		//check DroxPerms
-    	DroxPerms droxPerms = ((DroxPerms) this.getServer().getPluginManager().getPlugin("DroxPerms"));
+		DroxPerms droxPerms = ((DroxPerms) this.getServer().getPluginManager().getPlugin("DroxPerms"));
 		if (droxPerms != null) {
 			droxAPI = droxPerms.getAPI();
 		}
@@ -111,7 +113,7 @@ public class BeardAch extends JavaPlugin {
 			onDisable();
 			return;
 		}
-		
+
 		//Load installed triggers
 		addTrigger(AchCheckTrigger.class);
 		addTrigger(CuboidCheckTrigger.class);
@@ -121,19 +123,19 @@ public class BeardAch extends JavaPlugin {
 		addTrigger(StatCheckTrigger.class);
 		addTrigger(StatWithinTrigger.class);
 		addTrigger(EconomyTrigger.class);
-		
+
 		//load installed rewards
 		addReward(CommandReward.class);
 		addReward(CounterReward.class);
 		addReward(DroxSubGroupReward.class);
 		addReward(DroxTrackReward.class);
 		addReward(EconomyReward.class);
-		
-		
+
+
 		//TODO, HERE IS WHERE TO IMPLEMENT ADDON LOADING
-		
-		
-		
+
+
+
 		achievementManager.loadAchievements();
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
@@ -166,7 +168,7 @@ public class BeardAch extends JavaPlugin {
 
 	private void updateConfig(){
 		File f = new File(getDataFolder(),"BeardAch.yml");
-		
+
 		if(f.exists()){
 			try {
 				YamlConfiguration.loadConfiguration(f).save(new File(getDataFolder(),"config.yml"));
@@ -177,16 +179,16 @@ public class BeardAch extends JavaPlugin {
 			}
 		}
 	}
-	
+
 	public void addTrigger(Class<? extends ITrigger > trigger){
 		AbstractDataSource.triggerFactory.addPart(trigger);
 	}
 	public void addReward(Class<? extends IReward >  reward){
 		AbstractDataSource.rewardFactory.addPart(reward);
 	}
-	
+
 	public AchievementManager getAchievementManager(){
 		return achievementManager;
-		
+
 	}
 }
