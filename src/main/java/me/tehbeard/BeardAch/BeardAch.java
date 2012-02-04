@@ -14,6 +14,7 @@ import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -190,5 +191,16 @@ public class BeardAch extends JavaPlugin {
 	public AchievementManager getAchievementManager(){
 		return achievementManager;
 
+	}
+	
+	public static String colorise(String msg){
+		
+		for(int i = 0;i<=9;i++){
+			msg = msg.replaceAll("&" + i, ChatColor.getByChar(""+i).toString());
+		}
+		for(char i = 'a';i<='f';i++){
+			msg = msg.replaceAll("&" + i, ChatColor.getByChar(i).toString());
+		}
+		return msg;
 	}
 }

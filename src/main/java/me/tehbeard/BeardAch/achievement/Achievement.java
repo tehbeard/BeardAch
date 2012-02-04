@@ -84,15 +84,16 @@ public class Achievement {
 		}
 
 		if(broadcast || (BeardAch.self.getConfig().getBoolean("ach.msg.send.broadcast", false) && !BeardAch.self.getConfig().getBoolean("ach.msg.send.person", true))){
-			Bukkit.broadcastMessage(
+			Bukkit.broadcastMessage(BeardAch.colorise(
 					BeardAch.self.getConfig().getString("ach.msg.broadcast", 
 							(ChatColor.AQUA + "<PLAYER> " + ChatColor.WHITE + "Unlocked: " + ChatColor.GOLD + "<ACH>")).replace("<ACH>", name ).replace("<PLAYER>",player.getName()
 									)
+					)
 					);
 
 		}
 		if(BeardAch.self.getConfig().getBoolean("ach.msg.send.person", true)){
-			player.sendMessage(BeardAch.self.getConfig().getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>",player.getName()));
+			player.sendMessage(BeardAch.colorise(BeardAch.self.getConfig().getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>",player.getName())));
 			player.sendMessage(ChatColor.BLUE + descrip);
 		}
 
