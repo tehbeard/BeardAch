@@ -54,7 +54,13 @@ public class SqlDataSource extends AbstractDataSource{
 			ResultSet rs = conn.getMetaData().getTables(null, null, "achievements", null);
 			if (!rs.next()) {
 				BeardAch.printCon("Achievements table not found, creating table");
-				PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `achievements` ( `player` varchar(32) NOT NULL,  `achievement` varchar(255) NOT NULL,  `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  UNIQUE KEY `player` (`player`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+				PreparedStatement ps = conn.prepareStatement(
+						"CREATE TABLE IF NOT EXISTS `achievements` " +
+						"( `player` varchar(32) NOT NULL,  " +
+						"`achievement` varchar(255) NOT NULL,  " +
+						"`timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
+						" KEY `player` (`player`)) " +
+						"ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 				ps.executeUpdate();
 				ps.close();
 				BeardAch.printCon("created storage table");
