@@ -9,6 +9,7 @@ import me.tehbeard.BeardAch.achievement.triggers.*;
 import me.tehbeard.BeardAch.achievement.rewards.*;
 import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
+import me.tehbeard.BeardAch.dataSource.configurable.AddonLoader;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
@@ -31,6 +32,7 @@ public class BeardAch extends JavaPlugin {
 	public static BeardAch self;
 	private PlayerStatManager stats = null;
 	private AchievementManager achievementManager;
+	private AddonLoader addonLoader;
 
 	public PlayerStatManager getStats(){
 		return stats;
@@ -134,8 +136,12 @@ public class BeardAch extends JavaPlugin {
 
 
 		//TODO, HERE IS WHERE TO IMPLEMENT ADDON LOADING
-
-
+		File addonDir = (new File(getDataFolder(),"addons"));
+		if(!addonDir.exists()){
+			addonDir.mkdir();
+		}
+		addonLoader = new AddonLoader(addonDir, this);
+		addonLoader.loadAddons();
 
 		achievementManager.loadAchievements();
 

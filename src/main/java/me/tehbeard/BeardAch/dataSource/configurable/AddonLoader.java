@@ -1,4 +1,4 @@
-package me.tehbeard.BeardAch.achievement;
+package me.tehbeard.BeardAch.dataSource.configurable;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -7,10 +7,12 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
+
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
@@ -38,40 +40,46 @@ public class AddonLoader {
 		String[] flist = dir.list(new FilenameFilter() {
 
 			public boolean accept(File file, String filename) {
-				return (file.isFile() && filename.endsWith(".jar"));
+				return !(file.isFile() && filename.endsWith(".jar"));
 			}
 		});
 		HashSet<String> classList = new HashSet<String>();
 		ZipFile addon;
-		ArrayList<URL> urls = new ArrayList<URL>();
+		URL[] urls = new URL[flist.length];
+		int i =0;
+		BeardAch.printCon(":: "+flist.length);
 		for (String file : flist) {
 			try{
 				File addonFile = new File(dir, file);
 
-				urls.add(addonFile.toURI().toURL());
-
+				urls[i] = addonFile.toURI().toURL();
+				i++;
+				BeardAch.printCon(addonFile.toURI().toURL().toString());
 
 				addon = new ZipFile(addonFile);
-				ZipEntry manifest = addon.getEntry("BA.addon.properties");
+				ZipEntry manifest = addon.getEntry("achaddon.yml");
 				if (manifest != null) {
-					Properties prop = new Properties();
-					prop.load(addon.getInputStream(manifest));
-					for (String className : prop.stringPropertyNames()) {
-
+					YamlConfiguration addonConfig = new YamlConfiguration();
+					addonConfig.load(addon.getInputStream(manifest));
+					BeardAch.printCon("Loading addon " + addonConfig.getString("name","N/A"));
+					for(String className:addonConfig.getStringList("classes")){
 						classList.add(className);
-
 					}
-				}
+				}	
 			} catch (ZipException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (InvalidConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			
 
 		}
-		loader = new URLClassLoader((URL[])urls.toArray(),getClass().getClassLoader());
+		loader = new URLClassLoader(urls,getClass().getClassLoader());
 		// add to triggers/rewards
 		try {
 

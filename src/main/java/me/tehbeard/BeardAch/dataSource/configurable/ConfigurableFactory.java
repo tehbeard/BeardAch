@@ -3,7 +3,6 @@ package me.tehbeard.BeardAch.dataSource.configurable;
 import java.util.HashMap;
 import java.util.Map;
 
-import me.tehbeard.BeardAch.achievement.IConfigurable;
 
 public class ConfigurableFactory {
 	private Map<String,Class<? extends IConfigurable>> parts;
