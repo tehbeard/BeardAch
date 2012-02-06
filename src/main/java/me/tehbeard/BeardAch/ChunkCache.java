@@ -1,5 +1,6 @@
 package me.tehbeard.BeardAch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -20,16 +21,19 @@ public class ChunkCache {
 	private static HashMap<String,HashSet<Achievement>> cache = new HashMap<String,HashSet<Achievement>>();
 
 	public static void clearCache(){
-		 cache = new HashMap<String,HashSet<Achievement>>();
+		cache = new HashMap<String,HashSet<Achievement>>();
 	}
 	public static void addAchievement(Achievement a){
 		for(ITrigger t :a.getTrigs()){
 			if(t instanceof CuboidCheckTrigger){
-				for(String cacheLocation :((CuboidCheckTrigger)t).getCache()){
-					if(!cache.containsKey(cacheLocation)){
-						cache.put(cacheLocation, new HashSet<Achievement>());
+				ArrayList<String> cache2 = ((CuboidCheckTrigger)t).getCache();
+				if(cache2!=null){
+					for(String cacheLocation :cache2){
+						if(!cache.containsKey(cacheLocation)){
+							cache.put(cacheLocation, new HashSet<Achievement>());
+						}
+						cache.get(cacheLocation).add(a);
 					}
-					cache.get(cacheLocation).add(a);
 				}
 			}
 		}
@@ -40,7 +44,7 @@ public class ChunkCache {
 		String cx = "" + player.getLocation().getBlockX() / 16;
 		String cz = "" + player.getLocation().getBlockZ() / 16;
 
-		
+
 		if(cache.containsKey(""+world+","+cx+","+cz)){
 			//BeardAch.printDebugCon("Chunk cache found records, checking....");
 			for(Achievement a : cache.get(""+world+","+cx+","+cz)){

@@ -96,7 +96,7 @@ public class BeardAch extends JavaPlugin {
 		//setup events
 		Listener pl = new BeardAchPlayerListener();
 		getServer().getPluginManager().registerEvents(pl, this);
-
+		
 
 		if(getConfig().getString("ach.database.type","").equalsIgnoreCase("mysql")){
 			achievementManager.database = new SqlDataSource();
@@ -155,7 +155,7 @@ public class BeardAch extends JavaPlugin {
 
 
 		//commands
-
+		
 		getCommand("ach-reload").setExecutor(new AchReloadCommand());
 		getCommand("ach").setExecutor(new AchCommand());
 		getCommand("ach-fancy").setExecutor(new AchFancyCommand());
