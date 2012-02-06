@@ -16,9 +16,9 @@ import org.bukkit.entity.Player;
 @Configurable(tag="cuboid")
 public class CuboidCheckTrigger implements ITrigger {
 
-	String world = null;
+	private String world = null;
 
-	Cuboid c = new Cuboid();
+	protected Cuboid c = new Cuboid();
 
 	public void configure(String config) {
 			c.setCuboid(config);
