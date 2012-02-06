@@ -60,7 +60,7 @@ public class Cuboid {
 
 	public ArrayList<String> getChunks(){
 		ArrayList<String> chunks = new ArrayList<String>();
-		if(v1 == null || v2 == null){
+		if(v1 != null && v2 != null){
 			int cx1 = v1.getBlockX()/16;
 			int cz1 = v1.getBlockZ()/16;
 			int cx2 = v2.getBlockX()/16;
