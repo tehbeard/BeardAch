@@ -60,15 +60,17 @@ public class Cuboid {
 
 	public ArrayList<String> getChunks(){
 		ArrayList<String> chunks = new ArrayList<String>();
-		int cx1 = v1.getBlockX()/16;
-		int cz1 = v1.getBlockZ()/16;
-		int cx2 = v2.getBlockX()/16;
-		int cz2 = v2.getBlockZ()/16;
-		int cx,cz;
+		if(v1 == null || v2 == null){
+			int cx1 = v1.getBlockX()/16;
+			int cz1 = v1.getBlockZ()/16;
+			int cx2 = v2.getBlockX()/16;
+			int cz2 = v2.getBlockZ()/16;
+			int cx,cz;
 
-		for(cx=cx1;cx<=cx2;cx++){
-			for(cz=cz1;cz<=cz2;cz++){
-				chunks.add(""+world+","+cx+","+cz);
+			for(cx=cx1;cx<=cx2;cx++){
+				for(cz=cz1;cz<=cz2;cz++){
+					chunks.add(""+world+","+cx+","+cz);
+				}
 			}
 		}
 		return chunks;
