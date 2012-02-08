@@ -1,6 +1,6 @@
 name: BeardAch
 main: me.tehbeard.BeardAch.BeardAch
-version: {VERSION}
+version: ${project.plugin.version}
 depend: [BeardStat]
 softdepend: [DroxPerms,worldguard,Vault] 
 commands:

@@ -5,6 +5,11 @@
   <version>0.4</version>
   <name>BearchAch</name>
   <description>Achievements plugin for BeardStat</description>
+  <properties>
+  <project.plugin.flavour>flapjack</project.plugin.flavour>
+  <project.plugin.version>${project.version}-${project.plugin.flavour}</project.plugin.version>
+
+  </properties>
     <repositories>
       <!-- Repository for Bukkit -->
       <repository>
@@ -51,4 +56,17 @@
   		<scope>compile</scope>
   	</dependency>
   </dependencies>
+  <build>
+    <resources>
+      <resource>
+        <targetPath>.</targetPath>
+        <filtering>true</filtering>
+        <directory>${basedir}/src/main/resources/</directory>
+        <includes>
+          <include>plugin.yml</include>
+          <include>config.yml</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
 </project>
