@@ -2,6 +2,11 @@ package me.tehbeard.BeardAch;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import me.tehbeard.BeardAch.achievement.*;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
@@ -9,14 +14,19 @@ import me.tehbeard.BeardAch.achievement.triggers.*;
 import me.tehbeard.BeardAch.achievement.rewards.*;
 import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
-import me.tehbeard.BeardAch.dataSource.configurable.AddonLoader;
+import me.tehbeard.BeardAch.dataSource.configurable.AddonLoaderOld;
+import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
+import me.tehbeard.utils.addons.AddonLoader;
+import me.tehbeard.utils.addons.ClassBootStrapper;
+import me.tehbeard.utils.addons.ClassNameProvider;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 
@@ -29,184 +39,227 @@ import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
 
 public class BeardAch extends JavaPlugin {
 
-	public static BeardAch self;
-	private PlayerStatManager stats = null;
-	private AchievementManager achievementManager;
-	private AddonLoader addonLoader;
+    public static BeardAch self;
+    private PlayerStatManager stats = null;
+    private AchievementManager achievementManager;
+    private AddonLoader<IConfigurable> addonLoader;
+    public PlayerStatManager getStats(){
+        return stats;
 
-	public PlayerStatManager getStats(){
-		return stats;
+    }
+    public static DroxPermsAPI droxAPI = null;
+    private static final String PERM_PREFIX = "ach";
 
-	}
-	public static DroxPermsAPI droxAPI = null;
-	private static final String PERM_PREFIX = "ach";
+    public static boolean hasPermission(Permissible player,String node){
 
-	public static boolean hasPermission(Permissible player,String node){
-
-		return (player.hasPermission(PERM_PREFIX + "." + node) || player.isOp());
-
-
-	}
-	public static void printCon(String line){
-		System.out.println("[BeardAch] " + line);
-	}
-
-	public static void printDebugCon(String line){
-		if(self.getConfig().getBoolean("general.debug")){
-			System.out.println("[BeardAch][DEBUG] " + line);
-		}
-	}
-
-	public void onDisable() {
-
-		achievementManager.database.flush();
-
-	}
-
-	private void EnableBeardStat(){
-		BeardStat bs = (BeardStat) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
-		if(bs!=null && bs.isEnabled()){
-			stats = bs.getStatManager();
-		}
-
-	}
-
-	public void onEnable() {
-		self = this;
-		achievementManager = new AchievementManager();
-		//Load config
-		printCon("Starting BeardAch");
-		if(!getConfig().getKeys(false).contains("achievements")){
-			getConfig().options().copyDefaults(true);
-		}
-		saveConfig();
-		reloadConfig();
-		updateConfig();
-		reloadConfig();
-
-		EnableBeardStat();
+        return (player.hasPermission(PERM_PREFIX + "." + node) || player.isOp());
 
 
-		//check DroxPerms
-		DroxPerms droxPerms = ((DroxPerms) this.getServer().getPluginManager().getPlugin("DroxPerms"));
-		if (droxPerms != null) {
-			droxAPI = droxPerms.getAPI();
-		}
+    }
+    public static void printCon(String line){
+        System.out.println("[BeardAch] " + line);
+    }
 
-		//setup events
-		Listener pl = new BeardAchPlayerListener();
-		getServer().getPluginManager().registerEvents(pl, this);
-		
+    public static void printDebugCon(String line){
+        if(self.getConfig().getBoolean("general.debug")){
+            System.out.println("[BeardAch][DEBUG] " + line);
+        }
+    }
 
-		if(getConfig().getString("ach.database.type","").equalsIgnoreCase("mysql")){
-			achievementManager.database = new SqlDataSource();
-		}
-		if(getConfig().getString("ach.database.type","").equalsIgnoreCase("null")){
+    public void onDisable() {
 
-			achievementManager.database = new NullDataSource();	
-		}
-		if(getConfig().getString("ach.database.type","").equalsIgnoreCase("file")){
+        achievementManager.database.flush();
 
-			achievementManager.database = new YamlDataSource(this);	
-		}
+    }
 
-		if(achievementManager.database == null){
-			printCon("NO SUITABLE DATABASE SELECTED!!");
+    private void EnableBeardStat(){
+        BeardStat bs = (BeardStat) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
+        if(bs!=null && bs.isEnabled()){
+            stats = bs.getStatManager();
+        }
 
-			onDisable();
-			return;
-		}
+    }
 
-		//Load installed triggers
-		addTrigger(AchCheckTrigger.class);
-		addTrigger(CuboidCheckTrigger.class);
-		addTrigger(LockedTrigger.class);
-		addTrigger(NoAchCheckTrigger.class);
-		addTrigger(PermCheckTrigger.class);
-		addTrigger(StatCheckTrigger.class);
-		addTrigger(StatWithinTrigger.class);
-		addTrigger(EconomyTrigger.class);
+    @SuppressWarnings("unchecked")
+    public void onEnable() {
+        self = this;
+        achievementManager = new AchievementManager();
+        //Load config
+        printCon("Starting BeardAch");
+        if(!getConfig().getKeys(false).contains("achievements")){
+            getConfig().options().copyDefaults(true);
+        }
+        saveConfig();
+        reloadConfig();
+        updateConfig();
+        reloadConfig();
 
-		//load installed rewards
-		addReward(CommandReward.class);
-		addReward(CounterReward.class);
-		addReward(DroxSubGroupReward.class);
-		addReward(DroxTrackReward.class);
-		addReward(EconomyReward.class);
+        EnableBeardStat();
 
 
-		//TODO, HERE IS WHERE TO IMPLEMENT ADDON LOADING
-		File addonDir = (new File(getDataFolder(),"addons"));
-		if(!addonDir.exists()){
-			addonDir.mkdir();
-		}
-		addonLoader = new AddonLoader(addonDir, this);
-		addonLoader.loadAddons();
+        //check DroxPerms
+        DroxPerms droxPerms = ((DroxPerms) this.getServer().getPluginManager().getPlugin("DroxPerms"));
+        if (droxPerms != null) {
+            droxAPI = droxPerms.getAPI();
+        }
 
-		achievementManager.loadAchievements();
-
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
-
-			public void run() {
-				achievementManager.checkPlayers();
-			}
-
-		}, 600L,600L);
+        //setup events
+        Listener pl = new BeardAchPlayerListener();
+        getServer().getPluginManager().registerEvents(pl, this);
 
 
-		//commands
-		
-		getCommand("ach-reload").setExecutor(new AchReloadCommand());
-		getCommand("ach").setExecutor(new AchCommand());
-		getCommand("ach-fancy").setExecutor(new AchFancyCommand());
-		printCon("Loaded Version:" + getDescription().getVersion());
-	}
+        if(getConfig().getString("ach.database.type","").equalsIgnoreCase("mysql")){
+            achievementManager.database = new SqlDataSource();
+        }
+        if(getConfig().getString("ach.database.type","").equalsIgnoreCase("null")){
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command,
-			String label, String[] args) {
+            achievementManager.database = new NullDataSource();	
+        }
+        if(getConfig().getString("ach.database.type","").equalsIgnoreCase("file")){
 
-		sender.sendMessage("COMMAND NOT IMPLEMENTED");
-		return true;
-	}
+            achievementManager.database = new YamlDataSource(this);	
+        }
+
+        if(achievementManager.database == null){
+            printCon("NO SUITABLE DATABASE SELECTED!!");
+
+            onDisable();
+            return;
+        }
+
+        //Load installed triggers
+        addTrigger(AchCheckTrigger.class);
+        addTrigger(CuboidCheckTrigger.class);
+        addTrigger(LockedTrigger.class);
+        addTrigger(NoAchCheckTrigger.class);
+        addTrigger(PermCheckTrigger.class);
+        addTrigger(StatCheckTrigger.class);
+        addTrigger(StatWithinTrigger.class);
+        addTrigger(EconomyTrigger.class);
+
+        //load installed rewards
+        addReward(CommandReward.class);
+        addReward(CounterReward.class);
+        addReward(DroxSubGroupReward.class);
+        addReward(DroxTrackReward.class);
+        addReward(EconomyReward.class);
+
+
+        //TODO, HERE IS WHERE TO IMPLEMENT ADDON LOADING
+        File addonDir = (new File(getDataFolder(),"addons"));
+        if(!addonDir.exists()){
+            addonDir.mkdir();
+        }
+
+        addonLoader = new AddonLoader<IConfigurable>(addonDir, IConfigurable.class);
+        addonLoader.setClassNameProvider(new ClassNameProvider(){
+
+            @Override
+            public List<String> getClassList(ZipFile addon) {
+                List<String> classList = new ArrayList<String>();
+                try {
+                    ZipEntry manifest = addon.getEntry("achaddon.yml");
+                    if (manifest != null) {
+                        YamlConfiguration addonConfig = new YamlConfiguration();
+
+                        addonConfig.load(addon.getInputStream(manifest));
+
+                        BeardAch.printCon("Loading addon " + addonConfig.getString("name","N/A"));
+                        for(String className:addonConfig.getStringList("classes")){
+                            classList.add(className);
+                        }
+                    }
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (InvalidConfigurationException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                return classList;
+            }
+
+
+        });
+
+        addonLoader.setBootStrap(new ClassBootStrapper<IConfigurable>() {
+
+            @Override
+            public void makeClass(Class<? extends IConfigurable> classType) {
+                if(classType!=null){
+                    if(ITrigger.class.isAssignableFrom(classType)){
+                        addTrigger((Class<? extends ITrigger>) classType);
+                    }else if(IReward.class.isAssignableFrom(classType)){
+                        addReward((Class<? extends IReward>) classType);
+                    }
+                }
+            }
+        });
+        addonLoader.loadAddons();
+        achievementManager.loadAchievements();
+
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
+
+            public void run() {
+                achievementManager.checkPlayers();
+            }
+
+        }, 600L,600L);
+
+
+        //commands
+
+        getCommand("ach-reload").setExecutor(new AchReloadCommand());
+        getCommand("ach").setExecutor(new AchCommand());
+        getCommand("ach-fancy").setExecutor(new AchFancyCommand());
+        printCon("Loaded Version:" + getDescription().getVersion());
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,
+            String label, String[] args) {
+
+        sender.sendMessage("COMMAND NOT IMPLEMENTED");
+        return true;
+    }
 
 
 
 
-	private void updateConfig(){
-		File f = new File(getDataFolder(),"BeardAch.yml");
+    private void updateConfig(){
+        File f = new File(getDataFolder(),"BeardAch.yml");
 
-		if(f.exists()){
-			try {
-				YamlConfiguration.loadConfiguration(f).save(new File(getDataFolder(),"config.yml"));
-				f.renameTo(new File(getDataFolder(),"BeardAch.yml.old"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
+        if(f.exists()){
+            try {
+                YamlConfiguration.loadConfiguration(f).save(new File(getDataFolder(),"config.yml"));
+                f.renameTo(new File(getDataFolder(),"BeardAch.yml.old"));
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
 
-	public void addTrigger(Class<? extends ITrigger > trigger){
-		AbstractDataSource.triggerFactory.addPart(trigger);
-	}
-	public void addReward(Class<? extends IReward >  reward){
-		AbstractDataSource.rewardFactory.addPart(reward);
-	}
+    public void addTrigger(Class<? extends ITrigger > trigger){
+        AbstractDataSource.triggerFactory.addPart(trigger);
+    }
+    public void addReward(Class<? extends IReward >  reward){
+        AbstractDataSource.rewardFactory.addPart(reward);
+    }
 
-	public AchievementManager getAchievementManager(){
-		return achievementManager;
+    public AchievementManager getAchievementManager(){
+        return achievementManager;
 
-	}
-	
-	public static String colorise(String msg){
-		
-		for(int i = 0;i<=9;i++){
-			msg = msg.replaceAll("&" + i, ChatColor.getByChar(""+i).toString());
-		}
-		for(char i = 'a';i<='f';i++){
-			msg = msg.replaceAll("&" + i, ChatColor.getByChar(i).toString());
-		}
-		return msg;
-	}
+    }
+
+    public static String colorise(String msg){
+
+        for(int i = 0;i<=9;i++){
+            msg = msg.replaceAll("&" + i, ChatColor.getByChar(""+i).toString());
+        }
+        for(char i = 'a';i<='f';i++){
+            msg = msg.replaceAll("&" + i, ChatColor.getByChar(i).toString());
+        }
+        return msg;
+    }
 }
