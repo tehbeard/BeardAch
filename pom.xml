@@ -27,13 +27,6 @@
             <type>jar</type>
             <scope>compile</scope>    
         </dependency>
-        <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldedit</artifactId>
-            <version>5.1-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>    
-        </dependency>
   	<dependency>
   		<groupId>org.bukkit</groupId>
   		<artifactId>bukkit</artifactId>
@@ -55,6 +48,14 @@
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
+  	<dependency>
+  		<groupId>me.tehbeard</groupId>
+  		<artifactId>utils</artifactId>
+  		<version>0.1</version>
+  		<type>jar</type>
+    		<scope>compile</scope>
+  	</dependency>
+
   </dependencies>
   <build>
     <resources>
@@ -68,5 +69,29 @@
         </includes>
       </resource>
     </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <artifactSet>
+                <includes>
+                  <include>me.tehbeard:utils</include>
+                </includes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
   </build>
 </project>
