@@ -79,8 +79,10 @@ public class Achievement {
 				return false;
 			}
 		}
-		for(IReward reward:rewards){
-			reward.giveReward(player);
+		if(!player.hasPermission("ach.exempt.*") && !player.hasPermission("ach.exempt." + slug)){
+			for(IReward reward:rewards){
+				reward.giveReward(player);
+			}
 		}
 
 		if(broadcast || (BeardAch.self.getConfig().getBoolean("ach.msg.send.broadcast", false) && !BeardAch.self.getConfig().getBoolean("ach.msg.send.person", true))){
