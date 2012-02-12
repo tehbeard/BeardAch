@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -14,7 +14,6 @@ import me.tehbeard.BeardAch.achievement.triggers.*;
 import me.tehbeard.BeardAch.achievement.rewards.*;
 import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
-import me.tehbeard.BeardAch.dataSource.configurable.AddonLoaderOld;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
 import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
@@ -127,6 +126,7 @@ public class BeardAch extends JavaPlugin {
             return;
         }
 
+        printCon("Installing default triggers");
         //Load installed triggers
         addTrigger(AchCheckTrigger.class);
         addTrigger(CuboidCheckTrigger.class);
@@ -137,6 +137,7 @@ public class BeardAch extends JavaPlugin {
         addTrigger(StatWithinTrigger.class);
         addTrigger(EconomyTrigger.class);
 
+        printCon("Installing default rewards");
         //load installed rewards
         addReward(CommandReward.class);
         addReward(CounterReward.class);
@@ -145,7 +146,8 @@ public class BeardAch extends JavaPlugin {
         addReward(EconomyReward.class);
 
 
-        //TODO, HERE IS WHERE TO IMPLEMENT ADDON LOADING
+        printCon("Preparing to load addons");
+        //Create addon dir if it doesn't exist
         File addonDir = (new File(getDataFolder(),"addons"));
         if(!addonDir.exists()){
             addonDir.mkdir();
@@ -170,11 +172,15 @@ public class BeardAch extends JavaPlugin {
                         }
                     }
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    printCon("[ERROR] An I/O error occured while trying to access an addon. " + addon.getName());
+                    if(self.getConfig().getBoolean("general.debug")){
+                        e.printStackTrace();
+                    }
                 } catch (InvalidConfigurationException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    printCon("[ERROR] Configuration header for "+ addon.getName() + " appears to be corrupt");
+                    if(self.getConfig().getBoolean("general.debug")){
+                        e.printStackTrace();
+                    }
                 }
                 return classList;
             }
@@ -195,9 +201,12 @@ public class BeardAch extends JavaPlugin {
                 }
             }
         });
+        printCon("Loading addons");
         addonLoader.loadAddons();
+        printCon("Loading Achievements");
         achievementManager.loadAchievements();
 
+        printCon("Starting achievement checker");
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
             public void run() {
@@ -207,6 +216,7 @@ public class BeardAch extends JavaPlugin {
         }, 600L,600L);
 
 
+        printCon("Loading commands");
         //commands
 
         getCommand("ach-reload").setExecutor(new AchReloadCommand());
@@ -252,6 +262,11 @@ public class BeardAch extends JavaPlugin {
 
     }
 
+    /**
+     * Colorises strings containing &0-f
+     * @param msg
+     * @return
+     */
     public static String colorise(String msg){
 
         for(int i = 0;i<=9;i++){
