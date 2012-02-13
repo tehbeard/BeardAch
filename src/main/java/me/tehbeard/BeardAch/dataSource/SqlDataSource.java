@@ -135,11 +135,11 @@ public class SqlDataSource extends AbstractDataSource{
 
 
 	public HashSet<AchievementPlayerLink> getPlayersAchievements(String player) {
-
+	    HashSet<AchievementPlayerLink> c = new HashSet<AchievementPlayerLink>();
 		try {
 			prepGetAllPlayerAch.setString(1, player);
 			ResultSet rs = prepGetAllPlayerAch.executeQuery();
-			HashSet<AchievementPlayerLink> c = new HashSet<AchievementPlayerLink>();
+			
 			while(rs.next()){
 				c.add(new AchievementPlayerLink(rs.getString(1),rs.getTimestamp(2)));
 				
@@ -152,7 +152,7 @@ public class SqlDataSource extends AbstractDataSource{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return c;
 	}
 
 
