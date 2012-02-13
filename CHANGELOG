@@ -1,0 +1,6 @@
+Bacon -> Flapjack
+=================
+* Fixed neumerous potential NPE's
+* Added exemption nodes for achievement rewards 
+(ach.exempt.* or arch.exempt.[slug]
+* Addon loader (TODO: Details on how to make addons)
