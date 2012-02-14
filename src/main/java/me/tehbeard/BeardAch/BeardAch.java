@@ -19,8 +19,7 @@ import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import me.tehbeard.utils.addons.AddonLoader;
-import me.tehbeard.utils.addons.ClassBootStrapper;
-import me.tehbeard.utils.addons.ClassNameProvider;
+
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -153,9 +152,7 @@ public class BeardAch extends JavaPlugin {
             addonDir.mkdir();
         }
 
-        addonLoader = new AddonLoader<IConfigurable>(addonDir, IConfigurable.class);
-        addonLoader.setClassNameProvider(new ClassNameProvider(){
-
+        addonLoader = new AddonLoader<IConfigurable>(addonDir, IConfigurable.class){
             @Override
             public List<String> getClassList(ZipFile addon) {
                 List<String> classList = new ArrayList<String>();
@@ -185,11 +182,6 @@ public class BeardAch extends JavaPlugin {
                 return classList;
             }
 
-
-        });
-
-        addonLoader.setBootStrap(new ClassBootStrapper<IConfigurable>() {
-
             @Override
             public void makeClass(Class<? extends IConfigurable> classType) {
                 if(classType!=null){
@@ -200,7 +192,10 @@ public class BeardAch extends JavaPlugin {
                     }
                 }
             }
-        });
+
+
+        };
+
         printCon("Loading addons");
         addonLoader.loadAddons();
         printCon("Loading Achievements");
@@ -232,9 +227,6 @@ public class BeardAch extends JavaPlugin {
         sender.sendMessage("COMMAND NOT IMPLEMENTED");
         return true;
     }
-
-
-
 
     private void updateConfig(){
         File f = new File(getDataFolder(),"BeardAch.yml");
