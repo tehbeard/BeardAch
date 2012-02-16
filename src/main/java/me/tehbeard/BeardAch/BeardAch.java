@@ -2,7 +2,6 @@ package me.tehbeard.BeardAch;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -253,10 +252,10 @@ public class BeardAch extends JavaPlugin {
     }
 
     public void addTrigger(Class<? extends ITrigger > trigger){
-        //AbstractDataSource.triggerFactory.addPart(trigger);
+        AbstractDataSource.triggerFactory.addProduct(trigger);
     }
     public void addReward(Class<? extends IReward >  reward){
-        //AbstractDataSource.rewardFactory.addPart(reward);
+        AbstractDataSource.rewardFactory.addProduct(reward);
     }
 
     public AchievementManager getAchievementManager(){

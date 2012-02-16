@@ -95,16 +95,6 @@ public abstract class AbstractDataSource implements IDataSource{
 					IReward rewardInst = rewardFactory.getProduct(part[0]);
 					rewardInst.configure(part[1]);
 					ach.addReward(rewardInst);
-					/*
-					if(part[0].equals("comm")){
-						ach.addReward(CommandReward.getInstance(part[1]));
-					}else if(part[0].equals("promote")){
-						ach.addReward(DroxTrackReward.getInstance(part[1]));
-					}else if(part[0].equals("subgroup")){
-						ach.addReward(DroxSubGroupReward.getInstance(part[1]));
-					}else if(part[0].equals("counter")){
-						ach.addReward(CounterReward.getInstance(part[1]));
-					}*/
 				}
 				else
 				{
