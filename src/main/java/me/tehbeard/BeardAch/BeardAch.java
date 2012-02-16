@@ -2,6 +2,7 @@ package me.tehbeard.BeardAch;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import me.tehbeard.utils.addons.AddonLoader;
+import me.tehbeard.utils.factory.ConfigurableFactory;
 
 
 import org.bukkit.Bukkit;
@@ -104,8 +106,16 @@ public class BeardAch extends JavaPlugin {
         //setup events
         Listener pl = new BeardAchPlayerListener();
         getServer().getPluginManager().registerEvents(pl, this);
-
-
+        
+        printCon("Loading data Adapters");
+        ConfigurableFactory<IDataSource,DataSourceDescriptor> dataSourceFactory = new ConfigurableFactory<IDataSource, DataSourceDescriptor>(DataSourceDescriptor.class) {
+            
+            @Override
+            public String getTag(DataSourceDescriptor annotation) {
+                return annotation.tag();
+            }
+        };
+        
         if(getConfig().getString("ach.database.type","").equalsIgnoreCase("mysql")){
             achievementManager.database = new SqlDataSource();
         }
@@ -115,7 +125,7 @@ public class BeardAch extends JavaPlugin {
         }
         if(getConfig().getString("ach.database.type","").equalsIgnoreCase("file")){
 
-            achievementManager.database = new YamlDataSource(this);	
+            achievementManager.database = new YamlDataSource();	
         }
 
         if(achievementManager.database == null){
@@ -243,10 +253,10 @@ public class BeardAch extends JavaPlugin {
     }
 
     public void addTrigger(Class<? extends ITrigger > trigger){
-        AbstractDataSource.triggerFactory.addPart(trigger);
+        //AbstractDataSource.triggerFactory.addPart(trigger);
     }
     public void addReward(Class<? extends IReward >  reward){
-        AbstractDataSource.rewardFactory.addPart(reward);
+        //AbstractDataSource.rewardFactory.addPart(reward);
     }
 
     public AchievementManager getAchievementManager(){

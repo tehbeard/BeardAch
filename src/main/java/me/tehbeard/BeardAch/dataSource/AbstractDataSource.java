@@ -11,13 +11,26 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
+import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.utils.factory.ConfigurableFactory;
 
-import me.tehbeard.BeardAch.dataSource.configurable.ConfigurableFactory;
 
 public abstract class AbstractDataSource implements IDataSource{
 
-	public static final ConfigurableFactory triggerFactory = new ConfigurableFactory();
-	public static final ConfigurableFactory rewardFactory = new ConfigurableFactory();
+	public static final ConfigurableFactory<ITrigger,Configurable> triggerFactory = new ConfigurableFactory<ITrigger, Configurable>(Configurable.class) {
+        
+        @Override
+        public String getTag(Configurable annotation) {
+            return annotation.tag();
+        }
+    };
+	public static final ConfigurableFactory<IReward,Configurable> rewardFactory = new ConfigurableFactory<IReward, Configurable>(Configurable.class) {
+        
+        @Override
+        public String getTag(Configurable annotation) {
+            return annotation.tag();
+        }
+    };
 	
 	
 
@@ -45,8 +58,10 @@ public abstract class AbstractDataSource implements IDataSource{
 			for(String trig: triggers){
 				String[] part = trig.split("\\|");
 				if(part.length==2){
-					BeardAch.printDebugCon("Trigger => " + trig); 
-					ach.addTrigger((ITrigger) triggerFactory.getPart(part[0],part[1]));
+					BeardAch.printDebugCon("Trigger => " + trig);
+					ITrigger trigger = triggerFactory.getProduct(part[0]);
+					trigger.configure(part[1]);
+					ach.addTrigger(trigger);
 					/*
 					if(part[0].equals("stat")){
 						ach.addTrigger(StatCheckTrigger.getInstance(part[1]));
@@ -77,8 +92,9 @@ public abstract class AbstractDataSource implements IDataSource{
 				String[] part = reward.split("\\|");
 				if(part.length==2){
 					BeardAch.printDebugCon("Reward => " + reward); 
-
-					ach.addReward((IReward) rewardFactory.getPart(part[0],part[1]));
+					IReward rewardInst = rewardFactory.getProduct(part[0]);
+					rewardInst.configure(part[1]);
+					ach.addReward(rewardInst);
 					/*
 					if(part[0].equals("comm")){
 						ach.addReward(CommandReward.getInstance(part[1]));
