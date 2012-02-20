@@ -15,21 +15,16 @@ import me.tehbeard.BeardAch.achievement.rewards.*;
 import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
-import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import me.tehbeard.utils.addons.AddonLoader;
 import me.tehbeard.utils.factory.ConfigurableFactory;
-
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-
-import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -102,9 +97,7 @@ public class BeardAch extends JavaPlugin {
             droxAPI = droxPerms.getAPI();
         }
 
-        //setup events
-        Listener pl = new BeardAchPlayerListener();
-        getServer().getPluginManager().registerEvents(pl, this);
+
         
         printCon("Loading Data Adapters");
         ConfigurableFactory<IDataSource,DataSourceDescriptor> dataSourceFactory = new ConfigurableFactory<IDataSource, DataSourceDescriptor>(DataSourceDescriptor.class) {
@@ -224,6 +217,8 @@ public class BeardAch extends JavaPlugin {
 
         }, 600L,600L);
 
+        //setup events
+        getServer().getPluginManager().registerEvents(achievementManager,this);
 
         printCon("Loading commands");
         //commands
@@ -287,4 +282,5 @@ public class BeardAch extends JavaPlugin {
         }
         return msg;
     }
+
 }
