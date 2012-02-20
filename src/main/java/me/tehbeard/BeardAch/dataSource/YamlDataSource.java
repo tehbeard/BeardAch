@@ -14,6 +14,7 @@ import org.bukkit.plugin.Plugin;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 
+@DataSourceDescriptor(tag="file",version="1.4")
 public class YamlDataSource extends AbstractDataSource {
 
 	YamlConfiguration db;

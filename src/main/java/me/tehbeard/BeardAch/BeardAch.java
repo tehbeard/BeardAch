@@ -115,6 +115,7 @@ public class BeardAch extends JavaPlugin {
             }
         };
         
+        /*
         if(getConfig().getString("ach.database.type","").equalsIgnoreCase("mysql")){
             achievementManager.database = new SqlDataSource();
         }
@@ -125,12 +126,15 @@ public class BeardAch extends JavaPlugin {
         if(getConfig().getString("ach.database.type","").equalsIgnoreCase("file")){
 
             achievementManager.database = new YamlDataSource();	
-        }
+        }*/
+        achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type",""));
 
         if(achievementManager.database == null){
-            printCon("NO SUITABLE DATABASE SELECTED!!");
+            printCon("!!NO SUITABLE DATABASE SELECTED!!");
+            printCon("!!DISABLING PLUGIN!!");
 
-            onDisable();
+            //onDisable();
+            setEnabled(false);
             return;
         }
 
