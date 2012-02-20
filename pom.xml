@@ -87,6 +87,7 @@
                   <include>me.tehbeard:utils</include>
                 </includes>
               </artifactSet>
+              <minimizeJar>true</minimizeJar>
             </configuration>
           </execution>
         </executions>

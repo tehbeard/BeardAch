@@ -34,19 +34,23 @@ public abstract class AbstractDataSource implements IDataSource{
 	
 	
 
+    /**
+     * Load the achievment descriptions
+     */
 	public void loadAchievements() {
 
 
 		Set<String> achs = BeardAch.self.getConfig().getConfigurationSection("achievements").getKeys(false);
 		if(achs==null){
 			BeardAch.printCon("NO ACHIEVEMENTS FOUND");
+			return;
 		}
 		for(String slug : achs){
 			ConfigurationSection e = BeardAch.self.getConfig().getConfigurationSection("achievements").getConfigurationSection(slug);
 			if(e==null){
 				continue;
 			}
-
+			//load information
 			String name = e.getString("name");
 			String descrip = e.getString("descrip");
 			boolean broadcast = e.getBoolean("broadcast",false);
@@ -54,6 +58,7 @@ public abstract class AbstractDataSource implements IDataSource{
 
 			Achievement ach = new Achievement(slug,name, descrip,broadcast);
 
+			//load triggers
 			List<String> triggers = e.getStringList("triggers");
 			for(String trig: triggers){
 				String[] part = trig.split("\\|");
@@ -62,25 +67,6 @@ public abstract class AbstractDataSource implements IDataSource{
 					ITrigger trigger = triggerFactory.getProduct(part[0]);
 					trigger.configure(part[1]);
 					ach.addTrigger(trigger);
-					/*
-					if(part[0].equals("stat")){
-						ach.addTrigger(StatCheckTrigger.getInstance(part[1]));
-					}else if(part[0].equals("statwithin")){
-						ach.addTrigger(StatWithinTrigger.getInstance(part[1]));
-					}else if(part[0].equals("perm")){
-						ach.addTrigger(PermCheckTrigger.getInstance(part[1]));
-					}else if(part[0].equals("cuboid")){
-						ach.addTrigger(CuboidCheckTrigger.getInstance(part[1]));
-					}else if(part[0].equals("ach")){
-						ach.addTrigger(AchCheckTrigger.getInstance(part[1]));
-					}else if(part[0].equals("noach")){
-						ach.addTrigger(NoAchCheckTrigger.getInstance(part[1]));
-					}else if(part[0].equals("locked")){
-						ach.addTrigger(LockedTrigger.getInstance(part[1]));
-					}*/
-
-
-
 				}
 				else
 				{

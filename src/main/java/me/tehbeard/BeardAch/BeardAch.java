@@ -161,6 +161,7 @@ public class BeardAch extends JavaPlugin {
             addonDir.mkdir();
         }
 
+        //create the addon loader
         addonLoader = new AddonLoader<IConfigurable>(addonDir, IConfigurable.class){
             @Override
             public List<String> getClassList(ZipFile addon) {
@@ -258,6 +259,10 @@ public class BeardAch extends JavaPlugin {
         AbstractDataSource.rewardFactory.addProduct(reward);
     }
 
+    /**
+     * return the achievement manager
+     * @return
+     */
     public AchievementManager getAchievementManager(){
         return achievementManager;
 
