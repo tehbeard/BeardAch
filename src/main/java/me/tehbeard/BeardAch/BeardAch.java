@@ -106,7 +106,7 @@ public class BeardAch extends JavaPlugin {
         Listener pl = new BeardAchPlayerListener();
         getServer().getPluginManager().registerEvents(pl, this);
         
-        printCon("Loading data Adapters");
+        printCon("Loading Data Adapters");
         ConfigurableFactory<IDataSource,DataSourceDescriptor> dataSourceFactory = new ConfigurableFactory<IDataSource, DataSourceDescriptor>(DataSourceDescriptor.class) {
             
             @Override
