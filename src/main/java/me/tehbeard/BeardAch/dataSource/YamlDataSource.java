@@ -11,14 +11,17 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 
+@DataSourceDescriptor(tag="file",version="1.4")
 public class YamlDataSource extends AbstractDataSource {
 
 	YamlConfiguration db;
 	File dbFile;
 	File fancy;
-	public YamlDataSource(Plugin plugin){
+	public YamlDataSource(){
+	    Plugin plugin = BeardAch.self;
 		dbFile = new File(plugin.getDataFolder(),"database.yml");
 		fancy = new File(plugin.getDataFolder(),"ach.html");
 		db = YamlConfiguration.loadConfiguration(dbFile);

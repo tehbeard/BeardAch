@@ -15,21 +15,16 @@ import me.tehbeard.BeardAch.achievement.rewards.*;
 import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
-import me.tehbeard.BeardAch.listener.BeardAchPlayerListener;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import me.tehbeard.utils.addons.AddonLoader;
-import me.tehbeard.utils.addons.ClassBootStrapper;
-import me.tehbeard.utils.addons.ClassNameProvider;
+import me.tehbeard.utils.factory.ConfigurableFactory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-
-import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -102,11 +97,18 @@ public class BeardAch extends JavaPlugin {
             droxAPI = droxPerms.getAPI();
         }
 
-        //setup events
-        Listener pl = new BeardAchPlayerListener();
-        getServer().getPluginManager().registerEvents(pl, this);
 
-
+        
+        printCon("Loading Data Adapters");
+        ConfigurableFactory<IDataSource,DataSourceDescriptor> dataSourceFactory = new ConfigurableFactory<IDataSource, DataSourceDescriptor>(DataSourceDescriptor.class) {
+            
+            @Override
+            public String getTag(DataSourceDescriptor annotation) {
+                return annotation.tag();
+            }
+        };
+        
+        /*
         if(getConfig().getString("ach.database.type","").equalsIgnoreCase("mysql")){
             achievementManager.database = new SqlDataSource();
         }
@@ -116,13 +118,16 @@ public class BeardAch extends JavaPlugin {
         }
         if(getConfig().getString("ach.database.type","").equalsIgnoreCase("file")){
 
-            achievementManager.database = new YamlDataSource(this);	
-        }
+            achievementManager.database = new YamlDataSource();	
+        }*/
+        achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type",""));
 
         if(achievementManager.database == null){
-            printCon("NO SUITABLE DATABASE SELECTED!!");
+            printCon("!!NO SUITABLE DATABASE SELECTED!!");
+            printCon("!!DISABLING PLUGIN!!");
 
-            onDisable();
+            //onDisable();
+            setEnabled(false);
             return;
         }
 
@@ -153,9 +158,8 @@ public class BeardAch extends JavaPlugin {
             addonDir.mkdir();
         }
 
-        addonLoader = new AddonLoader<IConfigurable>(addonDir, IConfigurable.class);
-        addonLoader.setClassNameProvider(new ClassNameProvider(){
-
+        //create the addon loader
+        addonLoader = new AddonLoader<IConfigurable>(addonDir, IConfigurable.class){
             @Override
             public List<String> getClassList(ZipFile addon) {
                 List<String> classList = new ArrayList<String>();
@@ -185,11 +189,6 @@ public class BeardAch extends JavaPlugin {
                 return classList;
             }
 
-
-        });
-
-        addonLoader.setBootStrap(new ClassBootStrapper<IConfigurable>() {
-
             @Override
             public void makeClass(Class<? extends IConfigurable> classType) {
                 if(classType!=null){
@@ -200,7 +199,10 @@ public class BeardAch extends JavaPlugin {
                     }
                 }
             }
-        });
+
+
+        };
+
         printCon("Loading addons");
         addonLoader.loadAddons();
         printCon("Loading Achievements");
@@ -215,6 +217,8 @@ public class BeardAch extends JavaPlugin {
 
         }, 600L,600L);
 
+        //setup events
+        getServer().getPluginManager().registerEvents(achievementManager,this);
 
         printCon("Loading commands");
         //commands
@@ -233,9 +237,6 @@ public class BeardAch extends JavaPlugin {
         return true;
     }
 
-
-
-
     private void updateConfig(){
         File f = new File(getDataFolder(),"BeardAch.yml");
 
@@ -251,12 +252,16 @@ public class BeardAch extends JavaPlugin {
     }
 
     public void addTrigger(Class<? extends ITrigger > trigger){
-        AbstractDataSource.triggerFactory.addPart(trigger);
+        AbstractDataSource.triggerFactory.addProduct(trigger);
     }
     public void addReward(Class<? extends IReward >  reward){
-        AbstractDataSource.rewardFactory.addPart(reward);
+        AbstractDataSource.rewardFactory.addProduct(reward);
     }
 
+    /**
+     * return the achievement manager
+     * @return
+     */
     public AchievementManager getAchievementManager(){
         return achievementManager;
 
@@ -277,4 +282,5 @@ public class BeardAch extends JavaPlugin {
         }
         return msg;
     }
+
 }

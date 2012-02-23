@@ -3,7 +3,7 @@ package me.tehbeard.BeardAch.achievement.triggers;
 import java.util.ArrayList;
 
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
-import me.tehbeard.utils.Cuboid;
+import me.tehbeard.utils.cuboid.Cuboid;
 
 
 import org.bukkit.entity.Player;
@@ -17,8 +17,12 @@ import org.bukkit.entity.Player;
 public class CuboidCheckTrigger implements ITrigger {
 
 
-	protected Cuboid c = new Cuboid();
+	private Cuboid c = new Cuboid();
 
+	public Cuboid getCuboid(){
+	    return c;
+	}
+	
 	public void configure(String config) {
 			c.setCuboid(config);
 	}
