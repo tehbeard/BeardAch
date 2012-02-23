@@ -1,6 +1,7 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import org.bukkit.entity.Player;
 
@@ -48,6 +49,10 @@ public class StatWithinTrigger implements ITrigger {
 				}
 			}
 		}
+		else
+        {
+            BeardStat.printCon("[NAG] Attempting to use Statwithin trigger when BeardStat not loaded!!!");
+        }
 		return false;
 	}
 }

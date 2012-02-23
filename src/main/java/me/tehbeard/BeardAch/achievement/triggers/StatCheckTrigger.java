@@ -1,6 +1,7 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import org.bukkit.entity.Player;
 
@@ -39,6 +40,10 @@ public class StatCheckTrigger implements ITrigger {
 				return manager.findPlayerBlob(player.getName()).getStat(cat, stat).getValue()>=threshold;
 			}
 		}
+		else
+        {
+            BeardStat.printCon("[NAG] Attempting to use Stat trigger when BeardStat not loaded!!!");
+        }
 		return false;
 	}
 

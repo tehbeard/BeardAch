@@ -37,6 +37,7 @@ public class BeardAch extends JavaPlugin {
     private PlayerStatManager stats = null;
     private AchievementManager achievementManager;
     private AddonLoader<IConfigurable> addonLoader;
+    
     public PlayerStatManager getStats(){
         return stats;
 
@@ -70,6 +71,10 @@ public class BeardAch extends JavaPlugin {
         BeardStat bs = (BeardStat) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
         if(bs!=null && bs.isEnabled()){
             stats = bs.getStatManager();
+        }
+        else
+        {
+            printCon("[NAG] BeardStat not installed! stat and statwithin triggers will not function!");
         }
 
     }
