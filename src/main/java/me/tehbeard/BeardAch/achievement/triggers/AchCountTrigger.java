@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 /**
  * Checks if a player has a certain number of achievements
  * achcount|disc|20 would trigger when 20 achievements starting with the prefix disc are active
+ * achcount|*|10 would trigger if you have 10 achievements (any name)
  * @author James
  *
  */
@@ -37,7 +38,7 @@ public class AchCountTrigger implements ITrigger {
 		int count = 0;
 		if(achs !=null){
 			for(AchievementPlayerLink a: achs){
-				if(a.getSlug().startsWith(prefix)){count+=1;}
+				if(a.getSlug().startsWith(prefix)||prefix.equals("*")){count+=1;}
 			}
 		}
 		return (count > threshold);
