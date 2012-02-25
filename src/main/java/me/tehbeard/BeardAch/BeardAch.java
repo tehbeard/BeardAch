@@ -139,6 +139,7 @@ public class BeardAch extends JavaPlugin {
         printCon("Installing default triggers");
         //Load installed triggers
         addTrigger(AchCheckTrigger.class);
+        addTrigger(AchCountTrigger.class);
         addTrigger(CuboidCheckTrigger.class);
         addTrigger(LockedTrigger.class);
         addTrigger(NoAchCheckTrigger.class);
@@ -146,7 +147,7 @@ public class BeardAch extends JavaPlugin {
         addTrigger(StatCheckTrigger.class);
         addTrigger(StatWithinTrigger.class);
         addTrigger(EconomyTrigger.class);
-
+        
         printCon("Installing default rewards");
         //load installed rewards
         addReward(CommandReward.class);
