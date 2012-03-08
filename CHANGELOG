@@ -1,4 +1,4 @@
-Bacon -> Flapjack
+dumpling
 =================
 * Fixed neumerous potential NPE's
 * Added exemption nodes for achievement rewards 
@@ -6,3 +6,4 @@ Bacon -> Flapjack
 * Addon loader (TODO: Details on how to make addons) to load custom triggers
 and rewards
 * Vault support! Bank balance trigger and money rewards
+* achievement counter
