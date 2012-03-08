@@ -113,18 +113,7 @@ public class BeardAch extends JavaPlugin {
             }
         };
         
-        /*
-        if(getConfig().getString("ach.database.type","").equalsIgnoreCase("mysql")){
-            achievementManager.database = new SqlDataSource();
-        }
-        if(getConfig().getString("ach.database.type","").equalsIgnoreCase("null")){
 
-            achievementManager.database = new NullDataSource();	
-        }
-        if(getConfig().getString("ach.database.type","").equalsIgnoreCase("file")){
-
-            achievementManager.database = new YamlDataSource();	
-        }*/
         achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type",""));
 
         if(achievementManager.database == null){
@@ -224,7 +213,7 @@ public class BeardAch extends JavaPlugin {
         }, 600L,600L);
 
         //setup events
-        getServer().getPluginManager().registerEvents(achievementManager,this);
+        getServer().getPluginManager().registerEvents(new AchListener(achievementManager),this);
 
         printCon("Loading commands");
         //commands

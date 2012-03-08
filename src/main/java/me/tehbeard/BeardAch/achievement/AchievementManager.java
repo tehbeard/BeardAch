@@ -4,18 +4,12 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
 import me.tehbeard.utils.cuboid.ChunkCache;
-import me.tehbeard.utils.cuboid.CuboidEntry;
 
 import me.tehbeard.utils.cuboid.Cuboid;
 
@@ -24,12 +18,12 @@ import me.tehbeard.utils.cuboid.Cuboid;
  * @author James
  *
  */
-public class AchievementManager implements Listener {
+public class AchievementManager {
 
     public HashMap<String,HashSet<AchievementPlayerLink>> playerHasCache = new  HashMap<String,HashSet<AchievementPlayerLink>>();
     public HashMap<Achievement,HashSet<String>> playerCheckCache = new  HashMap<Achievement,HashSet<String>>();
     public IDataSource database = null;
-    private ChunkCache<Achievement> chunkCache = new ChunkCache<Achievement>();
+    public final ChunkCache<Achievement> chunkCache = new ChunkCache<Achievement>();
 
     private List<Achievement> achievements = new LinkedList<Achievement>();
 
@@ -198,23 +192,5 @@ public class AchievementManager implements Listener {
         return null;
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST)
-    public void onPlayerMove(PlayerMoveEvent event){
-        if(event.getTo().getBlockX() != event.getFrom().getBlockX() ||
-                event.getTo().getBlockY() != event.getFrom().getBlockY() || 
-                event.getTo().getBlockZ() != event.getFrom().getBlockZ()
-                ){
-            BeardAch.printDebugCon("Player moved, checking chunk Cache");
-            for( CuboidEntry<Achievement> e : chunkCache.getEntries(event.getPlayer())){
-                e.getEntry().checkAchievement(event.getPlayer());
-            }
-        }
-    }
 
-    @EventHandler(priority=EventPriority.HIGHEST)
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        // TODO Auto-generated method stub
-        loadPlayersAchievements(event.getPlayer().getName());
-
-    }
 }
