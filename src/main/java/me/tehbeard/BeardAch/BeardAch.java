@@ -2,11 +2,6 @@ package me.tehbeard.BeardAch;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import me.tehbeard.BeardAch.achievement.*;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
@@ -23,7 +18,6 @@ import me.tehbeard.utils.factory.ConfigurableFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -79,7 +73,7 @@ public class BeardAch extends JavaPlugin {
 
     }
 
-    @SuppressWarnings("unchecked")
+  
     public void onEnable() {
         self = this;
         achievementManager = new AchievementManager();
@@ -155,49 +149,7 @@ public class BeardAch extends JavaPlugin {
         }
 
         //create the addon loader
-        addonLoader = new AddonLoader<IConfigurable>(addonDir, IConfigurable.class){
-            @Override
-            public List<String> getClassList(ZipFile addon) {
-                List<String> classList = new ArrayList<String>();
-                try {
-                    ZipEntry manifest = addon.getEntry("achaddon.yml");
-                    if (manifest != null) {
-                        YamlConfiguration addonConfig = new YamlConfiguration();
-
-                        addonConfig.load(addon.getInputStream(manifest));
-
-                        BeardAch.printCon("Loading addon " + addonConfig.getString("name","N/A"));
-                        for(String className:addonConfig.getStringList("classes")){
-                            classList.add(className);
-                        }
-                    }
-                } catch (IOException e) {
-                    printCon("[ERROR] An I/O error occured while trying to access an addon. " + addon.getName());
-                    if(self.getConfig().getBoolean("general.debug")){
-                        e.printStackTrace();
-                    }
-                } catch (InvalidConfigurationException e) {
-                    printCon("[ERROR] Configuration header for "+ addon.getName() + " appears to be corrupt");
-                    if(self.getConfig().getBoolean("general.debug")){
-                        e.printStackTrace();
-                    }
-                }
-                return classList;
-            }
-
-            @Override
-            public void makeClass(Class<? extends IConfigurable> classType) {
-                if(classType!=null){
-                    if(ITrigger.class.isAssignableFrom(classType)){
-                        addTrigger((Class<? extends ITrigger>) classType);
-                    }else if(IReward.class.isAssignableFrom(classType)){
-                        addReward((Class<? extends IReward>) classType);
-                    }
-                }
-            }
-
-
-        };
+        addonLoader = new BeardAchAddonLoader(addonDir);
 
         printCon("Loading addons");
         addonLoader.loadAddons();
@@ -223,6 +175,8 @@ public class BeardAch extends JavaPlugin {
         getCommand("ach").setExecutor(new AchCommand());
         getCommand("ach-fancy").setExecutor(new AchFancyCommand());
         printCon("Loaded Version:" + getDescription().getVersion());
+        
+        if(getResource("additionalItems.txt")==null){printCon("null check");}
     }
 
     @Override

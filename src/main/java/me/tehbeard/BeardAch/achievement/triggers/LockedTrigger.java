@@ -6,7 +6,7 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import org.bukkit.entity.Player;
 
 /**
- * Checks if a player has a permission node
+ * Always false
  * @author James
  *
  */
