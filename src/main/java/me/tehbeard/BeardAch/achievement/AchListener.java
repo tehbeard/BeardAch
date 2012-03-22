@@ -1,7 +1,6 @@
 package me.tehbeard.BeardAch.achievement;
 
 import me.tehbeard.BeardAch.BeardAch;
-import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import me.tehbeard.utils.cuboid.CuboidEntry;
 
 import org.bukkit.event.EventHandler;

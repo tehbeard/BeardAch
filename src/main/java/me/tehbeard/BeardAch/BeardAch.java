@@ -112,7 +112,8 @@ public class BeardAch extends JavaPlugin {
                 return annotation.tag();
             }
         };
-        
+        dataSourceFactory.addProduct(YamlDataSource.class);
+        dataSourceFactory.addProduct(SqlDataSource.class);
 
         achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type",""));
 
@@ -240,7 +241,6 @@ public class BeardAch extends JavaPlugin {
                 YamlConfiguration.loadConfiguration(f).save(new File(getDataFolder(),"config.yml"));
                 f.renameTo(new File(getDataFolder(),"BeardAch.yml.old"));
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

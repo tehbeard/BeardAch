@@ -65,6 +65,7 @@ public abstract class AbstractDataSource implements IDataSource{
 				if(part.length==2){
 					BeardAch.printDebugCon("Trigger => " + trig);
 					ITrigger trigger = triggerFactory.getProduct(part[0]);
+					if(trigger==null){BeardAch.printCon("TRIGGER " + part[0] + " NOT FOUND!!! SKIPPING.");continue;}
 					trigger.configure(part[1]);
 					ach.addTrigger(trigger);
 				}
