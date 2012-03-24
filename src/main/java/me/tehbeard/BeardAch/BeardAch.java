@@ -1,7 +1,10 @@
 package me.tehbeard.BeardAch;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import me.tehbeard.BeardAch.achievement.*;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
@@ -68,7 +71,7 @@ public class BeardAch extends JavaPlugin {
         }
         else
         {
-            printCon("[NAG] BeardStat not installed! stat and statwithin triggers will not function!");
+            printCon("[PANIC] BeardStat not installed! stat and statwithin triggers will not function!");
         }
 
     }
@@ -112,8 +115,8 @@ public class BeardAch extends JavaPlugin {
         achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type",""));
 
         if(achievementManager.database == null){
-            printCon("!!NO SUITABLE DATABASE SELECTED!!");
-            printCon("!!DISABLING PLUGIN!!");
+            printCon("[ERROR] NO SUITABLE DATABASE SELECTED!!");
+            printCon("[ERROR] DISABLING PLUGIN!!");
 
             //onDisable();
             setEnabled(false);
@@ -140,6 +143,29 @@ public class BeardAch extends JavaPlugin {
         addReward(DroxTrackReward.class);
         addReward(EconomyReward.class);
 
+        //Load built in extras
+        InputStream bundle = getResource("bundle.txt");
+        if(bundle!=null){
+            printCon("Loading bundled addons");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bundle));
+            try {
+                while(reader.ready()){
+                    Class<?> c = getClassLoader().loadClass(reader.readLine());
+                    if(c!=null){
+                        if(ITrigger.class.isAssignableFrom(c)){
+                           addTrigger((Class<? extends ITrigger>) c);
+                        }else if(IReward.class.isAssignableFrom(c)){
+                            addReward((Class<? extends IReward>) c);
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                printCon("[PANIC] An error occured trying to read the bundle file (bundle.txt)");
+            } catch (ClassNotFoundException e) {
+                printCon("[PANIC] Could not load a class listed in the bundle file");
+            }
+        }        
+        
 
         printCon("Preparing to load addons");
         //Create addon dir if it doesn't exist
@@ -176,7 +202,7 @@ public class BeardAch extends JavaPlugin {
         getCommand("ach-fancy").setExecutor(new AchFancyCommand());
         printCon("Loaded Version:" + getDescription().getVersion());
         
-        if(getResource("additionalItems.txt")==null){printCon("null check");}
+        
     }
 
     @Override

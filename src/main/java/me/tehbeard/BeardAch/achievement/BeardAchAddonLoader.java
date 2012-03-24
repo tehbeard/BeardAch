@@ -21,7 +21,6 @@ public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
 
     public BeardAchAddonLoader(File dir) {
         super(dir, IConfigurable.class);
-        // TODO Auto-generated constructor stub
     }
 
     @Override

@@ -31,7 +31,7 @@ public class CounterReward implements  IReward{
 			manager.getPlayerBlob(player.getName()).getStat("achCount", name).incrementStat(count);
 		}
 		else{
-		    BeardAch.printCon("[NAG] BeardStat not loaded, reward not given!");
+		    BeardAch.printCon("[PANIC] BeardStat not loaded, reward not given!");
 		}
 	}
 

@@ -51,7 +51,7 @@ public class StatWithinTrigger implements ITrigger {
 		}
 		else
         {
-            BeardStat.printCon("[NAG] Attempting to use Statwithin trigger when BeardStat not loaded!!!");
+            BeardStat.printCon("[PANIC] Attempting to use Statwithin trigger when BeardStat not loaded!!!");
         }
 		return false;
 	}
