@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
+import me.tehbeard.BeardAch.achievement.triggers.CuboidTimeTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
 import me.tehbeard.utils.cuboid.ChunkCache;
@@ -78,6 +79,13 @@ public class AchievementManager {
         for(ITrigger t : ach.getTrigs()){
             if(t instanceof CuboidCheckTrigger){
                 Cuboid cuboid = ((CuboidCheckTrigger)t).getCuboid();
+                chunkCache.addEntry(cuboid, ach);
+            }
+            
+            if(t instanceof CuboidTimeTrigger){
+                Cuboid cuboid = ((CuboidTimeTrigger)t).getStartCuboid();
+                chunkCache.addEntry(cuboid, ach);
+                cuboid = ((CuboidTimeTrigger)t).getEndCuboid();
                 chunkCache.addEntry(cuboid, ach);
             }
         }
