@@ -9,8 +9,8 @@ import me.tehbeard.utils.cuboid.Cuboid;
 
 import org.bukkit.entity.Player;
 
-@Configurable(tag="cuboidtime")
-public class CuboidTimeTrigger implements ITrigger {
+@Configurable(tag="speedrun")
+public class SpeedRunTrigger implements ITrigger {
 
     private Cuboid startCuboid = new Cuboid();
     private Cuboid endCuboid = new Cuboid();
@@ -27,7 +27,7 @@ public class CuboidTimeTrigger implements ITrigger {
     }
 
     public void configure(String config) {
-        String[] c= config.split("\\\\");
+        String[] c= config.split("\\/");
         if(c.length == 3){
             startCuboid.setCuboid(c[0]);
             endCuboid.setCuboid(c[1]);
@@ -41,13 +41,16 @@ public class CuboidTimeTrigger implements ITrigger {
     public boolean checkAchievement(Player player) {
         
         //if inside start cuboid and state does not exist, create record
-        if(startCuboid.isInside(player.getLocation()) &&
-                !hasTime(player.getName())){
+        if((startCuboid.isInside(player.getLocation()) &&
+                !hasTime(player.getName()))){
             startTimer(player.getName());
+            player.sendMessage("Get moving!");
         }
         //if inside end cuboid, and state exists, check and return value
         if(endCuboid.isInside(player.getLocation()) &&
                 inTime(player.getName())){
+            player.sendMessage("you made it!");
+            clearTimer(player.getName());
             return true;
         }
         if(!inTime(player.getName())){
@@ -58,18 +61,40 @@ public class CuboidTimeTrigger implements ITrigger {
 
 
 
+    /**
+     * Start timer for a player
+     * @param player
+     */
     private void startTimer(String player){
         states.put(player, System.currentTimeMillis());
     }
 
+    /**
+     * Clear timer for a player
+     * @param player
+     */
     private void clearTimer(String player){
         states.remove(player);
     }
 
+    /**
+     * Has the players time expired?
+     * @param player
+     * @return
+     */
     private boolean inTime(String player){
+        if(hasTime(player)){
         return (System.currentTimeMillis() - states.get(player))/1000L <= timing;
+        }
+        return false;
+            
     }
     
+    /**
+     * Do they have a time in the system
+     * @param player
+     * @return
+     */
     private boolean hasTime(String player){
         return states.containsKey(player);
     }

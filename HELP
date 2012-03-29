@@ -57,10 +57,20 @@ satisfied if a player has a certain amount of money
     
 ##Cuboid trigger
 
-satisfied when a player enters an area
+Satisfied when a player enters an area
 
     cuboid|worldname:x1:y1:z1:x2:y2:z2
     cuboid|world:0:0:0:16:128:16
+
+##Speedrun
+
+Satisfied when a player travels between two defined cuboids within a defined time period
+
+    speedrun|cuboid1/cuboid2/time (seconds)
+    cuboids follow the same format as the cuboid trigger
+    worldname:x1:y1:z1:x2:y2:z2
+    
+    
 
 
 #Rewards

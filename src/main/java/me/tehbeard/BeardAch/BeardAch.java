@@ -111,6 +111,7 @@ public class BeardAch extends JavaPlugin {
         };
         dataSourceFactory.addProduct(YamlDataSource.class);
         dataSourceFactory.addProduct(SqlDataSource.class);
+        dataSourceFactory.addProduct(NullDataSource.class);
 
         achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type",""));
 
@@ -134,6 +135,7 @@ public class BeardAch extends JavaPlugin {
         addTrigger(StatCheckTrigger.class);
         addTrigger(StatWithinTrigger.class);
         addTrigger(EconomyTrigger.class);
+        addTrigger(SpeedRunTrigger.class);
         
         printCon("Installing default rewards");
         //load installed rewards

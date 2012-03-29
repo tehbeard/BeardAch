@@ -51,9 +51,7 @@
   	<dependency>
   		<groupId>me.tehbeard</groupId>
   		<artifactId>utils</artifactId>
-  		<version>0.1</version>
-  		<type>jar</type>
-    		<scope>compile</scope>
+  		<version>0.2-SNAPSHOT</version>
   	</dependency>
 
   </dependencies>

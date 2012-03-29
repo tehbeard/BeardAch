@@ -2,5 +2,7 @@
 * Fixed neumerous potential NPE's
 * Added exemption nodes for achievement rewards (ach.exempt.* or arch.exempt.[slug])
 * Addon loader (TODO: Details on how to make addons) to load custom triggers and rewards
+* bundle support, to allow slipstreaming custom triggers and rewards into BeardAch (list classes in bundle.txt inside jar)
 * Vault support! Bank balance trigger and money rewards
 * achievement counter trigger
+* speedrun trigger
