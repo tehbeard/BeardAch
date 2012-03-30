@@ -25,12 +25,17 @@ public class Achievement {
 	private HashSet<ITrigger> triggers = new HashSet<ITrigger>();
 	private HashSet<IReward> rewards = new HashSet<IReward>();
 	boolean broadcast;
-	public Achievement(String slug,String name,String descrip,boolean broadcast) {
+	private boolean hidden;
+	public boolean isHidden(){
+	    return hidden;
+	}
+	public Achievement(String slug,String name,String descrip,boolean broadcast,boolean hidden) {
 		this.slug = slug;
 		this.name = name;
 		this.descrip = descrip;
 		this.broadcast = broadcast;
 		this.id = nextId;
+		this.hidden = hidden;
 		nextId ++;
 
 	}

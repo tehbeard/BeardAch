@@ -56,7 +56,11 @@ public class AchievementManager {
      * @return
      */
     public List<Achievement> getAchievementsList() {
-        return achievements;
+        List<Achievement> ret = new ArrayList<Achievement>();
+        for(Achievement a: achievements){
+            if(!a.isHidden()){ret.add(a);}
+        }
+        return ret;
     }
 
 

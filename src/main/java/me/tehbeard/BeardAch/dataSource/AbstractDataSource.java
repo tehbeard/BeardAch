@@ -54,9 +54,11 @@ public abstract class AbstractDataSource implements IDataSource{
 			String name = e.getString("name");
 			String descrip = e.getString("descrip");
 			boolean broadcast = e.getBoolean("broadcast",false);
+			slug = e.getString("alias",slug);
+			boolean hidden = e.getBoolean("hidden",false);
 			BeardAch.printDebugCon("Loading achievement " + name);
 
-			Achievement ach = new Achievement(slug,name, descrip,broadcast);
+			Achievement ach = new Achievement(slug,name, descrip,broadcast,hidden);
 
 			//load triggers
 			List<String> triggers = e.getStringList("triggers");
