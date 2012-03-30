@@ -149,10 +149,8 @@ public class AchievementManager {
                     //check for bleep bloop
                     if(entry.getKey().checkAchievement(p)){
                         BeardAch.printDebugCon("Achievement Get! " + ply + "=>" + entry.getKey().getName());
-                        //push to cache
-                        playerHasCache.get(ply).add(new AchievementPlayerLink(entry.getKey().getSlug()));
-                        //push to DB
-                        database.setPlayersAchievements(ply, entry.getKey().getSlug());
+                        
+                        unlockAchievement(ply, entry.getKey().getSlug());
                         it.remove();
                     }
 
@@ -201,5 +199,10 @@ public class AchievementManager {
         return null;
     }
 
-
+    public void unlockAchievement(String player,String slug){
+      //push to cache
+        playerHasCache.get(player).add(new AchievementPlayerLink(slug));
+        //push to DB
+        database.setPlayersAchievements(player, slug);
+    }
 }

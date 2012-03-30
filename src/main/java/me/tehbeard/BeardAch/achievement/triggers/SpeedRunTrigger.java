@@ -34,27 +34,22 @@ public class SpeedRunTrigger implements ITrigger {
             timing = Long.parseLong(c[2]);
         }else
         {
-            System.out.println("Cuboid time invalid");
+            System.out.println("speedrun invalid");
         }
     }
 
     public boolean checkAchievement(Player player) {
         
         //if inside start cuboid and state does not exist, create record
-        if((startCuboid.isInside(player.getLocation()) &&
-                !hasTime(player.getName()))){
+        if((startCuboid.isInside(player.getLocation()))){
             startTimer(player.getName());
-            player.sendMessage("Get moving!");
+            return false;
         }
         //if inside end cuboid, and state exists, check and return value
         if(endCuboid.isInside(player.getLocation()) &&
                 inTime(player.getName())){
-            player.sendMessage("you made it!");
             clearTimer(player.getName());
             return true;
-        }
-        if(!inTime(player.getName())){
-            clearTimer(player.getName());
         }
         return false;
     }

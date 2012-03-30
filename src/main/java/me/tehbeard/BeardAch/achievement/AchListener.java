@@ -23,7 +23,12 @@ public class AchListener implements Listener{
                 ){
             BeardAch.printDebugCon("Player moved, checking chunk Cache");
             for( CuboidEntry<Achievement> e : manager.chunkCache.getEntries(event.getPlayer())){
-                e.getEntry().checkAchievement(event.getPlayer());
+                
+                if(e.getEntry().checkAchievement(event.getPlayer())){
+                 
+                    manager.unlockAchievement(event.getPlayer().getName(),e.getEntry().getSlug());
+                
+                }
             }
         }
     }
