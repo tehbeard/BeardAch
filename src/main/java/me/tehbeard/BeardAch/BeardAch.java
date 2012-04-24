@@ -77,6 +77,7 @@ public class BeardAch extends JavaPlugin {
     }
 
   
+    @SuppressWarnings("unchecked")
     public void onEnable() {
         self = this;
         achievementManager = new AchievementManager();

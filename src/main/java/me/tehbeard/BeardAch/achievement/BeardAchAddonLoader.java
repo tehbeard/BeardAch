@@ -52,6 +52,7 @@ public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
         return classList;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void makeClass(Class<? extends IConfigurable> classType) {
         if(classType!=null){
