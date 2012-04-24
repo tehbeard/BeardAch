@@ -108,4 +108,14 @@ and a `@Configurable()` annotation above the class definition.
 
 The only difference is they must implement IReward and provide `public void giveReward(Player)` instead 
 of `checkAchievement()`
- 
+
+#Coding an addon, achaddon.yml
+External addons require a file inside the jar (achaddon.yml), this declares the name of the addon 
+(shown on server.log for debug purposes), as well as a list of triggers and rewards.
+The class list must use the java package convention of .'s to point to Classes inside packages, 
+
+    name: "BOSEconomy addon"
+    classes:
+      - me.tehbeard.BOSEconomyTrigger
+      - me.tehbeard.BOSEconomyReward
+
