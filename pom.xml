@@ -28,13 +28,6 @@
             <scope>compile</scope>    
         </dependency>
   	<dependency>
-  		<groupId>org.bukkit</groupId>
-  		<artifactId>bukkit</artifactId>
-  		<version>1.1-R6</version>
-  		<type>jar</type>
-  		<scope>compile</scope>
-    	</dependency>
-  	<dependency>
   		<groupId>me.tehbeard</groupId>
   		<artifactId>BeardStat</artifactId>
   		<version>0.4</version>
@@ -54,6 +47,11 @@
   		<version>0.2-SNAPSHOT</version>
   	</dependency>
 
+  	<dependency>
+  		<groupId>org.bukkit</groupId>
+  		<artifactId>bukkit</artifactId>
+  		<version>1.2.5-R1.2</version>
+  	</dependency>
   </dependencies>
   <build>
     <resources>
