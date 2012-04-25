@@ -209,6 +209,7 @@ public class BeardAch extends JavaPlugin {
         achievementManager.loadAchievements();
 
 
+        //metrics code
         if(!getConfig().getBoolean("general.plugin-stats-opt-out",true)){
             try {
                 metrics = new Metrics(this);
