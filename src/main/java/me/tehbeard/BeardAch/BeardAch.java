@@ -289,6 +289,8 @@ public class BeardAch extends JavaPlugin {
                         return 1;
                     }}
                 );
+                
+                metrics.start();
 
             } catch (IOException e) {
                 // TODO Auto-generated catch block
