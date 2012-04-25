@@ -18,7 +18,10 @@ import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
 import me.tehbeard.utils.addons.AddonLoader;
 
 public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
-
+    
+    public int addonTriggersMetric = 0;
+    public int addonRewardsMetric = 0;
+    
     public BeardAchAddonLoader(File dir) {
         super(dir, IConfigurable.class);
     }
@@ -57,8 +60,10 @@ public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
     public void makeClass(Class<? extends IConfigurable> classType) {
         if(classType!=null){
             if(ITrigger.class.isAssignableFrom(classType)){
+                BeardAch.triggersMetric ++;
                 AbstractDataSource.triggerFactory.addProduct((Class<? extends ITrigger>) classType);
             }else if(IReward.class.isAssignableFrom(classType)){
+                BeardAch.rewardsMetric ++; 
                 AbstractDataSource.rewardFactory.addProduct((Class<? extends IReward>) classType);
             }
         }

@@ -111,6 +111,9 @@ public class Achievement {
 		return triggers;
 	}
 
+	public HashSet<IReward> getRewards(){
+        return rewards;
+    }
 
 
 }

@@ -1,5 +1,6 @@
 general:
   debug: false
+  plugin-stats-opt-out: false
 ach:
   database:
     type: file

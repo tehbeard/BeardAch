@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import me.tehbeard.BeardAch.Metrics.Graph;
+import me.tehbeard.BeardAch.Metrics.Plotter;
 import me.tehbeard.BeardAch.achievement.*;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.*;
 import me.tehbeard.BeardAch.achievement.rewards.*;
 import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
+import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
@@ -34,7 +37,12 @@ public class BeardAch extends JavaPlugin {
     private PlayerStatManager stats = null;
     private AchievementManager achievementManager;
     private AddonLoader<IConfigurable> addonLoader;
-    
+
+    private Metrics metrics;
+
+    public static int triggersMetric = 0;
+    public static int rewardsMetric = 0;
+
     public PlayerStatManager getStats(){
         return stats;
 
@@ -76,7 +84,7 @@ public class BeardAch extends JavaPlugin {
 
     }
 
-  
+
     @SuppressWarnings("unchecked")
     public void onEnable() {
         self = this;
@@ -94,6 +102,9 @@ public class BeardAch extends JavaPlugin {
         EnableBeardStat();
 
 
+
+
+
         //check DroxPerms
         DroxPerms droxPerms = ((DroxPerms) this.getServer().getPluginManager().getPlugin("DroxPerms"));
         if (droxPerms != null) {
@@ -101,10 +112,10 @@ public class BeardAch extends JavaPlugin {
         }
 
 
-        
+
         printCon("Loading Data Adapters");
         ConfigurableFactory<IDataSource,DataSourceDescriptor> dataSourceFactory = new ConfigurableFactory<IDataSource, DataSourceDescriptor>(DataSourceDescriptor.class) {
-            
+
             @Override
             public String getTag(DataSourceDescriptor annotation) {
                 return annotation.tag();
@@ -137,7 +148,7 @@ public class BeardAch extends JavaPlugin {
         addTrigger(StatWithinTrigger.class);
         addTrigger(EconomyTrigger.class);
         addTrigger(SpeedRunTrigger.class);
-        
+
         printCon("Installing default rewards");
         //load installed rewards
         addReward(CommandReward.class);
@@ -145,6 +156,12 @@ public class BeardAch extends JavaPlugin {
         addReward(DroxSubGroupReward.class);
         addReward(DroxTrackReward.class);
         addReward(EconomyReward.class);
+
+
+        //Metrics
+
+
+
 
         //Load built in extras
         InputStream bundle = getResource("bundle.txt");
@@ -156,19 +173,22 @@ public class BeardAch extends JavaPlugin {
                     Class<?> c = getClassLoader().loadClass(reader.readLine());
                     if(c!=null){
                         if(ITrigger.class.isAssignableFrom(c)){
-                           addTrigger((Class<? extends ITrigger>) c);
+                            triggersMetric ++;
+                            addTrigger((Class<? extends ITrigger>) c);
                         }else if(IReward.class.isAssignableFrom(c)){
+                            rewardsMetric ++;
                             addReward((Class<? extends IReward>) c);
                         }
                     }
                 }
+
             } catch (IOException e) {
                 printCon("[PANIC] An error occured trying to read the bundle file (bundle.txt)");
             } catch (ClassNotFoundException e) {
                 printCon("[PANIC] Could not load a class listed in the bundle file");
             }
         }        
-        
+
 
         printCon("Preparing to load addons");
         //Create addon dir if it doesn't exist
@@ -182,8 +202,100 @@ public class BeardAch extends JavaPlugin {
 
         printCon("Loading addons");
         addonLoader.loadAddons();
+
+
         printCon("Loading Achievements");
+
         achievementManager.loadAchievements();
+
+
+        if(!getConfig().getBoolean("general.plugin-stats-opt-out",true)){
+            try {
+                metrics = new Metrics(this);
+
+
+                //set up custom plotters for custom triggers and rewards
+                SimplePlotter ct = new SimplePlotter("Custom Triggers");
+                SimplePlotter cr = new SimplePlotter("Custom Rewards");
+                ct.set(triggersMetric);
+                cr.set(rewardsMetric);
+
+                if(getStats()!=null){
+                    metrics.addCustomData(new Plotter("BeardStat installed") {
+
+                        @Override
+                        public int getValue() {
+                            // TODO Auto-generated method stub
+                            return 1;
+                        }
+                    });
+                }
+                metrics.addCustomData(ct);
+                metrics.addCustomData(cr);
+
+                //total achievements on server
+                SimplePlotter totalAchievments = new SimplePlotter("Total Achievements");
+                totalAchievments.set(achievementManager.getAchievementsList().size());
+
+                //Triggers per achievement
+                Graph triggersGraph = metrics.createGraph("triggers");
+                for(final String trig : AbstractDataSource.triggerFactory.getTags()){
+                    SimplePlotter p = new SimplePlotter(trig + " Trigger");
+
+                    for(Achievement a : achievementManager.getAchievementsList()){
+                        for(ITrigger t : a.getTrigs()){
+                            Configurable c = t.getClass().getAnnotation(Configurable.class);
+                            if(c!=null){
+                                if(trig.equals(c.tag())){
+                                    p.increment();
+                                }
+                            }
+                        }
+                    }
+
+                    triggersGraph.addPlotter(p);
+
+                }
+
+
+                //Rewards per achievement
+                Graph rewardsGraph = metrics.createGraph("rewards");
+                for(final String trig : AbstractDataSource.triggerFactory.getTags()){
+                    SimplePlotter p = new SimplePlotter(trig + " Reward");
+
+                    for(Achievement a : achievementManager.getAchievementsList()){
+                        for(IReward r : a.getRewards()){
+                            Configurable c = r.getClass().getAnnotation(Configurable.class);
+                            if(c!=null){
+                                if(trig.equals(c.tag())){
+                                    p.increment();
+                                }
+                            }
+                        }
+                    }
+
+                    rewardsGraph.addPlotter(p);
+
+                }
+
+                Configurable c = achievementManager.database.getClass().getAnnotation(Configurable.class);
+                Graph g = metrics.createGraph("storage system");
+                g.addPlotter(new Plotter(c.tag() + " storage"){
+
+                    @Override
+                    public int getValue() {
+                        // TODO Auto-generated method stub
+                        return 1;
+                    }}
+                );
+
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                printCon("Could not load metrics :(");
+                //e.printStackTrace();
+            }
+
+        }
 
         printCon("Starting achievement checker");
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
@@ -204,8 +316,8 @@ public class BeardAch extends JavaPlugin {
         getCommand("ach").setExecutor(new AchCommand());
         getCommand("ach-fancy").setExecutor(new AchFancyCommand());
         printCon("Loaded Version:" + getDescription().getVersion());
-        
-        
+
+
     }
 
     @Override
