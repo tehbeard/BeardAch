@@ -279,7 +279,7 @@ public class BeardAch extends JavaPlugin {
 
                 }
 
-                Configurable c = achievementManager.database.getClass().getAnnotation(Configurable.class);
+                DataSourceDescriptor c = achievementManager.database.getClass().getAnnotation(DataSourceDescriptor.class);
                 Graph g = metrics.createGraph("storage system");
                 g.addPlotter(new Plotter(c.tag() + " storage"){
 
