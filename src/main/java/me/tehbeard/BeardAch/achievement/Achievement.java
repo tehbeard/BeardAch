@@ -16,6 +16,12 @@ import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
  *
  */
 public class Achievement {
+    
+    public static enum Display{
+        BROADCAST,
+        PERSON,
+        NONE
+    }
 
 	private String slug;
 	private String name;
@@ -24,12 +30,12 @@ public class Achievement {
 	private static int nextId = 1;
 	private HashSet<ITrigger> triggers = new HashSet<ITrigger>();
 	private HashSet<IReward> rewards = new HashSet<IReward>();
-	boolean broadcast;
+	Display broadcast;
 	private boolean hidden;
 	public boolean isHidden(){
 	    return hidden;
 	}
-	public Achievement(String slug,String name,String descrip,boolean broadcast,boolean hidden) {
+	public Achievement(String slug,String name,String descrip,Display broadcast,boolean hidden) {
 		this.slug = slug;
 		this.name = name;
 		this.descrip = descrip;
@@ -90,19 +96,26 @@ public class Achievement {
 			}
 		}
 
-		if(broadcast || (BeardAch.self.getConfig().getBoolean("ach.msg.send.broadcast", false) && !BeardAch.self.getConfig().getBoolean("ach.msg.send.person", true))){
-			Bukkit.broadcastMessage(BeardAch.colorise(
-					BeardAch.self.getConfig().getString("ach.msg.broadcast", 
-							(ChatColor.AQUA + "<PLAYER> " + ChatColor.WHITE + "Unlocked: " + ChatColor.GOLD + "<ACH>")).replace("<ACH>", name ).replace("<PLAYER>",player.getName()
-									)
-					)
-					);
+		
+		switch (broadcast){
+		case BROADCAST:{
+            Bukkit.broadcastMessage(BeardAch.colorise(
+                    BeardAch.self.getConfig().getString("ach.msg.broadcast", 
+                            (ChatColor.AQUA + "<PLAYER> " + ChatColor.WHITE + "Unlocked: " + ChatColor.GOLD + "<ACH>")).replace("<ACH>", name ).replace("<PLAYER>",player.getName()
+                                    )
+                    )
+                    );
 
+        }break;
+		  
+		case PERSON:{
+            player.sendMessage(BeardAch.colorise(BeardAch.self.getConfig().getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>",player.getName())));
+            player.sendMessage(ChatColor.BLUE + descrip);
+        }break;
+		    
 		}
-		if(BeardAch.self.getConfig().getBoolean("ach.msg.send.person", true)){
-			player.sendMessage(BeardAch.colorise(BeardAch.self.getConfig().getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>",player.getName())));
-			player.sendMessage(ChatColor.BLUE + descrip);
-		}
+		
+		
 
 		return true;
 	}

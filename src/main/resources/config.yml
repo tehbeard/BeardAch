@@ -12,9 +12,7 @@ ach:
     person: "Achievement Unlocked: <ACH>"
     broadcast: "<PLAYER> Unlocked: <ACH>"
     ach: "Visit our website to view all your achievements."
-    send:
-      person: true
-      broadcast: false
+    send: "BROADCAST" 
 achievements:
     old_timer:
       name: "Old Timer"
