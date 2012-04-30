@@ -8,6 +8,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.Achievement.Display;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
@@ -53,7 +54,7 @@ public abstract class AbstractDataSource implements IDataSource{
 			//load information
 			String name = e.getString("name");
 			String descrip = e.getString("descrip");
-			boolean broadcast = e.getBoolean("broadcast",false);
+			Display broadcast = Achievement.Display.valueOf(e.getString("broadcast",BeardAch.self.getConfig().getString("ach.msg.send","NONE")));
 			slug = e.getString("alias",slug);
 			boolean hidden = e.getBoolean("hidden",false);
 			BeardAch.printDebugCon("Loading achievement " + name);

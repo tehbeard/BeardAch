@@ -342,8 +342,17 @@ public class BeardAch extends JavaPlugin {
                 YamlConfiguration.loadConfiguration(f).save(new File(getDataFolder(),"config.yml"));
                 f.renameTo(new File(getDataFolder(),"BeardAch.yml.old"));
             } catch (IOException e) {
+                printCon("==============");
+                printCon("Failed to update from BeardAch.yml to config.yml");
+                printCon("==============");
                 e.printStackTrace();
             }
+        }
+        
+        if(getConfig().contains("ach.msg.send.broadcast")){
+            printCon("Updating to new message control config");
+            getConfig().set("ach.msg.send", "PERSON");
+            saveConfig();
         }
     }
 
