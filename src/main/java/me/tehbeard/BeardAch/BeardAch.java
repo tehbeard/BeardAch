@@ -261,14 +261,14 @@ public class BeardAch extends JavaPlugin {
 
                 //Rewards per achievement
                 Graph rewardsGraph = metrics.createGraph("rewards");
-                for(final String trig : AbstractDataSource.triggerFactory.getTags()){
-                    SimplePlotter p = new SimplePlotter(trig + " Reward");
+                for(final String reward : AbstractDataSource.rewardFactory.getTags()){
+                    SimplePlotter p = new SimplePlotter(reward + " Reward");
 
                     for(Achievement a : achievementManager.getAchievementsList()){
                         for(IReward r : a.getRewards()){
                             Configurable c = r.getClass().getAnnotation(Configurable.class);
                             if(c!=null){
-                                if(trig.equals(c.tag())){
+                                if(reward.equals(c.tag())){
                                     p.increment();
                                 }
                             }
