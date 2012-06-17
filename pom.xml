@@ -1,101 +1,124 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>me.tehbeard</groupId>
-  <artifactId>BeardAch</artifactId>
-  <version>0.4</version>
-  <name>BearchAch</name>
-  <description>Achievements plugin for BeardStat</description>
-  <properties>
-  <project.plugin.flavour>Espresso</project.plugin.flavour>
-  <project.plugin.version>${project.version}-${project.plugin.flavour}</project.plugin.version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>me.tehbeard</groupId>
+	<artifactId>BeardAch</artifactId>
+	<version>0.4</version>
+	<name>BearchAch</name>
+	<description>Achievements plugin for BeardStat</description>
+	<properties>
+		<project.plugin.flavour>Espresso</project.plugin.flavour>
+		<project.plugin.version>${project.version}-${project.plugin.flavour}</project.plugin.version>
 
-  </properties>
-    <repositories>
-      <!-- Repository for Bukkit -->
-      <repository>
-        <id>bukkit-repo</id>
-        <url>http://repo.bukkit.org/content/groups/public/</url>
-      </repository>
-      
-      <repository>
-        <id>escapecraft-repo</id>
-        <url>http://dev.escapecraft.com/maven/</url>
-      </repository>
-    </repositories>
-                              
-  
-  <dependencies>
-        <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>Vault</artifactId>
-            <version>1.2.17-SNAPSHOT</version>                     
-        </dependency>
-  	<dependency>
-  		<groupId>me.tehbeard</groupId>
-  		<artifactId>BeardStat</artifactId>
-  		<version>0.4</version>
-  		<type>jar</type>
-    		<scope>compile</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>de.hydrox.bukkit</groupId>
-  		<artifactId>DroxPerms</artifactId>
-  		<version>0.4.0-SNAPSHOT</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>me.tehbeard</groupId>
-  		<artifactId>utils</artifactId>
-  		<version>1.0</version>
-  	</dependency>
+	</properties>
+	<repositories>
+		<!-- Repository for Bukkit -->
+		<repository>
+			<id>bukkit-repo</id>
+			<url>http://repo.bukkit.org/content/groups/public/</url>
+		</repository>
 
-  	<dependency>
-  		<groupId>org.bukkit</groupId>
-  		<artifactId>bukkit</artifactId>
-  		<version>1.2.5-R1.2</version>
-  	</dependency>
-  </dependencies>
-  <build>
-    <resources>
-      <resource>
-        <targetPath>.</targetPath>
-        <filtering>true</filtering>
-        <directory>${basedir}/src/main/resources/</directory>
-        <includes>
-          <include>plugin.yml</include>
-          <include>config.yml</include>
-        </includes>
-      </resource>
-    </resources>
+		<repository>
+			<id>escapecraft-repo</id>
+			<url>http://dev.escapecraft.com/maven/</url>
+		</repository>
+	</repositories>
 
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>1.5</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <artifactSet>
-                <includes>
-                  <include>me.tehbeard:utils</include>
-                </includes>
-              </artifactSet>
-              <relocations>
-                <relocation>
-                  <pattern>me.tehbeard.utils</pattern>
-                  <shadedPattern>me.tehbeard.BeardAch.utils</shadedPattern>
-                </relocation>
-              </relocations>
-              <minimizeJar>true</minimizeJar>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
 
-  </build>
+	<dependencies>
+		<dependency>
+			<groupId>net.milkbowl.vault</groupId>
+			<artifactId>Vault</artifactId>
+			<version>1.2.17-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>me.tehbeard</groupId>
+			<artifactId>BeardStat</artifactId>
+			<version>0.4</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.hydrox.bukkit</groupId>
+			<artifactId>DroxPerms</artifactId>
+			<version>0.4.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>me.tehbeard</groupId>
+			<artifactId>utils</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>bukkit</artifactId>
+			<version>1.2.5-R1.2</version>
+		</dependency>
+	</dependencies>
+
+
+
+	<distributionManagement>
+		<repository>
+			<id>dev-repo</id>
+			<name>dev.escapecraft.com Releases</name>
+			<url>scp://dev.escapecraft.com/var/www/maven</url>
+		</repository>
+		<snapshotRepository>
+			<id>dev-repo-snap</id>
+			<name>dev.escapecraft.com Snapshots</name>
+			<url>scp://dev.escapecraft.com/var/www/maven</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>2.2</version>
+			</extension>
+		</extensions>
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources/</directory>
+				<includes>
+					<include>plugin.yml</include>
+					<include>config.yml</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>me.tehbeard:utils</include>
+								</includes>
+							</artifactSet>
+							<relocations>
+								<relocation>
+									<pattern>me.tehbeard.utils</pattern>
+									<shadedPattern>me.tehbeard.BeardAch.utils</shadedPattern>
+								</relocation>
+							</relocations>
+							<minimizeJar>true</minimizeJar>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+	</build>
 </project>
