@@ -14,7 +14,12 @@
       <!-- Repository for Bukkit -->
       <repository>
         <id>bukkit-repo</id>
-        <url>http://repo.bukkit.org/artifactory/repo</url>
+        <url>http://repo.bukkit.org/content/groups/public/</url>
+      </repository>
+      
+      <repository>
+        <id>escapecraft-repo</id>
+        <url>http://dev.escapecraft.com/maven/</url>
       </repository>
     </repositories>
                               
@@ -23,7 +28,7 @@
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
-            <version>1.2.16-SNAPSHOT</version>                     
+            <version>1.2.17-SNAPSHOT</version>                     
         </dependency>
   	<dependency>
   		<groupId>me.tehbeard</groupId>
@@ -35,12 +40,12 @@
   	<dependency>
   		<groupId>de.hydrox.bukkit</groupId>
   		<artifactId>DroxPerms</artifactId>
-  		<version>0.3.0</version>
+  		<version>0.4.0-SNAPSHOT</version>
   	</dependency>
   	<dependency>
   		<groupId>me.tehbeard</groupId>
   		<artifactId>utils</artifactId>
-  		<version>0.2-SNAPSHOT</version>
+  		<version>1.0</version>
   	</dependency>
 
   	<dependency>
