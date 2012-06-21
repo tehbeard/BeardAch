@@ -5,6 +5,8 @@ import java.util.HashSet;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
@@ -32,6 +34,8 @@ public class Achievement {
 	private HashSet<IReward> rewards = new HashSet<IReward>();
 	Display broadcast;
 	private boolean hidden;
+	
+	private Permission exempt;
 	public boolean isHidden(){
 	    return hidden;
 	}
@@ -42,6 +46,7 @@ public class Achievement {
 		this.broadcast = broadcast;
 		this.id = nextId;
 		this.hidden = hidden;
+		this.exempt = new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
 		nextId ++;
 
 	}
@@ -90,7 +95,7 @@ public class Achievement {
 				return false;
 			}
 		}
-		if(!player.hasPermission("ach.exempt.*") && !player.hasPermission("ach.exempt." + slug)){
+		if(!player.hasPermission("ach.exempt.*") && !player.hasPermission(exempt)){
 			for(IReward reward:rewards){
 				reward.giveReward(player);
 			}

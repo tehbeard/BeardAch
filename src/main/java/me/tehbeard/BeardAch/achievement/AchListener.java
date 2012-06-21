@@ -21,7 +21,7 @@ public class AchListener implements Listener{
                 event.getTo().getBlockY() != event.getFrom().getBlockY() || 
                 event.getTo().getBlockZ() != event.getFrom().getBlockZ()
                 ){
-            BeardAch.printDebugCon("Player moved, checking chunk Cache");
+            
             for( CuboidEntry<Achievement> e : manager.chunkCache.getEntries(event.getPlayer())){
                 
                 if(e.getEntry().checkAchievement(event.getPlayer())){
