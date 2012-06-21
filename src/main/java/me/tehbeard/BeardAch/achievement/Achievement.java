@@ -85,25 +85,36 @@ public class Achievement {
 			return false;
 		}
 
-		for(AchievementPlayerLink link : BeardAch.self.getAchievementManager().playerHasCache.get(player.getName())){
-			if(link.getSlug().equals(slug)){
-				return false;
-			}
+		if(BeardAch.self.getAchievementManager().playerHas(player.getName(), slug)){
+		    return false;
 		}
+		
 		for(ITrigger trigger:triggers){
 			if(!trigger.checkAchievement(player)){
 				return false;
 			}
 		}
-		if(!player.hasPermission("ach.exempt.*") && !player.hasPermission(exempt)){
-			for(IReward reward:rewards){
-				reward.giveReward(player);
-			}
-		}
-
 		
-		switch (broadcast){
-		case BROADCAST:{
+		unlock(player);
+		
+
+		return true;
+	}
+
+	public void unlock(Player player){
+	    if(!player.hasPermission("ach.exempt.*") && !player.hasPermission(exempt)){
+            for(IReward reward:rewards){
+                reward.giveReward(player);
+            }
+        }
+	    else
+	    {
+	        BeardAch.self.getLogger().info(player.getName() + " Exempt from achievement rewards.");
+	    }
+
+        
+        switch (broadcast){
+        case BROADCAST:{
             Bukkit.broadcastMessage(BeardAch.colorise(
                     BeardAch.self.getConfig().getString("ach.msg.broadcast", 
                             (ChatColor.AQUA + "<PLAYER> " + ChatColor.WHITE + "Unlocked: " + ChatColor.GOLD + "<ACH>")).replace("<ACH>", name ).replace("<PLAYER>",player.getName()
@@ -112,19 +123,18 @@ public class Achievement {
                     );
 
         }break;
-		  
-		case PERSON:{
+          
+        case PERSON:{
             player.sendMessage(BeardAch.colorise(BeardAch.self.getConfig().getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>",player.getName())));
             player.sendMessage(ChatColor.BLUE + descrip);
         }break;
-		    
-		}
-		
-		
-
-		return true;
+            
+        }
+        
+        BeardAch.self.getAchievementManager().makeAchievementLink(player.getName(),slug);
 	}
-
+	
+	
 	public HashSet<ITrigger> getTrigs(){
 		return triggers;
 	}

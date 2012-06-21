@@ -4,6 +4,11 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
@@ -11,6 +16,7 @@ import me.tehbeard.BeardAch.achievement.triggers.SpeedRunTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
 import me.tehbeard.utils.cuboid.ChunkCache;
+import me.tehbeard.utils.cuboid.CuboidEntry;
 
 import me.tehbeard.utils.cuboid.Cuboid;
 
@@ -19,12 +25,12 @@ import me.tehbeard.utils.cuboid.Cuboid;
  * @author James
  *
  */
-public class AchievementManager {
+public class AchievementManager implements Listener {
 
-    public HashMap<String,HashSet<AchievementPlayerLink>> playerHasCache = new  HashMap<String,HashSet<AchievementPlayerLink>>();
-    public HashMap<Achievement,HashSet<String>> playerCheckCache = new  HashMap<Achievement,HashSet<String>>();
+    private HashMap<String,HashSet<AchievementPlayerLink>> playerHasCache = new  HashMap<String,HashSet<AchievementPlayerLink>>();
+    private HashMap<Achievement,HashSet<String>> playerCheckCache = new  HashMap<Achievement,HashSet<String>>();
     public IDataSource database = null;
-    public final ChunkCache<Achievement> chunkCache = new ChunkCache<Achievement>();
+    private final ChunkCache<Achievement> chunkCache = new ChunkCache<Achievement>();
 
     private List<Achievement> achievements = new LinkedList<Achievement>();
 
@@ -129,6 +135,15 @@ public class AchievementManager {
         }
     }
 
+    
+    public boolean playerHas(String player,String slug){
+        for(AchievementPlayerLink link : playerHasCache.get(player)){
+            if(link.getSlug().equals(slug)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Check all players online
@@ -153,8 +168,6 @@ public class AchievementManager {
                     //check for bleep bloop
                     if(entry.getKey().checkAchievement(p)){
                         BeardAch.printDebugCon("Achievement Get! " + ply + "=>" + entry.getKey().getName());
-                        
-                        unlockAchievement(ply, entry.getKey().getSlug());
                         it.remove();
                     }
 
@@ -203,10 +216,41 @@ public class AchievementManager {
         return null;
     }
 
-    public void unlockAchievement(String player,String slug){
+    public void makeAchievementLink(String player,String slug){
       //push to cache
         playerHasCache.get(player).add(new AchievementPlayerLink(slug));
         //push to DB
         database.setPlayersAchievements(player, slug);
     }
+    
+    
+    
+    
+    
+    ///LISTENER
+    
+    @EventHandler(priority=EventPriority.HIGHEST)
+    public void onPlayerMove(PlayerMoveEvent event){
+        if(event.getTo().getBlockX() != event.getFrom().getBlockX() ||
+                event.getTo().getBlockY() != event.getFrom().getBlockY() || 
+                event.getTo().getBlockZ() != event.getFrom().getBlockZ()
+                ){
+            
+            for( CuboidEntry<Achievement> e : chunkCache.getEntries(event.getPlayer())){
+                
+                if(e.getEntry().checkAchievement(event.getPlayer())){
+                    playerCheckCache.get(e.getEntry()).remove(event.getPlayer().getName());
+                }
+            }
+        }
+    }
+
+    @EventHandler(priority=EventPriority.HIGHEST)
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        // TODO Auto-generated method stub
+        loadPlayersAchievements(event.getPlayer().getName());
+
+    }
 }
+
+

@@ -313,7 +313,7 @@ public class BeardAch extends JavaPlugin {
         }, 600L,600L);
 
         //setup events
-        getServer().getPluginManager().registerEvents(new AchListener(achievementManager),this);
+        getServer().getPluginManager().registerEvents(achievementManager,this);
 
         printCon("Loading commands");
         //commands
