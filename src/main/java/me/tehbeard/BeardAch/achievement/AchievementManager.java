@@ -34,6 +34,11 @@ public class AchievementManager implements Listener {
 
     private List<Achievement> achievements = new LinkedList<Achievement>();
 
+    
+    public AchievementManager(){
+        playerHasCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
+
+    }
     public void loadAchievements(){
         //clear cache
         clearAchievements();
@@ -52,7 +57,6 @@ public class AchievementManager implements Listener {
      */
     public void clearAchievements(){
         chunkCache.clearCache();
-        playerHasCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
         achievements = new LinkedList<Achievement>();
         playerCheckCache = new HashMap<Achievement,HashSet<String>>();	
     }
