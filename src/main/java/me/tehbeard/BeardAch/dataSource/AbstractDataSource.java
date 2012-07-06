@@ -41,6 +41,8 @@ public abstract class AbstractDataSource implements IDataSource{
 	public void loadAchievements() {
 
 
+	    BeardAch.printDebugCon("Loading Achievement Data");
+	    BeardAch.self.reloadConfig();
 		Set<String> achs = BeardAch.self.getConfig().getConfigurationSection("achievements").getKeys(false);
 		if(achs==null){
 			BeardAch.printCon("[PANIC] NO ACHIEVEMENTS FOUND");
