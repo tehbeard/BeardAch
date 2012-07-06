@@ -43,7 +43,6 @@ public class SqlDataSource extends AbstractDataSource{
         try {
             conn = DriverManager.getConnection(conUrl,conStr);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -90,7 +89,6 @@ public class SqlDataSource extends AbstractDataSource{
 
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -101,7 +99,6 @@ public class SqlDataSource extends AbstractDataSource{
             prepGetAllPlayerAch = conn.prepareStatement("SELECT `achievement`,`timestamp` FROM `achievements` WHERE player=?");
             prepAddPlayerAch = conn.prepareStatement("INSERT INTO `achievements` (`player` ,`achievement`,`timestamp`) values (?,?,?)",Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -237,7 +234,6 @@ public class SqlDataSource extends AbstractDataSource{
             }
             fancyStat.executeBatch();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

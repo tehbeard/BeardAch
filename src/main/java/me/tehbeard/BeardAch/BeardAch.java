@@ -293,7 +293,6 @@ public class BeardAch extends JavaPlugin {
                 metrics.start();
 
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 printCon("Could not load metrics :(");
                 printCon("Please send the following stack trace to Tehbeard");
                 printCon("=======================");

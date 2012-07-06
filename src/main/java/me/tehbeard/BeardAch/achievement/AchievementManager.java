@@ -56,9 +56,10 @@ public class AchievementManager implements Listener {
      * Clear the caches.
      */
     public void clearAchievements(){
+        database.flush();
         chunkCache.clearCache();
         achievements = new LinkedList<Achievement>();
-        playerCheckCache = new HashMap<Achievement,HashSet<String>>();	
+        playerCheckCache = new HashMap<Achievement,HashSet<String>>();
     }
 
     /**
