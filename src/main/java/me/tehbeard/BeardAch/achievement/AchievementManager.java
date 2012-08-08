@@ -34,7 +34,7 @@ public class AchievementManager implements Listener {
 
     private List<Achievement> achievements = new LinkedList<Achievement>();
 
-    
+
     public AchievementManager(){
         playerHasCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
 
@@ -96,7 +96,7 @@ public class AchievementManager implements Listener {
                 Cuboid cuboid = ((CuboidCheckTrigger)t).getCuboid();
                 chunkCache.addEntry(cuboid, ach);
             }
-            
+
             if(t instanceof SpeedRunTrigger){
                 System.out.println("Adding speed run trigger");
                 Cuboid cuboid = ((SpeedRunTrigger)t).getStartCuboid();
@@ -140,7 +140,7 @@ public class AchievementManager implements Listener {
         }
     }
 
-    
+
     public boolean playerHas(String player,String slug){
         for(AchievementPlayerLink link : playerHasCache.get(player)){
             if(link.getSlug().equals(slug)){
@@ -157,33 +157,41 @@ public class AchievementManager implements Listener {
 
         //wipe players not online
         //for each achievement
-        for( Entry<Achievement, HashSet<String>> entry : playerCheckCache.entrySet()){
-            BeardAch.printDebugCon("ach:"+entry.getKey().getName());
-            //loop all players, check them.
-            Iterator<String> it = entry.getValue().iterator();
-            String ply;
-            Player p;
-            while(it.hasNext()){
-                ply = it.next();
 
-                //get player object for offline detection
-                p =Bukkit.getPlayer(ply);
-                if(p instanceof Player){
-                    BeardAch.printDebugCon("Player "+ply+" online");
-                    //check for bleep bloop
-                    if(entry.getKey().checkAchievement(p)){
-                        BeardAch.printDebugCon("Achievement Get! " + ply + "=>" + entry.getKey().getName());
+        boolean keepChecking = true;
+        while(keepChecking){
+            for( Entry<Achievement, HashSet<String>> entry : playerCheckCache.entrySet()){
+                keepChecking = false;
+                BeardAch.printDebugCon("ach:"+entry.getKey().getName());
+                //loop all players, check them.
+                Iterator<String> it = entry.getValue().iterator();
+                String ply;
+                Player p;
+                while(it.hasNext()){
+                    ply = it.next();
+
+                    //get player object for offline detection
+                    p =Bukkit.getPlayer(ply);
+                    if(p instanceof Player){
+                        BeardAch.printDebugCon("Player "+ply+" online");
+                        //check for bleep bloop
+                        if(entry.getKey().checkAchievement(p)){
+                            BeardAch.printDebugCon("Achievement Get! " + ply + "=>" + entry.getKey().getName());
+                            it.remove();
+                            keepChecking = true;
+                        }
+
+                    }else{
                         it.remove();
                     }
 
-                }else{
-                    it.remove();
                 }
 
             }
-
-
         }
+
+
+
 
 
     }
@@ -222,27 +230,27 @@ public class AchievementManager implements Listener {
     }
 
     public void makeAchievementLink(String player,String slug){
-      //push to cache
+        //push to cache
         playerHasCache.get(player).add(new AchievementPlayerLink(slug));
         //push to DB
         database.setPlayersAchievements(player, slug);
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     ///LISTENER
-    
+
     @EventHandler(priority=EventPriority.HIGHEST)
     public void onPlayerMove(PlayerMoveEvent event){
         if(event.getTo().getBlockX() != event.getFrom().getBlockX() ||
                 event.getTo().getBlockY() != event.getFrom().getBlockY() || 
                 event.getTo().getBlockZ() != event.getFrom().getBlockZ()
                 ){
-            
+
             for( CuboidEntry<Achievement> e : chunkCache.getEntries(event.getPlayer())){
-                
+
                 if(e.getEntry().checkAchievement(event.getPlayer())){
                     playerCheckCache.get(e.getEntry()).remove(event.getPlayer().getName());
                 }
