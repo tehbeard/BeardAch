@@ -37,7 +37,7 @@
 		<dependency>
 			<groupId>me.tehbeard</groupId>
 			<artifactId>BeardStat</artifactId>
-			<version>0.4.7</version>
+			<version>0.4.8-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>de.hydrox.bukkit</groupId>
