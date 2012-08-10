@@ -18,94 +18,94 @@ import me.tehbeard.utils.factory.ConfigurableFactory;
 
 public abstract class AbstractDataSource implements IDataSource{
 
-	public static final ConfigurableFactory<ITrigger,Configurable> triggerFactory = new ConfigurableFactory<ITrigger, Configurable>(Configurable.class) {
-        
+    public static final ConfigurableFactory<ITrigger,Configurable> triggerFactory = new ConfigurableFactory<ITrigger, Configurable>(Configurable.class) {
+
         @Override
         public String getTag(Configurable annotation) {
             return annotation.tag();
         }
     };
-	public static final ConfigurableFactory<IReward,Configurable> rewardFactory = new ConfigurableFactory<IReward, Configurable>(Configurable.class) {
-        
+    public static final ConfigurableFactory<IReward,Configurable> rewardFactory = new ConfigurableFactory<IReward, Configurable>(Configurable.class) {
+
         @Override
         public String getTag(Configurable annotation) {
             return annotation.tag();
         }
     };
-	
-	
+
+
 
     /**
      * Load the achievment descriptions
      */
-	public void loadAchievements() {
+    public void loadAchievements() {
 
 
-	    BeardAch.printDebugCon("Loading Achievement Data");
-	    BeardAch.self.reloadConfig();
-		Set<String> achs = BeardAch.self.getConfig().getConfigurationSection("achievements").getKeys(false);
-		if(achs==null){
-			BeardAch.printCon("[PANIC] NO ACHIEVEMENTS FOUND");
-			return;
-		}
-		for(String slug : achs){
-			ConfigurationSection e = BeardAch.self.getConfig().getConfigurationSection("achievements").getConfigurationSection(slug);
-			if(e==null){
-				continue;
-			}
-			//load information
-			String name = e.getString("name");
-			String descrip = e.getString("descrip");
-			Display broadcast = Achievement.Display.valueOf(e.getString("broadcast",BeardAch.self.getConfig().getString("ach.msg.send","NONE")));
-			slug = e.getString("alias",slug);
-			boolean hidden = e.getBoolean("hidden",false);
-			BeardAch.printDebugCon("Loading achievement " + name);
+        BeardAch.printDebugCon("Loading Achievement Data");
+        BeardAch.self.reloadConfig();
+        Set<String> achs = BeardAch.self.getConfig().getConfigurationSection("achievements").getKeys(false);
+        if(achs==null){
+            BeardAch.printCon("[PANIC] NO ACHIEVEMENTS FOUND");
+            return;
+        }
+        for(String slug : achs){
+            ConfigurationSection e = BeardAch.self.getConfig().getConfigurationSection("achievements").getConfigurationSection(slug);
+            if(e==null){
+                continue;
+            }
+            //load information
+            String name = e.getString("name");
+            String descrip = e.getString("descrip");
+            Display broadcast = Achievement.Display.valueOf(e.getString("broadcast",BeardAch.self.getConfig().getString("ach.msg.send","NONE")));
+            slug = e.getString("alias",slug);
+            boolean hidden = e.getBoolean("hidden",false);
+            BeardAch.printDebugCon("Loading achievement " + name);
 
-			Achievement ach = new Achievement(slug,name, descrip,broadcast,hidden);
+            Achievement ach = new Achievement(slug,name, descrip,broadcast,hidden);
 
-			//load triggers
-			List<String> triggers = e.getStringList("triggers");
-			for(String trig: triggers){
-				String[] part = trig.split("\\|");
-				if(part.length==2){
-					BeardAch.printDebugCon("Trigger => " + trig);
-					ITrigger trigger = triggerFactory.getProduct(part[0]);
-					if(trigger==null){BeardAch.printCon("[PANIC] TRIGGER " + part[0] + " NOT FOUND!!! SKIPPING.");continue;}
-					trigger.configure(part[1]);
-					ach.addTrigger(trigger);
-				}
-				else
-				{
-					BeardAch.printCon("[PANIC] ERROR! MALFORMED TRIGGER FOR ACHIEVEMENT " + name);
-				}
-			}
-			List<String> rewards = e.getStringList("rewards");
-			for(String reward: rewards){
-				String[] part = reward.split("\\|");
-				if(part.length==2){
-					BeardAch.printDebugCon("Reward => " + reward); 
-					IReward rewardInst = rewardFactory.getProduct(part[0]);
-					rewardInst.configure(part[1]);
-					ach.addReward(rewardInst);
-				}
-				else
-				{
-					BeardAch.printCon("[PANIC] ERROR! MALFORMED REWARD FOR ACHIEVEMENT " + name);
-				}
-			}
+            //load triggers
+            List<String> triggers = e.getStringList("triggers");
+            for(String trig: triggers){
+                String[] part = trig.split("\\|");
+                if(part.length==2){
+                    BeardAch.printDebugCon("Trigger => " + trig);
+                    ITrigger trigger = triggerFactory.getProduct(part[0]);
+                    if(trigger==null){BeardAch.printCon("[PANIC] TRIGGER " + part[0] + " NOT FOUND!!! SKIPPING.");continue;}
+                    trigger.configure(part[1]);
+                    ach.addTrigger(trigger);
+                }
+                else
+                {
+                    BeardAch.printCon("[PANIC] ERROR! MALFORMED TRIGGER FOR ACHIEVEMENT " + name);
+                }
+            }
+            List<String> rewards = e.getStringList("rewards");
+            for(String reward: rewards){
+                String[] part = reward.split("\\|");
+                if(part.length==2){
+                    BeardAch.printDebugCon("Reward => " + reward); 
+                    IReward rewardInst = rewardFactory.getProduct(part[0]);
+                    rewardInst.configure(part[1]);
+                    ach.addReward(rewardInst);
+                }
+                else
+                {
+                    BeardAch.printCon("[PANIC] ERROR! MALFORMED REWARD FOR ACHIEVEMENT " + name);
+                }
+            }
 
-			BeardAch.self.getAchievementManager().addAchievement(ach);
-			BeardAch.printDebugCon("Loaded achievement " + name);
-		}
+            BeardAch.self.getAchievementManager().addAchievement(ach);
+            BeardAch.printDebugCon("Loaded achievement " + name);
+        }
 
 
-	}
+    }
 
-	public abstract HashSet<AchievementPlayerLink> getPlayersAchievements(String Player);
+    public abstract HashSet<AchievementPlayerLink> getPlayersAchievements(String Player);
 
-	public abstract void setPlayersAchievements(String player,
-			String achievement);
-	public abstract void flush();
+    public abstract void setPlayersAchievements(String player,
+            String achievement);
+    public abstract void flush();
 
-	public abstract void clearAchievements(String player) ;
+    public abstract void clearAchievements(String player) ;
 }
