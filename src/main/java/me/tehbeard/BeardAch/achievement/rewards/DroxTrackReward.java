@@ -2,6 +2,7 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 
 import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
@@ -10,7 +11,7 @@ import org.bukkit.entity.Player;
 public class DroxTrackReward implements IReward{
 
 	String track = "";
-	public void configure(String config) {
+	public void configure(Achievement Ach,String config) {
 		
 		track = config;
 	

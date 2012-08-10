@@ -3,6 +3,7 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 
 import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 
@@ -13,7 +14,7 @@ public class CounterReward implements  IReward{
 	String name = "";
 	int count = 0;
 	private static PlayerStatManager manager = null;
-	public void configure(String config) {
+	public void configure(Achievement Ach,String config) {
 		if(manager==null){
 			manager = BeardAch.self.getStats();
 		}

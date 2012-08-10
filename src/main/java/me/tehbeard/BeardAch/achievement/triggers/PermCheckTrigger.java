@@ -1,6 +1,7 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 
 
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ public class PermCheckTrigger implements ITrigger {
 
 	String perm;
 
-	public void configure(String config) {
+	public void configure(Achievement ach,String config) {
 		perm = config;
 	}
 

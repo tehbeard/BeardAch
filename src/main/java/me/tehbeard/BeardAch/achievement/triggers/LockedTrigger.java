@@ -1,6 +1,8 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 
 
+import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
@@ -14,7 +16,8 @@ import org.bukkit.entity.Player;
 public class LockedTrigger implements ITrigger {
 
 
-	public void configure(String config) {
+	public void configure(Achievement ach,String config) {
+	    BeardAch.printCon("[ALERT] Achievement " + ach.getName() + " is locked and will not trigger");
 	}
 
 

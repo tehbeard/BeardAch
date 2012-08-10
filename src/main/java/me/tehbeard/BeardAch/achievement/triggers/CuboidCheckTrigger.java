@@ -2,6 +2,7 @@ package me.tehbeard.BeardAch.achievement.triggers;
 
 import java.util.ArrayList;
 
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.utils.cuboid.Cuboid;
 
@@ -23,7 +24,7 @@ public class CuboidCheckTrigger implements ITrigger {
 	    return c;
 	}
 	
-	public void configure(String config) {
+	public void configure(Achievement ach,String config) {
 			c.setCuboid(config);
 	}
 

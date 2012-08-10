@@ -1,5 +1,6 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
@@ -20,7 +21,7 @@ public class StatWithinTrigger implements ITrigger {
 
 	private static PlayerStatManager manager = null;
 
-	public void configure(String config) {
+	public void configure(Achievement ach,String config) {
 		if(manager==null){
 			manager = BeardAch.self.getStats();
 		}

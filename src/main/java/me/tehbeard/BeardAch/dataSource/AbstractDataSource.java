@@ -71,7 +71,7 @@ public abstract class AbstractDataSource implements IDataSource{
                     BeardAch.printDebugCon("Trigger => " + trig);
                     ITrigger trigger = triggerFactory.getProduct(part[0]);
                     if(trigger==null){BeardAch.printCon("[PANIC] TRIGGER " + part[0] + " NOT FOUND!!! SKIPPING.");continue;}
-                    trigger.configure(part[1]);
+                    trigger.configure(ach,part[1]);
                     ach.addTrigger(trigger);
                 }
                 else
@@ -85,7 +85,7 @@ public abstract class AbstractDataSource implements IDataSource{
                 if(part.length==2){
                     BeardAch.printDebugCon("Reward => " + reward); 
                     IReward rewardInst = rewardFactory.getProduct(part[0]);
-                    rewardInst.configure(part[1]);
+                    rewardInst.configure(ach,part[1]);
                     ach.addReward(rewardInst);
                 }
                 else

@@ -1,6 +1,7 @@
 package me.tehbeard.BeardAch.achievement.rewards;
 
 import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import net.milkbowl.vault.economy.Economy;
 
@@ -24,7 +25,7 @@ public class EconomyReward implements IReward {
 		return (economy != null);
 	}
 
-	public void configure(String config) {
+	public void configure(Achievement Ach,String config) {
 		setupEconomy();
 		amount = Double.parseDouble(config);
 	}

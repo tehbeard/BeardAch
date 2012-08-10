@@ -5,6 +5,7 @@ package me.tehbeard.BeardAch.achievement.triggers;
 import java.util.List;
 
 import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
@@ -20,7 +21,7 @@ public class AchCheckTrigger implements ITrigger {
 
 	String ach;
 
-	public void configure(String config) {
+	public void configure(Achievement Ach,String config) {
 		ach = config;
 	}
 

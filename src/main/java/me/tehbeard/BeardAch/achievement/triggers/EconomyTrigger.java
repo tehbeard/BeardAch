@@ -1,5 +1,6 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import net.milkbowl.vault.economy.Economy;
 
@@ -23,7 +24,7 @@ public class EconomyTrigger implements ITrigger {
 		return (economy != null);
 	}
 
-	public void configure(String config) {
+	public void configure(Achievement ach,String config) {
 		setupEconomy();
 		amount = Double.parseDouble(config);
 	}

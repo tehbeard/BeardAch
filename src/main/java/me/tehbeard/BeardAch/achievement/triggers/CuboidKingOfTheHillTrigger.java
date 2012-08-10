@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.utils.cuboid.Cuboid;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -21,6 +24,7 @@ public class CuboidKingOfTheHillTrigger implements ITrigger, Runnable {
 
     private Cuboid c = new Cuboid();
     private int time = 0;
+    private Achievement ach;
 
     private Map<String,Long> times = new HashMap<String, Long>();
     
@@ -29,7 +33,8 @@ public class CuboidKingOfTheHillTrigger implements ITrigger, Runnable {
         return c;
     }
 
-    public void configure(String config) {
+    public void configure(Achievement ach,String config) {
+        this.ach = ach;
         String[] con= config.split("\\/");
         if(con.length == 2){
             c.setCuboid(con[0]);
@@ -75,7 +80,8 @@ public class CuboidKingOfTheHillTrigger implements ITrigger, Runnable {
     }
 
     public void run() {
-        // TODO Auto-generated method stub
+
+            BeardAch.self.getAchievementManager().checkAchievement(ach);
         
     }
 

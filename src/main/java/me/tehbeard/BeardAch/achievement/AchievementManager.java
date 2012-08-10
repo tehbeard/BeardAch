@@ -241,6 +241,31 @@ public class AchievementManager implements Listener {
         database.setPlayersAchievements(player, slug);
     }
 
+    
+    public void checkAchievement(Achievement ach){
+        
+        Iterator<String> it = playerCheckCache.get(ach).iterator();
+        String ply;
+        Player p;
+        while(it.hasNext()){
+            ply = it.next();
+
+            //get player object for offline detection
+            p =Bukkit.getPlayer(ply);
+            if(p instanceof Player){
+                BeardAch.printDebugCon("Player "+ply+" online");
+                //check for bleep bloop
+                if(ach.checkAchievement(p)){
+                    BeardAch.printDebugCon("Achievement Get! " + ply + "=>" + ach.getName());
+                    it.remove();
+                }
+
+            }else{
+                it.remove();
+            }
+
+        }
+    }
 
 
 

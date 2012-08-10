@@ -3,6 +3,7 @@ package me.tehbeard.BeardAch.achievement.triggers;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.utils.cuboid.Cuboid;
 
@@ -25,7 +26,7 @@ public class SpeedRunTrigger implements ITrigger {
         return endCuboid;
     }
 
-    public void configure(String config) {
+    public void configure(Achievement ach,String config) {
         String[] c= config.split("\\/");
         if(c.length == 3){
             startCuboid.setCuboid(c[0]);

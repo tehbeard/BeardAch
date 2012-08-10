@@ -2,6 +2,7 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 
 import me.tehbeard.BeardAch.BeardAch;
+import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.Bukkit;
@@ -11,7 +12,7 @@ import org.bukkit.entity.Player;
 public class CommandReward implements IReward{
 
 	String command = "";
-	public void configure(String config) {
+	public void configure(Achievement Ach,String config) {
 		command = config;
 		
 	}
