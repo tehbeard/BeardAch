@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
+import me.tehbeard.BeardAch.achievement.triggers.CuboidKingOfTheHillTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.SpeedRunTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
@@ -98,10 +99,14 @@ public class AchievementManager implements Listener {
             }
 
             if(t instanceof SpeedRunTrigger){
-                System.out.println("Adding speed run trigger");
+                
                 Cuboid cuboid = ((SpeedRunTrigger)t).getStartCuboid();
                 chunkCache.addEntry(cuboid, ach);
                 cuboid = ((SpeedRunTrigger)t).getEndCuboid();
+                chunkCache.addEntry(cuboid, ach);
+            }
+            if(t instanceof CuboidKingOfTheHillTrigger){
+                Cuboid cuboid = ((CuboidKingOfTheHillTrigger)t).getCuboid();
                 chunkCache.addEntry(cuboid, ach);
             }
         }
