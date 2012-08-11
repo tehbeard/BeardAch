@@ -148,6 +148,7 @@ public class BeardAch extends JavaPlugin {
         addTrigger(StatWithinTrigger.class);
         addTrigger(EconomyTrigger.class);
         addTrigger(SpeedRunTrigger.class);
+        addTrigger(CuboidKingOfTheHillTrigger.class);
 
         printCon("Installing default rewards");
         //load installed rewards

@@ -1,0 +1,22 @@
+Achievement designer menu
+
+Create new achievement
+  [Set name]
+  [Set Description]
+  [Add Trigger]
+    <Trigger List>
+    [AchCheck]
+      Select Achievement
+      Save
+      Cancel
+    [Cuboid]
+      Select area
+      Save
+      Cancel
+    [SpeedRun]
+      Select Start
+      Select End
+      Save
+      Cancel
+  Add reward
+    <Reward List>
