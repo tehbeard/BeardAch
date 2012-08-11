@@ -310,7 +310,7 @@ public class BeardAch extends JavaPlugin {
                 achievementManager.checkPlayers();
             }
 
-        }, 600L,600L);
+        }, 200L,200L);
 
         //setup events
         getServer().getPluginManager().registerEvents(achievementManager,this);

@@ -108,7 +108,8 @@ public class AchievementManager implements Listener {
             if(t instanceof CuboidKingOfTheHillTrigger){
                 Cuboid cuboid = ((CuboidKingOfTheHillTrigger)t).getCuboid();
                 chunkCache.addEntry(cuboid, ach);
-                Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.self, (Runnable)t, 60L, 60L);
+                Bukkit.getPluginManager().registerEvents((CuboidKingOfTheHillTrigger)t, BeardAch.self);
+                
             }
         }
 

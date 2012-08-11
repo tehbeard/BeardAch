@@ -12,6 +12,10 @@ import me.tehbeard.utils.cuboid.Cuboid;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
  * Checks if a players is in a cuboid for a specified amount of time
@@ -19,7 +23,7 @@ import org.bukkit.entity.Player;
  *
  */
 @Configurable(tag="koth")
-public class CuboidKingOfTheHillTrigger implements ITrigger, Runnable {
+public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
 
 
     private Cuboid c = new Cuboid();
@@ -27,8 +31,8 @@ public class CuboidKingOfTheHillTrigger implements ITrigger, Runnable {
     private Achievement ach;
 
     private Map<String,Long> times = new HashMap<String, Long>();
-    
-    
+
+
     public Cuboid getCuboid(){
         return c;
     }
@@ -44,47 +48,65 @@ public class CuboidKingOfTheHillTrigger implements ITrigger, Runnable {
 
     public boolean checkAchievement(Player player) {
 
-        boolean wasInside = wasInside(player.getName());
-        boolean isInside  = c.isInside(player.getLocation());
         long currentTime = System.currentTimeMillis() / 1000L;
         
-        if(wasInside){
-            if((currentTime-getTime(player.getName()))>=time){
-                times.remove(player.getName());
-                return true;
-            }
-            if(!isInside){
-                times.remove(player.getName());
-            }
+        if(hasTime(player.getName())){
+            return (currentTime-getTime(player.getName()))>=time;
         }
-        if(isInside && !wasInside){
-            getTime(player.getName());
-        }
-        
+
         return false;
     }
 
     public ArrayList<String> getCache(){
         return c.getChunks();
     }
-    
-    private boolean wasInside(String player){
+
+    private boolean hasTime(String player){
         return times.containsKey(player);
     }
-    
+
     private Long getTime(String player){
-        if(!wasInside(player)){
+        if(!hasTime(player)){
             times.put(player, System.currentTimeMillis()/1000L);
         }
         return times.get(player);
     }
 
-    public void run() {
+    @EventHandler(priority=EventPriority.HIGHEST)
+    public void onPlayerMove(PlayerMoveEvent event){
+        if(event.getTo().getBlockX() != event.getFrom().getBlockX() ||
+                event.getTo().getBlockY() != event.getFrom().getBlockY() || 
+                event.getTo().getBlockZ() != event.getFrom().getBlockZ()
+                ){
+            Player player = event.getPlayer();
+            boolean wasInside = c.isInside(event.getFrom());
+            boolean isInside  = c.isInside(event.getTo());
+            long currentTime = System.currentTimeMillis() / 1000L;
 
-            BeardAch.self.getAchievementManager().checkAchievement(ach);
-        
+            if(wasInside){
+                l(player.getName() + " was inside cuboid");
+                if((currentTime-getTime(player.getName()))>=time){
+                    l(player.getName() + " was inside cuboid for required amount of time");
+                    BeardAch.self.getAchievementManager().checkAchievement(ach);
+                    
+                }
+                if(!isInside){
+                    l(player.getName() + " left cuboid, clearing time");
+                    times.remove(player.getName());
+                }
+            }
+            if(isInside && !wasInside){
+                l(player.getName() + " entered cuboid, starting timer.");
+                getTime(player.getName());
+            }
+
+            
+
+        }
     }
 
+        private void l(String l){
+            System.out.println(l);
+        }
 
-
-}
+    }
