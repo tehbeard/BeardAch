@@ -7,4 +7,10 @@ package me.tehbeard.BeardAch.dataSource.configurable;
  */
 public @interface RunnableTime {
 long value();
+SyncType type() default SyncType.SYNC;
+
+public enum SyncType{
+    SYNC,
+    ASYNC
+}
 }
