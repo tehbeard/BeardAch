@@ -16,6 +16,7 @@ import me.tehbeard.BeardAch.achievement.triggers.CuboidKingOfTheHillTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.SpeedRunTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
+import me.tehbeard.BeardAch.dataSource.configurable.RunnableTime;
 import me.tehbeard.utils.cuboid.ChunkCache;
 import me.tehbeard.utils.cuboid.CuboidEntry;
 
@@ -105,11 +106,14 @@ public class AchievementManager implements Listener {
                 cuboid = ((SpeedRunTrigger)t).getEndCuboid();
                 chunkCache.addEntry(cuboid, ach);
             }
-            if(t instanceof CuboidKingOfTheHillTrigger){
-                Cuboid cuboid = ((CuboidKingOfTheHillTrigger)t).getCuboid();
-                chunkCache.addEntry(cuboid, ach);
-                Bukkit.getPluginManager().registerEvents((CuboidKingOfTheHillTrigger)t, BeardAch.self);
-                
+            if(t instanceof Listener){
+                Bukkit.getPluginManager().registerEvents((Listener)t, BeardAch.self);
+            }
+            if(t instanceof Runnable){
+                RunnableTime rt = t.getClass().getAnnotation(RunnableTime.class);
+                if(rt != null){
+                    
+                }
             }
         }
 

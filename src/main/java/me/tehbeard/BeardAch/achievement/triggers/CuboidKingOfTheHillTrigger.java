@@ -33,10 +33,6 @@ public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
     private Map<String,Long> times = new HashMap<String, Long>();
 
 
-    public Cuboid getCuboid(){
-        return c;
-    }
-
     public void configure(Achievement ach,String config) {
         this.ach = ach;
         String[] con= config.split("\\/");
