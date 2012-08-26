@@ -60,12 +60,15 @@ public class WorldGuardRegionTrigger implements ITrigger,Listener{
 
     @EventHandler
     public void move(PlayerMoveEvent event){
+
         if(event.getTo().getBlockX() != event.getFrom().getBlockX() ||
                 event.getTo().getBlockY() != event.getFrom().getBlockY() || 
                 event.getTo().getBlockZ() != event.getFrom().getBlockZ()
                 ){
             if(event.getPlayer().getWorld().getName().equals(world)){
-                checkAchievement(event.getPlayer());
+                if(checkAchievement(event.getPlayer())){
+                    ach.checkAchievement(event.getPlayer());
+                }
             }
         }
     }

@@ -106,6 +106,7 @@ public class AchievementManager implements Listener {
                 chunkCache.addEntry(cuboid, ach);
             }
             if(t instanceof Listener){
+                BeardAch.printDebugCon("Adding listener trigger");
                 Bukkit.getPluginManager().registerEvents((Listener)t, BeardAch.self);
             }
             if(t instanceof Runnable){
