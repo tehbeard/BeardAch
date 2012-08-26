@@ -28,6 +28,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
 import de.hydrox.bukkit.DroxPerms.DroxPerms;
 import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
 
@@ -39,7 +41,11 @@ public class BeardAch extends JavaPlugin {
     private AddonLoader<IConfigurable> addonLoader;
 
     private Metrics metrics;
+    private WorldGuardPlugin worldGuard;
 
+    public WorldGuardPlugin getWorldGuard() {
+        return worldGuard;
+    }
     public static int triggersMetric = 0;
     public static int rewardsMetric = 0;
 
@@ -110,6 +116,11 @@ public class BeardAch extends JavaPlugin {
         if (droxPerms != null) {
             droxAPI = droxPerms.getAPI();
         }
+        
+        //check WorldGuard
+        worldGuard = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
+        
+           
 
 
 
@@ -149,6 +160,7 @@ public class BeardAch extends JavaPlugin {
         addTrigger(EconomyTrigger.class);
         addTrigger(SpeedRunTrigger.class);
         addTrigger(CuboidKingOfTheHillTrigger.class);
+        addTrigger(WorldGuardRegionTrigger.class);
 
         printCon("Installing default rewards");
         //load installed rewards
