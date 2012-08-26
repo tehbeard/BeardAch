@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.CuboidKingOfTheHillTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.SpeedRunTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
@@ -246,6 +245,9 @@ public class AchievementManager implements Listener {
         //push to DB
         database.setPlayersAchievements(player, slug);
     }
+    
+    
+    
 
     
     public void checkAchievement(Achievement ach){
@@ -273,6 +275,9 @@ public class AchievementManager implements Listener {
         }
     }
 
+    public void removeCheck(Achievement ach,Player player){
+        playerCheckCache.get(ach).remove(player.getName());
+    }
 
 
 

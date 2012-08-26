@@ -132,6 +132,7 @@ public class Achievement {
         }
         
         BeardAch.self.getAchievementManager().makeAchievementLink(player.getName(),slug);
+        BeardAch.self.getAchievementManager().removeCheck(this, player);
 	}
 	
 	
