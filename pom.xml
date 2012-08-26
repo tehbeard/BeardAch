@@ -12,10 +12,6 @@
 
 	</properties>
 	<repositories>
-		<repository>
-			<id>SK89Q-repo</id>
-			<url>http://maven.sk89q.com/repo/</url>
-		</repository>
 		<!-- Repository for Bukkit -->
 		<repository>
 			<id>bukkit-repo</id>
@@ -24,6 +20,10 @@
 		<repository>
 			<id>vault-repo</id>
 			<url>http://ci.herocraftonline.com/plugin/repository/everything</url>
+		</repository>
+		<repository>
+			<id>SK89Q-repo</id>
+			<url>http://maven.sk89q.com/repo/</url>
 		</repository>
 		<repository>
 			<id>escapecraft-repo</id>
