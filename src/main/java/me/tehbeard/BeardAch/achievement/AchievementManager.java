@@ -99,7 +99,7 @@ public class AchievementManager implements Listener {
             }
 
             if(t instanceof SpeedRunTrigger){
-                
+
                 Cuboid cuboid = ((SpeedRunTrigger)t).getStartCuboid();
                 chunkCache.addEntry(cuboid, ach);
                 cuboid = ((SpeedRunTrigger)t).getEndCuboid();
@@ -111,7 +111,7 @@ public class AchievementManager implements Listener {
             if(t instanceof Runnable){
                 RunnableTime rt = t.getClass().getAnnotation(RunnableTime.class);
                 if(rt != null){
-                    
+
                 }
             }
         }
@@ -170,29 +170,29 @@ public class AchievementManager implements Listener {
 
         boolean keepChecking = true;
         while(keepChecking){
-            for( Entry<Achievement, HashSet<String>> entry : playerCheckCache.entrySet()){
+            
+            for( Achievement ach : playerCheckCache.keySet()){
+                
                 keepChecking = false;
-                BeardAch.printDebugCon("ach:"+entry.getKey().getName());
+                
+                BeardAch.printDebugCon("ach:"+ach.getName());
                 //loop all players, check them.
-                Iterator<String> it = entry.getValue().iterator();
-                String ply;
+                
+                Set<String> list = getListOfPlayersToCheck(ach);
                 Player p;
-                while(it.hasNext()){
-                    ply = it.next();
+                for(String ply : list){
 
                     //get player object for offline detection
                     p =Bukkit.getPlayer(ply);
                     if(p instanceof Player){
                         BeardAch.printDebugCon("Player "+ply+" online");
                         //check for bleep bloop
-                        if(entry.getKey().checkAchievement(p)){
-                            BeardAch.printDebugCon("Achievement Get! " + ply + "=>" + entry.getKey().getName());
-                            it.remove();
+                        if(ach.checkAchievement(p)){
                             keepChecking = true;
                         }
 
                     }else{
-                        it.remove();
+                        removeCheck(ach, ply);
                     }
 
                 }
@@ -245,14 +245,14 @@ public class AchievementManager implements Listener {
         //push to DB
         database.setPlayersAchievements(player, slug);
     }
-    
-    
-    
 
-    
+
+
+
+
     public void checkAchievement(Achievement ach){
-        
-        Iterator<String> it = playerCheckCache.get(ach).iterator();
+
+        Iterator<String> it = getListOfPlayersToCheck(ach).iterator();
         String ply;
         Player p;
         while(it.hasNext()){
@@ -263,10 +263,7 @@ public class AchievementManager implements Listener {
             if(p instanceof Player){
                 BeardAch.printDebugCon("Player "+ply+" online");
                 //check for bleep bloop
-                if(ach.checkAchievement(p)){
-                    BeardAch.printDebugCon("Achievement Get! " + ply + "=>" + ach.getName());
-                    it.remove();
-                }
+                ach.checkAchievement(p);
 
             }else{
                 it.remove();
@@ -275,8 +272,8 @@ public class AchievementManager implements Listener {
         }
     }
 
-    public void removeCheck(Achievement ach,Player player){
-        playerCheckCache.get(ach).remove(player.getName());
+    public void removeCheck(Achievement ach,String player){
+        playerCheckCache.get(ach).remove(player);
     }
 
 
@@ -292,9 +289,8 @@ public class AchievementManager implements Listener {
 
             for( CuboidEntry<Achievement> e : chunkCache.getEntries(event.getPlayer())){
 
-                if(e.getEntry().checkAchievement(event.getPlayer())){
-                    playerCheckCache.get(e.getEntry()).remove(event.getPlayer().getName());
-                }
+                e.getEntry().checkAchievement(event.getPlayer());
+
             }
         }
     }
@@ -304,6 +300,12 @@ public class AchievementManager implements Listener {
         // TODO Auto-generated method stub
         loadPlayersAchievements(event.getPlayer().getName());
 
+    }
+    
+    
+    private Set<String> getListOfPlayersToCheck(Achievement ach){
+        HashSet<String> list = playerCheckCache.get(ach);
+        return new HashSet<String>(list);
     }
 }
 

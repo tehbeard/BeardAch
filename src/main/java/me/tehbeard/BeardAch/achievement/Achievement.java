@@ -36,9 +36,11 @@ public class Achievement {
 	private boolean hidden;
 	
 	private Permission exempt;
+	
 	public boolean isHidden(){
 	    return hidden;
 	}
+	
 	public Achievement(String slug,String name,String descrip,Display broadcast,boolean hidden) {
 		this.slug = slug;
 		this.name = name;
@@ -132,7 +134,7 @@ public class Achievement {
         }
         
         BeardAch.self.getAchievementManager().makeAchievementLink(player.getName(),slug);
-        BeardAch.self.getAchievementManager().removeCheck(this, player);
+        BeardAch.self.getAchievementManager().removeCheck(this, player.getName());
 	}
 	
 	
