@@ -16,7 +16,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 @Configurable(tag="wgregion")
-public class WorldGuardRegionTrigger implements ITrigger{
+public class WorldGuardRegionTrigger implements ITrigger,Listener{
 
     private RegionManager rm;
     private String region = "";

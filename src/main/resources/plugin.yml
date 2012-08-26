@@ -1,7 +1,7 @@
 name: BeardAch
 main: me.tehbeard.BeardAch.BeardAch
 version: ${project.plugin.version}
-softdepend: [DroxPerms,Vault,BeardStat] 
+softdepend: [WorldGuard,DroxPerms,Vault,BeardStat] 
 commands:
     ach:
         description: Show your achievements
