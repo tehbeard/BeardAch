@@ -211,7 +211,7 @@ public class BeardAch extends JavaPlugin {
 
 
         //metrics code
-        if(!getConfig().getBoolean("general.plugin-stats-opt-out",true)){
+        if(!getConfig().getBoolean("general.plugin-stats-opt-out",false)){
             try {
                 metrics = new Metrics(this);
 
