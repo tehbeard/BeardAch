@@ -161,6 +161,7 @@ public class BeardAch extends JavaPlugin {
         addTrigger(SpeedRunTrigger.class);
         addTrigger(CuboidKingOfTheHillTrigger.class);
         addTrigger(WorldGuardRegionTrigger.class);
+        
 
         printCon("Installing default rewards");
         //load installed rewards
@@ -169,7 +170,7 @@ public class BeardAch extends JavaPlugin {
         addReward(DroxSubGroupReward.class);
         addReward(DroxTrackReward.class);
         addReward(EconomyReward.class);
-
+        addReward(SetGroupReward.class);
 
         //Metrics
 
