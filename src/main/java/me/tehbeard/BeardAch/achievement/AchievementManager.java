@@ -1,6 +1,5 @@
 package me.tehbeard.BeardAch.achievement;
 import java.util.*;
-import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
