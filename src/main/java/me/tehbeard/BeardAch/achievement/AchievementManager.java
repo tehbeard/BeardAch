@@ -112,7 +112,13 @@ public class AchievementManager implements Listener {
             if(t instanceof Runnable){
                 RunnableTime rt = t.getClass().getAnnotation(RunnableTime.class);
                 if(rt != null){
-
+                    switch(rt.type()){
+                    case SYNC:
+                        Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.self, (Runnable)t, rt.value(), rt.value());
+                        break;
+                    case ASYNC:
+                        Bukkit.getScheduler().scheduleAsyncRepeatingTask(BeardAch.self, (Runnable)t, rt.value(), rt.value());
+                    }
                 }
             }
         }
