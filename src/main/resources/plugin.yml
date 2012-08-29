@@ -10,7 +10,7 @@ commands:
         description: reloads the achievements
         usage: /<command>
     ach-fancy:
-        description: Use to update any output displays slug->fancy DB
+        description: dumps achievement definitions to database
         usage: /<command>
 permissions:
   beardach.reload:

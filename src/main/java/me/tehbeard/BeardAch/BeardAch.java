@@ -161,6 +161,7 @@ public class BeardAch extends JavaPlugin {
         addTrigger(SpeedRunTrigger.class);
         addTrigger(CuboidKingOfTheHillTrigger.class);
         addTrigger(WorldGuardRegionTrigger.class);
+        addTrigger(InteractTrigger.class);
         
 
         printCon("Installing default rewards");
