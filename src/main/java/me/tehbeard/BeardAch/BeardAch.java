@@ -63,12 +63,12 @@ public class BeardAch extends JavaPlugin {
 
     }
     public static void printCon(String line){
-        System.out.println("[BeardAch] " + line);
+        self.getLogger().info("[BeardAch] " + line);
     }
 
     public static void printDebugCon(String line){
         if(self.getConfig().getBoolean("general.debug")){
-            System.out.println("[BeardAch][DEBUG] " + line);
+            printCon("[DEBUG] " + line);
         }
     }
 
