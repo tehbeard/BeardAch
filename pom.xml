@@ -17,10 +17,10 @@
 			<id>bukkit-repo</id>
 			<url>http://repo.bukkit.org/content/groups/public/</url>
 		</repository>
-		<repository>
+		<!--<repository>
 			<id>vault-repo</id>
 			<url>http://ci.herocraftonline.com/plugin/repository/everything</url>
-		</repository>
+		</repository>-->
 		<repository>
 			<id>SK89Q-repo</id>
 			<url>http://maven.sk89q.com/repo/</url>
@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>net.milkbowl.vault</groupId>
 			<artifactId>Vault</artifactId>
-			<version>1.2.17-SNAPSHOT</version>
+			<version>1.2.16</version>
 		</dependency>
 		<dependency>
 			<groupId>me.tehbeard</groupId>
