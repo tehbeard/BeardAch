@@ -4,12 +4,15 @@
 * Use latest BeardStat
 * Added King of the hill trigger
 * Added worldguard region trigger
+* Add block interact trigger
+* Add teleport player reward
+* Add apply potion effect reward
 * Shifted code so that Achievement is responsible for calling methods to link player to an achievement and remove a player from achievement checking
 * Add ability for triggers to be listeners and runnable, this will make future triggers more powerful
 * change exemption permissions to false by default.
 
 ##dumpling
-* Fixed neumerous potential NPE's
+* Fixed numerous potential NPE's
 * Added exemption nodes for achievement rewards (ach.exempt.* or arch.exempt.[slug])
 * Addon loader (TODO: Details on how to make addons) to load custom triggers and rewards
 * bundle support, to allow slipstreaming custom triggers and rewards into BeardAch (list classes in bundle.txt inside jar)
