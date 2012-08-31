@@ -173,6 +173,7 @@ public class BeardAch extends JavaPlugin {
         addReward(EconomyReward.class);
         addReward(SetGroupReward.class);
         addReward(TeleportReward.class);
+        addReward(PotionReward.class);
 
         //Metrics
 
