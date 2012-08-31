@@ -172,6 +172,7 @@ public class BeardAch extends JavaPlugin {
         addReward(DroxTrackReward.class);
         addReward(EconomyReward.class);
         addReward(SetGroupReward.class);
+        addReward(TeleportReward.class);
 
         //Metrics
 
