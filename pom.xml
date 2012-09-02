@@ -65,7 +65,7 @@
 		<dependency>
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldguard</artifactId>
-			<version>5.4</version>
+			<version>5.5.4.1-ec</version>
 		</dependency>
 	</dependencies>
 
