@@ -22,10 +22,6 @@
 			<url>http://ci.herocraftonline.com/plugin/repository/everything</url>
 		</repository>-->
 		<repository>
-			<id>SK89Q-repo</id>
-			<url>http://maven.sk89q.com/repo/</url>
-		</repository>
-		<repository>
 			<id>escapecraft-repo</id>
 			<url>http://dev.escapecraft.com/maven/</url>
 		</repository>
