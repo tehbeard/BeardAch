@@ -174,6 +174,7 @@ public class BeardAch extends JavaPlugin {
         addReward(SetGroupReward.class);
         addReward(TeleportReward.class);
         addReward(PotionReward.class);
+        addReward(PlayerCommandReward.class);
 
         //Metrics
 
