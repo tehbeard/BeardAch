@@ -1,10 +1,13 @@
 package me.tehbeard.BeardAch.commands;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
+import me.tehbeard.utils.commands.ArgumentPack;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -14,49 +17,64 @@ import org.bukkit.entity.Player;
 
 public class AchCommand implements CommandExecutor{
 
-	public boolean onCommand(CommandSender sender, Command command,
-			String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command,
+            String label, String[] args) {
+        String player = (sender instanceof Player) ? ((Player)sender).getName() : null;
+        int page = 1;
+        ArgumentPack pack = new ArgumentPack(new String[0],new String[]{"p","a"}, args);
+        //select other player if provided
+        if(pack.getOption("p")!=null){player = pack.getOption("p");}
 
-		if(sender instanceof Player){
-			Player player = (Player)sender;
-			if(args.length == 0){
 
-				//SIMPLE PAGINATION, ONLY SHOW LAST 5 ACHIEVEMENTS
-				List<AchievementPlayerLink> list = BeardAch.self.getAchievementManager().getAchievements(player.getName());
-				AchievementPlayerLink a;
-				
-				int pageSize = Math.min(5, list.size());
-				
-				player.sendMessage(ChatColor.AQUA + "Unlocked Achievements:");
-				for(int i=list.size()-pageSize;i<list.size();i++){
-					a = list.get(i);
-					player.sendMessage(ChatColor.WHITE + "#" + a.getAch().getId() + " "+ ChatColor.GOLD + a.getAch().getName() + " - " + ChatColor.WHITE + a.getDate().toString());
-				}
-				String msg = BeardAch.self.getConfig().getString("ach.msg.ach", null);
-				
-				if(msg!=null){
-					player.sendMessage(msg);
-				}
-				
-			}else if(args.length ==1){
-				Achievement a = BeardAch.self.getAchievementManager().getAchievement(Integer.parseInt(args[0]));
-				if(a!=null){
-					player.sendMessage(ChatColor.GOLD + a.getName());
-					player.sendMessage(ChatColor.BLUE + a.getDescrip());
+        //Better pagination
+        ArrayList<AchievementPlayerLink> list = new ArrayList<AchievementPlayerLink>(BeardAch.self.getAchievementManager().getAchievements(player));
 
-					//if they have unlocked it, tell them when they did
-					for( AchievementPlayerLink aLink:BeardAch.self.getAchievementManager().getAchievements(player.getName())){
-						if(aLink.getSlug().equals(a.getSlug())){
-						player.sendMessage(ChatColor.WHITE  + "You Unlocked this: " + aLink.getDate().toString());
-						}
-					}
-					
-				}
-			}
+        //sort list based on time
+        Collections.sort(list, new Comparator<AchievementPlayerLink>() {
 
-		}
+            public int compare(AchievementPlayerLink o1,
+                    AchievementPlayerLink o2) {
+                return o2.getDate().compareTo(o1.getDate());
 
-		return true;
-	}
+            }
+        });
+
+        
+        if(pack.getOption("a")==null){
+            
+            int size = (int) Math.ceil(((double)list.size())/9.0);
+            sender.sendMessage(ChatColor.AQUA + "Unlocked Achievements - page " + page + " of " + size + " :");
+            int start = ((page-1)*9);
+            for(int i=start;i<start+9;i++){
+                AchievementPlayerLink a = list.get(i);
+                if(a==null){break;}
+                sender.sendMessage(ChatColor.WHITE + "#" + a.getAch().getId() + " "+ ChatColor.GOLD + a.getAch().getName() + " - " + ChatColor.WHITE + a.getDate().toString());
+            }
+            String msg = BeardAch.self.getConfig().getString("ach.msg.ach", null);
+
+            if(msg!=null){
+                sender.sendMessage(msg);
+            }
+        }else{
+
+            Achievement a = BeardAch.self.getAchievementManager().getAchievement(Integer.parseInt(pack.getOption("a")));
+            if(a!=null){
+                sender.sendMessage(ChatColor.GOLD + a.getName());
+                sender.sendMessage(ChatColor.BLUE + a.getDescrip());
+
+                //if they have unlocked it, tell them when they did
+                for( AchievementPlayerLink aLink:BeardAch.self.getAchievementManager().getAchievements(player)){
+                    if(aLink.getSlug().equals(a.getSlug())){
+                        sender.sendMessage(ChatColor.WHITE  + "Unlocked on: " + aLink.getDate().toString());
+                    }
+                }
+
+            }
+        }
+
+
+
+        return true;
+    }
 
 }

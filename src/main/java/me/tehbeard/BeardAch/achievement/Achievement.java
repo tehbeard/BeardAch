@@ -49,6 +49,7 @@ public class Achievement {
 		this.id = nextId;
 		this.hidden = hidden;
 		this.exempt = new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
+		Bukkit.getPluginManager().removePermission(this.exempt);
 		Bukkit.getPluginManager().addPermission(this.exempt);
 		nextId ++;
 
