@@ -20,8 +20,10 @@ public class AchCommand implements CommandExecutor{
     public boolean onCommand(CommandSender sender, Command command,
             String label, String[] args) {
         String player = (sender instanceof Player) ? ((Player)sender).getName() : null;
-        int page = 1;
-        ArgumentPack pack = new ArgumentPack(new String[0],new String[]{"p","a"}, args);
+        
+        ArgumentPack pack = new ArgumentPack(new String[0],new String[]{"p","a","n"}, args);
+        
+        int page = pack.getOption("n")==null? 1 : Integer.parseInt(pack.getOption("n")); 
         //select other player if provided
         if(pack.getOption("p")!=null){player = pack.getOption("p");}
 
