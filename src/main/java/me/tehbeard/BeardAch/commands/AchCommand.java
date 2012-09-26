@@ -45,9 +45,10 @@ public class AchCommand implements CommandExecutor{
         if(pack.getOption("a")==null){
             
             int size = (int) Math.ceil(((double)list.size())/9.0);
+            int s = Math.min(9,list.size());
             sender.sendMessage(ChatColor.AQUA + "Unlocked Achievements - page " + page + " of " + size + " :");
             int start = ((page-1)*9);
-            for(int i=start;i<start+9;i++){
+            for(int i=start;i<start+s;i++){
                 AchievementPlayerLink a = list.get(i);
                 if(a==null){break;}
                 sender.sendMessage(ChatColor.WHITE + "#" + a.getAch().getId() + " "+ ChatColor.GOLD + a.getAch().getName() + " - " + ChatColor.WHITE + a.getDate().toString());
