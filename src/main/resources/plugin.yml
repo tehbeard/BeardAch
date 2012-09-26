@@ -11,12 +11,7 @@ commands:
         usage: /<command>
     ach-fancy:
         description: dumps achievement definitions to database
-        usage: |
-            /<command> - Show latest achievements unlocked
-            /<command> -n 2 - Show second page of achievements unlocked
-            /<command> -p herpderp - Show herpderp's achievements
-            /<command> -p herpderp -n 3 - show 3rd page of herpderp's achievements
-            /<command> -a 5 - Show achievement number 5
+        usage: /<command>
 permissions:
   beardach.reload:
     description: Allows you to reload the achievements list

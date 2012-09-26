@@ -10,7 +10,6 @@
 * Shifted code so that Achievement is responsible for calling methods to link player to an achievement and remove a player from achievement checking
 * Add ability for triggers to be listeners and runnable, this will make future triggers more powerful
 * change exemption permissions to false by default.
-* paginate /ach
 ##dumpling
 * Fixed numerous potential NPE's
 * Added exemption nodes for achievement rewards (ach.exempt.* or arch.exempt.[slug])
