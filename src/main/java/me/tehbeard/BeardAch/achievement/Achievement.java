@@ -35,6 +35,7 @@ public class Achievement {
 	Display broadcast;
 	private boolean hidden;
 	
+	private static final Permission exemptAll = new Permission("ach.exempt.*",PermissionDefault.FALSE)
 	private Permission exempt;
 	
 	public boolean isHidden(){
@@ -49,8 +50,8 @@ public class Achievement {
 		this.id = nextId;
 		this.hidden = hidden;
 		this.exempt = new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
-		Bukkit.getPluginManager().removePermission(this.exempt);
-		Bukkit.getPluginManager().addPermission(this.exempt);
+		//Bukkit.getPluginManager().removePermission(this.exempt);
+		//Bukkit.getPluginManager().addPermission(this.exempt);
 		nextId ++;
 
 	}
@@ -106,7 +107,7 @@ public class Achievement {
 	}
 
 	public void unlock(Player player){
-	    if(!player.hasPermission("ach.exempt.*") && !player.hasPermission(exempt)){
+	    if(!player.hasPermission(exemptAll) && !player.hasPermission(exempt)){
             for(IReward reward:rewards){
                 reward.giveReward(player);
             }
