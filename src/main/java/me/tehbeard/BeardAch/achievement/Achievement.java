@@ -35,7 +35,7 @@ public class Achievement {
 	Display broadcast;
 	private boolean hidden;
 	
-	private static final Permission exemptAll = new Permission("ach.exempt.*",PermissionDefault.FALSE)
+	private static final Permission exemptAll = new Permission("ach.exempt.*",PermissionDefault.FALSE);
 	private Permission exempt;
 	
 	public boolean isHidden(){
