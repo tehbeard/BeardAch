@@ -176,10 +176,9 @@ public class AchievementManager implements Listener {
 
         boolean keepChecking = true;
         while(keepChecking){
+            keepChecking = false;
             
             for( Achievement ach : playerCheckCache.keySet()){
-                
-                keepChecking = false;
                 
                 BeardAch.printDebugCon("ach:"+ach.getName());
                 //loop all players, check them.
