@@ -176,6 +176,7 @@ public class AchievementManager implements Listener {
 
         boolean keepChecking = true;
         while(keepChecking){
+            BeardAch.printDebugCon("Beggining Check player loop");
             keepChecking = false;
             
             for( Achievement ach : playerCheckCache.keySet()){
@@ -203,6 +204,7 @@ public class AchievementManager implements Listener {
                 }
 
             }
+            BeardAch.printDebugCon("Ending Check player loop");
         }
 
 
