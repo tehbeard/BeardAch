@@ -8,8 +8,10 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.configurable.Usage;
 
 @Configurable(tag="vaultaddgroup")
+@Usage(arguments={"group|group to add/set"},packageName="base",dependencies="Vault",blurb="Adds or sets a players group, via vault. Consult your permissions plugin documentation for further information on how this works.")
 public class SetGroupReward implements IReward {
     
     

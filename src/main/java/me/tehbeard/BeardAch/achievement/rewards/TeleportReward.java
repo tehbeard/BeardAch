@@ -6,8 +6,10 @@ import org.bukkit.entity.Player;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.configurable.Usage;
 
 @Configurable(tag="teleport")
+@Usage(arguments={"world|World to Teleport to","x|","y|","z|","yaw|","pitch|"},packageName="base")
 public class TeleportReward implements IReward {
 
     private Location l;
