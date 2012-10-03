@@ -37,60 +37,19 @@ public class BeardAch extends JavaPlugin {
 
     public static BeardAch self;
     private PlayerStatManager stats = null;
-    private AchievementManager achievementManager;
     private AddonLoader<IConfigurable> addonLoader;
-
     private Metrics metrics;
-    private WorldGuardPlugin worldGuard;
-
-    public WorldGuardPlugin getWorldGuard() {
-        return worldGuard;
-    }
+    
     public static int triggersMetric = 0;
     public static int rewardsMetric = 0;
-
-    public PlayerStatManager getStats(){
-        return stats;
-
-    }
+    
     public static DroxPermsAPI droxAPI = null;
-    private static final String PERM_PREFIX = "ach";
-
-    public static boolean hasPermission(Permissible player,String node){
-
-        return (player.hasPermission(PERM_PREFIX + "." + node) || player.isOp());
-
-
-    }
-    public static void printCon(String line){
-        self.getLogger().info("[BeardAch] " + line);
-    }
-
-    public static void printDebugCon(String line){
-        if(self.getConfig().getBoolean("general.debug")){
-            printCon("[DEBUG] " + line);
-        }
-    }
-
-    public void onDisable() {
-
-        achievementManager.database.flush();
-
-    }
-
-    private void EnableBeardStat(){
-        BeardStat bs = (BeardStat) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
-        if(bs!=null && bs.isEnabled()){
-            stats = bs.getStatManager();
-        }
-        else
-        {
-            printCon("[PANIC] BeardStat not installed! stat and statwithin triggers will not function!");
-        }
-
-    }
-
-
+    private WorldGuardPlugin worldGuard;
+    private AchievementManager achievementManager;
+    
+    /**
+     * Load BeardAch
+     */
     @SuppressWarnings("unchecked")
     public void onEnable() {
         self = this;
@@ -343,6 +302,18 @@ public class BeardAch extends JavaPlugin {
 
     }
 
+    /**
+     * Unload BeardAch
+     */
+    public void onDisable() {
+
+        achievementManager.database.flush();
+
+    }
+    
+    /**
+     * Handle unfinished commands
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command,
             String label, String[] args) {
@@ -351,6 +322,9 @@ public class BeardAch extends JavaPlugin {
         return true;
     }
 
+    /**
+     * Update the config
+     */
     private void updateConfig(){
         File f = new File(getDataFolder(),"BeardAch.yml");
 
@@ -373,20 +347,19 @@ public class BeardAch extends JavaPlugin {
         }
     }
 
+    /**
+     * Add a trigger
+     * @param trigger
+     */
     public void addTrigger(Class<? extends ITrigger > trigger){
         AbstractDataSource.triggerFactory.addProduct(trigger);
     }
+    /**
+     * Add a reward
+     * @param reward
+     */
     public void addReward(Class<? extends IReward >  reward){
         AbstractDataSource.rewardFactory.addProduct(reward);
-    }
-
-    /**
-     * return the achievement manager
-     * @return
-     */
-    public AchievementManager getAchievementManager(){
-        return achievementManager;
-
     }
 
     /**
@@ -404,5 +377,63 @@ public class BeardAch extends JavaPlugin {
         }
         return msg;
     }
+    
+    /**
+     * return the achievement manager
+     * @return
+     */
+    public AchievementManager getAchievementManager(){
+        return achievementManager;
 
+    }
+    
+    /**
+     * Return WorldGuard instance
+     * @return
+     */
+    public WorldGuardPlugin getWorldGuard() {
+        return worldGuard;
+    }
+    
+    /**
+     * Returns BeardStat instance
+     * @return
+     */
+    public PlayerStatManager getStats(){
+        return stats;
+    }
+    
+    /**
+     * Print console message
+     * @param line
+     */
+    public static void printCon(String line){
+        self.getLogger().info(line);
+    }
+
+    /**
+     * Print message for debug
+     * @param line
+     */
+    public static void printDebugCon(String line){
+        if(self.getConfig().getBoolean("general.debug")){
+            printCon("[DEBUG] " + line);
+        }
+    }
+   
+
+    /**
+     * Try to load BeardStat
+     */
+    private void EnableBeardStat(){
+        BeardStat bs = (BeardStat) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
+        if(bs!=null && bs.isEnabled()){
+            stats = bs.getStatManager();
+        }
+        else
+        {
+            printCon("[PANIC] BeardStat not installed! stat and statwithin triggers will not function!");
+        }
+
+    }
 }
