@@ -459,8 +459,7 @@ public class BeardAch extends JavaPlugin {
     }
     
     private void setHelp(){
-        IndexHelpTopic index = new IndexHelpTopic("BeardAchConfig","Triggers and rewards help files","beardach.help",configurableTopics,"This is a list of all loaded Triggers and Rewards for BeardAch that have declared a help definition");
-        Bukkit.getHelpMap().addTopic(index);
+        //TODO: dump to file, /help is crap
     }
     
 }
