@@ -21,3 +21,6 @@ permissions:
   beardach.reload.fancy:
     description: allows you to use /ach-fancy to make external ach displays
     default: false
+  beardach.help:
+    description: allows access to help topics on triggers and rewards.
+    default: op 

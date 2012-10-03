@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import me.tehbeard.BeardAch.Metrics.Graph;
 import me.tehbeard.BeardAch.Metrics.Plotter;
@@ -15,7 +17,9 @@ import me.tehbeard.BeardAch.achievement.rewards.*;
 import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.configurable.ConfigurableHelpTopic;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
+import me.tehbeard.BeardAch.dataSource.configurable.Usage;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import me.tehbeard.utils.addons.AddonLoader;
@@ -25,6 +29,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.help.HelpTopic;
+import org.bukkit.help.IndexHelpTopic;
 import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -39,6 +45,7 @@ public class BeardAch extends JavaPlugin {
     private PlayerStatManager stats = null;
     private AddonLoader<IConfigurable> addonLoader;
     private Metrics metrics;
+    private List<HelpTopic> configurableTopics = new ArrayList<HelpTopic>();
     
     public static int triggersMetric = 0;
     public static int rewardsMetric = 0;
@@ -181,6 +188,9 @@ public class BeardAch extends JavaPlugin {
         addonLoader.loadAddons();
 
 
+        printCon("Enabling help topics");
+        setHelp();
+        
         printCon("Loading Achievements");
 
         achievementManager.loadAchievements();
@@ -352,6 +362,7 @@ public class BeardAch extends JavaPlugin {
      * @param trigger
      */
     public void addTrigger(Class<? extends ITrigger > trigger){
+        makeHelpTopic(trigger);
         AbstractDataSource.triggerFactory.addProduct(trigger);
     }
     /**
@@ -359,6 +370,7 @@ public class BeardAch extends JavaPlugin {
      * @param reward
      */
     public void addReward(Class<? extends IReward >  reward){
+        makeHelpTopic(reward);
         AbstractDataSource.rewardFactory.addProduct(reward);
     }
 
@@ -436,4 +448,18 @@ public class BeardAch extends JavaPlugin {
         }
 
     }
+    
+    
+    private void makeHelpTopic(Class<? extends IConfigurable > configurable){
+        Usage usage = configurable.getAnnotation(Usage.class);
+        Configurable tag = configurable.getAnnotation(Configurable.class);
+        if(usage == null){return;}
+        HelpTopic topic = new ConfigurableHelpTopic(tag.tag(), usage);
+        configurableTopics.add(topic);
+    }
+    
+    private void setHelp(){
+        IndexHelpTopic index = new IndexHelpTopic("BeardAchConfig","Triggers and rewards help files","beardach.help",configurableTopics,"This is a list of all loaded Triggers and Rewards for BeardAch that have declared a help definition");
+    }
+    
 }
