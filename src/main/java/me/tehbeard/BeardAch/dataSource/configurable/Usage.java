@@ -9,4 +9,5 @@ public @interface Usage {
 String[] arguments();
 String[] dependencies() default {};
 String blurb() default "";
+String packageName();
 }

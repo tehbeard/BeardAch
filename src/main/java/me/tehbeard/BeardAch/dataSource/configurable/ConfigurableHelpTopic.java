@@ -17,7 +17,7 @@ public class ConfigurableHelpTopic extends HelpTopic{
                     
         }
         
-        this.fullText = name + "\n"+
+        this.fullText = name + "[" + usage.packageName() + " Package]\n"+
         ChatColor.GOLD + "Dependencies:";
         for(String dep: usage.dependencies()){
             fullText +=dep + "\n";
