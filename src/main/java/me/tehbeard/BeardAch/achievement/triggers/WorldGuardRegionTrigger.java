@@ -47,7 +47,8 @@ public class WorldGuardRegionTrigger implements ITrigger,Listener{
         if(rm==null){
             return false;
         }
-
+        if(!player.getWorld().getName().equals(world)){return false;}
+        
         ApplicableRegionSet zones = rm.getApplicableRegions(player.getLocation());
         for(ProtectedRegion zone : zones){
             if(zone.getId().equals(region)){
