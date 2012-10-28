@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -30,28 +31,32 @@ public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
     public List<String> getClassList(ZipFile addon) {
         List<String> classList = new ArrayList<String>();
         try {
-            ZipEntry manifest = addon.getEntry("achaddon.yml");
+            ZipEntry manifest = addon.getEntry("bundle.properties");
             if (manifest != null) {
-                YamlConfiguration addonConfig = new YamlConfiguration();
+                Scanner scanner;
 
-                addonConfig.load(addon.getInputStream(manifest));
-
-                BeardAch.printCon("Loading addon " + addonConfig.getString("name","N/A"));
-                for(String className:addonConfig.getStringList("classes")){
-                    classList.add(className);
+                scanner = new Scanner(addon.getInputStream(manifest));
+                boolean named = false;
+                while(scanner.hasNext()){
+                    String ln = scanner.nextLine();
+                    String[] l = ln.split("=");
+                    if(l[0].equalsIgnoreCase("name") && !named){
+                        named = true;
+                        BeardAch.printCon("Loading addon " + l[1]);
+                    }else if(l[0].equalsIgnoreCase("class") && named){
+                        classList.add(l[1]);
+                    }
+                    
                 }
+                scanner.close();
             }
         } catch (IOException e) {
             BeardAch.printCon("[ERROR] An I/O error occured while trying to access an addon. " + addon.getName());
             if(BeardAch.self.getConfig().getBoolean("general.debug")){
                 e.printStackTrace();
             }
-        } catch (InvalidConfigurationException e) {
-            BeardAch.printCon("[ERROR] Configuration header for "+ addon.getName() + " appears to be corrupt");
-            if(BeardAch.self.getConfig().getBoolean("general.debug")){
-                e.printStackTrace();
-            }
         }
+        
         return classList;
     }
 
