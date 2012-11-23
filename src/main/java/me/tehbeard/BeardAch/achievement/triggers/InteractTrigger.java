@@ -12,10 +12,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.help.Argument;
+import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 //TODO Interact block trigger
 @Configurable(tag="interact")
+@Usage(arguments={
+        @Argument(name="World",desc=""),
+        @Argument(name="x",desc=""),
+        @Argument(name="y",desc=""),
+        @Argument(name="z",desc="")
+        },packageName="base",blurb="Triggers when a player interacts with a block at the specified coordinates")
 public class InteractTrigger implements ITrigger, Listener {
 
     private Location l;

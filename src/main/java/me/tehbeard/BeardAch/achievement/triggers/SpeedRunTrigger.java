@@ -8,7 +8,7 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.utils.cuboid.Cuboid;
 
 import org.bukkit.entity.Player;
-
+//TODO: Redo as worldguard based
 @Configurable(tag="speedrun")
 public class SpeedRunTrigger implements ITrigger {
 

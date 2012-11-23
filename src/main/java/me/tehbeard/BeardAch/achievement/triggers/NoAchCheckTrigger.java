@@ -6,6 +6,8 @@ import java.util.List;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
+import me.tehbeard.BeardAch.achievement.help.Argument;
+import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
@@ -16,6 +18,9 @@ import org.bukkit.entity.Player;
  *
  */
 @Configurable(tag="noach")
+@Usage(arguments={
+        @Argument(name="achievement",desc="achievement slug")
+        },packageName="base",blurb="Fires if player DOES NOT have the specified achievement")
 public class NoAchCheckTrigger implements ITrigger {
 
 	String ach;

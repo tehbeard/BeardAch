@@ -1,6 +1,8 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.help.Argument;
+import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import net.milkbowl.vault.economy.Economy;
 
@@ -8,7 +10,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-@Configurable(tag="bankbalance")
+@Configurable(tag="bankbalance")@Usage(arguments={
+        @Argument(name="balance",desc="Amount player must have"),
+        },packageName="base",dependencies="vault")
 public class EconomyTrigger implements ITrigger {
 
 	private static Economy economy = null;

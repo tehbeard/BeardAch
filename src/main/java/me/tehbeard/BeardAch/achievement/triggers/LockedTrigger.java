@@ -3,6 +3,8 @@ package me.tehbeard.BeardAch.achievement.triggers;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.help.Argument;
+import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
@@ -13,6 +15,7 @@ import org.bukkit.entity.Player;
  *
  */
 @Configurable(tag="locked")
+@Usage(arguments={},packageName="base",blurb="Prevents an achievement from firing")
 public class LockedTrigger implements ITrigger {
 
 

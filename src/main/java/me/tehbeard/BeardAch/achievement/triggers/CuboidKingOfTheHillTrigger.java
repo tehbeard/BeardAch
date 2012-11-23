@@ -6,6 +6,8 @@ import java.util.Map;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.help.Argument;
+import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.utils.cuboid.Cuboid;
 
@@ -21,6 +23,17 @@ import org.bukkit.event.player.PlayerMoveEvent;
  *
  */
 @Configurable(tag="koth")
+@Usage(arguments={
+        @Argument(name="World",desc=""),
+        @Argument(name="x1",desc=""),
+        @Argument(name="y",desc=""),
+        @Argument(name="z1",desc=""),
+        @Argument(name="x2",desc=""),
+        @Argument(name="y2",desc=""),
+        @Argument(name="z2",desc=""),
+        @Argument(name="/",desc=""),
+        @Argument(name="time",desc="time in seconds player must be inside area"),
+        },packageName="base",blurb="Provides a king of the hill trigger, player must be inside area continuously for x seconds")
 public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
 
 

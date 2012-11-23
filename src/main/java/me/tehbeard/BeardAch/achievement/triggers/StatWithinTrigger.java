@@ -1,6 +1,8 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.help.Argument;
+import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
@@ -12,6 +14,12 @@ import org.bukkit.entity.Player;
  *
  */
 @Configurable(tag="statwithin")
+@Usage(arguments={
+        @Argument(name="category",desc=""),
+        @Argument(name="stat",desc=""),
+        @Argument(name="lower threshold",desc="Must be atleast this value"),
+        @Argument(name="upper threshold",desc="Must be less than or at most this value")
+        },packageName="base",blurb="")
 public class StatWithinTrigger implements ITrigger {
 
 	String cat;
