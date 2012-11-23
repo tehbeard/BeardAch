@@ -30,8 +30,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.help.HelpTopic;
-import org.bukkit.help.IndexHelpTopic;
-import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -213,7 +211,6 @@ public class BeardAch extends JavaPlugin {
 
                         @Override
                         public int getValue() {
-                            // TODO Auto-generated method stub
                             return 1;
                         }
                     });
@@ -272,7 +269,6 @@ public class BeardAch extends JavaPlugin {
 
                     @Override
                     public int getValue() {
-                        // TODO Auto-generated method stub
                         return 1;
                     }}
                 );
