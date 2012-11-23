@@ -17,7 +17,6 @@ import me.tehbeard.BeardAch.achievement.rewards.*;
 import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
-import me.tehbeard.BeardAch.dataSource.configurable.ConfigurableHelpTopic;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
 import me.tehbeard.BeardAch.dataSource.configurable.Usage;
 import me.tehbeard.BeardStat.BeardStat;
@@ -461,11 +460,6 @@ public class BeardAch extends JavaPlugin {
     
     
     private void makeHelpTopic(Class<? extends IConfigurable > configurable){
-        Usage usage = configurable.getAnnotation(Usage.class);
-        Configurable tag = configurable.getAnnotation(Configurable.class);
-        if(usage == null){return;}
-        HelpTopic topic = new ConfigurableHelpTopic(tag.tag(), usage);
-        configurableTopics.add(topic);
     }
     
     private void setHelp(){
