@@ -9,8 +9,189 @@
 	<properties>
 		<project.plugin.flavour>Espresso</project.plugin.flavour>
 		<project.plugin.version>${project.version}-${project.plugin.flavour}</project.plugin.version>
-
 	</properties>
+
+  <profiles>
+    <profile>
+      <id>p-env</id>
+      <dependencies combine.children="append">
+		    <dependency>
+			    <groupId>com.tehbeard.beardach</groupId>
+	        <artifactId>environmental</artifactId>
+	        <version>1.0-SNAPSHOT</version>
+		    </dependency>
+	    </dependencies>
+      <build>
+      <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <configuration>
+            	<filters combine.children="append"> 
+                <filter>
+                  <artifact>com.tehbeard.beardach:environmental</artifact>
+                  <includes>
+                   <include>**</include>
+                 </includes>
+                </filter> 
+              </filters>
+            	<transformers combine.children="append">
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>bundle.properties</resource>
+                </transformer>
+                </transformers>
+              <artifactSet>
+                <includes combine.children="append">
+                  <include>com.tehbeard.beardach:environmental</include>
+                </includes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    </build>
+    </profile>
+
+     <profile>
+      <id>p-spout</id>
+      <dependencies combine.children="append">
+		    <dependency>
+			    <groupId>com.tehbeard.beardach</groupId>
+	        <artifactId>SpoutPackage</artifactId>
+	        <version>0.0.1-SNAPSHOT</version>
+		    </dependency>
+	    </dependencies>
+      <build>
+      <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <configuration>
+            	<filters combine.children="append"> 
+                <filter>
+                  <artifact>com.tehbeard.beardach:SpoutPackage</artifact>
+                  <includes>
+                   <include>**</include>
+                 </includes>
+                </filter> 
+              </filters>
+            	<transformers combine.children="append">
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>bundle.properties</resource>
+                </transformer>
+                </transformers>
+              <artifactSet>
+                <includes combine.children="append">
+                  <include>com.tehbeard.beardach:SpoutPackage</include>
+                </includes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    </build>
+    </profile>
+
+    <profile>
+      <id>p-buscript</id>
+      <dependencies combine.children="append">
+		    <dependency>
+			  	<groupId>com.tehbeard.beardach</groupId>
+	        <artifactId>buscripts</artifactId>
+	        <version>0.0.1-SNAPSHOT</version>
+		    </dependency>
+	    </dependencies>
+      <build>
+      <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <configuration>
+            	<filters combine.children="append"> 
+                <filter>
+                  <artifact>com.tehbeard.beardach:buscripts</artifact>
+                  <includes>
+                   <include>**</include>
+                 </includes>
+                </filter> 
+              </filters>
+            	<transformers combine.children="append">
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>bundle.properties</resource>
+                </transformer>
+                </transformers>
+              <artifactSet>
+                <includes combine.children="append">
+                  <include>com.tehbeard.beardach:buscripts</include>
+                </includes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    </build>
+    </profile>
+
+  <profile>
+  	<id>p-buscript-lib</id>
+  	<repositories combine.children="append">
+  		<repository>
+  		  <id>buscript</id>
+			  <url>http://repo.onarandombox.com/content/groups/public/</url>
+		  </repository>
+		</repositories>
+
+      <dependencies combine.children="append">
+		    <dependency>
+		      <groupId>com.dumptruckman.minecraft</groupId>
+          <artifactId>buscript</artifactId>
+          <version>1.0</version>
+		    </dependency>
+	    </dependencies>
+      <build>
+      <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <configuration>
+            	<filters combine.children="append"> 
+                <filter>
+                  <artifact>com.dumptruckman.minecraft:buscript</artifact>
+                  <includes>
+                   <include>**</include>
+                 </includes>
+                </filter> 
+              </filters>
+              <artifactSet>
+                <includes combine.children="append">
+                  <include>com.dumptruckman.minecraft:buscript</include>
+                </includes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    </build>
+    </profile>
+  </profiles>
+  
+
 	<repositories>
 		<!-- Repository for Bukkit -->
 		<repository>
@@ -107,7 +288,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>1.5</version>
+				<version>1.6</version>
 				<executions>
 					<execution>
 						<phase>package</phase>

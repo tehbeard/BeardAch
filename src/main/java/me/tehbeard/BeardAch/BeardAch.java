@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import me.tehbeard.BeardAch.Metrics.Graph;
 import me.tehbeard.BeardAch.Metrics.Plotter;
@@ -43,14 +44,14 @@ public class BeardAch extends JavaPlugin {
     private AddonLoader<IConfigurable> addonLoader;
     private Metrics metrics;
     private List<HelpTopic> configurableTopics = new ArrayList<HelpTopic>();
-    
+
     public static int triggersMetric = 0;
     public static int rewardsMetric = 0;
-    
+
     public static DroxPermsAPI droxAPI = null;
     private WorldGuardPlugin worldGuard;
     private AchievementManager achievementManager;
-    
+
     /**
      * Load BeardAch
      */
@@ -79,11 +80,11 @@ public class BeardAch extends JavaPlugin {
         if (droxPerms != null) {
             droxAPI = droxPerms.getAPI();
         }
-        
+
         //check WorldGuard
         worldGuard = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
-        
-           
+
+
 
 
 
@@ -125,7 +126,7 @@ public class BeardAch extends JavaPlugin {
         addTrigger(CuboidKingOfTheHillTrigger.class);
         addTrigger(WorldGuardRegionTrigger.class);
         addTrigger(InteractTrigger.class);
-        
+
 
         printCon("Installing default rewards");
         //load installed rewards
@@ -145,28 +146,38 @@ public class BeardAch extends JavaPlugin {
 
 
         //Load built in extras
-        InputStream bundle = getResource("bundle.txt");
+        InputStream bundle = getResource("bundle.properties");
+
         if(bundle!=null){
-            printCon("Loading bundled addons");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(bundle));
-            try {
-                while(reader.ready()){
-                    Class<?> c = getClassLoader().loadClass(reader.readLine());
-                    if(c!=null){
-                        if(ITrigger.class.isAssignableFrom(c)){
-                            triggersMetric ++;
-                            addTrigger((Class<? extends ITrigger>) c);
-                        }else if(IReward.class.isAssignableFrom(c)){
-                            rewardsMetric ++;
-                            addReward((Class<? extends IReward>) c);
+            try{
+                printCon("Loading bundled addons");
+
+                Scanner scanner;
+
+                scanner = new Scanner(bundle);
+                while(scanner.hasNext()){
+                    String ln = scanner.nextLine();
+                    String[] l = ln.split("=");
+                    if(l[0].equalsIgnoreCase("name")){
+                        BeardAch.printCon("Loading bundled addon " + l[1]);
+                    }else if(l[0].equalsIgnoreCase("class")){
+                        Class<?> c = getClassLoader().loadClass(l[1]);
+                        if(c!=null){
+                            if(ITrigger.class.isAssignableFrom(c)){
+                                triggersMetric ++;
+                                addTrigger((Class<? extends ITrigger>) c);
+                            }else if(IReward.class.isAssignableFrom(c)){
+                                rewardsMetric ++;
+                                addReward((Class<? extends IReward>) c);
+                            }
                         }
                     }
-                }
 
-            } catch (IOException e) {
-                printError("An error occured trying to read the bundle file (bundle.txt)");
+
+                }
+                scanner.close();
             } catch (ClassNotFoundException e) {
-                printError("Could not load a class listed in the bundle file");
+                printCon("[PANIC] Could not load a class listed in the bundle file");
             }
         }        
 
@@ -187,7 +198,7 @@ public class BeardAch extends JavaPlugin {
 
         printCon("Enabling help topics");
         setHelp();
-        
+
         printCon("Loading Achievements");
 
         achievementManager.loadAchievements();
@@ -204,12 +215,12 @@ public class BeardAch extends JavaPlugin {
                 SimplePlotter cr = new SimplePlotter("Custom Rewards");
                 ct.set(triggersMetric);
                 cr.set(rewardsMetric);
-
                 if(getStats()!=null){
                     metrics.addCustomData(new Plotter("BeardStat installed") {
 
                         @Override
                         public int getValue() {
+                            // TODO Auto-generated method stub
                             return 1;
                         }
                     });
@@ -259,7 +270,6 @@ public class BeardAch extends JavaPlugin {
                     }
 
                     rewardsGraph.addPlotter(p);
-
                 }
 
                 DataSourceDescriptor c = achievementManager.database.getClass().getAnnotation(DataSourceDescriptor.class);
@@ -268,13 +278,19 @@ public class BeardAch extends JavaPlugin {
 
                     @Override
                     public int getValue() {
+                        // TODO Auto-generated method stub
                         return 1;
                     }}
-                );
-                
+                        );
+
                 metrics.start();
 
             } catch (Exception e) {
+                printCon("Could not load metrics :(");
+                printCon("Please send the following stack trace to Tehbeard");
+                printCon("=======================");
+                e.printStackTrace();
+                printCon("=======================");
             }
 
         }
@@ -310,7 +326,7 @@ public class BeardAch extends JavaPlugin {
         achievementManager.database.flush();
 
     }
-    
+
     /**
      * Handle unfinished commands
      */
@@ -339,7 +355,7 @@ public class BeardAch extends JavaPlugin {
                 e.printStackTrace();
             }
         }
-        
+
         if(getConfig().contains("ach.msg.send.broadcast")){
             printCon("Updating to new message control config");
             getConfig().set("ach.msg.send", "PERSON");
@@ -379,40 +395,7 @@ public class BeardAch extends JavaPlugin {
         }
         return msg;
     }
-    
-    /**
-     * return the achievement manager
-     * @return
-     */
-    public AchievementManager getAchievementManager(){
-        return achievementManager;
 
-    }
-    
-    /**
-     * Return WorldGuard instance
-     * @return
-     */
-    public WorldGuardPlugin getWorldGuard() {
-        return worldGuard;
-    }
-    
-    /**
-     * Returns BeardStat instance
-     * @return
-     */
-    public PlayerStatManager getStats(){
-        return stats;
-    }
-    
-    /**
-     * Print console message
-     * @param line
-     */
-    public static void printCon(String line){
-        self.getLogger().info(line);
-    }
-    
     /**
      * Print error message
      * @param errMsg
@@ -432,16 +415,15 @@ public class BeardAch extends JavaPlugin {
         self.getLogger().severe("[ERROR] ==Stack trace dump==");
     }
 
+
     /**
-     * Print message for debug
-     * @param line
+     * return the achievement manager
+     * @return
      */
-    public static void printDebugCon(String line){
-        if(self.getConfig().getBoolean("general.debug")){
-            printCon("[DEBUG] " + line);
-        }
+    public AchievementManager getAchievementManager(){
+        return achievementManager;
     }
-   
+
 
     /**
      * Try to load BeardStat
@@ -455,15 +437,48 @@ public class BeardAch extends JavaPlugin {
         {
             printError("BeardStat not installed! stat and statwithin triggers will not function!");
         }
-
     }
-    
-    
+
+    /**
+     * Return WorldGuard instance
+     * @return
+     */
+    public WorldGuardPlugin getWorldGuard() {
+        return worldGuard;
+    }
+
+    /**
+     * Returns BeardStat instance
+     * @return
+     */
+    public PlayerStatManager getStats(){
+        return stats;
+    }
+
+    /**
+     * Print console message
+     * @param line
+     */
+    public static void printCon(String line){
+        self.getLogger().info(line);
+    }
+
+    /**
+     * Print message for debug
+     * @param line
+     */
+    public static void printDebugCon(String line){
+        if(self.getConfig().getBoolean("general.debug")){
+            printCon("[DEBUG] " + line);
+        }
+    }
+
+
     private void makeHelpTopic(Class<? extends IConfigurable > configurable){
     }
-    
+
     private void setHelp(){
         //TODO: dump to file, /help is crap
     }
-    
+
 }
