@@ -426,6 +426,17 @@ public class BeardAch extends JavaPlugin {
     public static void printError(String errMsg){
         self.getLogger().severe("[ERROR] " + errMsg);
     }
+    /**
+     * Print error message with an exception
+     * @param errMsg
+     * @param e
+     */
+    public static void printError(String errMsg,Exception e){
+        self.getLogger().severe("[ERROR] " + errMsg);
+        self.getLogger().severe("[ERROR] ==Stack trace dump==");
+        e.printStackTrace();
+        self.getLogger().severe("[ERROR] ==Stack trace dump==");
+    }
 
     /**
      * Print message for debug
