@@ -418,6 +418,14 @@ public class BeardAch extends JavaPlugin {
     public static void printCon(String line){
         self.getLogger().info(line);
     }
+    
+    /**
+     * Print error message
+     * @param errMsg
+     */
+    public static void printError(String errMsg){
+        self.getLogger().severe("[ERROR] " + errMsg);
+    }
 
     /**
      * Print message for debug
