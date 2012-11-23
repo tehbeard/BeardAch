@@ -33,10 +33,14 @@ public class WorldGuardRegionTrigger implements ITrigger,Listener{
         World w = Bukkit.getWorld(c[0]);
         WorldGuardPlugin wg = BeardAch.self.getWorldGuard();
         if(wg==null){
-            BeardAch.printCon("[ERROR] WorldGuard not loaded! trigger will fail!");
+            BeardAch.printError("WorldGuard not loaded! trigger will fail!");
             return;
         }
         rm = wg.getRegionManager(w);
+        if(rm==null){
+            BeardAch.printError("World not found!");
+            return;
+        }
         world = w.getName();
         region = c[1];
 
@@ -55,7 +59,6 @@ public class WorldGuardRegionTrigger implements ITrigger,Listener{
                 return true;
             }
         }
-        // TODO Auto-generated method stub
         return false;
     }
 
