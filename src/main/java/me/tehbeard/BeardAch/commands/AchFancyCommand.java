@@ -16,7 +16,6 @@ public class AchFancyCommand implements CommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command lbl, String cmd,
 			String[] args) {
-		// TODO Auto-generated method stub
 		if(!sender.hasPermission("beardach.reload.fancy")){return true;}
 		sender.sendMessage("Dumping fancy achievement names");
 		BeardAch.self.getAchievementManager().database.dumpFancy();

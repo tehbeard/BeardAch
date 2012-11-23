@@ -304,7 +304,6 @@ public class AchievementManager implements Listener {
 
     @EventHandler(priority=EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        // TODO Auto-generated method stub
         loadPlayersAchievements(event.getPlayer().getName());
 
     }

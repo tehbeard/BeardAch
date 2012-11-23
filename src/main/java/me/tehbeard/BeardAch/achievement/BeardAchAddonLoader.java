@@ -42,12 +42,12 @@ public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
                 }
             }
         } catch (IOException e) {
-            BeardAch.printCon("[ERROR] An I/O error occured while trying to access an addon. " + addon.getName());
+            BeardAch.printError("An I/O error occured while trying to access an addon. " + addon.getName());
             if(BeardAch.self.getConfig().getBoolean("general.debug")){
                 e.printStackTrace();
             }
         } catch (InvalidConfigurationException e) {
-            BeardAch.printCon("[ERROR] Configuration header for "+ addon.getName() + " appears to be corrupt");
+            BeardAch.printError("Configuration header for "+ addon.getName() + " appears to be corrupt");
             if(BeardAch.self.getConfig().getBoolean("general.debug")){
                 e.printStackTrace();
             }

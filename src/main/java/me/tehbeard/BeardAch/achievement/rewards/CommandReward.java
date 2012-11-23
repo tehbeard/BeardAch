@@ -1,7 +1,6 @@
 package me.tehbeard.BeardAch.achievement.rewards;
 
 
-import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.configurable.Usage;
@@ -22,7 +21,6 @@ public class CommandReward implements IReward{
 	public void giveReward(Player player) {
 		
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(),command.replace("<PLAYER>", player.getName()));
-		BeardAch.printCon(command.replace("<PLAYER>", player.getName()));
 	}
 
 }

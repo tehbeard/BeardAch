@@ -103,8 +103,8 @@ public class BeardAch extends JavaPlugin {
         achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type",""));
 
         if(achievementManager.database == null){
-            printCon("[ERROR] NO SUITABLE DATABASE SELECTED!!");
-            printCon("[ERROR] DISABLING PLUGIN!!");
+            printError("NO SUITABLE DATABASE SELECTED!!");
+            printError("DISABLING PLUGIN!!");
 
             //onDisable();
             setEnabled(false);
@@ -165,9 +165,9 @@ public class BeardAch extends JavaPlugin {
                 }
 
             } catch (IOException e) {
-                printCon("[PANIC] An error occured trying to read the bundle file (bundle.txt)");
+                printError("An error occured trying to read the bundle file (bundle.txt)");
             } catch (ClassNotFoundException e) {
-                printCon("[PANIC] Could not load a class listed in the bundle file");
+                printError("Could not load a class listed in the bundle file");
             }
         }        
 
@@ -276,11 +276,6 @@ public class BeardAch extends JavaPlugin {
                 metrics.start();
 
             } catch (Exception e) {
-                printCon("Could not load metrics :(");
-                printCon("Please send the following stack trace to Tehbeard");
-                printCon("=======================");
-                e.printStackTrace();
-                printCon("=======================");
             }
 
         }
@@ -459,7 +454,7 @@ public class BeardAch extends JavaPlugin {
         }
         else
         {
-            printCon("[PANIC] BeardStat not installed! stat and statwithin triggers will not function!");
+            printError("BeardStat not installed! stat and statwithin triggers will not function!");
         }
 
     }
