@@ -2,15 +2,19 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
-import me.tehbeard.BeardAch.dataSource.configurable.Usage;
 
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 @Configurable(tag="potion")
-@Usage(arguments={"type|potion Type","amplifier|Tier of potion","duration|duration in seconds"},packageName="base")
+@Usage(arguments={
+        @Argument(name="type",desc="Potion type"),
+        @Argument(name="tier",desc="Potion tier"),
+        @Argument(name="duration",desc="duration (seconds)")
+        },packageName="base")
 public class PotionReward implements IReward {
 
     private PotionEffect effect;

@@ -4,13 +4,18 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
-import me.tehbeard.BeardAch.dataSource.configurable.Usage;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 
 import org.bukkit.entity.Player;
 @Configurable(tag="counter")
-@Usage(arguments={"name|counter name","count|Amount to increment"}, packageName = "base",blurb="Serves as a counter, value is stored in BeardStat under the achCount category, can be read by other achievements using stat triggers")
+@Usage(arguments={
+        @Argument(name="name",desc="counter name"),
+        @Argument(name="count",desc="Amount to increment by")
+        }, 
+        packageName = "base",
+        blurb="Serves as a counter, value is stored in BeardStat under the achCount category, can be read by other achievements using stat triggers")
 public class CounterReward implements  IReward{
 
 	String name = "";

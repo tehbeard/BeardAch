@@ -3,8 +3,8 @@ package me.tehbeard.BeardAch.achievement.triggers;
 import java.util.ArrayList;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
-import me.tehbeard.BeardAch.dataSource.configurable.Usage;
 import me.tehbeard.utils.cuboid.Cuboid;
 
 

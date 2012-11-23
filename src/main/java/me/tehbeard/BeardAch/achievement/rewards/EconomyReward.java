@@ -2,8 +2,8 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
-import me.tehbeard.BeardAch.dataSource.configurable.Usage;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 @Configurable(tag="money")
-@Usage(arguments="amount|Amount of money to give (decimals supported)",packageName="base",dependencies="Vault")
+@Usage(arguments=@Argument(name="amount",desc="Amount of money to give player, decimals supported"),packageName="base",dependencies="Vault")
 public class EconomyReward implements IReward {
 
 	private static Economy economy = null;

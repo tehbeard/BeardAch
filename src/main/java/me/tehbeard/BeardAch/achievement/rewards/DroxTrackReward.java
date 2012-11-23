@@ -3,13 +3,13 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
-import me.tehbeard.BeardAch.dataSource.configurable.Usage;
 
 import org.bukkit.entity.Player;
 
 @Configurable(tag="promote")
-@Usage(arguments = { "track|Track to promote user along" }, packageName = "base",dependencies="DroxPerms")
+@Usage(arguments = {@Argument(name="track",desc="The track to promote the player along")}, packageName = "base",dependencies="DroxPerms")
 public class DroxTrackReward implements IReward{
 
 	String track = "";
