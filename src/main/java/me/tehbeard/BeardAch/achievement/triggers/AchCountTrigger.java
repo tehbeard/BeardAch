@@ -7,6 +7,7 @@ import java.util.List;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
+import me.tehbeard.BeardAch.achievement.help.Argument;
 import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
@@ -20,7 +21,10 @@ import org.bukkit.entity.Player;
  *
  */
 @Configurable(tag="achcount")
-@Usage(arguments={"prefix|prefix of achievement slug to match","threshold|must have more then this many results to trigger"}, packageName = "base",blurb="use * to signify ALL achievements counted")
+@Usage(arguments={
+        @Argument(name="prefix",desc="prefix of achievement slug to match"),
+        @Argument(name="threshold",desc="Must have more than this many matches to trigger")
+        }, packageName = "base",blurb="use * to signify ALL achievements counted")
 public class AchCountTrigger implements ITrigger {
 
 	int threshold;

@@ -3,6 +3,7 @@ package me.tehbeard.BeardAch.achievement.triggers;
 import java.util.ArrayList;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.help.Argument;
 import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.utils.cuboid.Cuboid;
@@ -16,7 +17,15 @@ import org.bukkit.entity.Player;
  *
  */
 @Configurable(tag="cuboid")
-@Usage(arguments={"world|World for cuboid","x1|","y1|","z1|","x2|","y2|","z2|"},packageName="base",blurb="Provides a dependency free area entry trigger")
+@Usage(arguments={
+        @Argument(name="World",desc=""),
+        @Argument(name="x1",desc=""),
+        @Argument(name="y",desc=""),
+        @Argument(name="z1",desc=""),
+        @Argument(name="x2",desc=""),
+        @Argument(name="y2",desc=""),
+        @Argument(name="z2",desc="")
+        },packageName="base",blurb="Provides a dependency free area entry trigger")
 public class CuboidCheckTrigger implements ITrigger {
 
 
