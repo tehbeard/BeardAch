@@ -2,6 +2,7 @@ package me.tehbeard.BeardAch.achievement.help;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -48,7 +49,7 @@ public class HelpMaker {
     
     public static void writeHelp(){
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("help.html"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(BeardAch.self.getDataFolder(),"help.html")));
             String output = new String(pageTemplate);
             
             StringBuilder sb = new StringBuilder();
