@@ -10,6 +10,8 @@ import java.util.Scanner;
 import me.tehbeard.BeardAch.Metrics.Graph;
 import me.tehbeard.BeardAch.Metrics.Plotter;
 import me.tehbeard.BeardAch.achievement.*;
+import me.tehbeard.BeardAch.achievement.help.HelpMaker;
+import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.*;
 import me.tehbeard.BeardAch.achievement.rewards.*;
@@ -106,7 +108,7 @@ public class BeardAch extends JavaPlugin {
             setEnabled(false);
             return;
         }
-
+        HelpMaker.loadTemplates();
         printCon("Installing default triggers");
         //Load installed triggers
         addTrigger(AchCheckTrigger.class);
@@ -193,7 +195,8 @@ public class BeardAch extends JavaPlugin {
 
 
         printCon("Enabling help topics");
-        setHelp();
+
+        HelpMaker.writeHelp();
 
         printCon("Loading Achievements");
 
@@ -364,7 +367,8 @@ public class BeardAch extends JavaPlugin {
      * @param trigger
      */
     public void addTrigger(Class<? extends ITrigger > trigger){
-        makeHelpTopic(trigger);
+        HelpMaker.addTrigger(trigger.getAnnotation(Configurable.class).tag(), trigger.getAnnotation(Usage.class));
+        
         AbstractDataSource.triggerFactory.addProduct(trigger);
     }
     /**
@@ -372,7 +376,7 @@ public class BeardAch extends JavaPlugin {
      * @param reward
      */
     public void addReward(Class<? extends IReward >  reward){
-        makeHelpTopic(reward);
+        HelpMaker.addReward(reward.getAnnotation(Configurable.class).tag(), reward.getAnnotation(Usage.class));
         AbstractDataSource.rewardFactory.addProduct(reward);
     }
 
@@ -470,11 +474,5 @@ public class BeardAch extends JavaPlugin {
     }
 
 
-    private void makeHelpTopic(Class<? extends IConfigurable > configurable){
-    }
-
-    private void setHelp(){
-        //TODO: dump to file, /help is crap
-    }
 
 }

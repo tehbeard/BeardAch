@@ -1,14 +1,15 @@
 package me.tehbeard.BeardAch.achievement.help;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.apache.commons.lang.ArrayUtils;
-
-import de.schlichtherle.io.FileWriter;
+import org.bukkit.util.FileUtil;
 
 import me.tehbeard.BeardAch.BeardAch;
 
@@ -31,8 +32,10 @@ public class HelpMaker {
     private static List<String> rewards  = new ArrayList<String>();
     
     public static void loadTemplates(){
-        sectionTemplate = read("help\\section.html");
-        pageTemplate    = read("help\\page.html");
+        sectionTemplate = read("section.html");
+        pageTemplate    = read("page.html");
+        System.out.println(sectionTemplate);
+        System.out.println(pageTemplate);
     }
     
     public static void addTrigger(String tag,Usage usage){
@@ -71,6 +74,7 @@ public class HelpMaker {
     }
     
     private static String process(String tag,Usage usage){
+        if(usage==null){return "";}
         String work = new String(sectionTemplate);
         work = work.replace(T_TAG, tag);
         work = work.replace(T_ARGS, args(usage.arguments()));
@@ -99,11 +103,27 @@ public class HelpMaker {
     }
     
     private static String read(String file){
-        Scanner s = new Scanner(BeardAch.self.getResource(file));
-        String str = "";
-        while(s.hasNext()){
-            str += s.nextLine() + "\n";
+        BufferedReader br = new BufferedReader(new InputStreamReader(BeardAch.self.getResource(file)));
+        
+        String str ="";
+        String s = null;
+        try {
+            s = br.readLine();
+            while(s!=null){
+                str+=s;
+                s = br.readLine();
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }finally{
+            try {
+                br.close();
+            } catch (IOException e) {
+            }
         }
+        
+        
         return str;
     }
 }
