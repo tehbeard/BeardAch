@@ -1,3 +1,7 @@
+##Fillet
+* Added help file generation
+* Code cleanup
+* Profiles for slipstreaming built into pom
 ##Espresso
 * Fixed /ach-reload
 * api for unlocking achievements

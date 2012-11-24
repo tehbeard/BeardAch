@@ -112,7 +112,7 @@ public class HelpMaker {
             s = br.readLine();
             while(s!=null){
                 str+=s;
-                s = br.readLine();
+                s = br.readLine() + "\n";
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
