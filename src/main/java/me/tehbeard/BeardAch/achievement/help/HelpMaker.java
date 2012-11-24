@@ -49,7 +49,9 @@ public class HelpMaker {
     
     public static void writeHelp(){
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(BeardAch.self.getDataFolder(),"help.html")));
+            File f = new File("plugins/BeardAch/help.html");
+            f.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new FileWriter(f));
             String output = new String(pageTemplate);
             
             StringBuilder sb = new StringBuilder();
@@ -109,10 +111,9 @@ public class HelpMaker {
         String str ="";
         String s = null;
         try {
-            s = br.readLine();
-            while(s!=null){
-                str+=s;
-                s = br.readLine() + "\n";
+
+            while((s=br.readLine()) != null){
+                str+=s + "\n";
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
