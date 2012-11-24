@@ -1,10 +1,14 @@
 package me.tehbeard.BeardAch.achievement.help;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.lang.ArrayUtils;
+
+import de.schlichtherle.io.FileWriter;
 
 import me.tehbeard.BeardAch.BeardAch;
 
@@ -15,6 +19,9 @@ public class HelpMaker {
     public static final String T_DEPENDENCIES = "{depends}";
     public static final String T_BLURB = "{blurb}";
     public static final String T_PACKAGE = "{package}";
+    
+    public static final String T_TRIGGERS = "{trigger}";
+    public static final String T_REWARDS  = "{reward}";
     
     private static String sectionTemplate;
     
@@ -36,13 +43,40 @@ public class HelpMaker {
         rewards.add(process(tag, usage));
     }
     
+    public static void writeHelp(){
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("help.html"));
+            String output = new String(pageTemplate);
+            
+            StringBuilder sb = new StringBuilder();
+            for(String s : triggers){
+                sb.append(s);
+            }
+            output = output.replace(T_TRIGGERS,sb.toString());
+            
+            sb = new StringBuilder();
+            for(String s : rewards){
+                sb.append(s);
+            }
+            output = output.replace(T_REWARDS,sb.toString());
+            
+            bw.write(output);
+            bw.flush();
+            bw.close();
+            
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
     private static String process(String tag,Usage usage){
         String work = new String(sectionTemplate);
-        work.replace(T_TAG, tag);
-        work.replace(T_ARGS, args(usage.arguments()));
-        work.replace(T_DEPENDENCIES,depends(usage.dependencies()));
-        work.replace(T_BLURB, usage.blurb());
-        work.replace(T_PACKAGE, usage.packageName());
+        work = work.replace(T_TAG, tag);
+        work = work.replace(T_ARGS, args(usage.arguments()));
+        work = work.replace(T_DEPENDENCIES,depends(usage.dependencies()));
+        work = work.replace(T_BLURB, usage.blurb());
+        work = work.replace(T_PACKAGE, usage.packageName());
         return work;
     }
     
@@ -63,9 +97,6 @@ public class HelpMaker {
         s+="</ul>";
         return s;
     }
-    
-    
-    
     
     private static String read(String file){
         Scanner s = new Scanner(BeardAch.self.getResource(file));

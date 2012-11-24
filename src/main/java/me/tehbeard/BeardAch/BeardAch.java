@@ -40,7 +40,6 @@ public class BeardAch extends JavaPlugin {
     private PlayerStatManager stats = null;
     private AddonLoader<IConfigurable> addonLoader;
     private Metrics metrics;
-    private List<HelpTopic> configurableTopics = new ArrayList<HelpTopic>();
 
     public static int triggersMetric = 0;
     public static int rewardsMetric = 0;
