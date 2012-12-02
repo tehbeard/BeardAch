@@ -63,10 +63,10 @@ public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
         if(classType!=null){
             if(ITrigger.class.isAssignableFrom(classType)){
                 BeardAch.triggersMetric ++;
-                AbstractDataSource.triggerFactory.addProduct((Class<? extends ITrigger>) classType);
+                BeardAch.self.addTrigger((Class<? extends ITrigger>) classType);
             }else if(IReward.class.isAssignableFrom(classType)){
                 BeardAch.rewardsMetric ++; 
-                AbstractDataSource.rewardFactory.addProduct((Class<? extends IReward>) classType);
+                BeardAch.self.addReward((Class<? extends IReward>) classType);
             }
         }
     }
