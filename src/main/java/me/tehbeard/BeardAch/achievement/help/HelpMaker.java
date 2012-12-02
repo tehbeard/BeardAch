@@ -35,8 +35,8 @@ public class HelpMaker {
     public static void loadTemplates(){
         sectionTemplate = read("section.html");
         pageTemplate    = read("page.html");
-        System.out.println(sectionTemplate);
-        System.out.println(pageTemplate);
+        //System.out.println(sectionTemplate);
+        //System.out.println(pageTemplate);
     }
     
     public static void addTrigger(String tag,Usage usage){
