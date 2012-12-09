@@ -26,7 +26,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 @Usage(arguments={
         @Argument(name="World",desc=""),
         @Argument(name="x1",desc=""),
-        @Argument(name="y",desc=""),
+        @Argument(name="y1",desc=""),
         @Argument(name="z1",desc=""),
         @Argument(name="x2",desc=""),
         @Argument(name="y2",desc=""),
