@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.tehbeard</groupId>
 	<artifactId>BeardAch</artifactId>
-	<version>0.4.6-SNAPSHOT</version>
+	<version>0.4.6</version>
 	<name>BearchAch</name>
 	<description>Achievements plugin for BeardStat</description>
 	<properties>
-		<project.plugin.flavour>Fillet</project.plugin.flavour>
+		<project.plugin.flavour>Fillet [BETA]</project.plugin.flavour>
 		<project.plugin.version>${project.version}-${project.plugin.flavour}</project.plugin.version>
 	</properties>
 
