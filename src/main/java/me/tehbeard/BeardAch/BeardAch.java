@@ -233,7 +233,7 @@ public class BeardAch extends JavaPlugin {
 
                 //Triggers per achievement
                 Graph triggersGraph = metrics.createGraph("triggers");
-                for(final String trig : AbstractDataSource.triggerFactory.getTags()){
+                for(final String trig : AchievementLoader.triggerFactory.getTags()){
                     SimplePlotter p = new SimplePlotter(trig + " Trigger");
 
                     for(Achievement a : achievementManager.getAchievementsList()){
@@ -254,7 +254,7 @@ public class BeardAch extends JavaPlugin {
 
                 //Rewards per achievement
                 Graph rewardsGraph = metrics.createGraph("rewards");
-                for(final String reward : AbstractDataSource.rewardFactory.getTags()){
+                for(final String reward : AchievementLoader.rewardFactory.getTags()){
                     SimplePlotter p = new SimplePlotter(reward + " Reward");
 
                     for(Achievement a : achievementManager.getAchievementsList()){
@@ -369,7 +369,7 @@ public class BeardAch extends JavaPlugin {
     public void addTrigger(Class<? extends ITrigger > trigger){
         HelpMaker.addTrigger(trigger.getAnnotation(Configurable.class).tag(), trigger.getAnnotation(Usage.class));
         
-        AbstractDataSource.triggerFactory.addProduct(trigger);
+        AchievementLoader.triggerFactory.addProduct(trigger);
     }
     /**
      * Add a reward
@@ -377,7 +377,7 @@ public class BeardAch extends JavaPlugin {
      */
     public void addReward(Class<? extends IReward >  reward){
         HelpMaker.addReward(reward.getAnnotation(Configurable.class).tag(), reward.getAnnotation(Usage.class));
-        AbstractDataSource.rewardFactory.addProduct(reward);
+        AchievementLoader.rewardFactory.addProduct(reward);
     }
 
     /**

@@ -13,6 +13,7 @@ import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.SpeedRunTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
+import me.tehbeard.BeardAch.dataSource.AchievementLoader;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
 import me.tehbeard.BeardAch.dataSource.configurable.RunnableTime;
 import me.tehbeard.utils.cuboid.ChunkCache;
@@ -45,7 +46,7 @@ public class AchievementManager implements Listener {
         //reset Achievement Id's
         Achievement.resetId();
         //load achievements
-        database.loadAchievements();
+        AchievementLoader.loadAchievements();
 
         //load each players 
         for(Player p :Bukkit.getOnlinePlayers()){
