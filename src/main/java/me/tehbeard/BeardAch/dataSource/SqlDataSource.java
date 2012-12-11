@@ -20,7 +20,7 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 
 @DataSourceDescriptor(tag="mysql",version="1.1")
-public class SqlDataSource extends AbstractDataSource{
+public class SqlDataSource implements IDataSource{
 
     private HashMap<String,HashSet<AchievementPlayerLink>> writeCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
     Connection conn;

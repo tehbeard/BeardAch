@@ -11,7 +11,6 @@ import java.util.zip.ZipFile;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
-import me.tehbeard.BeardAch.dataSource.AbstractDataSource;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
 import me.tehbeard.utils.addons.AddonLoader;
 

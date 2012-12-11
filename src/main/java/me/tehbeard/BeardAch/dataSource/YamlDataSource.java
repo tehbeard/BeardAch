@@ -15,7 +15,7 @@ import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 
 @DataSourceDescriptor(tag="file",version="1.4")
-public class YamlDataSource extends AbstractDataSource {
+public class YamlDataSource implements IDataSource {
 
 	YamlConfiguration db;
 	File dbFile;
@@ -65,7 +65,6 @@ public class YamlDataSource extends AbstractDataSource {
 
 	}
 
-	@Override
 	public HashSet<AchievementPlayerLink> getPlayersAchievements(String player) {
 		HashSet<AchievementPlayerLink> ret = new HashSet<AchievementPlayerLink>();
 		ConfigurationSection playerData = db.getConfigurationSection("database."+player);
@@ -81,13 +80,11 @@ public class YamlDataSource extends AbstractDataSource {
 		return ret;
 	}
 
-	@Override
 	public void setPlayersAchievements(String player, String achievement) {
 		// TODO Auto-generated method stub
 		db.set("database." + player + "."+achievement,System.currentTimeMillis());
 	}
 
-	@Override
 	public void flush() {
 
 		try {
@@ -98,7 +95,6 @@ public class YamlDataSource extends AbstractDataSource {
 		}
 	}
 
-	@Override
 	public void clearAchievements(String player) {
 		// TODO Auto-generated method stub
 		db.set("database."+player, null);
