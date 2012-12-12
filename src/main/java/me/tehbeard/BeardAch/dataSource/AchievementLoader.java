@@ -78,6 +78,7 @@ public class AchievementLoader {
             if(tripped){
 
                 JsonWriter jw = new JsonWriter(new FileWriter(file));
+                jw.setIndent("  ");
                 gson.toJson(
                         BeardAch.self.getAchievementManager().getLoadedAchievements(),
                         new TypeToken<List<Achievement>>(){}.getType(), 
