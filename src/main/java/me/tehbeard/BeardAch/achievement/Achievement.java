@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
+import com.google.gson.annotations.Expose;
+
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
@@ -25,14 +27,21 @@ public class Achievement {
         NONE
     }
 
+    @Expose
 	private String slug;
+    @Expose
 	private String name;
+    @Expose
 	private String descrip;
 	private transient int id = 0;
 	private static int nextId = 1;
+	@Expose
 	private HashSet<ITrigger> triggers = new HashSet<ITrigger>();
+	@Expose
 	private HashSet<IReward> rewards = new HashSet<IReward>();
+	@Expose
 	Display broadcast;
+	@Expose
 	private boolean hidden;
 	
 	private static final Permission exemptAll = null;//new Permission("ach.exempt.*",PermissionDefault.FALSE);
@@ -41,10 +50,16 @@ public class Achievement {
 	public boolean isHidden(){
 	    return hidden;
 	}
+	
 	public Achievement(){
-	    
+	    nextId ++;
 	}
 	
+	public void postLoad(){
+	    this.exempt = new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
+	}
+	
+	@Deprecated
 	public Achievement(String slug,String name,String descrip,Display broadcast,boolean hidden) {
 		this.slug = slug;
 		this.name = name;
@@ -52,10 +67,10 @@ public class Achievement {
 		this.broadcast = broadcast;
 		this.id = nextId;
 		this.hidden = hidden;
-		this.exempt = null;// new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
+		this.exempt = null;//new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
 		//Bukkit.getPluginManager().removePermission(this.exempt);
 		//Bukkit.getPluginManager().addPermission(this.exempt);
-		nextId ++;
+		
 
 	}
 

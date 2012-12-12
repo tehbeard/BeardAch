@@ -18,6 +18,7 @@ import me.tehbeard.utils.factory.ConfigurableFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 public class AchievementLoader {
     
@@ -32,7 +33,9 @@ public class AchievementLoader {
     
    
     public static void loadAchievements(){
-        loadConfigAchievements();
+        //TODO:Load from file
+        List<Achievement> achievements = gson.fromJson("", new TypeToken<List<Achievement>>(){}.getType());
+
     }
     
     

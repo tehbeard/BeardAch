@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.Achievement.Display;
 import me.tehbeard.BeardAch.achievement.rewards.DroxTrackReward;
@@ -12,6 +15,7 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 
 public class TestClass {
@@ -29,7 +33,11 @@ public class TestClass {
         tr.configure(a, "veteran");
         a.addReward(tr);
        
-        Gson gson = 
+        Gson gson =  new GsonBuilder().
+                excludeFieldsWithoutExposeAnnotation().
+                registerTypeHierarchyAdapter(ITrigger.class, new TriggerJSONParser()).
+                registerTypeHierarchyAdapter(IReward.class, new RewardJSONParser()).
+                create();
         
         String json = gson.toJson(a);
         System.out.println(json);
@@ -44,5 +52,17 @@ public class TestClass {
         for( IReward i : aaa.getRewards()){
             System.out.println(i.getClass().getName());
         }
+        
+        
+        List<Achievement> alist = new ArrayList<Achievement>();
+        alist.add(a);
+        alist.add(aaa);
+        
+        json = gson.toJson(alist);
+        System.out.println(json);
+        
+        List<Achievement> aalist = gson.fromJson(json, new TypeToken<List<Achievement>>(){}.getType());
+        System.out.println(aalist.size());
+        
     }
 }
