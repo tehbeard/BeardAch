@@ -3,10 +3,12 @@ package me.tehbeard.BeardAch.dataSource.json;
 import java.lang.reflect.Type;
 
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.AchievementLoader;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.utils.cuboid.Cuboid;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,8 +20,8 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 public class RewardJSONParser implements JsonSerializer<IReward>,JsonDeserializer<IReward>{
-
-    private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeHierarchyAdapter(Location.class,new LocationJSONParser()).create();
+    
+    private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeHierarchyAdapter(Cuboid.class,new CuboidJSONParser()).registerTypeHierarchyAdapter(Location.class,new LocationJSONParser()).create();
     public JsonElement serialize(IReward trigger, Type type,
             JsonSerializationContext context) {
         JsonElement element = gson.toJsonTree(trigger);
@@ -32,6 +34,11 @@ public class RewardJSONParser implements JsonSerializer<IReward>,JsonDeserialize
         
         return gson.fromJson(element, AchievementLoader.rewardFactory.get(element.getAsJsonObject().get("_type").getAsString()));
         
+    }
+    
+    public static void main(String[] args){
+        Cuboid c= new Cuboid();
+        c.setCuboid(new Vector(1,1,1), new Vector(100,100,100), "foo");
     }
 
 }

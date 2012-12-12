@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.AchievementLoader;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.utils.cuboid.Cuboid;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,7 +20,7 @@ import com.google.gson.JsonSerializer;
 
 public class TriggerJSONParser implements JsonSerializer<ITrigger>,JsonDeserializer<ITrigger>{
 
-    private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeHierarchyAdapter(Location.class,new LocationJSONParser()).create();
+    private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeHierarchyAdapter(Cuboid.class,new CuboidJSONParser()).registerTypeHierarchyAdapter(Location.class,new LocationJSONParser()).create();
     
     public JsonElement serialize(ITrigger trigger, Type type,
             JsonSerializationContext context) {
