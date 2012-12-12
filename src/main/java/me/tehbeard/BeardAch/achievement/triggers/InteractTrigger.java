@@ -11,6 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.google.gson.annotations.Expose;
+
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.Argument;
 import me.tehbeard.BeardAch.achievement.help.Usage;
@@ -27,7 +29,9 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 public class InteractTrigger implements ITrigger, Listener {
 
     
+    @Expose
     private Location l;
+    
     private Achievement ach;
     private Set<String> active = new HashSet<String>();
     public void configure(Achievement ach, String config) {

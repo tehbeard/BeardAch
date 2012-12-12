@@ -23,6 +23,7 @@ public class LocationJSONParser implements JsonSerializer<Location>,JsonDeserial
 
     public JsonElement serialize(Location location, Type type,
             JsonSerializationContext context) {
+        System.out.println(location.toString());
         JsonObject element = new JsonObject();
         element.addProperty("world", location.getWorld().getName());
         element.addProperty("x", location.getX());

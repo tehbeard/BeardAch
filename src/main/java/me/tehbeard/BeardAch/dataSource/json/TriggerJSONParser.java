@@ -2,6 +2,8 @@ package me.tehbeard.BeardAch.dataSource.json;
 
 import java.lang.reflect.Type;
 
+import org.bukkit.Location;
+
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.AchievementLoader;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
@@ -17,7 +19,7 @@ import com.google.gson.JsonSerializer;
 
 public class TriggerJSONParser implements JsonSerializer<ITrigger>,JsonDeserializer<ITrigger>{
 
-    private Gson gson =  new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+    private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeHierarchyAdapter(Location.class,new LocationJSONParser()).create();
     
     public JsonElement serialize(ITrigger trigger, Type type,
             JsonSerializationContext context) {
