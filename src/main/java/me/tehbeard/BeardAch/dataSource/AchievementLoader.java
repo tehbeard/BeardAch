@@ -35,7 +35,8 @@ public class AchievementLoader {
     public static void loadAchievements(){
         //TODO:Load from file
         List<Achievement> achievements = gson.fromJson("", new TypeToken<List<Achievement>>(){}.getType());
-
+        
+        loadConfigAchievements();
     }
     
     
@@ -64,12 +65,14 @@ public class AchievementLoader {
             Achievement ach = new Achievement(slug,name, descrip,broadcast,hidden);
 
             //load triggers
+            try{
             List<String> triggers = e.getStringList("triggers");
+            
             for(String trig: triggers){
                 String[] part = trig.split("\\|");
                 if(part.length==2){
                     BeardAch.printDebugCon("Trigger => " + trig);
-                    ITrigger trigger = triggerFactory.getProduct(part[0]);
+                    ITrigger trigger = triggerFactory.get(part[0]).newInstance();
                     if(trigger==null){BeardAch.printCon("[PANIC] TRIGGER " + part[0] + " NOT FOUND!!! SKIPPING.");continue;}
                     trigger.configure(ach,part[1]);
                     ach.addTrigger(trigger);
@@ -84,7 +87,7 @@ public class AchievementLoader {
                 String[] part = reward.split("\\|");
                 if(part.length==2){
                     BeardAch.printDebugCon("Reward => " + reward); 
-                    IReward rewardInst = rewardFactory.getProduct(part[0]);
+                    IReward rewardInst = rewardFactory.get(part[0]).newInstance();
                     rewardInst.configure(ach,part[1]);
                     ach.addReward(rewardInst);
                 }
@@ -94,6 +97,14 @@ public class AchievementLoader {
                 }
             }
 
+            } catch (InstantiationException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            } catch (IllegalAccessException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            
             BeardAch.self.getAchievementManager().addAchievement(ach);
             BeardAch.printDebugCon("Loaded achievement " + name);
         }
