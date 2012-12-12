@@ -21,7 +21,7 @@ import com.google.gson.reflect.TypeToken;
 public class TestClass {
 
     
-    @Test
+    /*@Test*/
     public void t(){
         Achievement a = new Achievement("slug","name","desc",Display.BROADCAST,false);
         
