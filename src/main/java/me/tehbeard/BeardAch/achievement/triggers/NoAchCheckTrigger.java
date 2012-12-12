@@ -12,6 +12,8 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Checks if a player does not have an achievement
  * @author James
@@ -23,6 +25,7 @@ import org.bukkit.entity.Player;
         },packageName="base",blurb="Fires if player DOES NOT have the specified achievement")
 public class NoAchCheckTrigger implements ITrigger {
 
+    @Expose
 	String ach;
 
 	public void configure(Achievement ach,String config) {

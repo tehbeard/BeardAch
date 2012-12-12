@@ -26,6 +26,7 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
         },packageName="base",blurb="Triggers when a player interacts with a block at the specified coordinates")
 public class InteractTrigger implements ITrigger, Listener {
 
+    
     private Location l;
     private Achievement ach;
     private Set<String> active = new HashSet<String>();

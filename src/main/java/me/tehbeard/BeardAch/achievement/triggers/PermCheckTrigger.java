@@ -8,6 +8,8 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Checks if a player has a permission node
  * @author James
@@ -19,6 +21,7 @@ import org.bukkit.entity.Player;
         },packageName="base",blurb="Fires if player has that permission")
 public class PermCheckTrigger implements ITrigger {
 
+    @Expose
 	String perm;
 
 	public void configure(Achievement ach,String config) {

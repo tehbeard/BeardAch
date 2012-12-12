@@ -13,6 +13,8 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Checks if a player has a certain number of achievements
  * achcount|disc|20 would trigger when 20 achievements starting with the prefix disc are active
@@ -27,7 +29,9 @@ import org.bukkit.entity.Player;
         }, packageName = "base",blurb="use * to signify ALL achievements counted")
 public class AchCountTrigger implements ITrigger {
 
+    @Expose
 	int threshold;
+    @Expose
 	String prefix;
 
 	public void configure(Achievement Ach,String config) {

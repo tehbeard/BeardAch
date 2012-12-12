@@ -13,6 +13,8 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Checks if a player has a permission node
  * @author James
@@ -22,6 +24,7 @@ import org.bukkit.entity.Player;
 @Usage(arguments = {@Argument(name="achievement",desc="The achievement slug")}, packageName = "base")
 public class AchCheckTrigger implements ITrigger {
 
+    @Expose
 	String ach;
 
 	public void configure(Achievement Ach,String config) {

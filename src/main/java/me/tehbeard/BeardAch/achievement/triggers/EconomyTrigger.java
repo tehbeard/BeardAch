@@ -10,12 +10,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import com.google.gson.annotations.Expose;
+
 @Configurable(tag="bankbalance")@Usage(arguments={
         @Argument(name="balance",desc="Amount player must have"),
         },packageName="base",dependencies="vault")
 public class EconomyTrigger implements ITrigger {
 
 	private static Economy economy = null;
+	@Expose
 	private double amount;
 
 	private static Boolean setupEconomy() {

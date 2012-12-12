@@ -8,6 +8,8 @@ import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import org.bukkit.entity.Player;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Checks if a players stat is above certain threshold, then triggers. 
  * @author James
@@ -22,9 +24,13 @@ import org.bukkit.entity.Player;
         },packageName="base",blurb="")
 public class StatWithinTrigger implements ITrigger {
 
+    @Expose
 	String cat;
+    @Expose
 	String stat;
+    @Expose
 	int lowerThreshold;
+    @Expose
 	int upperThreshold;
 
 	private static PlayerStatManager manager = null;
