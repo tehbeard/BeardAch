@@ -52,6 +52,7 @@ public class Achievement {
 	}
 	
 	public Achievement(){
+	    this.id = nextId;
 	    nextId ++;
 	}
 	
