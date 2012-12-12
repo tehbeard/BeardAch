@@ -44,7 +44,7 @@ public class Achievement {
 	@Expose
 	private boolean hidden;
 	
-	private static final Permission exemptAll = null;//new Permission("ach.exempt.*",PermissionDefault.FALSE);
+	private static final Permission exemptAll = new Permission("ach.exempt.*",PermissionDefault.FALSE);
 	private Permission exempt;
 	
 	public boolean isHidden(){
