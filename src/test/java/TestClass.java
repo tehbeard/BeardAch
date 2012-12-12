@@ -36,7 +36,7 @@ public class TestClass {
         Gson gson =  new GsonBuilder().
                 excludeFieldsWithoutExposeAnnotation().
                 registerTypeHierarchyAdapter(ITrigger.class, new TriggerJSONParser()).
-                registerTypeHierarchyAdapter(IReward.class, new RewardJSONParser()).
+                registerTypeHierarchyAdapter(IReward.class, new RewardJSONParser()).setPrettyPrinting().
                 create();
         
         String json = gson.toJson(a);
