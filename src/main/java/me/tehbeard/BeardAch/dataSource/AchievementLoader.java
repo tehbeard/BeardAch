@@ -11,6 +11,9 @@ import me.tehbeard.BeardAch.achievement.Achievement.Display;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.ClassCatalogue;
+import me.tehbeard.BeardAch.dataSource.json.RewardJSONParser;
+import me.tehbeard.BeardAch.dataSource.json.TriggerJSONParser;
 import me.tehbeard.utils.factory.ConfigurableFactory;
 
 import com.google.gson.Gson;
@@ -18,29 +21,22 @@ import com.google.gson.GsonBuilder;
 
 public class AchievementLoader {
     
-    public static final ConfigurableFactory<ITrigger,Configurable> triggerFactory = new ConfigurableFactory<ITrigger, Configurable>(Configurable.class) {
+    public static final ClassCatalogue<ITrigger> triggerFactory = new ClassCatalogue<ITrigger>();
+    public static final ClassCatalogue<IReward> rewardFactory = new ClassCatalogue<IReward>();
 
-        @Override
-        public String getTag(Configurable annotation) {
-            return annotation.tag();
-        }
-    };
-    public static final ConfigurableFactory<IReward,Configurable> rewardFactory = new ConfigurableFactory<IReward, Configurable>(Configurable.class) {
-
-        @Override
-        public String getTag(Configurable annotation) {
-            return annotation.tag();
-        }
-    };
-
-    private static Gson gson = new GsonBuilder().create();
+    private static Gson gson = new GsonBuilder().
+            excludeFieldsWithoutExposeAnnotation().
+            registerTypeHierarchyAdapter(ITrigger.class, new TriggerJSONParser()).
+            registerTypeHierarchyAdapter(IReward.class, new RewardJSONParser()).
+            create();
     
-    private static Gson baseGsonParser = new Gson();
-    
+   
     public static void loadAchievements(){
-        
+        loadConfigAchievements();
     }
     
+    
+    //TODO: KILL THIS WITH FIRE
     public static void loadConfigAchievements(){
         BeardAch.printDebugCon("Loading Achievement Data");
         BeardAch.self.reloadConfig();

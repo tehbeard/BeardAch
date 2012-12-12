@@ -28,18 +28,21 @@ public class Achievement {
 	private String slug;
 	private String name;
 	private String descrip;
-	private int id = 0;
+	private transient int id = 0;
 	private static int nextId = 1;
 	private HashSet<ITrigger> triggers = new HashSet<ITrigger>();
 	private HashSet<IReward> rewards = new HashSet<IReward>();
 	Display broadcast;
 	private boolean hidden;
 	
-	private static final Permission exemptAll = new Permission("ach.exempt.*",PermissionDefault.FALSE);
+	private static final Permission exemptAll = null;//new Permission("ach.exempt.*",PermissionDefault.FALSE);
 	private Permission exempt;
 	
 	public boolean isHidden(){
 	    return hidden;
+	}
+	public Achievement(){
+	    
 	}
 	
 	public Achievement(String slug,String name,String descrip,Display broadcast,boolean hidden) {
@@ -49,7 +52,7 @@ public class Achievement {
 		this.broadcast = broadcast;
 		this.id = nextId;
 		this.hidden = hidden;
-		this.exempt = new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
+		this.exempt = null;// new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
 		//Bukkit.getPluginManager().removePermission(this.exempt);
 		//Bukkit.getPluginManager().addPermission(this.exempt);
 		nextId ++;
