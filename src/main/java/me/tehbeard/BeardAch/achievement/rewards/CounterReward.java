@@ -9,6 +9,8 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 
 import org.bukkit.entity.Player;
+
+import com.google.gson.annotations.Expose;
 @Configurable(tag="counter")
 @Usage(arguments={
         @Argument(name="name",desc="counter name"),
@@ -18,7 +20,9 @@ import org.bukkit.entity.Player;
         blurb="Serves as a counter, value is stored in BeardStat under the achCount category, can be read by other achievements using stat triggers")
 public class CounterReward implements  IReward{
 
+    @Expose
 	String name = "";
+    @Expose
 	int count = 0;
 	private static PlayerStatManager manager = null;
 	public void configure(Achievement Ach,String config) {

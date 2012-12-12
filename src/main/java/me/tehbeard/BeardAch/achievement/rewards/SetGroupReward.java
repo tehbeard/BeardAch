@@ -6,6 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import com.google.gson.annotations.Expose;
+
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
@@ -16,6 +18,7 @@ public class SetGroupReward implements IReward {
     
     
     private static Permission perms;
+    @Expose
     private String group = ""; 
     private static Boolean setupPerms() {
         if(perms==null){

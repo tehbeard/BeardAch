@@ -8,10 +8,13 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
 
+import com.google.gson.annotations.Expose;
+
 @Configurable(tag="subgroup")
 @Usage(arguments = { @Argument(name="subgroup",desc="subgroup to add to a player")}, packageName = "base",dependencies="DroxPerms")
 public class DroxSubGroupReward implements IReward{
 
+    @Expose
 	String subgroup = "";
 	public void configure(Achievement Ach,String config) {
 		subgroup = config;

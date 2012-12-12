@@ -7,10 +7,13 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import com.google.gson.annotations.Expose;
+
 @Configurable(tag="playercommand")
 @Usage(arguments=@Argument(name="command",desc="command to execute as the player"),packageName="base")
 public class PlayerCommandReward implements IReward {
 
+    @Expose
     String comm = "";
     public void configure(Achievement ach, String config) {
         comm = config;

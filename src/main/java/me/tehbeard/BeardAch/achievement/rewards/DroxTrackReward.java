@@ -8,10 +8,12 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
 import org.bukkit.entity.Player;
 
+import com.google.gson.annotations.Expose;
+
 @Configurable(tag="promote")
 @Usage(arguments = {@Argument(name="track",desc="The track to promote the player along")}, packageName = "base",dependencies="DroxPerms")
 public class DroxTrackReward implements IReward{
-
+    @Expose
 	String track = "";
 	public void configure(Achievement Ach,String config) {
 		

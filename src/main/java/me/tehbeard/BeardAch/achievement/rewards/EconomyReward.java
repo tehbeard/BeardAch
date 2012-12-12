@@ -10,11 +10,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import com.google.gson.annotations.Expose;
+
 @Configurable(tag="money")
 @Usage(arguments=@Argument(name="amount",desc="Amount of money to give player, decimals supported"),packageName="base",dependencies="Vault")
 public class EconomyReward implements IReward {
 
 	private static Economy economy = null;
+	@Expose
 	private double amount = 0.0D;
 
 	private static Boolean setupEconomy() {

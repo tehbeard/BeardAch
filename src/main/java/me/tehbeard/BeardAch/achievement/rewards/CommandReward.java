@@ -9,12 +9,15 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import com.google.gson.annotations.Expose;
+
 @Configurable(tag="comm")
 @Usage(arguments=@Argument(name="command",desc="The command to execute, executed on the console. <PLAYER> is replaced it the players name"),
 packageName="base",
 blurb="Executes a command on the console")
 public class CommandReward implements IReward{
 
+    @Expose
 	String command = "";
 	public void configure(Achievement Ach,String config) {
 		command = config;
