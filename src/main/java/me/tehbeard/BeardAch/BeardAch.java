@@ -59,12 +59,10 @@ public class BeardAch extends JavaPlugin {
         achievementManager = new AchievementManager();
         //Load config
         printCon("Starting BeardAch");
-        if(!getConfig().getKeys(false).contains("achievements")){
+        /*if(!getConfig().getKeys(false).contains("achievements")){
             getConfig().options().copyDefaults(true);
-        }
+        }*/
         saveConfig();
-        reloadConfig();
-        updateConfig();
         reloadConfig();
 
         EnableBeardStat();
@@ -337,30 +335,7 @@ public class BeardAch extends JavaPlugin {
         return true;
     }
 
-    /**
-     * Update the config
-     */
-    private void updateConfig(){
-        File f = new File(getDataFolder(),"BeardAch.yml");
-
-        if(f.exists()){
-            try {
-                YamlConfiguration.loadConfiguration(f).save(new File(getDataFolder(),"config.yml"));
-                f.renameTo(new File(getDataFolder(),"BeardAch.yml.old"));
-            } catch (IOException e) {
-                printCon("==============");
-                printCon("Failed to update from BeardAch.yml to config.yml");
-                printCon("==============");
-                e.printStackTrace();
-            }
-        }
-
-        if(getConfig().contains("ach.msg.send.broadcast")){
-            printCon("Updating to new message control config");
-            getConfig().set("ach.msg.send", "PERSON");
-            saveConfig();
-        }
-    }
+    
 
     /**
      * Add a trigger

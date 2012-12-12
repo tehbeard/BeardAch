@@ -3,10 +3,14 @@ package me.tehbeard.BeardAch.dataSource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
 import me.tehbeard.BeardAch.BeardAch;
@@ -25,6 +29,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonWriter;
+
+
 
 public class AchievementLoader {
 
@@ -53,6 +60,33 @@ public class AchievementLoader {
                     BeardAch.self.getAchievementManager().addAchievement(a);
                 }
             }
+
+
+
+
+
+            //TODO: Kill in 0.6
+            List<Achievement> l = loadOldConfigAchievements();
+            boolean tripped = false;
+            for(Achievement a:l){
+                tripped = true;
+                BeardAch.printCon("Loading achievement " + a.getName());
+                BeardAch.self.getAchievementManager().addAchievement(a);
+            }
+            //convert old to new json awesomeness
+            if(tripped){
+
+                FileWriter fw = new FileWriter(file);
+                gson.toJson(
+                        BeardAch.self.getAchievementManager().getLoadedAchievements(),
+                        new TypeToken<List<Achievement>>(){}.getType(), 
+                        new JsonWriter(fw)
+                        );
+                
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[BEARDACH] CONVERTED ACHIEVEMENTS TO JSON, PLEASE CHECK CONVERSION WORKED AND REMOVE ACHIEVEMENTS ENTRY FROM config.yml");
+            }
+
+
         } catch (JsonIOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -66,19 +100,22 @@ public class AchievementLoader {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        //loadConfigAchievements();
     }
 
 
     //TODO: KILL THIS WITH FIRE
-    public static void loadConfigAchievements(){
+    public static List<Achievement> loadOldConfigAchievements(){
+
+        List<Achievement> a = new ArrayList<Achievement>();
+
         BeardAch.printDebugCon("Loading Achievement Data");
         BeardAch.self.reloadConfig();
         Set<String> achs = BeardAch.self.getConfig().getConfigurationSection("achievements").getKeys(false);
         if(achs==null){
-            BeardAch.printCon("[PANIC] NO ACHIEVEMENTS FOUND");
-            return;
+            return a;
+        }
+        else{
+            BeardAch.printCon("[PANIC] OLD ACHIEVEMENTS CONFIG FOUND, CONVERSION WILL BE DONE");
         }
         for(String slug : achs){
             ConfigurationSection e = BeardAch.self.getConfig().getConfigurationSection("achievements").getConfigurationSection(slug);
@@ -136,8 +173,8 @@ public class AchievementLoader {
                 e1.printStackTrace();
             }
 
-            BeardAch.self.getAchievementManager().addAchievement(ach);
-            BeardAch.printDebugCon("Loaded achievement " + name);
+            a.add(ach);
         }
+        return a;
     }
 }

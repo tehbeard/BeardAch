@@ -64,13 +64,25 @@ public class AchievementManager implements Listener {
     }
 
     /**
-     * Return the list of loaded achievements
+     * Return the list of visible achievements
      * @return
      */
     public List<Achievement> getAchievementsList() {
         List<Achievement> ret = new ArrayList<Achievement>();
         for(Achievement a: achievements){
             if(!a.isHidden()){ret.add(a);}
+        }
+        return ret;
+    }
+    
+    /**
+     * Get a list of all achievements
+     * @return
+     */
+    public List<Achievement> getLoadedAchievements() {
+        List<Achievement> ret = new ArrayList<Achievement>();
+        for(Achievement a: achievements){
+           ret.add(a);
         }
         return ret;
     }
