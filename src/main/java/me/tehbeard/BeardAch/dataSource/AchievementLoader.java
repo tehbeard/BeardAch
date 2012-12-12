@@ -40,6 +40,7 @@ public class AchievementLoader {
 
     private static Gson gson = new GsonBuilder().
             excludeFieldsWithoutExposeAnnotation().
+            setPrettyPrinting().
             registerTypeHierarchyAdapter(ITrigger.class, new TriggerJSONParser()).
             registerTypeHierarchyAdapter(IReward.class, new RewardJSONParser()).
             create();
@@ -76,13 +77,13 @@ public class AchievementLoader {
             //convert old to new json awesomeness
             if(tripped){
 
-                FileWriter fw = new FileWriter(file);
+                JsonWriter jw = new JsonWriter(new FileWriter(file));
                 gson.toJson(
                         BeardAch.self.getAchievementManager().getLoadedAchievements(),
                         new TypeToken<List<Achievement>>(){}.getType(), 
-                        new JsonWriter(fw)
+                        jw
                         );
-                
+                jw.close();
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[BEARDACH] CONVERTED ACHIEVEMENTS TO JSON, PLEASE CHECK CONVERSION WORKED AND REMOVE ACHIEVEMENTS ENTRY FROM config.yml");
             }
 
