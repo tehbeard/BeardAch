@@ -1,5 +1,9 @@
 package me.tehbeard.BeardAch.dataSource;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -18,10 +22,12 @@ import me.tehbeard.utils.factory.ConfigurableFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 public class AchievementLoader {
-    
+
     public static final ClassCatalogue<ITrigger> triggerFactory = new ClassCatalogue<ITrigger>();
     public static final ClassCatalogue<IReward> rewardFactory = new ClassCatalogue<IReward>();
 
@@ -30,16 +36,40 @@ public class AchievementLoader {
             registerTypeHierarchyAdapter(ITrigger.class, new TriggerJSONParser()).
             registerTypeHierarchyAdapter(IReward.class, new RewardJSONParser()).
             create();
-    
-   
+
+
     public static void loadAchievements(){
         //TODO:Load from file
-        List<Achievement> achievements = gson.fromJson("", new TypeToken<List<Achievement>>(){}.getType());
-        
-        loadConfigAchievements();
+
+
+        try {
+            File file = new File(BeardAch.self.getDataFolder(),"ach.json");
+            file.createNewFile();
+            List<Achievement> achievements = gson.fromJson(new FileReader(file), new TypeToken<List<Achievement>>(){}.getType());
+            if(achievements!=null){
+                for(Achievement a : achievements){
+                    BeardAch.printCon("Loading achievement " + a.getName());
+                    BeardAch.self.getAchievementManager().addAchievement(a);
+                }
+            }
+        } catch (JsonIOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JsonSyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        //loadConfigAchievements();
     }
-    
-    
+
+
     //TODO: KILL THIS WITH FIRE
     public static void loadConfigAchievements(){
         BeardAch.printDebugCon("Loading Achievement Data");
@@ -66,36 +96,36 @@ public class AchievementLoader {
 
             //load triggers
             try{
-            List<String> triggers = e.getStringList("triggers");
-            
-            for(String trig: triggers){
-                String[] part = trig.split("\\|");
-                if(part.length==2){
-                    BeardAch.printDebugCon("Trigger => " + trig);
-                    ITrigger trigger = triggerFactory.get(part[0]).newInstance();
-                    if(trigger==null){BeardAch.printCon("[PANIC] TRIGGER " + part[0] + " NOT FOUND!!! SKIPPING.");continue;}
-                    trigger.configure(ach,part[1]);
-                    ach.addTrigger(trigger);
+                List<String> triggers = e.getStringList("triggers");
+
+                for(String trig: triggers){
+                    String[] part = trig.split("\\|");
+                    if(part.length==2){
+                        BeardAch.printDebugCon("Trigger => " + trig);
+                        ITrigger trigger = triggerFactory.get(part[0]).newInstance();
+                        if(trigger==null){BeardAch.printCon("[PANIC] TRIGGER " + part[0] + " NOT FOUND!!! SKIPPING.");continue;}
+                        trigger.configure(ach,part[1]);
+                        ach.addTrigger(trigger);
+                    }
+                    else
+                    {
+                        BeardAch.printCon("[PANIC] ERROR! MALFORMED TRIGGER FOR ACHIEVEMENT " + name);
+                    }
                 }
-                else
-                {
-                    BeardAch.printCon("[PANIC] ERROR! MALFORMED TRIGGER FOR ACHIEVEMENT " + name);
+                List<String> rewards = e.getStringList("rewards");
+                for(String reward: rewards){
+                    String[] part = reward.split("\\|");
+                    if(part.length==2){
+                        BeardAch.printDebugCon("Reward => " + reward); 
+                        IReward rewardInst = rewardFactory.get(part[0]).newInstance();
+                        rewardInst.configure(ach,part[1]);
+                        ach.addReward(rewardInst);
+                    }
+                    else
+                    {
+                        BeardAch.printCon("[PANIC] ERROR! MALFORMED REWARD FOR ACHIEVEMENT " + name);
+                    }
                 }
-            }
-            List<String> rewards = e.getStringList("rewards");
-            for(String reward: rewards){
-                String[] part = reward.split("\\|");
-                if(part.length==2){
-                    BeardAch.printDebugCon("Reward => " + reward); 
-                    IReward rewardInst = rewardFactory.get(part[0]).newInstance();
-                    rewardInst.configure(ach,part[1]);
-                    ach.addReward(rewardInst);
-                }
-                else
-                {
-                    BeardAch.printCon("[PANIC] ERROR! MALFORMED REWARD FOR ACHIEVEMENT " + name);
-                }
-            }
 
             } catch (InstantiationException e1) {
                 // TODO Auto-generated catch block
@@ -104,7 +134,7 @@ public class AchievementLoader {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
-            
+
             BeardAch.self.getAchievementManager().addAchievement(ach);
             BeardAch.printDebugCon("Loaded achievement " + name);
         }

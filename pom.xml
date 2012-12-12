@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.tehbeard</groupId>
 	<artifactId>BeardAch</artifactId>
-	<version>0.4.6</version>
+	<version>0.5-SNAPSHOT</version>
 	<name>BearchAch</name>
 	<description>Achievements plugin for BeardStat</description>
 	<properties>
@@ -320,12 +320,17 @@
 							<artifactSet>
 								<includes>
 									<include>me.tehbeard:utils</include>
+									<include>com.google.code.gson:gson</include>
 								</includes>
 							</artifactSet>
 							<relocations>
 								<relocation>
 									<pattern>me.tehbeard.utils</pattern>
 									<shadedPattern>me.tehbeard.BeardAch.utils</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>com.google.code.gson</pattern>
+									<shadedPattern>me.tehbeard.BeardAch.gson</shadedPattern>
 								</relocation>
 							</relocations>
 							<minimizeJar>true</minimizeJar>
