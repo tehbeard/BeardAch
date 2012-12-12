@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
 import me.tehbeard.BeardAch.BeardAch;
@@ -20,6 +21,7 @@ import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.ClassCatalogue;
+import me.tehbeard.BeardAch.dataSource.json.LocationJSONParser;
 import me.tehbeard.BeardAch.dataSource.json.RewardJSONParser;
 import me.tehbeard.BeardAch.dataSource.json.TriggerJSONParser;
 import me.tehbeard.utils.factory.ConfigurableFactory;
@@ -43,6 +45,7 @@ public class AchievementLoader {
             setPrettyPrinting().
             registerTypeHierarchyAdapter(ITrigger.class, new TriggerJSONParser()).
             registerTypeHierarchyAdapter(IReward.class, new RewardJSONParser()).
+            registerTypeHierarchyAdapter(Location.class,new LocationJSONParser()).
             create();
 
 
