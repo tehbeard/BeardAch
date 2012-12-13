@@ -11,6 +11,8 @@ import me.tehbeard.utils.cuboid.Cuboid;
 
 import org.bukkit.entity.Player;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Checks if a players is in a cuboid
  * @author James
@@ -29,25 +31,26 @@ import org.bukkit.entity.Player;
 public class CuboidCheckTrigger implements ITrigger {
 
 
-	private Cuboid c = new Cuboid();
+    @Expose
+	private Cuboid cuboid = new Cuboid();
 
 	public Cuboid getCuboid(){
-	    return c;
+	    return cuboid;
 	}
 	
 	public void configure(Achievement ach,String config) {
-			c.setCuboid(config);
+			cuboid.setCuboid(config);
 	}
 
 	public boolean checkAchievement(Player player) {
 		//if player has stat
 		//if(player.getWorld().getName().equals(world)){
 
-		return c.isInside(player.getLocation());
+		return cuboid.isInside(player.getLocation());
 	}
 	
 	public ArrayList<String> getCache(){
-		return c.getChunks();
+		return cuboid.getChunks();
 	}
 
     

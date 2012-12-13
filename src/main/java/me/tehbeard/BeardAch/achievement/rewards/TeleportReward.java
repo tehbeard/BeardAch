@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import com.google.gson.annotations.Expose;
+
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
@@ -19,10 +21,11 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 },packageName="base")
 public class TeleportReward implements IReward {
 
-    private Location l;
+    @Expose
+    private Location to;
     public void configure(Achievement ach, String config) {
         String[] c = config.split(":");
-        l = new Location(Bukkit.getWorld(c[0]),
+        to = new Location(Bukkit.getWorld(c[0]),
                 Double.parseDouble(c[1]),
                 Double.parseDouble(c[2]),
                 Double.parseDouble(c[3]),
@@ -34,7 +37,7 @@ public class TeleportReward implements IReward {
     }
 
     public void giveReward(Player player) {
-        player.teleport(l);
+        player.teleport(to);
         
     }
 

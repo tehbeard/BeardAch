@@ -8,12 +8,17 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.utils.cuboid.Cuboid;
 
 import org.bukkit.entity.Player;
+
+import com.google.gson.annotations.Expose;
 //TODO: Redo as worldguard based
 @Configurable(tag="speedrun")
 public class SpeedRunTrigger implements ITrigger {
 
+    @Expose
     private Cuboid startCuboid = new Cuboid();
+    @Expose
     private Cuboid endCuboid = new Cuboid();
+    @Expose
     long timing = 0L;
 
     Map<String,Long> states = new HashMap<String,Long> ();

@@ -17,6 +17,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Checks if a players is in a cuboid for a specified amount of time
  * @author James
@@ -37,7 +39,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
 
 
-    private Cuboid c = new Cuboid();
+    @Expose
+    private Cuboid cuboid = new Cuboid();
+    @Expose
     private int time = 0;
     private Achievement ach;
 
@@ -48,7 +52,7 @@ public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
         this.ach = ach;
         String[] con= config.split("\\/");
         if(con.length == 2){
-            c.setCuboid(con[0]);
+            cuboid.setCuboid(con[0]);
             time = Integer.parseInt(con[1]);
         }
     }
@@ -65,7 +69,7 @@ public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
     }
 
     public ArrayList<String> getCache(){
-        return c.getChunks();
+        return cuboid.getChunks();
     }
 
     private boolean hasTime(String player){
@@ -86,8 +90,8 @@ public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
                 event.getTo().getBlockZ() != event.getFrom().getBlockZ()
                 ){
             Player player = event.getPlayer();
-            boolean wasInside = c.isInside(event.getFrom());
-            boolean isInside  = c.isInside(event.getTo());
+            boolean wasInside = cuboid.isInside(event.getFrom());
+            boolean isInside  = cuboid.isInside(event.getTo());
             long currentTime = System.currentTimeMillis() / 1000L;
 
             if(wasInside){
