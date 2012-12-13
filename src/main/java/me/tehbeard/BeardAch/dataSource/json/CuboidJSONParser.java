@@ -2,11 +2,6 @@ package me.tehbeard.BeardAch.dataSource.json;
 
 import java.lang.reflect.Type;
 
-import org.bukkit.Location;
-
-import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
-import me.tehbeard.BeardAch.dataSource.AchievementLoader;
-import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.utils.cuboid.Cuboid;
 
 import com.google.gson.Gson;
