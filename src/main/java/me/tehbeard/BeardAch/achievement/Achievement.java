@@ -58,6 +58,12 @@ public class Achievement {
 	
 	public void postLoad(){
 	    this.exempt = new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
+	    for(ITrigger t : triggers){
+	        t.configure(this);
+	    }
+	    for(IReward r : rewards){
+            r.configure(this);
+        }
 	}
 	
 	@Deprecated
@@ -68,7 +74,7 @@ public class Achievement {
 		this.broadcast = broadcast;
 		this.id = nextId;
 		this.hidden = hidden;
-		this.exempt = null;//new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
+		this.exempt = new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
 		//Bukkit.getPluginManager().removePermission(this.exempt);
 		//Bukkit.getPluginManager().addPermission(this.exempt);
 		
