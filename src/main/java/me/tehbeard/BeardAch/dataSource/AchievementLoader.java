@@ -108,20 +108,27 @@ public class AchievementLoader {
     }
 
 
-    //TODO: KILL THIS WITH FIRE
+    //TODO: KILL THIS WITH FIRE IN 0.6
     public static List<Achievement> loadOldConfigAchievements(){
 
         List<Achievement> a = new ArrayList<Achievement>();
 
         BeardAch.printDebugCon("Loading Achievement Data");
         BeardAch.self.reloadConfig();
-        Set<String> achs = BeardAch.self.getConfig().getConfigurationSection("achievements").getKeys(false);
-        if(achs==null){
-            return a;
-        }
-        else{
+        if(BeardAch.self.getConfig().contains("achievements")){
             BeardAch.printCon("[PANIC] OLD ACHIEVEMENTS CONFIG FOUND, CONVERSION WILL BE DONE");
         }
+        else
+        {
+            return a;
+        }
+        
+        Set<String> achs = BeardAch.self.getConfig().getConfigurationSection("achievements").getKeys(false);
+        
+        BeardAch.self.getConfig().set("oldAchievements", BeardAch.self.getConfig().getConfigurationSection("achievements"));
+        BeardAch.self.getConfig().set("achievements",null);
+        BeardAch.self.saveConfig();
+        
         for(String slug : achs){
             ConfigurationSection e = BeardAch.self.getConfig().getConfigurationSection("achievements").getConfigurationSection(slug);
             if(e==null){
