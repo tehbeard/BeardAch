@@ -151,6 +151,7 @@ public class AchievementLoader {
                         ITrigger trigger = triggerFactory.get(part[0]).newInstance();
                         if(trigger==null){BeardAch.printCon("[PANIC] TRIGGER " + part[0] + " NOT FOUND!!! SKIPPING.");continue;}
                         trigger.configure(ach,part[1]);
+                        trigger.configure(ach);
                         ach.addTrigger(trigger);
                     }
                     else
@@ -165,6 +166,7 @@ public class AchievementLoader {
                         BeardAch.printDebugCon("Reward => " + reward); 
                         IReward rewardInst = rewardFactory.get(part[0]).newInstance();
                         rewardInst.configure(ach,part[1]);
+                        rewardInst.configure(ach);
                         ach.addReward(rewardInst);
                     }
                     else
