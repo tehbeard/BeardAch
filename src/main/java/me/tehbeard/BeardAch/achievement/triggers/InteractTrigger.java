@@ -18,7 +18,6 @@ import me.tehbeard.BeardAch.achievement.help.Argument;
 import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
-//TODO Interact block trigger
 @Configurable(tag="interact")
 @Usage(arguments={
         @Argument(name="World",desc=""),
@@ -67,7 +66,6 @@ public class InteractTrigger implements ITrigger, Listener {
     }
 
     public void configure(Achievement ach) {
-        // TODO Auto-generated method stub
         
     }
 

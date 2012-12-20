@@ -42,7 +42,6 @@ public class TeleportReward implements IReward {
     }
 
     public void configure(Achievement ach) {
-        // TODO Auto-generated method stub
         
     }
 

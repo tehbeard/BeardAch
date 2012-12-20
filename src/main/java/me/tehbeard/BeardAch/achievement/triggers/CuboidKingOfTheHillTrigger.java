@@ -121,7 +121,6 @@ public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
         }
 
         public void configure(Achievement ach) {
-            // TODO Auto-generated method stub
             
         }
 

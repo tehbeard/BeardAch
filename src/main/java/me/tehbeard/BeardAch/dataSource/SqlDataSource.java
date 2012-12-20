@@ -214,12 +214,10 @@ public class SqlDataSource implements IDataSource{
 
 
     public void clearAchievements(String player) {
-        // TODO Auto-generated method stub
 
     }
 
     public void dumpFancy() {
-        // TODO Auto-generated method stub
         try {
             conn.prepareStatement("DELETE FROM `ach_map`").execute();
             PreparedStatement fancyStat = conn.prepareStatement("INSERT INTO `ach_map`  values (?,?,?)");

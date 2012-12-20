@@ -81,7 +81,6 @@ public class YamlDataSource implements IDataSource {
 	}
 
 	public void setPlayersAchievements(String player, String achievement) {
-		// TODO Auto-generated method stub
 		db.set("database." + player + "."+achievement,System.currentTimeMillis());
 	}
 
@@ -96,7 +95,6 @@ public class YamlDataSource implements IDataSource {
 	}
 
 	public void clearAchievements(String player) {
-		// TODO Auto-generated method stub
 		db.set("database."+player, null);
 	}
 

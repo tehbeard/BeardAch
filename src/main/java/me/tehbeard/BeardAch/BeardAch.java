@@ -212,7 +212,6 @@ public class BeardAch extends JavaPlugin {
 
                         @Override
                         public int getValue() {
-                            // TODO Auto-generated method stub
                             return 1;
                         }
                     });
@@ -270,7 +269,6 @@ public class BeardAch extends JavaPlugin {
 
                     @Override
                     public int getValue() {
-                        // TODO Auto-generated method stub
                         return 1;
                     }}
                         );

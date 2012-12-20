@@ -56,7 +56,6 @@ public class AchCountTrigger implements ITrigger {
 	}
 
     public void configure(Achievement ach) {
-        // TODO Auto-generated method stub
         
     }
 

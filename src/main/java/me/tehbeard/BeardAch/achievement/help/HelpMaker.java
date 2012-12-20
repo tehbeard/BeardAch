@@ -68,8 +68,7 @@ public class HelpMaker {
             bw.close();
             
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            BeardAch.printError("An error occured writing the help file",e);
         }
     }
     
@@ -113,8 +112,7 @@ public class HelpMaker {
                 str+=s + "\n";
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            BeardAch.printError("An error occured reading a template for the help file",e);
         }finally{
             try {
                 br.close();

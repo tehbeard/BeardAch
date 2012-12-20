@@ -48,8 +48,6 @@ public class AchievementLoader {
 
 
     public static void loadAchievements(){
-        //TODO:Load from file
-
 
         try {
             File file = new File(BeardAch.self.getDataFolder(),"ach.json");
@@ -92,16 +90,15 @@ public class AchievementLoader {
 
 
         } catch (JsonIOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            BeardAch.printError("An error occured reading ach.json",e);
+            
         } catch (JsonSyntaxException e) {
-            // TODO Auto-generated catch block
+           BeardAch.printError("There is a problem with the syntax of ach.json",e);
             e.printStackTrace();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            BeardAch.printError("ach.json not found",e);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            BeardAch.printError("An error occured reading ach.json",e);
             e.printStackTrace();
         }
     }
@@ -176,11 +173,9 @@ public class AchievementLoader {
                 }
 
             } catch (InstantiationException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+                BeardAch.printError("Error loading old achievements",e1);
             } catch (IllegalAccessException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+                BeardAch.printError("Error loading old achievements",e1);
             }
 
             a.add(ach);

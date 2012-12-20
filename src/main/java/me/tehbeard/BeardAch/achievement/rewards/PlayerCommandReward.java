@@ -27,7 +27,6 @@ public class PlayerCommandReward implements IReward {
     }
 
     public void configure(Achievement ach) {
-        // TODO Auto-generated method stub
         
     }
 
