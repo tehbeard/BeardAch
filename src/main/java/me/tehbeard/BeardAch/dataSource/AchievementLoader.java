@@ -85,6 +85,7 @@ public class AchievementLoader {
                         new TypeToken<List<Achievement>>(){}.getType(), 
                         jw
                         );
+                jw.flush();
                 jw.close();
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[BEARDACH] CONVERTED ACHIEVEMENTS TO JSON, PLEASE CHECK CONVERSION WORKED AND REMOVE ACHIEVEMENTS ENTRY FROM config.yml");
             }
@@ -113,7 +114,7 @@ public class AchievementLoader {
 
         BeardAch.printDebugCon("Loading Achievement Data");
         BeardAch.self.reloadConfig();
-        if(BeardAch.self.getConfig().contains("achievements")){
+        if(BeardAch.self.getConfig().isConfigurationSection("achievements")){
             BeardAch.printCon("[PANIC] OLD ACHIEVEMENTS CONFIG FOUND, CONVERSION WILL BE DONE");
         }
         else
@@ -122,10 +123,6 @@ public class AchievementLoader {
         }
         
         Set<String> achs = BeardAch.self.getConfig().getConfigurationSection("achievements").getKeys(false);
-        
-        BeardAch.self.getConfig().set("oldAchievements", BeardAch.self.getConfig().getConfigurationSection("achievements"));
-        BeardAch.self.getConfig().set("achievements",null);
-        BeardAch.self.saveConfig();
         
         for(String slug : achs){
             ConfigurationSection e = BeardAch.self.getConfig().getConfigurationSection("achievements").getConfigurationSection(slug);
@@ -186,6 +183,11 @@ public class AchievementLoader {
 
             a.add(ach);
         }
+        
+        BeardAch.self.getConfig().set("oldAchievements", BeardAch.self.getConfig().getConfigurationSection("achievements"));
+        BeardAch.self.getConfig().set("achievements",null);
+        BeardAch.self.saveConfig();
+        
         return a;
     }
 }

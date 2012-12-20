@@ -13,9 +13,3 @@ ach:
     broadcast: "<PLAYER> Unlocked: <ACH>"
     ach: "Visit our website to view all your achievements."
     send: "BROADCAST" 
-achievements:
-    old_timer:
-      name: "Old Timer"
-      descrip: "Been on here a while, ain't ya?"
-      triggers:
-        - "stat|stats:playedother:54000"
