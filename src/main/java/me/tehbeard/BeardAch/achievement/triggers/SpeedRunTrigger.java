@@ -99,5 +99,9 @@ public class SpeedRunTrigger implements ITrigger {
         return states.containsKey(player);
     }
 
+    public void configure(Achievement ach) {
+        
+    }
+
 
 }

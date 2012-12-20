@@ -43,4 +43,9 @@ public class AchCheckTrigger implements ITrigger {
 		return false;
 	}
 
+    public void configure(Achievement ach) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

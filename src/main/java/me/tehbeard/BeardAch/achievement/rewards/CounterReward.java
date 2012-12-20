@@ -26,9 +26,7 @@ public class CounterReward implements  IReward{
 	int count = 0;
 	private static PlayerStatManager manager = null;
 	public void configure(Achievement Ach,String config) {
-		if(manager==null){
-			manager = BeardAch.self.getStats();
-		}
+		
 		String[] opt = config.split("\\:");
 		if(opt.length==2){
 			name = opt[0];
@@ -46,5 +44,12 @@ public class CounterReward implements  IReward{
 		    BeardAch.printError("BeardStat not loaded, reward not given!");
 		}
 	}
+
+
+    public void configure(Achievement ach) {
+        if(manager==null){
+            manager = BeardAch.self.getStats();
+        }
+    }
 
 }

@@ -39,18 +39,8 @@ public class WorldGuardRegionTrigger implements ITrigger,Listener{
         if(c.length !=2){
             throw new IllegalArgumentException("Region AND World must be defined");
         }
-        World w = Bukkit.getWorld(c[0]);
-        WorldGuardPlugin wg = BeardAch.self.getWorldGuard();
-        if(wg==null){
-            BeardAch.printError("WorldGuard not loaded! trigger will fail!");
-            return;
-        }
-        rm = wg.getRegionManager(w);
-        if(rm==null){
-            BeardAch.printError("World not found!");
-            return;
-        }
-        world = w.getName();
+        
+        world = c[0];
         region = c[1];
 
 
@@ -84,6 +74,21 @@ public class WorldGuardRegionTrigger implements ITrigger,Listener{
                 }
             }
         }
+    }
+
+    public void configure(Achievement ach) {
+        World w = Bukkit.getWorld(world);
+        WorldGuardPlugin wg = BeardAch.self.getWorldGuard();
+        if(wg==null){
+            BeardAch.printError("WorldGuard not loaded! trigger will fail!");
+            return;
+        }
+        rm = wg.getRegionManager(w);
+        if(rm==null){
+            BeardAch.printError("World not found!");
+            return;
+        }
+        
     }
 
 }

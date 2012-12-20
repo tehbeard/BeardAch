@@ -41,4 +41,9 @@ public class SetGroupReward implements IReward {
         }
     }
 
+    public void configure(Achievement ach) {
+        setupPerms();
+        
+    }
+
 }

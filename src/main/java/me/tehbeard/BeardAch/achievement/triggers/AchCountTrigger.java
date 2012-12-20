@@ -55,4 +55,9 @@ public class AchCountTrigger implements ITrigger {
 		return (count > threshold);
 	}
 
+    public void configure(Achievement ach) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

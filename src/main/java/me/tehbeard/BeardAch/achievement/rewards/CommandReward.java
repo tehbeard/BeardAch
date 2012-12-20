@@ -29,4 +29,8 @@ public class CommandReward implements IReward{
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(),command.replace("<PLAYER>", player.getName()));
 	}
 
+    public void configure(Achievement ach) {
+        
+    }
+
 }

@@ -46,4 +46,9 @@ public class NoAchCheckTrigger implements ITrigger {
 		return result;
 	}
 
+    public void configure(Achievement ach) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

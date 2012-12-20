@@ -120,4 +120,9 @@ public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
             System.out.println(l);
         }
 
+        public void configure(Achievement ach) {
+            // TODO Auto-generated method stub
+            
+        }
+
     }

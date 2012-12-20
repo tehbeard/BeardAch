@@ -32,7 +32,7 @@ public class EconomyTrigger implements ITrigger {
 	}
 
 	public void configure(Achievement ach,String config) {
-		setupEconomy();
+		
 		amount = Double.parseDouble(config);
 	}
 
@@ -43,5 +43,10 @@ public class EconomyTrigger implements ITrigger {
 		}
 		return false;
 	}
+
+    public void configure(Achievement ach) {
+        setupEconomy();
+        
+    }
 
 }

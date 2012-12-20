@@ -33,9 +33,7 @@ public class StatCheckTrigger implements ITrigger {
 	private static PlayerStatManager manager = null;
 
 	public void configure(Achievement ach,String config) {
-		if(manager==null){
-			manager = BeardAch.self.getStats();
-		}
+		
 		String[] opt = config.split("\\:");
 		if(opt.length==3){
 			cat = opt[0];
@@ -59,5 +57,12 @@ public class StatCheckTrigger implements ITrigger {
         }
 		return false;
 	}
+
+    public void configure(Achievement ach) {
+        if(manager==null){
+            manager = BeardAch.self.getStats();
+        }
+        
+    }
 
 }

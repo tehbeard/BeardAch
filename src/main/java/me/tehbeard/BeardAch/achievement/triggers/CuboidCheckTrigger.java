@@ -53,6 +53,11 @@ public class CuboidCheckTrigger implements ITrigger {
 		return cuboid.getChunks();
 	}
 
+    public void configure(Achievement ach) {
+        // TODO Auto-generated method stub
+        
+    }
+
     
 
 }

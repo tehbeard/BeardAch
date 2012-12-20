@@ -66,4 +66,9 @@ public class InteractTrigger implements ITrigger, Listener {
         }
     }
 
+    public void configure(Achievement ach) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

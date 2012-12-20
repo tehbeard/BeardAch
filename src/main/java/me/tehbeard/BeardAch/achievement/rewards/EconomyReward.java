@@ -31,7 +31,6 @@ public class EconomyReward implements IReward {
 	}
 
 	public void configure(Achievement Ach,String config) {
-		setupEconomy();
 		amount = Double.parseDouble(config);
 	}
 
@@ -44,5 +43,10 @@ public class EconomyReward implements IReward {
 			BeardAch.printError("Economy reward was not given because economy support did not load");
 		}
 	}
+
+    public void configure(Achievement ach) {
+        setupEconomy();
+        
+    }
 
 }

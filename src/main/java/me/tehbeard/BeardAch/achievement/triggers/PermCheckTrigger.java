@@ -34,4 +34,9 @@ public class PermCheckTrigger implements ITrigger {
 		return player.hasPermission(perm);
 	}
 
+
+    public void configure(Achievement ach) {
+        
+    }
+
 }
