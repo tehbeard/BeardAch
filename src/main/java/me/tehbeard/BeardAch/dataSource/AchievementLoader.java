@@ -19,12 +19,10 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.Achievement.Display;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
-import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.ClassCatalogue;
 import me.tehbeard.BeardAch.dataSource.json.LocationJSONParser;
 import me.tehbeard.BeardAch.dataSource.json.RewardJSONParser;
 import me.tehbeard.BeardAch.dataSource.json.TriggerJSONParser;
-import me.tehbeard.utils.factory.ConfigurableFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -142,6 +140,7 @@ public class AchievementLoader {
             boolean hidden = e.getBoolean("hidden",false);
             BeardAch.printDebugCon("Loading achievement " + name);
 
+            @SuppressWarnings("deprecation")
             Achievement ach = new Achievement(slug,name, descrip,broadcast,hidden);
 
             //load triggers

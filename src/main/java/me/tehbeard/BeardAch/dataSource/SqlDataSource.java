@@ -118,7 +118,8 @@ public class SqlDataSource implements IDataSource{
                 public void run() {
                     Runnable r = new SqlFlusher(writeCache);
                     writeCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
-                    Bukkit.getScheduler().scheduleAsyncDelayedTask(BeardAch.self, r);
+                    Bukkit.getScheduler().runTaskAsynchronously(BeardAch.self, r);
+                    
                 }
 
             }, 2400L, 2400L);

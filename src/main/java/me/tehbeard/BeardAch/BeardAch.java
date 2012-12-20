@@ -1,10 +1,7 @@
 package me.tehbeard.BeardAch;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import me.tehbeard.BeardAch.Metrics.Graph;
@@ -27,8 +24,6 @@ import me.tehbeard.utils.factory.ConfigurableFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.help.HelpTopic;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
