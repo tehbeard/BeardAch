@@ -32,6 +32,7 @@ public class EconomyReward implements IReward {
 
 	public void configure(Achievement Ach,String config) {
 		amount = Double.parseDouble(config);
+		setupEconomy();
 	}
 
 	public void giveReward(Player player) {
