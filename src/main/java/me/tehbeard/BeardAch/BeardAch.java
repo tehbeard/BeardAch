@@ -1,6 +1,7 @@
 package me.tehbeard.BeardAch;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -134,7 +135,13 @@ public class BeardAch extends JavaPlugin {
         addReward(PotionReward.class);
         addReward(PlayerCommandReward.class);
 
-
+        
+        try {
+			json.write(new File(getDataFolder(),"config-out.json"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 
         //Load built in extras
