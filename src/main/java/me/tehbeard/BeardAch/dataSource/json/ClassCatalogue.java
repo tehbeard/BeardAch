@@ -27,4 +27,8 @@ public class ClassCatalogue<T> {
     public Collection<String> getTags(){
         return catalogue.keySet();
     }
+    
+    public Collection<Class<? extends T>> getClasses(){
+    	return catalogue.values();
+    }
 }

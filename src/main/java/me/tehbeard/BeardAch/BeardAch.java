@@ -16,6 +16,7 @@ import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorJSON;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import me.tehbeard.utils.addons.AddonLoader;
@@ -45,6 +46,8 @@ public class BeardAch extends JavaPlugin {
     private WorldGuardPlugin worldGuard;
     private AchievementManager achievementManager;
 
+    
+    private EditorJSON json = new EditorJSON();
     /**
      * Load BeardAch
      */
@@ -130,8 +133,6 @@ public class BeardAch extends JavaPlugin {
         addReward(TeleportReward.class);
         addReward(PotionReward.class);
         addReward(PlayerCommandReward.class);
-
-        //Metrics
 
 
 
@@ -338,6 +339,7 @@ public class BeardAch extends JavaPlugin {
         HelpMaker.addTrigger(trigger.getAnnotation(Configurable.class).tag(), trigger.getAnnotation(Usage.class));
         
         AchievementLoader.triggerFactory.addProduct(trigger);
+        json.addTrigger(trigger);
     }
     /**
      * Add a reward
@@ -346,6 +348,7 @@ public class BeardAch extends JavaPlugin {
     public void addReward(Class<? extends IReward >  reward){
         HelpMaker.addReward(reward.getAnnotation(Configurable.class).tag(), reward.getAnnotation(Usage.class));
         AchievementLoader.rewardFactory.addProduct(reward);
+        json.addReward(reward);
     }
 
     /**
