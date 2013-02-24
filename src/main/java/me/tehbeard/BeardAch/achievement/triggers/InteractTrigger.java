@@ -17,6 +17,8 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.Argument;
 import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 
 @Configurable(tag="interact")
 @Usage(arguments={
@@ -29,6 +31,7 @@ public class InteractTrigger implements ITrigger, Listener {
 
     
     @Expose
+    @EditorField(alias="Block to interact",type=EditorFieldType.location)
     private Location l;
     
     private Achievement ach;

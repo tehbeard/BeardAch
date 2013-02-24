@@ -6,6 +6,7 @@ import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 
 import org.bukkit.entity.Player;
@@ -21,8 +22,10 @@ import com.google.gson.annotations.Expose;
 public class CounterReward implements  IReward{
 
     @Expose
+    @EditorField(alias="Counter name")
 	String name = "";
     @Expose
+    @EditorField(alias="Amount to increment")
 	int count = 0;
 	private static PlayerStatManager manager = null;
 	public void configure(Achievement Ach,String config) {

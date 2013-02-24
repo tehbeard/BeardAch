@@ -5,6 +5,7 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.Argument;
 import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -28,8 +29,10 @@ public class WorldGuardRegionTrigger implements ITrigger,Listener{
 
     private RegionManager rm;
     @Expose
+    @EditorField(alias="Region name")
     private String region = "";
     @Expose
+    @EditorField(alias="World name")
     private String world = "";
     private Achievement ach;
 

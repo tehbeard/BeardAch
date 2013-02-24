@@ -4,6 +4,7 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.Argument;
 import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
@@ -19,6 +20,7 @@ public class EconomyTrigger implements ITrigger {
 
 	private static Economy economy = null;
 	@Expose
+	@EditorField(alias="Lower threshold")
 	private double amount;
 
 	private static Boolean setupEconomy() {

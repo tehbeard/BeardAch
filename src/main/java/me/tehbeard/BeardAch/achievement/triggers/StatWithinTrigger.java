@@ -4,6 +4,7 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.Argument;
 import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardStat.BeardStat;
 import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import org.bukkit.entity.Player;
@@ -25,12 +26,16 @@ import com.google.gson.annotations.Expose;
 public class StatWithinTrigger implements ITrigger {
 
     @Expose
+    @EditorField(alias="Category")
 	String cat;
     @Expose
+    @EditorField(alias="statistic")
 	String stat;
     @Expose
+    @EditorField(alias="Lower bound threshold")
 	int lowerThreshold;
     @Expose
+    @EditorField(alias="Upper bound threshold")
 	int upperThreshold;
 
 	private static PlayerStatManager manager = null;

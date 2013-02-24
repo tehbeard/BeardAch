@@ -3,6 +3,7 @@ package me.tehbeard.BeardAch.achievement.rewards;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ import com.google.gson.annotations.Expose;
 public class PlayerCommandReward implements IReward {
 
     @Expose
+    @EditorField(alias="Command")
     String comm = "";
     public void configure(Achievement ach, String config) {
         comm = config;

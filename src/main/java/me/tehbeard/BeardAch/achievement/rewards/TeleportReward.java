@@ -9,6 +9,8 @@ import com.google.gson.annotations.Expose;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 
 @Configurable(tag="teleport")
 @Usage(arguments={
@@ -22,6 +24,7 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 public class TeleportReward implements IReward {
 
     @Expose
+    @EditorField(alias="Teleport to",type=EditorFieldType.location)
     private Location to;
     public void configure(Achievement ach, String config) {
         String[] c = config.split(":");

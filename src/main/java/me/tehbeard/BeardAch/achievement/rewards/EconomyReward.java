@@ -4,6 +4,7 @@ import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
@@ -18,6 +19,7 @@ public class EconomyReward implements IReward {
 
 	private static Economy economy = null;
 	@Expose
+	@EditorField(alias="Amount to give")
 	private double amount = 0.0D;
 
 	private static Boolean setupEconomy() {
