@@ -25,7 +25,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@Configurable(tag="koth")
+@Configurable(tag="koth",name="King of the hill")
 @Usage(arguments={
         @Argument(name="World",desc=""),
         @Argument(name="x1",desc=""),

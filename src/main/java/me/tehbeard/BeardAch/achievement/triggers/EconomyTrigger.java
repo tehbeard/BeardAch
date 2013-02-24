@@ -13,7 +13,8 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.google.gson.annotations.Expose;
 
-@Configurable(tag="bankbalance")@Usage(arguments={
+@Configurable(tag="bankbalance",name="(Vault)Check bank balance")
+@Usage(arguments={
         @Argument(name="balance",desc="Amount player must have"),
         },packageName="base",dependencies="vault")
 public class EconomyTrigger implements ITrigger {

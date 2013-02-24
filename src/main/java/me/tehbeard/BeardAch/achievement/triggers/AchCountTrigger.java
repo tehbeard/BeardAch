@@ -23,7 +23,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@Configurable(tag="achcount")
+@Configurable(tag="achcount",name="Achievement count")
 @Usage(arguments={
         @Argument(name="prefix",desc="prefix of achievement slug to match"),
         @Argument(name="threshold",desc="Must have more than this many matches to trigger")

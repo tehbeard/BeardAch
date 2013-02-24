@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
  * @author James
  *
  */
-@Configurable(tag="locked")
+@Configurable(tag="locked",name="Lock this achievement")
 @Usage(arguments={},packageName="base",blurb="Prevents an achievement from firing")
 public class LockedTrigger implements ITrigger {
 

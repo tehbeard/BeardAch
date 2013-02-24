@@ -20,7 +20,7 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 
-@Configurable(tag="interact")
+@Configurable(tag="interact",name="Click block at location")
 @Usage(arguments={
         @Argument(name="World",desc=""),
         @Argument(name="x",desc=""),

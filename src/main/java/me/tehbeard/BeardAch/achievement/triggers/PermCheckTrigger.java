@@ -16,7 +16,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@Configurable(tag="perm")
+@Configurable(tag="perm",name="has permission node")
 @Usage(arguments={
         @Argument(name="permission",desc="permission node to check")
         },packageName="base",blurb="Fires if player has that permission")

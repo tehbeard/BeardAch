@@ -12,7 +12,7 @@ import me.tehbeard.BeardStat.containers.PlayerStatManager;
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
-@Configurable(tag="counter")
+@Configurable(tag="counter",name="Increment counter")
 @Usage(arguments={
         @Argument(name="name",desc="counter name"),
         @Argument(name="count",desc="Amount to increment by")

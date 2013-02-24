@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 
-@Configurable(tag="playercommand")
+@Configurable(tag="playercommand",name="Execute command as player")
 @Usage(arguments=@Argument(name="command",desc="command to execute as the player"),packageName="base")
 public class PlayerCommandReward implements IReward {
 

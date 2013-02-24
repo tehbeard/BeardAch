@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.google.gson.annotations.Expose;
 
-@Configurable(tag="potion")
+@Configurable(tag="potion",name="Apply potion effect")
 @Usage(arguments={
         @Argument(name="type",desc="Potion type"),
         @Argument(name="tier",desc="Potion tier"),

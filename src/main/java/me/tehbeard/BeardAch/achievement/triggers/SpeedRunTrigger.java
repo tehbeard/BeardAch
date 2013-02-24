@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 //TODO: Redo as worldguard based
-@Configurable(tag="speedrun")
+@Configurable(tag="speedrun",name="Speed run")
 public class SpeedRunTrigger implements ITrigger {
 
     @Expose

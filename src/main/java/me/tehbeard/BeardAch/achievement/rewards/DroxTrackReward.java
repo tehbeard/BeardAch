@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 
-@Configurable(tag="promote")
+@Configurable(tag="promote",name="(DroxPerms) Promote along track")
 @Usage(arguments = {@Argument(name="track",desc="The track to promote the player along")}, packageName = "base",dependencies="DroxPerms")
 public class DroxTrackReward implements IReward{
     @Expose

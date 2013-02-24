@@ -16,7 +16,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@Configurable(tag="stat")
+@Configurable(tag="stat",name="stat above threshold")
 @Usage(arguments={
         @Argument(name="category",desc=""),
         @Argument(name="stat",desc=""),

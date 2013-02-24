@@ -20,7 +20,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@Configurable(tag="noach")
+@Configurable(tag="noach",name="Does not have achievement")
 @Usage(arguments={
         @Argument(name="achievement",desc="achievement slug")
         },packageName="base",blurb="Fires if player DOES NOT have the specified achievement")

@@ -21,7 +21,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@Configurable(tag="ach")
+@Configurable(tag="ach",name="has achievement")
 @Usage(arguments = {@Argument(name="achievement",desc="The achievement slug")}, packageName = "base")
 public class AchCheckTrigger implements ITrigger {
 

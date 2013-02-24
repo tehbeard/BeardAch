@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 
-@Configurable(tag="subgroup")
+@Configurable(tag="subgroup",name="(DroxPerms) add subgroup")
 @Usage(arguments = { @Argument(name="subgroup",desc="subgroup to add to a player")}, packageName = "base",dependencies="DroxPerms")
 public class DroxSubGroupReward implements IReward{
 

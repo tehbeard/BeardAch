@@ -13,7 +13,7 @@ import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 
-@Configurable(tag="vaultaddgroup")
+@Configurable(tag="vaultaddgroup",name="(Vault) add/set group")
 @Usage(arguments={@Argument(name="group",desc="Add/set user to a group")},packageName="base",dependencies="Vault",blurb="Adds or sets a players group, via vault. Consult your permissions plugin documentation for further information on how this works.")
 public class SetGroupReward implements IReward {
     

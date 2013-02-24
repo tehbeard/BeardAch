@@ -13,7 +13,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.google.gson.annotations.Expose;
 
-@Configurable(tag="money")
+@Configurable(tag="money",name="(vault) Give money")
 @Usage(arguments=@Argument(name="amount",desc="Amount of money to give player, decimals supported"),packageName="base",dependencies="Vault")
 public class EconomyReward implements IReward {
 

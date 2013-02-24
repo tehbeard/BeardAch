@@ -20,7 +20,7 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
-@Configurable(tag="wgregion")
+@Configurable(tag="wgregion",name="(WorldGuard) Inside region")
 @Usage(arguments={
         @Argument(name="world",desc=""),
         @Argument(name="region name",desc="")

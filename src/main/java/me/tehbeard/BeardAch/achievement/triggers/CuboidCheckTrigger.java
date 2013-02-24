@@ -18,7 +18,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@Configurable(tag="cuboid")
+@Configurable(tag="cuboid",name="cuboid")
 @Usage(arguments={
         @Argument(name="World",desc=""),
         @Argument(name="x1",desc=""),

@@ -46,8 +46,8 @@ public class EditorJSON {
 	private void addItem(Class<?> c,List<EditorElement> list){
 		
 		EditorElement ee = new EditorElement();
-		ee.name = c.getAnnotation(Configurable.class).tag();
-		ee.type = ee.name;
+		ee.name = c.getAnnotation(Configurable.class).name();
+		ee.type = c.getAnnotation(Configurable.class).tag();
 		try{
 		for(Field f : c.getDeclaredFields()){
 			if(!f.isAnnotationPresent(Expose.class)){continue;}

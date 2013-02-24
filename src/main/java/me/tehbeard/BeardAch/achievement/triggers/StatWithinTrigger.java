@@ -16,7 +16,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@Configurable(tag="statwithin")
+@Configurable(tag="statwithin",name="Stat within boundaries")
 @Usage(arguments={
         @Argument(name="category",desc=""),
         @Argument(name="stat",desc=""),

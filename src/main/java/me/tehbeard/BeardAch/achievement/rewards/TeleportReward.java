@@ -12,7 +12,7 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 
-@Configurable(tag="teleport")
+@Configurable(tag="teleport",name="Teleport to location")
 @Usage(arguments={
         @Argument(name="world",desc=""),
         @Argument(name="x",desc=""),
