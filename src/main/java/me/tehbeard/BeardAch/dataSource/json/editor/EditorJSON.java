@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 
@@ -15,6 +17,7 @@ import com.google.gson.stream.JsonWriter;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardStat.BeardStat;
 
 public class EditorJSON {
 
@@ -41,10 +44,13 @@ public class EditorJSON {
 		addItem(r,rewards);
 	}
 	private void addItem(Class<?> c,List<EditorElement> list){
+		
 		EditorElement ee = new EditorElement();
 		ee.name = c.getAnnotation(Configurable.class).tag();
 		ee.type = ee.name;
-		for(Field f : c.getFields()){
+		try{
+		for(Field f : c.getDeclaredFields()){
+			if(!f.isAnnotationPresent(Expose.class)){continue;}
 			EditorFormElement efe = new EditorFormElement();
 			efe.key = f.getName();
 			efe.name = efe.key;
@@ -58,12 +64,17 @@ public class EditorJSON {
 		}
 
 		list.add(ee);
+		}
+		catch(NoClassDefFoundError e){
+			BeardStat.printCon("Skipping item " + ee.name);
+		}
 	}
 
 	public void write(File file) throws IOException{
 		JsonWriter writer = new JsonWriter(new FileWriter(file));
-		Gson gson = new Gson();
-		gson.toJson(this,new TypeToken<List<EditorJSON>>(){}.getType(),writer);
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		
+		gson.toJson(this,new TypeToken<EditorJSON>(){}.getType(),writer);
 		writer.flush();
 		writer.close();
 	}
