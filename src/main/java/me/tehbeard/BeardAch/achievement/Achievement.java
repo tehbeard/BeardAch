@@ -73,6 +73,7 @@ public class Achievement {
 		this.descrip = descrip;
 		this.broadcast = broadcast;
 		this.id = nextId;
+		nextId ++;
 		this.hidden = hidden;
 		this.exempt = new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
 		//Bukkit.getPluginManager().removePermission(this.exempt);
