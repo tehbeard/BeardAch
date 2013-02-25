@@ -5,6 +5,8 @@ import java.util.Map;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 import me.tehbeard.utils.cuboid.Cuboid;
 
 import org.bukkit.entity.Player;
@@ -15,10 +17,13 @@ import com.google.gson.annotations.Expose;
 public class SpeedRunTrigger implements ITrigger {
 
     @Expose
+    @EditorField(alias="start cuboid",type=EditorFieldType.cuboid)
     private Cuboid startCuboid = new Cuboid();
     @Expose
+    @EditorField(alias="end cuboid",type=EditorFieldType.cuboid)
     private Cuboid endCuboid = new Cuboid();
     @Expose
+    @EditorField(alias="time to beat (seconds)")
     long timing = 0L;
 
     Map<String,Long> states = new HashMap<String,Long> ();

@@ -6,6 +6,8 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.help.Argument;
 import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 import me.tehbeard.utils.cuboid.Cuboid;
 
 
@@ -32,6 +34,7 @@ public class CuboidCheckTrigger implements ITrigger {
 
 
     @Expose
+    @EditorField(alias="cuboid",type=EditorFieldType.cuboid)
 	private Cuboid cuboid = new Cuboid();
 
 	public Cuboid getCuboid(){

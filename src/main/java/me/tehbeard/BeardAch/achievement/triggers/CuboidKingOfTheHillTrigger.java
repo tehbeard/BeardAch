@@ -10,6 +10,7 @@ import me.tehbeard.BeardAch.achievement.help.Argument;
 import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 import me.tehbeard.utils.cuboid.Cuboid;
 
 import org.bukkit.entity.Player;
@@ -41,6 +42,7 @@ public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
 
 
     @Expose
+    @EditorField(alias="cuboid",type=EditorFieldType.cuboid)
     private Cuboid cuboid = new Cuboid();
     @Expose
     @EditorField(alias="Time inside hill(seconds)")
