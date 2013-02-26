@@ -56,7 +56,7 @@ public class AchievementLoader {
             if(achievements!=null){
                 for(Achievement a : achievements){
                     a.postLoad();
-                    BeardAch.printCon("Loading achievement " + a.getName());
+                    BeardAch.printDebugCon("Loading achievement " + a.getName());
                     BeardAch.self.getAchievementManager().addAchievement(a);
                 }
             }
