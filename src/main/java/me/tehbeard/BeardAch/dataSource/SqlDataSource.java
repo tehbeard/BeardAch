@@ -29,6 +29,8 @@ public class SqlDataSource implements IDataSource{
     //protected static PreparedStatement prepGetPlayerStat;
     protected static PreparedStatement prepGetAllPlayerAch;
     protected static PreparedStatement prepAddPlayerAch;
+    
+    protected static PreparedStatement ping;
 
 
     protected void createConnection(){
@@ -98,6 +100,9 @@ public class SqlDataSource implements IDataSource{
         try{
             prepGetAllPlayerAch = conn.prepareStatement("SELECT `achievement`,`timestamp` FROM `achievements` WHERE player=?");
             prepAddPlayerAch = conn.prepareStatement("INSERT INTO `achievements` (`player` ,`achievement`,`timestamp`) values (?,?,?)",Statement.RETURN_GENERATED_KEYS);
+            
+            ping = conn.prepareStatement("SELECT count(*) from `achievement`");
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -211,6 +216,8 @@ public class SqlDataSource implements IDataSource{
             	if(!checkConnection()){
             		throw new SQLException("Failed to reconnect to SQL server");
             	}
+            	
+            	ping.execute();
 
                 for( Entry<String, HashSet<AchievementPlayerLink>> es :write.entrySet()){
 
