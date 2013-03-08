@@ -103,6 +103,32 @@ public class SqlDataSource implements IDataSource{
         }
 
     }
+    
+    private synchronized boolean checkConnection(){
+		BeardAch.printDebugCon("Checking connection");
+		try {
+			if(conn == null || !conn.isValid(0)){
+				BeardAch.printDebugCon("Something is derp, rebooting connection.");
+				createConnection();
+				if(conn!=null){
+					BeardAch.printDebugCon("Rebuilding statements");
+					prepareStatements();
+				}
+				else
+				{
+					BeardAch.printDebugCon("Reboot failed!");
+				}
+
+			}
+		} catch (SQLException e) {
+			conn = null;
+			return false;
+		}catch(AbstractMethodError e){
+
+		}
+		BeardAch.printDebugCon("Checking is " + conn != null ? "up" : "down");
+		return conn != null;
+	}
 
     public SqlDataSource() {
         try {
@@ -135,6 +161,9 @@ public class SqlDataSource implements IDataSource{
     public HashSet<AchievementPlayerLink> getPlayersAchievements(String player) {
         HashSet<AchievementPlayerLink> c = new HashSet<AchievementPlayerLink>();
         try {
+        	if(!checkConnection()){
+        		throw new SQLException("Failed to reconnect to server, aborting load");
+        	}
             prepGetAllPlayerAch.setString(1, player);
             ResultSet rs = prepGetAllPlayerAch.executeQuery();
 
@@ -149,8 +178,8 @@ public class SqlDataSource implements IDataSource{
             return c;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return c;
     }
 
 
@@ -179,6 +208,9 @@ public class SqlDataSource implements IDataSource{
             }
             try {
                 //if connection is closed, attempt to rebuild connection
+            	if(!checkConnection()){
+            		throw new SQLException("Failed to reconnect to SQL server");
+            	}
 
                 for( Entry<String, HashSet<AchievementPlayerLink>> es :write.entrySet()){
 
