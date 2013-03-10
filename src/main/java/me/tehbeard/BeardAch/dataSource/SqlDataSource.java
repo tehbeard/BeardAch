@@ -101,7 +101,7 @@ public class SqlDataSource implements IDataSource{
             prepGetAllPlayerAch = conn.prepareStatement("SELECT `achievement`,`timestamp` FROM `achievements` WHERE player=?");
             prepAddPlayerAch = conn.prepareStatement("INSERT INTO `achievements` (`player` ,`achievement`,`timestamp`) values (?,?,?)",Statement.RETURN_GENERATED_KEYS);
             
-            ping = conn.prepareStatement("SELECT count(*) from `achievement`");
+            ping = conn.prepareStatement("SELECT count(*) from `achievements`");
             
         } catch (SQLException e) {
             e.printStackTrace();
