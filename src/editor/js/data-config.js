@@ -42,8 +42,13 @@ Trigger / reward
 }
 
 */
-
+var data;
 function initConfig(t){
+  data = t;
+}
+function loadConfig(){
+  var t;
+  t = data;
   for(x in t.triggers){
     p = x / (t.triggers.length + t.rewards.length);
     bootProgressUpdate(p*100,"Installing trigger " + t.triggers[x].name);

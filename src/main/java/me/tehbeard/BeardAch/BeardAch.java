@@ -464,8 +464,11 @@ public class BeardAch extends JavaPlugin {
 			while((entry = zis.getNextEntry()) != null)
 			{
 				File outputFile = new File(outputDir,entry.getName());
-				outputFile.mkdirs();
 				
+				if(entry.isDirectory()){
+					outputFile.mkdirs();
+					continue;
+				}
 				int count;
 
                 byte data[] = new byte[BUFFER_SIZE];

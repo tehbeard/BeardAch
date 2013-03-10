@@ -3,6 +3,7 @@ r = 5;
 $(function(){
 
   $("#bootModal").modal({keyboard:false});
+  loadConfig();
 //Deep Clone and append to achievements list
   $('#newach').click(function(){
    $('.ach-UI > .achievement').clone(true).appendTo('.achievements');
