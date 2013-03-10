@@ -74,6 +74,7 @@ public class WorldGuardRegionTrigger implements ITrigger,Listener{
     }
 
     public void configure(Achievement ach) {
+        this.ach = ach;
         World w = Bukkit.getWorld(world);
         WorldGuardPlugin wg = BeardAch.self.getWorldGuard();
         if(wg==null){
