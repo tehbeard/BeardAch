@@ -202,143 +202,161 @@
 			<url>http://repo.bukkit.org/content/groups/public/</url>
 		</repository>
 		<!--<repository> <id>vault-repo</id> <url>http://ci.herocraftonline.com/plugin/repository/everything</url> 
-			</repository> -->
-		<repository>
-			<id>SK89Q-repo</id>
-			<url>http://maven.sk89q.com/repo/</url>
-		</repository>
-		<repository>
-			<id>escapecraft-repo</id>
-			<url>http://dev.escapecraft.com/maven/</url>
-		</repository>
+   </repository> -->
+   <repository>
+     <id>SK89Q-repo</id>
+     <url>http://maven.sk89q.com/repo/</url>
+ </repository>
+ <repository>
+     <id>escapecraft-repo</id>
+     <url>http://dev.escapecraft.com/maven/</url>
+ </repository>
 
-	</repositories>
-
-
-	<dependencies>
-	    <!-- BeardUtils -->
-		<dependency>
-			<groupId>me.tehbeard</groupId>
-			<artifactId>utils</artifactId>
-			<version>1.1-SNAPSHOT</version>
-		</dependency>
-		<!-- Vault -->
-		<dependency>
-			<groupId>net.milkbowl.vault</groupId>
-			<artifactId>Vault</artifactId>
-			<version>1.2.16</version>
-		</dependency>
-		
-		<!-- BeardStat -->
-		<dependency>
-			<groupId>me.tehbeard</groupId>
-			<artifactId>BeardStat</artifactId>
-			<version>0.4.8</version>
-		</dependency>
-		<!-- DroxPerms -->
-		<dependency>
-			<groupId>de.hydrox.bukkit</groupId>
-			<artifactId>DroxPerms</artifactId>
-			<version>0.4.0-SNAPSHOT</version>
-		</dependency>
-		
-		<!-- Bukkit -->
-		<dependency>
-			<groupId>org.bukkit</groupId>
-			<artifactId>bukkit</artifactId>
-			<version>1.4.5-R1.0</version>
-		</dependency>
+</repositories>
 
 
-		<!-- WorldGuard -->
-		<dependency>
-			<groupId>com.sk89q</groupId>
-			<artifactId>worldguard</artifactId>
-			<version>5.5.4-SNAPSHOT</version>
-		</dependency>
+<dependencies>
+   <!-- BeardUtils -->
+   <dependency>
+     <groupId>me.tehbeard</groupId>
+     <artifactId>utils</artifactId>
+     <version>1.1-SNAPSHOT</version>
+ </dependency>
+ <!-- Vault -->
+ <dependency>
+     <groupId>net.milkbowl.vault</groupId>
+     <artifactId>Vault</artifactId>
+     <version>1.2.16</version>
+ </dependency>
 
-		<!-- Gson: Java to Json conversion -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.2.2</version>
-			<scope>compile</scope>
-		</dependency>
-	</dependencies>
+ <!-- BeardStat -->
+ <dependency>
+     <groupId>me.tehbeard</groupId>
+     <artifactId>BeardStat</artifactId>
+     <version>0.4.8</version>
+ </dependency>
+ <!-- DroxPerms -->
+ <dependency>
+     <groupId>de.hydrox.bukkit</groupId>
+     <artifactId>DroxPerms</artifactId>
+     <version>0.4.0-SNAPSHOT</version>
+ </dependency>
+
+ <!-- Bukkit -->
+ <dependency>
+     <groupId>org.bukkit</groupId>
+     <artifactId>bukkit</artifactId>
+     <version>1.4.5-R1.0</version>
+ </dependency>
+
+
+ <!-- WorldGuard -->
+ <dependency>
+     <groupId>com.sk89q</groupId>
+     <artifactId>worldguard</artifactId>
+     <version>5.5.4-SNAPSHOT</version>
+ </dependency>
+
+ <!-- Gson: Java to Json conversion -->
+ <dependency>
+     <groupId>com.google.code.gson</groupId>
+     <artifactId>gson</artifactId>
+     <version>2.2.2</version>
+     <scope>compile</scope>
+ </dependency>
+</dependencies>
 
 
 
-	<distributionManagement>
-		<repository>
-			<id>dev-repo</id>
-			<name>dev.escapecraft.com Releases</name>
-			<url>scp://dev.escapecraft.com/var/www/maven</url>
-		</repository>
-		<snapshotRepository>
-			<id>dev-repo-snap</id>
-			<name>dev.escapecraft.com Snapshots</name>
-			<url>scp://dev.escapecraft.com/var/www/maven</url>
-		</snapshotRepository>
-	</distributionManagement>
-	<build>
-		<extensions>
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ssh</artifactId>
-				<version>2.2</version>
-			</extension>
-		</extensions>
-		<resources>
-			<resource>
-				<targetPath>.</targetPath>
-				<filtering>true</filtering>
-				<directory>${basedir}/src/main/resources/</directory>
-				<includes>
-					<include>plugin.yml</include>
-					<include>config.yml</include>
-				</includes>
-			</resource>
-			<resource>
-				<targetPath>.</targetPath>
-				<filtering>true</filtering>
-				<directory>${basedir}/src/main/resources/help</directory>
-			</resource>
-		</resources>
+<distributionManagement>
+  <repository>
+     <id>dev-repo</id>
+     <name>dev.escapecraft.com Releases</name>
+     <url>scp://dev.escapecraft.com/var/www/maven</url>
+ </repository>
+ <snapshotRepository>
+     <id>dev-repo-snap</id>
+     <name>dev.escapecraft.com Snapshots</name>
+     <url>scp://dev.escapecraft.com/var/www/maven</url>
+ </snapshotRepository>
+</distributionManagement>
+<build>
+  <extensions>
+     <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>2.2</version>
+    </extension>
+</extensions>
+<resources>
+   <resource>
+      <targetPath>.</targetPath>
+      <filtering>true</filtering>
+      <directory>${basedir}/src/main/resources/</directory>
+      <includes>
+         <include>plugin.yml</include>
+         <include>config.yml</include>
+     </includes>
+ </resource>
+ 
+</resources>
 
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>1.6</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<artifactSet>
-								<includes>
-									<include>me.tehbeard:utils</include>
-									<include>com.google.code.gson:gson</include>
-								</includes>
-							</artifactSet>
-							<relocations>
-								<relocation>
-									<pattern>me.tehbeard.utils</pattern>
-									<shadedPattern>me.tehbeard.BeardAch.utils</shadedPattern>
-								</relocation>
-								<relocation>
-									<pattern>com.google.code.gson</pattern>
-									<shadedPattern>me.tehbeard.BeardAch.gson</shadedPattern>
-								</relocation>
-							</relocations>
-							<minimizeJar>true</minimizeJar>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
+<plugins>
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <version>2.4</version>
 
-	</build>
+    <executions>
+       <execution>
+         <phase>process-resources</phase>
+         <goals>
+            <goal>single</goal>
+        </goals>
+    </execution>
+  </executions>
+  <configuration>
+    <finalName>editor</finalName>
+    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+    <appendAssemblyId>false</appendAssemblyId>
+     <descriptors>
+      <descriptor>src/main/assembly/package.xml</descriptor>
+    </descriptors>
+    </configuration>
+</plugin>
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-shade-plugin</artifactId>
+  <version>1.6</version>
+  <executions>
+     <execution>
+        <phase>package</phase>
+        <goals>
+           <goal>shade</goal>
+       </goals>
+       <configuration>
+           <artifactSet>
+              <includes>
+                 <include>me.tehbeard:utils</include>
+                 <include>com.google.code.gson:gson</include>
+             </includes>
+         </artifactSet>
+         <relocations>
+            <relocation>
+               <pattern>me.tehbeard.utils</pattern>
+               <shadedPattern>me.tehbeard.BeardAch.utils</shadedPattern>
+           </relocation>
+           <relocation>
+               <pattern>com.google.code.gson</pattern>
+               <shadedPattern>me.tehbeard.BeardAch.gson</shadedPattern>
+           </relocation>
+       </relocations>
+       <minimizeJar>true</minimizeJar>
+   </configuration>
+</execution>
+</executions>
+</plugin>
+</plugins>
+
+</build>
 </project>
