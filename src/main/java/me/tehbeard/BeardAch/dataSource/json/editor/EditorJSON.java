@@ -71,11 +71,16 @@ public class EditorJSON {
 	}
 
 	public void write(File file) throws IOException{
-		JsonWriter writer = new JsonWriter(new FileWriter(file));
+		FileWriter fw = new FileWriter(file);
+		fw.write("initConfig(");
+		JsonWriter writer = new JsonWriter(fw);
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		
 		
 		gson.toJson(this,new TypeToken<EditorJSON>(){}.getType(),writer);
 		writer.flush();
+		fw.write(");");
+		fw.flush();
 		writer.close();
 	}
 
