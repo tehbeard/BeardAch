@@ -135,7 +135,7 @@ public class BeardAch extends JavaPlugin {
 
         
         try {
-			json.write(new File(getDataFolder(),"config-out.json"));
+			json.write(new File(getDataFolder(),"editor/settings.js"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
