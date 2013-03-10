@@ -1,9 +1,13 @@
 package me.tehbeard.BeardAch;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import me.tehbeard.BeardAch.Metrics.Graph;
 import me.tehbeard.BeardAch.Metrics.Plotter;
@@ -134,12 +138,7 @@ public class BeardAch extends JavaPlugin {
         addReward(PlayerCommandReward.class);
 
         
-        try {
-			json.write(new File(getDataFolder(),"editor/settings.js"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+        
 
 
         //Load built in extras
@@ -192,6 +191,15 @@ public class BeardAch extends JavaPlugin {
         printCon("Loading addons");
         addonLoader.loadAddons();
 
+        printCon("Writing editor settings");
+        new File(getDataFolder(),"editor").mkdirs();
+        try {
+			json.write(new File(getDataFolder(),"editor/settings.js"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        exportEditor();
 
         printCon("Loading Achievements");
 
@@ -444,5 +452,41 @@ public class BeardAch extends JavaPlugin {
     }
 
 
+    public static final int BUFFER_SIZE = 8192;
+    
+    private void exportEditor(){
+    	try {
+    	ZipInputStream zis = new ZipInputStream(getResource("editor.zip"));
+    	ZipEntry entry = null;
+
+    	File outputDir = new File(getDataFolder(),"editor");
+        
+			while((entry = zis.getNextEntry()) != null)
+			{
+				File outputFile = new File(outputDir,entry.getName());
+				outputFile.mkdirs();
+				
+				int count;
+
+                byte data[] = new byte[BUFFER_SIZE];
+
+                //write the file to the disk
+                FileOutputStream fos = new FileOutputStream(outputFile);
+                BufferedOutputStream dest = new BufferedOutputStream(fos, BUFFER_SIZE);
+
+                while((count = zis.read(data, 0, BUFFER_SIZE)) != -1)
+                {
+                    dest.write(data, 0, count);
+                }
+
+                //close the output streams
+                dest.flush();
+                dest.close();
+			}
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+    }
 
 }
