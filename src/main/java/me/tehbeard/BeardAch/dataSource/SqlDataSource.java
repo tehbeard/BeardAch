@@ -238,6 +238,7 @@ public class SqlDataSource implements IDataSource{
 
             } catch (SQLException e) {
                 BeardAch.printCon("Connection Could not be established, attempting to reconnect...");
+                e.printStackTrace();
                 createConnection();
                 prepareStatements();
             }
