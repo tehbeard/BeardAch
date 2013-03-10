@@ -7,8 +7,6 @@ import java.util.List;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
-import me.tehbeard.BeardAch.achievement.help.Argument;
-import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 
@@ -24,10 +22,6 @@ import com.google.gson.annotations.Expose;
  *
  */
 @Configurable(tag="achcount",name="Achievement count")
-@Usage(arguments={
-        @Argument(name="prefix",desc="prefix of achievement slug to match"),
-        @Argument(name="threshold",desc="Must have more than this many matches to trigger")
-        }, packageName = "base",blurb="use * to signify ALL achievements counted")
 public class AchCountTrigger implements ITrigger {
 
     @Expose

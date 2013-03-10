@@ -14,19 +14,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import com.google.gson.annotations.Expose;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.help.Argument;
-import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 
 @Configurable(tag="interact",name="Click block at location")
-@Usage(arguments={
-        @Argument(name="World",desc=""),
-        @Argument(name="x",desc=""),
-        @Argument(name="y",desc=""),
-        @Argument(name="z",desc="")
-        },packageName="base",blurb="Triggers when a player interacts with a block at the specified coordinates")
+
 public class InteractTrigger implements ITrigger, Listener {
 
     

@@ -3,7 +3,6 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 
@@ -12,7 +11,6 @@ import org.bukkit.entity.Player;
 import com.google.gson.annotations.Expose;
 
 @Configurable(tag="promote",name="(DroxPerms) Promote along track")
-@Usage(arguments = {@Argument(name="track",desc="The track to promote the player along")}, packageName = "base",dependencies="DroxPerms")
 public class DroxTrackReward implements IReward{
     @Expose
     @EditorField(alias="Track to promote along")

@@ -2,8 +2,6 @@ package me.tehbeard.BeardAch.achievement.triggers;
 
 
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.help.Argument;
-import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 
@@ -17,9 +15,6 @@ import com.google.gson.annotations.Expose;
  *
  */
 @Configurable(tag="perm",name="has permission node")
-@Usage(arguments={
-        @Argument(name="permission",desc="permission node to check")
-        },packageName="base",blurb="Fires if player has that permission")
 public class PermCheckTrigger implements ITrigger {
 
     @Expose

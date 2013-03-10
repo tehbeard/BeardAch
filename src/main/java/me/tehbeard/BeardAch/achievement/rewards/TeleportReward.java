@@ -7,20 +7,11 @@ import org.bukkit.entity.Player;
 import com.google.gson.annotations.Expose;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 
 @Configurable(tag="teleport",name="Teleport to location")
-@Usage(arguments={
-        @Argument(name="world",desc=""),
-        @Argument(name="x",desc=""),
-        @Argument(name="y",desc=""),
-        @Argument(name="z",desc=""),
-        @Argument(name="yaw",desc=""),
-        @Argument(name="pitch",desc=""),
-},packageName="base")
 public class TeleportReward implements IReward {
 
     @Expose

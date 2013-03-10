@@ -2,7 +2,6 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.help.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 
@@ -13,11 +12,6 @@ import org.bukkit.potion.PotionEffectType;
 import com.google.gson.annotations.Expose;
 
 @Configurable(tag="potion",name="Apply potion effect")
-@Usage(arguments={
-        @Argument(name="type",desc="Potion type"),
-        @Argument(name="tier",desc="Potion tier"),
-        @Argument(name="duration",desc="duration (seconds)")
-        },packageName="base")
 public class PotionReward implements IReward {
 
     @Expose

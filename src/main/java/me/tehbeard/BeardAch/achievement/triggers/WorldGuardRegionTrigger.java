@@ -2,8 +2,6 @@ package me.tehbeard.BeardAch.achievement.triggers;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.help.Argument;
-import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 
@@ -21,10 +19,6 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 @Configurable(tag="wgregion",name="(WorldGuard) Inside region")
-@Usage(arguments={
-        @Argument(name="world",desc=""),
-        @Argument(name="region name",desc="")
-        },packageName="base",blurb="Fires if player enters the region",dependencies="worldguard")
 public class WorldGuardRegionTrigger implements ITrigger,Listener{
 
     private RegionManager rm;

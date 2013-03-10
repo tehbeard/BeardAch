@@ -8,8 +8,6 @@ import java.util.Scanner;
 import me.tehbeard.BeardAch.Metrics.Graph;
 import me.tehbeard.BeardAch.Metrics.Plotter;
 import me.tehbeard.BeardAch.achievement.*;
-import me.tehbeard.BeardAch.achievement.help.HelpMaker;
-import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.*;
 import me.tehbeard.BeardAch.achievement.rewards.*;
@@ -59,8 +57,9 @@ public class BeardAch extends JavaPlugin {
         //Load config
         printCon("Starting BeardAch");
         /*if(!getConfig().getKeys(false).contains("achievements")){
-            getConfig().options().copyDefaults(true);
+            
         }*/
+        getConfig().options().copyDefaults(true);
         saveConfig();
         reloadConfig();
 
@@ -105,7 +104,6 @@ public class BeardAch extends JavaPlugin {
             setEnabled(false);
             return;
         }
-        HelpMaker.loadTemplates();
         printCon("Installing default triggers");
         //Load installed triggers
         addTrigger(AchCheckTrigger.class);
@@ -194,10 +192,6 @@ public class BeardAch extends JavaPlugin {
         printCon("Loading addons");
         addonLoader.loadAddons();
 
-
-        printCon("Enabling help topics");
-
-        HelpMaker.writeHelp();
 
         printCon("Loading Achievements");
 
@@ -343,8 +337,7 @@ public class BeardAch extends JavaPlugin {
      * @param trigger
      */
     public void addTrigger(Class<? extends ITrigger > trigger){
-        HelpMaker.addTrigger(trigger.getAnnotation(Configurable.class).tag(), trigger.getAnnotation(Usage.class));
-        
+      
         AchievementLoader.triggerFactory.addProduct(trigger);
         json.addTrigger(trigger);
     }
@@ -353,7 +346,6 @@ public class BeardAch extends JavaPlugin {
      * @param reward
      */
     public void addReward(Class<? extends IReward >  reward){
-        HelpMaker.addReward(reward.getAnnotation(Configurable.class).tag(), reward.getAnnotation(Usage.class));
         AchievementLoader.rewardFactory.addProduct(reward);
         json.addReward(reward);
     }

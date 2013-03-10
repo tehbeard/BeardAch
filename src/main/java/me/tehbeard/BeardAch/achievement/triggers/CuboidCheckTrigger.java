@@ -3,8 +3,6 @@ package me.tehbeard.BeardAch.achievement.triggers;
 import java.util.ArrayList;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.help.Argument;
-import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
@@ -21,15 +19,6 @@ import com.google.gson.annotations.Expose;
  *
  */
 @Configurable(tag="cuboid",name="cuboid")
-@Usage(arguments={
-        @Argument(name="World",desc=""),
-        @Argument(name="x1",desc=""),
-        @Argument(name="y",desc=""),
-        @Argument(name="z1",desc=""),
-        @Argument(name="x2",desc=""),
-        @Argument(name="y2",desc=""),
-        @Argument(name="z2",desc="")
-        },packageName="base",blurb="Provides a dependency free area entry trigger")
 public class CuboidCheckTrigger implements ITrigger {
 
 

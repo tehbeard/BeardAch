@@ -2,8 +2,6 @@ package me.tehbeard.BeardAch.achievement.rewards;
 
 
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.BeardAch.achievement.help.Argument;
-import me.tehbeard.BeardAch.achievement.help.Usage;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 
@@ -13,9 +11,6 @@ import org.bukkit.entity.Player;
 import com.google.gson.annotations.Expose;
 
 @Configurable(tag="comm",name="Execute console command")
-@Usage(arguments=@Argument(name="command",desc="The command to execute, executed on the console. <PLAYER> is replaced it the players name"),
-packageName="base",
-blurb="Executes a command on the console")
 public class CommandReward implements IReward{
 
     @Expose
