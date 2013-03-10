@@ -7,7 +7,7 @@
 	<name>BearchAch</name>
 	<description>Achievements plugin for BeardStat</description>
 	<properties>
-		<project.plugin.flavour>Fillet [BETA]</project.plugin.flavour>
+		<project.plugin.flavour>Apricot</project.plugin.flavour>
 		<project.plugin.version>${project.version}-${project.plugin.flavour}</project.plugin.version>
 	</properties>
 
