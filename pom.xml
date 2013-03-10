@@ -299,6 +299,12 @@
      </includes>
  </resource>
  
+<resource>
+      <targetPath>.</targetPath>
+      <filtering>false</filtering>
+      <directory>${project.build.directory}/generated-files/</directory>
+ </resource>
+ 
 </resources>
 
 <plugins>
@@ -309,7 +315,7 @@
 
     <executions>
        <execution>
-         <phase>process-resources</phase>
+         <phase>generate-resources</phase>
          <goals>
             <goal>single</goal>
         </goals>
@@ -317,7 +323,7 @@
   </executions>
   <configuration>
     <finalName>editor</finalName>
-    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+    <outputDirectory>${project.build.directory}/generated-files</outputDirectory>
     <appendAssemblyId>false</appendAssemblyId>
      <descriptors>
       <descriptor>src/main/assembly/package.xml</descriptor>
