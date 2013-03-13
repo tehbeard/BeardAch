@@ -36,12 +36,10 @@ public class RewardJSONParser implements JsonSerializer<IReward>,JsonDeserialize
         return gson.fromJson(element, AchievementLoader.rewardFactory.get(element.getAsJsonObject().get("_type").getAsString()));
         }
         catch (NoClassDefFoundError e){
-        	BeardAch.printCon("ERROR LOADING ACHIEVEMENT");
         	BeardAch.printCon("Reward type failed: " + element.getAsJsonObject().get("_type").getAsString());
         	BeardAch.printDebugCon("Dumping JSON");
         	BeardAch.printDebugCon(element.toString());
         	BeardAch.printDebugCon("END Dumping JSON");
-        	BeardAch.printCon("Achievement not loaded");
         }
         return null;
     }
