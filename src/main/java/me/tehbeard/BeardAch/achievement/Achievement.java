@@ -56,7 +56,8 @@ public class Achievement {
 	    nextId ++;
 	}
 	
-	public void postLoad(){
+	public boolean postLoad(){
+		try{
 	    this.exempt = new Permission("ach.exempt." + slug,PermissionDefault.FALSE);
 	    for(ITrigger t : triggers){
 	        t.configure(this);
@@ -64,6 +65,10 @@ public class Achievement {
 	    for(IReward r : rewards){
             r.configure(this);
         }
+	    return true;
+		}catch(Exception e){
+			return false;
+		}
 	}
 	
 	@Deprecated
