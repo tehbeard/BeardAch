@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import org.bukkit.Location;
 
+import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.AchievementLoader;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
@@ -32,8 +33,18 @@ public class TriggerJSONParser implements JsonSerializer<ITrigger>,JsonDeseriali
     public ITrigger deserialize(JsonElement element, Type type,
             JsonDeserializationContext context) throws JsonParseException {
         
-        return gson.fromJson(element, AchievementLoader.triggerFactory.get(element.getAsJsonObject().get("_type").getAsString()));
-        
+    	try{
+            return gson.fromJson(element, AchievementLoader.triggerFactory.get(element.getAsJsonObject().get("_type").getAsString()));
+            }
+            catch (Exception e){
+            	BeardAch.printCon("ERROR LOADING ACHIEVEMENT");
+            	BeardAch.printCon("Trigger type failed: " + element.getAsJsonObject().get("_slug").getAsString());
+            	BeardAch.printDebugCon("Dumping JSON");
+            	BeardAch.printDebugCon(element.getAsString());
+            	BeardAch.printDebugCon("END Dumping JSON");
+            	BeardAch.printCon("Achievement not loaded");
+            }
+            return null;
     }
 
 }

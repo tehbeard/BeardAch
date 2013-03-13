@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
+import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.AchievementLoader;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
@@ -31,9 +32,18 @@ public class RewardJSONParser implements JsonSerializer<IReward>,JsonDeserialize
 
     public IReward deserialize(JsonElement element, Type type,
             JsonDeserializationContext context) throws JsonParseException {
-        
+        try{
         return gson.fromJson(element, AchievementLoader.rewardFactory.get(element.getAsJsonObject().get("_type").getAsString()));
-        
+        }
+        catch (Exception e){
+        	BeardAch.printCon("ERROR LOADING ACHIEVEMENT");
+        	BeardAch.printCon("Reward type failed: " + element.getAsJsonObject().get("_slug").getAsString());
+        	BeardAch.printDebugCon("Dumping JSON");
+        	BeardAch.printDebugCon(element.getAsString());
+        	BeardAch.printDebugCon("END Dumping JSON");
+        	BeardAch.printCon("Achievement not loaded");
+        }
+        return null;
     }
     
     public static void main(String[] args){

@@ -55,7 +55,8 @@ public class AchievementLoader {
             List<Achievement> achievements = gson.fromJson(new FileReader(file), new TypeToken<List<Achievement>>(){}.getType());
             if(achievements!=null){
                 for(Achievement a : achievements){
-                    a.postLoad();
+                	if(a == null){continue;}
+                	a.postLoad();
                     BeardAch.printDebugCon("Loading achievement " + a.getName());
                     BeardAch.self.getAchievementManager().addAchievement(a);
                 }
