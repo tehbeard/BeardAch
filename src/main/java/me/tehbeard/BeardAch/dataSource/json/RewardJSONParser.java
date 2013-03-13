@@ -39,7 +39,7 @@ public class RewardJSONParser implements JsonSerializer<IReward>,JsonDeserialize
         	BeardAch.printCon("ERROR LOADING ACHIEVEMENT");
         	BeardAch.printCon("Reward type failed: " + element.getAsJsonObject().get("_type").getAsString());
         	BeardAch.printDebugCon("Dumping JSON");
-        	BeardAch.printDebugCon(element.getAsString());
+        	BeardAch.printDebugCon(element);
         	BeardAch.printDebugCon("END Dumping JSON");
         	BeardAch.printCon("Achievement not loaded");
         }

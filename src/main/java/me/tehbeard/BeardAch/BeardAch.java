@@ -109,33 +109,50 @@ public class BeardAch extends JavaPlugin {
             return;
         }
         printCon("Installing default triggers");
+        
+        Scanner s = new Scanner(getResource("components.txt"));
+        while(s.hasNextLine()){
+        	try {
+				Class<?> c = Class.forName(s.nextLine());
+				if(ITrigger.class.isAssignableFrom(c)){
+					addTrigger((Class<? extends ITrigger>) c);
+				}
+				
+				if(IReward.class.isAssignableFrom(c)){
+					addReward((Class<? extends IReward>) c);
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
         //Load installed triggers
-        addTrigger(AchCheckTrigger.class);
-        addTrigger(AchCountTrigger.class);
-        addTrigger(CuboidCheckTrigger.class);
-        addTrigger(LockedTrigger.class);
-        addTrigger(NoAchCheckTrigger.class);
-        addTrigger(PermCheckTrigger.class);
-        addTrigger(StatCheckTrigger.class);
-        addTrigger(StatWithinTrigger.class);
-        addTrigger(EconomyTrigger.class);
-        addTrigger(SpeedRunTrigger.class);
-        addTrigger(CuboidKingOfTheHillTrigger.class);
-        addTrigger(WorldGuardRegionTrigger.class);
-        addTrigger(InteractTrigger.class);
+//        addTrigger(AchCheckTrigger.class);
+//        addTrigger(AchCountTrigger.class);
+//        addTrigger(CuboidCheckTrigger.class);
+//        addTrigger(LockedTrigger.class);
+//        addTrigger(NoAchCheckTrigger.class);
+//        addTrigger(PermCheckTrigger.class);
+//        addTrigger(StatCheckTrigger.class);
+//        addTrigger(StatWithinTrigger.class);
+//        addTrigger(EconomyTrigger.class);
+//        addTrigger(SpeedRunTrigger.class);
+//        addTrigger(CuboidKingOfTheHillTrigger.class);
+//        addTrigger(WorldGuardRegionTrigger.class);
+//        addTrigger(InteractTrigger.class);
 
 
         printCon("Installing default rewards");
         //load installed rewards
-        addReward(CommandReward.class);
-        addReward(CounterReward.class);
-        addReward(DroxSubGroupReward.class);
-        addReward(DroxTrackReward.class);
-        addReward(EconomyReward.class);
-        addReward(SetGroupReward.class);
-        addReward(TeleportReward.class);
-        addReward(PotionReward.class);
-        addReward(PlayerCommandReward.class);
+//        addReward(CommandReward.class);
+//        addReward(CounterReward.class);
+//        addReward(DroxSubGroupReward.class);
+//        addReward(DroxTrackReward.class);
+//        addReward(EconomyReward.class);
+//        addReward(SetGroupReward.class);
+//        addReward(TeleportReward.class);
+//        addReward(PotionReward.class);
+//        addReward(PlayerCommandReward.class);
 
         
         
