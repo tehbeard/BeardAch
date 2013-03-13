@@ -17,7 +17,6 @@ import com.google.gson.stream.JsonWriter;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
-import me.tehbeard.BeardStat.BeardStat;
 
 public class EditorJSON {
 
@@ -66,7 +65,7 @@ public class EditorJSON {
 		list.add(ee);
 		}
 		catch(NoClassDefFoundError e){
-			BeardStat.printCon("Skipping item " + ee.name);
+			BeardAch.printCon("Skipping item " + ee.name);
 		}
 	}
 
