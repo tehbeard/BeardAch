@@ -36,9 +36,9 @@ public class TriggerJSONParser implements JsonSerializer<ITrigger>,JsonDeseriali
     	try{
             return gson.fromJson(element, AchievementLoader.triggerFactory.get(element.getAsJsonObject().get("_type").getAsString()));
             }
-            catch (Exception e){
+            catch (NoClassDefFoundError e){
             	BeardAch.printCon("ERROR LOADING ACHIEVEMENT");
-            	BeardAch.printCon("Trigger type failed: " + element.getAsJsonObject().get("_slug").getAsString());
+            	BeardAch.printCon("Trigger type failed: " + element.getAsJsonObject().get("_type").getAsString());
             	BeardAch.printDebugCon("Dumping JSON");
             	BeardAch.printDebugCon(element.getAsString());
             	BeardAch.printDebugCon("END Dumping JSON");
