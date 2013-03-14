@@ -19,6 +19,11 @@ import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 
+/**
+ * Generates the json file for the achievements editor
+ * @author James
+ *
+ */
 public class EditorJSON {
 
 	public List<EditorElement> triggers = new ArrayList<EditorElement>();
@@ -31,6 +36,11 @@ public class EditorJSON {
 		public String name;
 	}
 
+	/**
+	 * Structural class for elements of a trigger/reward
+	 * @author James
+	 *
+	 */
 	public class EditorFormElement{
 		public String key;
 		public String name;
