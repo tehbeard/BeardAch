@@ -32,12 +32,22 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 
 
-
+/**
+ * Loads achievements from an external Gson file
+ * @author James
+ *
+ */
 public class AchievementLoader {
 
 	public static final ClassCatalogue<ITrigger> triggerFactory = new ClassCatalogue<ITrigger>();
 	public static final ClassCatalogue<IReward> rewardFactory = new ClassCatalogue<IReward>();
 
+	/**
+	 * Create prime Gson object, 
+	 * Only export annotated fields
+	 * Pretty print for human debugging.
+	 * Also adds type adapters for trigger, reward and location
+	 */
 	private static Gson gson = new GsonBuilder().
 			excludeFieldsWithoutExposeAnnotation().
 			setPrettyPrinting().
@@ -50,10 +60,12 @@ public class AchievementLoader {
 	public static void loadAchievements(){
 
 		try {
+			//Load and create file
 			File file = new File(BeardAch.self.getDataFolder(),"ach.json");
 			file.createNewFile();
 			List<Achievement> achievements = gson.fromJson(new FileReader(file), new TypeToken<List<Achievement>>(){}.getType());
 			if(achievements!=null){
+				//Run postLoad() on all achievements and add them to manager if successful 
 				for(Achievement a : achievements){
 					if(a.postLoad()){
 						BeardAch.printDebugCon("Loading achievement " + a.getName());
@@ -71,6 +83,7 @@ public class AchievementLoader {
 
 
 			//TODO: Kill in 0.6
+			//old method to load achievements
 			List<Achievement> l = loadOldConfigAchievements();
 			boolean tripped = false;
 			for(Achievement a:l){

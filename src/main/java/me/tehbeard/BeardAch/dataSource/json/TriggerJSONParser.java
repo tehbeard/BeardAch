@@ -19,6 +19,11 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+/**
+ * Adds type information to Gson for interface->concrete of triggers
+ * @author James
+ *
+ */
 public class TriggerJSONParser implements JsonSerializer<ITrigger>,JsonDeserializer<ITrigger>{
 
     private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeHierarchyAdapter(Cuboid.class,new CuboidJSONParser()).registerTypeHierarchyAdapter(Location.class,new LocationJSONParser()).create();

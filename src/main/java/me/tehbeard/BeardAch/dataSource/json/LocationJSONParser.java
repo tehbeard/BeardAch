@@ -13,6 +13,11 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+/**
+ * Allows location's to be transformed to/from JSON
+ * @author James
+ *
+ */
 public class LocationJSONParser implements JsonSerializer<Location>,JsonDeserializer<Location>{
 
     public JsonElement serialize(Location location, Type type,

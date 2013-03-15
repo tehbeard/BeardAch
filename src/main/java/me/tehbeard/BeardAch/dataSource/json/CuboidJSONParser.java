@@ -13,6 +13,11 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+/**
+ * ..Is this even needed anymore?
+ * @author James
+ *
+ */
 public class CuboidJSONParser implements JsonSerializer<Cuboid>,JsonDeserializer<Cuboid>{
 
     private Gson gson = new GsonBuilder().create();
