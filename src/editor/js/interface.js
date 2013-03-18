@@ -17,7 +17,7 @@ $(function(){
       a.push(saveAchievement($(e)));
     });
       out.val(JSON.stringify(a,null,"  "));
-
+      window.saveAs(new Blob([JSON.stringify(a,null,"  ")]),"ach.json");
   });
 
 // On Trigger selected, add to achievement
