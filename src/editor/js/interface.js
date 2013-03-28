@@ -21,7 +21,7 @@ $(function(){
   });
 
 // On Trigger selected, add to achievement
-$('button.add-trigger').click(function(e){
+$('.add-trigger-btn').click(function(e){
 
   type = $('select.add-trigger',$(this).parent()).val();
   console.log("changed to " + type);
@@ -33,7 +33,7 @@ $('button.add-trigger').click(function(e){
 
 
 // On Reward selected, add to achievement
-$('button.add-reward').click(function(e){
+$('.add-reward-btn').click(function(e){
 
   type = $('select.add-reward',$(this).parent()).val();
   console.log("changed to " + type);
