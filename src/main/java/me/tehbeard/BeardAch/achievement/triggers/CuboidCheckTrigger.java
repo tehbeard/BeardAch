@@ -2,6 +2,7 @@ package me.tehbeard.BeardAch.achievement.triggers;
 
 import java.util.ArrayList;
 
+import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
@@ -46,7 +47,8 @@ public class CuboidCheckTrigger implements ITrigger {
 	}
 
     public void configure(Achievement ach) {
-        
+        //Register with cuboid listener
+        BeardAch.self.getCuboidListener().add(cuboid, ach);
     }
 
     

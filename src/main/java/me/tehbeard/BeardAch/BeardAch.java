@@ -13,8 +13,7 @@ import me.tehbeard.BeardAch.Metrics.Graph;
 import me.tehbeard.BeardAch.Metrics.Plotter;
 import me.tehbeard.BeardAch.achievement.*;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
-import me.tehbeard.BeardAch.achievement.triggers.*;
-import me.tehbeard.BeardAch.achievement.rewards.*;
+import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.commands.*;
 import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
@@ -51,6 +50,9 @@ public class BeardAch extends JavaPlugin {
 
     
     private EditorJSON json = new EditorJSON();
+    
+    private BeardAchCuboidListener cuboidListener = new BeardAchCuboidListener();
+    
     /**
      * Load BeardAch
      */
@@ -69,9 +71,7 @@ public class BeardAch extends JavaPlugin {
 
         EnableBeardStat();
 
-
-
-
+        Bukkit.getPluginManager().registerEvents(cuboidListener, this);
 
         //check DroxPerms
         DroxPerms droxPerms = ((DroxPerms) this.getServer().getPluginManager().getPlugin("DroxPerms"));
@@ -81,10 +81,6 @@ public class BeardAch extends JavaPlugin {
 
         //check WorldGuard
         worldGuard = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
-
-
-
-
 
         printCon("Loading Data Adapters");
         ConfigurableFactory<IDataSource,DataSourceDescriptor> dataSourceFactory = new ConfigurableFactory<IDataSource, DataSourceDescriptor>(DataSourceDescriptor.class) {
@@ -108,7 +104,7 @@ public class BeardAch extends JavaPlugin {
             setEnabled(false);
             return;
         }
-        printCon("Installing default triggers");
+        printCon("Installing default triggers and rewards");
         
         Scanner s = new Scanner(getResource("components.txt"));
         while(s.hasNextLine()){
@@ -122,39 +118,11 @@ public class BeardAch extends JavaPlugin {
 					addReward((Class<? extends IReward>) c);
 				}
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }
-        //Load installed triggers
-//        addTrigger(AchCheckTrigger.class);
-//        addTrigger(AchCountTrigger.class);
-//        addTrigger(CuboidCheckTrigger.class);
-//        addTrigger(LockedTrigger.class);
-//        addTrigger(NoAchCheckTrigger.class);
-//        addTrigger(PermCheckTrigger.class);
-//        addTrigger(StatCheckTrigger.class);
-//        addTrigger(StatWithinTrigger.class);
-//        addTrigger(EconomyTrigger.class);
-//        addTrigger(SpeedRunTrigger.class);
-//        addTrigger(CuboidKingOfTheHillTrigger.class);
-//        addTrigger(WorldGuardRegionTrigger.class);
-//        addTrigger(InteractTrigger.class);
 
-
-        printCon("Installing default rewards");
-        //load installed rewards
-//        addReward(CommandReward.class);
-//        addReward(CounterReward.class);
-//        addReward(DroxSubGroupReward.class);
-//        addReward(DroxTrackReward.class);
-//        addReward(EconomyReward.class);
-//        addReward(SetGroupReward.class);
-//        addReward(TeleportReward.class);
-//        addReward(PotionReward.class);
-//        addReward(PlayerCommandReward.class);
-
-        
+  
         
 
 
@@ -213,7 +181,6 @@ public class BeardAch extends JavaPlugin {
         try {
 			json.write(new File(getDataFolder(),"editor/settings.js"));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
         exportEditor();
@@ -508,5 +475,10 @@ public class BeardAch extends JavaPlugin {
 			e.printStackTrace();
 		}
     }
+
+    public BeardAchCuboidListener getCuboidListener() {
+        return cuboidListener;
+    }
+
 
 }
