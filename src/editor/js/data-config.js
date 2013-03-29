@@ -25,7 +25,7 @@ function loadConfig(){
 function makeElement(data,container){
   var html = '<div class="element" data-type="' + data.type + '">';
   html+='<input type="hidden" data-key="_type" value="' + data.type + '"/>';
-  html+='<div class="input-prepend"><label class="add-on"><b>' + data.name + '</b></label><button class="btn btn-danger" onclick="deleteParent(this);"><i class="icon-remove icon-white"></i> Remove</button>';
+  html+='<h4>' + data.name + '</h4><button class="btn btn-danger" onclick="deleteElement(this);"><i class="icon-remove icon-white"></i> Remove</button>';
   for(x in data.fields){
     html+=makeFormElement(data.fields[x]);
   }

@@ -73,7 +73,7 @@ function bootProgressUpdate(percent,status){
   }
 }
 
-function deleteParent(t){
+function deleteElement(t){
   console.log("delete!");
   $(t).parent().remove();
 }
