@@ -2,8 +2,8 @@
 .project
 .classpath
 .settings
-.settings\*
 target
 bin
 *~
 plugin.yml
+.settings\org.eclipse.jdt.core.prefs
