@@ -62,7 +62,7 @@ public class InteractTrigger implements ITrigger, Listener {
     }
 
     public void configure(Achievement ach) {
-        
+        this.ach = ach;
     }
 
 }
