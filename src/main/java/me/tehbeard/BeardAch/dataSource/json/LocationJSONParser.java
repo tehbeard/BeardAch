@@ -40,10 +40,10 @@ public class LocationJSONParser implements JsonSerializer<Location>,JsonDeserial
                 l.get("x").getAsDouble(),
                 l.get("y").getAsDouble(),
                 l.get("z").getAsDouble(),
-                l.get("yaw").getAsFloat(),
-                l.get("pitch").getAsFloat()
+                (l.has("yaw") ? l.get("yaw").getAsFloat() : 0.0f),
+                (l.has("pitch") ? l.get("pitch").getAsFloat() : 0.0f)
                 );
-        
+
     }
 
 }
