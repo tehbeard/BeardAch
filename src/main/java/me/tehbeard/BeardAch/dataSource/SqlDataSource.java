@@ -113,7 +113,7 @@ public class SqlDataSource implements IDataSource{
 		BeardAch.printDebugCon("Checking connection");
 		try {
 			if(conn == null || !conn.isValid(0)){
-				BeardAch.printDebugCon("Something is derp, rebooting connection.");
+				BeardAch.printCon("Connection to database interuptted, attempting to reconnect...");
 				createConnection();
 				if(conn!=null){
 					BeardAch.printDebugCon("Rebuilding statements");
