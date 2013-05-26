@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,14 +57,29 @@ public class AchievementLoader {
 			registerTypeHierarchyAdapter(Location.class,new LocationJSONParser()).
 			create();
 
-
+	private static List<Achievement> loadAchievementsFromJSONFile(File file){
+	    
+        try {
+            return gson.fromJson(new FileReader(file), new TypeToken<List<Achievement>>(){}.getType());
+        } catch (JsonIOException e) {
+            BeardAch.printError("An error occured reading " + file.toString(),e);
+        } catch (JsonSyntaxException e) {
+            BeardAch.printError("There is a problem with the syntax of " + file.toString(),e);
+        } catch (FileNotFoundException e) {
+            BeardAch.printError(file.toString() + " not found",e);
+        } catch (IOException e) {
+            BeardAch.printError("An error occured reading " + file.toString(),e);
+        }
+        return null;
+	}
+	
 	public static void loadAchievements(){
 
 		try {
 			//Load and create file
 			File file = new File(BeardAch.self.getDataFolder(),"ach.json");
 			file.createNewFile();
-			List<Achievement> achievements = gson.fromJson(new FileReader(file), new TypeToken<List<Achievement>>(){}.getType());
+			List<Achievement> achievements = loadAchievementsFromJSONFile(file);
 			if(achievements!=null){
 				//Run postLoad() on all achievements and add them to manager if successful 
 				for(Achievement a : achievements){
@@ -76,6 +92,31 @@ public class AchievementLoader {
 						BeardAch.printCon("Could not load " + a.getName());
 					}
 				}
+			}
+			
+			File achDir = new File(BeardAch.self.getDataFolder(),"config");
+			if(achDir.isDirectory() && achDir.exists()){
+			    for(String f : achDir.list(new FilenameFilter() {
+                    
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith(".json");
+                    }
+                })){
+			        achievements = loadAchievementsFromJSONFile(new File(f));
+		            if(achievements!=null){
+		                //Run postLoad() on all achievements and add them to manager if successful 
+		                for(Achievement a : achievements){
+		                    if(a.postLoad()){
+		                        BeardAch.printDebugCon("Loading achievement " + a.getName());
+		                        BeardAch.self.getAchievementManager().addAchievement(a);
+		                    }
+		                    else
+		                    {
+		                        BeardAch.printCon("Could not load " + a.getName());
+		                    }
+		                }
+		            }
+			    }
 			}
 
 
