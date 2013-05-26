@@ -157,6 +157,7 @@ public class Achievement {
                                     )
                     )
                     );
+            player.sendMessage(ChatColor.BLUE + descrip);
 
         }break;
           
