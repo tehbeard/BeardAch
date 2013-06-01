@@ -102,7 +102,7 @@ public class AchievementLoader {
                         return name.endsWith(".json");
                     }
                 })){
-			        achievements = loadAchievementsFromJSONFile(new File(f));
+			        achievements = loadAchievementsFromJSONFile(new File(achDir,f));
 		            if(achievements!=null){
 		                //Run postLoad() on all achievements and add them to manager if successful 
 		                for(Achievement a : achievements){
