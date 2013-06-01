@@ -6,7 +6,7 @@ import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
-import me.tehbeard.BeardStat.containers.PlayerStatManager;
+import com.tehbeard.BeardStat.containers.PlayerStatManager;
 
 import org.bukkit.entity.Player;
 
@@ -15,6 +15,10 @@ import com.google.gson.annotations.Expose;
 
 public class CounterReward implements  IReward{
 
+    private static final String DOMAIN = "beardach";
+    
+    
+    
     @Expose
     @EditorField(alias="Counter name")
 	String name = "";
@@ -35,7 +39,7 @@ public class CounterReward implements  IReward{
 
 	public void giveReward(Player player) {
 		if(manager != null){
-			manager.getPlayerBlob(player.getName()).getStat("achCount", name).incrementStat(count);
+			manager.getPlayerBlob(player.getName()).getStat(DOMAIN,player.getWorld().getName(),"achCount", name).incrementStat(count);
 		}
 		else{
 		    BeardAch.printError("BeardStat not loaded, reward not given!");

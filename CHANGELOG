@@ -1,3 +1,13 @@
+##Banana Split
+* Support for BeardStat 0.6 and up
+  * Will probably when loaded with 0.5 and below, DO NOT DO THIS.
+  * stat and statwithin support domain and world entries.
+    * By default, will use the "default" domain and world * (all worlds)
+    * Counter reward now uses the "beardach" domain, and the world is set based on players current world, any triggers based on it will need to be changed.
+* Team trigger
+* When using the BROADCAST display method, send the achievement description to the achievee.
+* Add support for loading multiple json files, to simplify management of large amounts of achievements (in a standard deployment, they should be under plugins/BeardAch/config and end in .json)
+* Tweak to build system to prevent problems.
 ##Apricot
 * Moved achievement configuration storage to JSON
   * Should automatically convert old config to new

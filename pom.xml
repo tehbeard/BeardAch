@@ -230,11 +230,6 @@
 		</dependency>
 
 		<!-- BeardStat -->
-		<dependency>
-			<groupId>com.tehbeard</groupId>
-			<artifactId>BeardStat</artifactId>
-			<version>0.6-SNAPSHOT</version>
-		</dependency>
 		<!-- DroxPerms -->
 
 		<!-- Bukkit -->
@@ -254,11 +249,21 @@
 			<version>2.2.2</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>tehbeard.annotate</groupId>
 			<artifactId>annotate</artifactId>
-			<version>1.0</version>
-		</dependency>
+			<version>1.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>BeardAch</artifactId>
+					<groupId>me.tehbeard</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>BeardStat</artifactId>
+					<groupId>com.tehbeard</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>-->
 		<dependency>
 			<groupId>de.hydrox.bukkit</groupId>
 			<artifactId>DroxPerms</artifactId>
@@ -268,6 +273,16 @@
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldguard</artifactId>
 			<version>5.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.tehbeard</groupId>
+			<artifactId>BeardStat</artifactId>
+			<version>0.6-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>tehbeard.annotate</groupId>
+			<artifactId>annotate</artifactId>
+			<version>1.1</version>
 		</dependency>
 	</dependencies>
 
@@ -350,6 +365,7 @@
 								<includes>
 									<include>me.tehbeard:utils</include>
 									<include>com.google.code.gson:gson</include>
+									<include>tehbeard.annotate:annotate</include>
 								</includes>
 							</artifactSet>
 							<relocations>

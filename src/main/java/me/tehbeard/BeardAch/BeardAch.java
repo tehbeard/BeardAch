@@ -19,8 +19,8 @@ import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorJSON;
-import me.tehbeard.BeardStat.BeardStat;
-import me.tehbeard.BeardStat.containers.PlayerStatManager;
+import com.tehbeard.BeardStat.BeardStat;
+import com.tehbeard.BeardStat.containers.PlayerStatManager;
 import me.tehbeard.utils.addons.AddonLoader;
 import me.tehbeard.utils.factory.ConfigurableFactory;
 
@@ -56,6 +56,7 @@ public class BeardAch extends JavaPlugin {
     /**
      * Load BeardAch
      */
+    @Override
     @SuppressWarnings("unchecked")
     public void onEnable() {
         self = this;
@@ -305,6 +306,7 @@ public class BeardAch extends JavaPlugin {
     /**
      * Unload BeardAch
      */
+    @Override
     public void onDisable() {
 
         achievementManager.database.flush();
