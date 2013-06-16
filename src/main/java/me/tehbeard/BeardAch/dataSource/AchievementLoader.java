@@ -106,6 +106,7 @@ public class AchievementLoader {
 		            if(achievements!=null){
 		                //Run postLoad() on all achievements and add them to manager if successful 
 		                for(Achievement a : achievements){
+		                    if(a==null){continue;}
 		                    if(a.postLoad()){
 		                        BeardAch.printDebugCon("Loading achievement " + a.getName());
 		                        BeardAch.self.getAchievementManager().addAchievement(a);
