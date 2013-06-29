@@ -67,8 +67,6 @@ public class AchievementLoader {
             BeardAch.printError("There is a problem with the syntax of " + file.toString(),e);
         } catch (FileNotFoundException e) {
             BeardAch.printError(file.toString() + " not found",e);
-        } catch (IOException e) {
-            BeardAch.printError("An error occured reading " + file.toString(),e);
         }
         return null;
 	}

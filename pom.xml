@@ -212,6 +212,10 @@
 			<url>http://dev.escapecraft.com/maven/</url>
 		</repository>
 
+		<repository>
+			<id>mcStats</id>
+			<url>http://repo.mcstats.org/content/repositories/public</url>
+		</repository>
 	</repositories>
 
 
@@ -284,6 +288,13 @@
 			<artifactId>annotate</artifactId>
 			<version>1.1</version>
 		</dependency>
+		
+				<dependency>
+			<groupId>org.mcstats.bukkit</groupId>
+			<artifactId>metrics</artifactId>
+			<version>R7</version>
+		</dependency>
+
 	</dependencies>
 
 

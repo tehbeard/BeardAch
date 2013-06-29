@@ -9,8 +9,6 @@ import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import me.tehbeard.BeardAch.Metrics.Graph;
-import me.tehbeard.BeardAch.Metrics.Plotter;
 import me.tehbeard.BeardAch.achievement.*;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
@@ -28,6 +26,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
+import org.mcstats.Metrics.Graph;
+import org.mcstats.Metrics.Plotter;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
@@ -202,17 +203,17 @@ public class BeardAch extends JavaPlugin {
                 SimplePlotter cr = new SimplePlotter("Custom Rewards");
                 ct.set(triggersMetric);
                 cr.set(rewardsMetric);
-                if(getStats()!=null){
-                    metrics.addCustomData(new Plotter("BeardStat installed") {
+                final String bsInstalled = "BeardStat " + (getStats()==null ? "not " : "") + "found";
+                    metrics.createGraph("BeardStat found").addPlotter(new Plotter(bsInstalled) {
 
-                        @Override
                         public int getValue() {
                             return 1;
                         }
+                        
+                        
                     });
-                }
-                metrics.addCustomData(ct);
-                metrics.addCustomData(cr);
+                metrics.createGraph("Custom triggers").addPlotter(ct);
+                metrics.createGraph("Custom rewards").addPlotter(cr);
 
                 //total achievements on server
                 SimplePlotter totalAchievments = new SimplePlotter("Total Achievements");

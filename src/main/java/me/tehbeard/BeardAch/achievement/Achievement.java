@@ -165,6 +165,11 @@ public class Achievement {
             player.sendMessage(BeardAch.colorise(BeardAch.self.getConfig().getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>",player.getName())));
             player.sendMessage(ChatColor.BLUE + descrip);
         }break;
+        case NONE:
+            BeardAch.printDebugCon("Achievement get! " + player +" , " + name);
+            break;
+        default:
+            break;
             
         }
         

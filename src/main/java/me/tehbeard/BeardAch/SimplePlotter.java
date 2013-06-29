@@ -1,5 +1,7 @@
 package me.tehbeard.BeardAch;
 
+import org.mcstats.Metrics;
+
 public class SimplePlotter extends Metrics.Plotter{
 
     int value = 0;
