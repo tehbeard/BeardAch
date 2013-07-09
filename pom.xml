@@ -240,7 +240,7 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.5.1-R0.2-SNAPSHOT</version>
+			<version>1.6.1-R0.1-SNAPSHOT</version>
 		</dependency>
 
 
@@ -276,7 +276,7 @@
 		<dependency>
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldguard</artifactId>
-			<version>5.7.3</version>
+			<version>5.7.6-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.tehbeard</groupId>
