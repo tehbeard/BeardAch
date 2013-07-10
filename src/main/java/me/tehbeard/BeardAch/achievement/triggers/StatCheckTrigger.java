@@ -54,7 +54,7 @@ public class StatCheckTrigger implements ITrigger {
         }
         else
         {
-            BeardStat.printCon("[PANIC] Attempting to use Stat trigger when BeardStat not loaded!!!");
+            BeardAch.printCon("[PANIC] Attempting to use Stat trigger when BeardStat not loaded!!!");
         }
         return false;
     }
