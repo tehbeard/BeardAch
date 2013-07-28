@@ -289,10 +289,11 @@
 			<version>1.2</version>
 		</dependency>
 		
-				<dependency>
+		<dependency>
 			<groupId>org.mcstats.bukkit</groupId>
 			<artifactId>metrics</artifactId>
 			<version>R7</version>
+			<scope>compile</scope>
 		</dependency>
 
 	</dependencies>
@@ -377,6 +378,7 @@
 									<include>me.tehbeard:utils</include>
 									<include>com.google.code.gson:gson</include>
 									<include>tehbeard.annotate:annotate</include>
+									<include>org.mcstats.bukkit:metrics</include>
 								</includes>
 							</artifactSet>
 							<relocations>
