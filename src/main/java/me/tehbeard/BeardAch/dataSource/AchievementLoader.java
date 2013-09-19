@@ -155,6 +155,7 @@ public class AchievementLoader {
 
 
 	//TODO: KILL THIS WITH FIRE IN 0.6
+	@SuppressWarnings("deprecation")
 	public static List<Achievement> loadOldConfigAchievements(){
 
 		List<Achievement> a = new ArrayList<Achievement>();
@@ -184,7 +185,7 @@ public class AchievementLoader {
 			boolean hidden = e.getBoolean("hidden",false);
 			BeardAch.printDebugCon("Loading achievement " + name);
 
-			@SuppressWarnings("deprecation")
+
 			Achievement ach = new Achievement(slug,name, descrip,broadcast,hidden);
 
 			//load triggers
