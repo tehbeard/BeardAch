@@ -253,21 +253,10 @@
 			<version>2.2.2</version>
 			<scope>compile</scope>
 		</dependency>
-		<!--<dependency>
-			<groupId>tehbeard.annotate</groupId>
-			<artifactId>annotate</artifactId>
-			<version>1.1</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>BeardAch</artifactId>
-					<groupId>me.tehbeard</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>BeardStat</artifactId>
-					<groupId>com.tehbeard</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>-->
+		<!--<dependency> <groupId>tehbeard.annotate</groupId> <artifactId>annotate</artifactId> 
+			<version>1.1</version> <exclusions> <exclusion> <artifactId>BeardAch</artifactId> 
+			<groupId>me.tehbeard</groupId> </exclusion> <exclusion> <artifactId>BeardStat</artifactId> 
+			<groupId>com.tehbeard</groupId> </exclusion> </exclusions> </dependency> -->
 		<dependency>
 			<groupId>de.hydrox.bukkit</groupId>
 			<artifactId>DroxPerms</artifactId>
@@ -288,7 +277,7 @@
 			<artifactId>annotate</artifactId>
 			<version>1.2</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.mcstats.bukkit</groupId>
 			<artifactId>metrics</artifactId>
@@ -397,30 +386,41 @@
 				</executions>
 			</plugin>
 			<plugin>
-			<groupId>org.bsc.maven</groupId>
-			<artifactId>maven-processor-plugin</artifactId>
-			<version>2.1.1</version>
-			<executions>
-			<execution>
-			<phase>generate-sources</phase>
-			<goals>
-			<goal>process</goal>
-			</goals>
-			</execution>
-			</executions>
-			<configuration>
-			<processors>
-			<processor>com.tehbeard.annotations.ConfigurableAnnotationProcessor</processor>
-			
-			</processors>
-			<outputDirectory>${project.build.directory}/generated-files</outputDirectory>
-			</configuration>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<version>2.1.1</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>process</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<processors>
+						<processor>com.tehbeard.annotations.ConfigurableAnnotationProcessor</processor>
+
+					</processors>
+					<outputDirectory>${project.build.directory}/generated-files</outputDirectory>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
 			</plugin>
 		</plugins>
 
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>

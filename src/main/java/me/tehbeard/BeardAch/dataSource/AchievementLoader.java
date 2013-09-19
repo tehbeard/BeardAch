@@ -78,19 +78,7 @@ public class AchievementLoader {
 			File file = new File(BeardAch.self.getDataFolder(),"ach.json");
 			file.createNewFile();
 			List<Achievement> achievements = loadAchievementsFromJSONFile(file);
-			if(achievements!=null){
-				//Run postLoad() on all achievements and add them to manager if successful 
-				for(Achievement a : achievements){
-					if(a.postLoad()){
-						BeardAch.printDebugCon("Loading achievement " + a.getName());
-						BeardAch.self.getAchievementManager().addAchievement(a);
-					}
-					else
-					{
-						BeardAch.printCon("Could not load " + a.getName());
-					}
-				}
-			}
+			processAchievements(achievements);
 			
 			File achDir = new File(BeardAch.self.getDataFolder(),"config");
 			if(achDir.isDirectory() && achDir.exists()){
@@ -101,20 +89,7 @@ public class AchievementLoader {
                     }
                 })){
 			        achievements = loadAchievementsFromJSONFile(new File(achDir,f));
-		            if(achievements!=null){
-		                //Run postLoad() on all achievements and add them to manager if successful 
-		                for(Achievement a : achievements){
-		                    if(a==null){continue;}
-		                    if(a.postLoad()){
-		                        BeardAch.printDebugCon("Loading achievement " + a.getName());
-		                        BeardAch.self.getAchievementManager().addAchievement(a);
-		                    }
-		                    else
-		                    {
-		                        BeardAch.printCon("Could not load " + a.getName());
-		                    }
-		                }
-		            }
+			        processAchievements(achievements);
 			    }
 			}
 
@@ -158,6 +133,23 @@ public class AchievementLoader {
 		} catch (IOException e) {
 			BeardAch.printError("An error occured reading ach.json",e);
 			e.printStackTrace();
+		}
+	}
+	
+	//Cycle each Achievement and postload as needed
+	private static void processAchievements(List<Achievement> achievements) {
+		if(achievements!=null){
+			//Run postLoad() on all achievements and add them to manager if successful 
+			for(Achievement a : achievements){
+				if(a.postLoad()){
+					BeardAch.printDebugCon("Loading achievement " + a.getName());
+					BeardAch.self.getAchievementManager().addAchievement(a);
+				}
+				else
+				{
+					BeardAch.printCon("Could not load " + a.getName());
+				}
+			}
 		}
 	}
 

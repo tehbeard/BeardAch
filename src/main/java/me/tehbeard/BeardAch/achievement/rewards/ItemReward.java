@@ -1,7 +1,5 @@
 package me.tehbeard.BeardAch.achievement.rewards;
 
-import java.util.HashMap;
-
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
