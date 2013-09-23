@@ -8,6 +8,27 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
   $scope.ui.pageStart   = 1;
   $scope.ui.perPage   = 10;
   $scope.ui.search      = "";
+  $scope.ui.triggerSelected = "";
+  $scope.ui.rewardSelected = "";
+
+  $scope.testFunc = function(){
+    alert("TEST");
+  }
+
+  $scope.ui.addTrigger = function(){
+    $scope.achievements[$scope.ui.editIndex].triggers.push({_type:$scope.ui.triggerSelected});
+  }
+
+  $scope.ui.addReward = function(){
+    $scope.achievements[$scope.ui.editIndex].rewards.push({_type:$scope.ui.rewardSelected});
+  }
+
+  $scope.remove_trigger = function(idx){
+    console.log(idx);
+    $scope.achievements[$scope.ui.editIndex].triggers.splice(idx,1);
+    $scope.$apply();
+  }
+
 
   $scope.ui.pages = function(){
   	return Math.ceil($filter('achsearch')($scope.achievements,$scope.ui.search).length / $scope.ui.perPage);

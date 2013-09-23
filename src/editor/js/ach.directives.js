@@ -2,7 +2,6 @@ angular.module('achDirectives',[]).directive('achReward', ['$compile','$template
   var linker = function(scope, element, attrs) {
 
     var html = $templateCache.get('reward.' + scope.entry._type);
-    console.log("ach-reward");
     element.html(html);
     element.replaceWith($compile(element.html())(scope));
 

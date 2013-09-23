@@ -28,6 +28,8 @@ function _generateTemplate(prefix,entry,tempCache){
 
 
   var html = "<h2>" + entry.name + "</h2>";
+  html+="<button ng-click='testFunc()'>remove</button>";
+  html+="$parent.$index : {{$parent.$index}}<br>";
   for(x in entry.fields){
     html += tempCache.get("partial.ele." + entry.fields[x].type)
     .replace(/\$\{label\}/g,entry.fields[x].name)
@@ -56,6 +58,7 @@ initConfig = function(data){
  <style type="text/css">
  .modal-body {
     max-height: 800px;
+    max-width: 800px;
 }
  </style>
 <!-- Partials for the trigger / reward forms to build off of -->
@@ -185,6 +188,7 @@ initConfig = function(data){
     <h3 id="myModalLabel">Edit achievement</h3>
   </div>
   <div class="modal-body form-horizontal">
+    <pre>{{achievements[ui.editIndex]}}</pre>
     <div class="control-group"><label class="control-label">id:</label><div class="controls"><input type="text" ng-model="achievements[ui.editIndex].slug"/></div></div>
     <div class="control-group"><label class="control-label">name:</label><div class="controls"><input type="text" ng-model="achievements[ui.editIndex].name"/></div></div>
     <div class="control-group"><label class="control-label">description:</label><div class="controls"><input type="text" ng-model="achievements[ui.editIndex].descrip"/></div></div>
@@ -196,14 +200,18 @@ initConfig = function(data){
     </select></div></div>
     <hr>
     <h3>Triggers</h3>
-    <div class="input-append"><select ng-model="ui.triggerSelected" ng-options="k as v for (k,v) in opttrigger"></select><button class="btn">Add</button></div>
+    <div class="input-append"><select ng-model="ui.triggerSelected" ng-options="k as v for (k,v) in opttrigger"></select><button class="btn" ng-click="ui.addTrigger()">Add</button></div>
     <!-- TODO: TRIGGER ADDER -->
-    <ach-trigger ng-repeat="trigger in achievements[ui.editIndex].triggers" entry="trigger"></ach-trigger>
-    <hr/>
+    <div ng-repeat="trigger in achievements[ui.editIndex].triggers" >
+      <ach-trigger entry="trigger"></ach-trigger>
+    </div>
+    <hr>
     <h3>Rewards</h3>
-    <div class="input-append"><select ng-model="ui.rewardSelected" ng-options="k as v for (k,v) in optreward"></select><button class="btn">Add</button></div>
+    <div class="input-append"><select ng-model="ui.rewardSelected" ng-options="k as v for (k,v) in optreward"></select><button class="btn" ng-click="ui.addReward()">Add</button></div>
     <!-- TODO: REWARD ADDER -->
-    <ach-reward ng-repeat="reward in achievements[ui.editIndex].rewards" entry="reward">{{reward | json}}</ach-reward>
+    <div  ng-repeat="reward in achievements[ui.editIndex].rewards" >
+      <ach-reward entry="reward">{{reward | json}}</ach-reward>
+    </div>
   </div>
   <div class="modal-footer">
   </div>
@@ -241,9 +249,5 @@ initConfig = function(data){
    <button class="btn btn-primary" ng-click="saveAsFile()">Save to file</button>
   </div>
 </div>
-
-<!-- OLD CODE -->
-<!--<script type="text/javascript" src="js/data-config.js"></script>-->
-
 </body>
 </html>
