@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BeardAch</title>
+  <!-- Bootstrap -->
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <style>
+  .achievements > .achievement:nth-child(odd){
+    background-color: #EEEEEE;
+  }
+  .achievement{
+    padding: 5px;
+    border: 1px solid black;
+  }
+  #output{
+    width: 90%;
+    height: 300px;
+  }
+  </style>
+</head>
+<body>
+
+  <div class="container" style="margin-top:20px">
+
+    <div class="row">
+      <div class="span2">
+        <ul class="nav nav-list">
+          <li class="nav-header">BeardAch Editor</li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Help</a></li>
+          <li><a href="#">Editor</a></li>
+          <li class="nav-header"><h5>Help documents</h5></li>
+          <li class="divider"></li>
+          <li class="nav-header">Triggers</li>
+          <li><a href="#">Achievement check</a></li>
+          <li class="nav-header">Rewards</li>
+          <li><a href="#">Command</a></li>
+          
+
+        </ul>
+
+      </div>
+      <div class="span10">
+        <div class="page" id="about">
+          <p class="lead">
+            Welcome to the BeardAch achievement editor.
+            <br/>
+            <button data-target="#loadModal" class="btn btn-success" data-toggle="modal"><i class="icon-folder-open icon-white"></i> Load config</button>
+             <!-- data-target="#saveModal" data-toggle="modal"-->
+            <button class="btn btn-success" id="saveach"><i class="icon-file icon-white"></i> Save config</button>
+            <button class="btn btn-primary" id="newach"><i class="icon-plus icon-white"></i> Add new achievement</button>
+            <input type="text" placeholder="filter achievements" id="search-ach"/>
+
+          </p>
+          <div class="achievements">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui-modal-container">
+    <div id="loadModal" class="modal fade hide" role="dialog" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h3 id="myModalLabel">Load Achievement Configuration</h3>
+      </div>
+      <div class="modal-body">
+        <input type="file" id="loadFile" title="Select JSON config to load">
+
+      </div>
+      <div class="modal-footer">
+        <button id="loadfileBtn" class="btn btn-primary" >Load it</button>
+      </div>
+    </div>
+
+     <div id="saveModal" class="modal fade hide" role="dialog" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h3 id="myModalLabel">Save Achievement Configuration</h3>
+      </div>
+      <div class="modal-body">
+        <textarea id="output">
+        </textarea>
+        <button class="btn btn-info" onclick="document.getElementById('output').select();">Select All</button>
+
+      </div>
+      <div class="modal-footer">
+        Future versions will instead provide a download button with a file dialog instead of copy/paste text area.
+      </div>
+    </div>
+
+
+    <div id="bootModal" class="modal fade hide" role="dialog" data-backdrop="static" data-keyboard="false">
+      <div class="modal-header">
+
+        <h3 id="myModalLabel">Initializing</h3>
+      </div>
+      <div class="modal-body">
+        <p>Loading BeardAch Achievement editor
+          <div class="progress progress-striped active">
+            <div id="boot-progress" class="bar" style="width: 0%;"></div>
+          </div>
+        </p>
+
+      </div>
+      <div class="modal-footer">
+        <span id="status">Initialising configuration</span>
+      </div>
+    </div>
+  </div>
+  <div class="hide trigger-container">
+  </div>
+  <div class="hide reward-container">
+  </div>
+  <div class="hide ach-UI">
+    <div class="achievement">
+      <h3>Achievement</h3>
+      <h4>General</h4>
+      <label>Slug</label><input type="text" data-key="slug" placeholder="ach_slug"/>
+      <label>Name</label><input type="text" data-key="name" placeholder="Achievement name"/>
+      <label>Description</label><input type="text" data-key="descrip" placeholder="Achievement Description"/>
+      <label>Hidden</label><input type="checkbox" data-key="hidden"/>
+      <label>Broadcast setting</label><select data-key="broadcast">
+      <option value="BROADCAST">Broadcast to all</option>
+      <option value="PERSON">Broadcast to person</option>
+      <option value="NONE">Don't broadcast</option>
+    </select>
+<hr>
+    <h4>Triggers</h4>
+    <select class="add-trigger">
+    </select>
+    <br/><button class="add-trigger-btn btn">Add</button>
+    <div id="triggers">
+
+    </div>
+
+    <hr>
+    <h4>Rewards</h4>
+    <select class="add-reward">
+    </select><br/><button class="add-reward-btn btn">Add</button>
+    <div id="rewards">
+
+    </div>
+    <br/>
+    <button class="btn btn-danger" onclick="deleteElement(this);"><i class="icon-remove icon-white"></i> Remove Achievement</button>
+  </div>
+
+
+</div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.file-input.js"></script>
+<script type="text/javascript" src="js/FileSaver.min.js"></script>
+<script type="text/javascript" src="js/interface.js"></script>
+<script type="text/javascript" src="js/data-config.js"></script>
+<script type="text/javascript" src="settings.js"></script>
+</body>
+</html>
