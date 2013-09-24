@@ -1,10 +1,11 @@
-package me.tehbeard.BeardAch.achievement.triggers;
+package me.tehbeard.BeardAch.achievement.triggers.env;
 
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 

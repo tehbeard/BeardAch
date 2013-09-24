@@ -1,4 +1,4 @@
-package me.tehbeard.BeardAch.achievement.triggers;
+package me.tehbeard.BeardAch.achievement.triggers.spatial;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import com.google.gson.annotations.Expose;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;

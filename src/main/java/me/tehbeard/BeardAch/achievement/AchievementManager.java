@@ -10,9 +10,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.tehbeard.BeardAch.BeardAch;
-import me.tehbeard.BeardAch.achievement.triggers.CuboidCheckTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.SpeedRunTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
+import me.tehbeard.BeardAch.achievement.triggers.spatial.CuboidCheckTrigger;
+import me.tehbeard.BeardAch.achievement.triggers.spatial.SpeedRunTrigger;
 import me.tehbeard.BeardAch.dataSource.AchievementLoader;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
 import me.tehbeard.BeardAch.dataSource.configurable.RunnableTime;
