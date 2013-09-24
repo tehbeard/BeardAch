@@ -181,7 +181,9 @@ public class BeardAch extends JavaPlugin {
         printCon("Writing editor settings");
         new File(getDataFolder(),"editor").mkdirs();
         try {
-			json.write(new File(getDataFolder(),"editor/settings.js"));
+            File settingsFile = new File(getDataFolder(),"editor/settings.js");
+            if(settingsFile.exists()){settingsFile.delete();}
+			json.write(settingsFile);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
