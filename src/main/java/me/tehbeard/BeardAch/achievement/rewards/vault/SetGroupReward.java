@@ -1,4 +1,4 @@
-package me.tehbeard.BeardAch.achievement.rewards;
+package me.tehbeard.BeardAch.achievement.rewards.vault;
 
 import net.milkbowl.vault.permission.Permission;
 
@@ -9,6 +9,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import com.google.gson.annotations.Expose;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 

@@ -1,6 +1,7 @@
-package me.tehbeard.BeardAch.achievement.rewards;
+package me.tehbeard.BeardAch.achievement.rewards.command;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 

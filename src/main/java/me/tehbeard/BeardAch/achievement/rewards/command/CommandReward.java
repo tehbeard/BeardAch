@@ -1,34 +1,31 @@
-package me.tehbeard.BeardAch.achievement.rewards;
+package me.tehbeard.BeardAch.achievement.rewards.command;
 
 
-import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 
-@Configurable(tag="promote",name="(DroxPerms) Promote along track")
-public class DroxTrackReward implements IReward{
+@Configurable(tag="comm",name="Execute console command")
+public class CommandReward implements IReward{
+
     @Expose
-    @EditorField(alias="Track to promote along")
-	String track = "";
+    @EditorField(alias="Command")
+	String command = "";
 	public void configure(Achievement Ach,String config) {
+		command = config;
 		
-		track = config;
-	
 	}
 
-	
 	public void giveReward(Player player) {
-		if(BeardAch.droxAPI!=null){
-			BeardAch.droxAPI.promotePlayer(player.getName(), track);
-			BeardAch.printDebugCon("Played Promoted");
-		}
+		
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(),command.replace("<PLAYER>", player.getName()));
 	}
-
 
     public void configure(Achievement ach) {
         

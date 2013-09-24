@@ -1,4 +1,4 @@
-package me.tehbeard.BeardAch.achievement.rewards;
+package me.tehbeard.BeardAch.achievement.rewards.player;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import com.google.gson.annotations.Expose;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
+import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
