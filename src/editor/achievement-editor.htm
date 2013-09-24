@@ -2,103 +2,105 @@
 <html ng-app="achMain">
 <head>
   <!-- Load base libraries -->
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-<!--<script type="text/javascript" src="bootstrap/js/bootstrap.file-input.js"></script>-->
-<script type="text/javascript" src="js/FileSaver.min.js"></script>
-<script type="text/javascript" src="js/angular.min.js"></script>
-<script type="text/javascript" src="settings.js"></script>
-<script type="text/javascript" src="js/ach.directives.js"></script>
-<script type="text/javascript" src="js/ach.main.js"></script>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+  <!--<script type="text/javascript" src="bootstrap/js/bootstrap.file-input.js"></script>-->
+  <script type="text/javascript" src="js/FileSaver.min.js"></script>
+  <script type="text/javascript" src="js/angular.min.js"></script>
+  <script type="text/javascript" src="settings.js"></script>
+  <script type="text/javascript" src="js/ach.directives.js"></script>
+  <script type="text/javascript" src="js/ach.main.js"></script>
 
 
-<!-- Loads BeardAch trigger/reward definitions into the application  -->
-<!-- Doesn't seem to want to work from external file :/ -->
-<script type="text/javascript">
-function _generateTemplate(prefix,entry,tempCache){
-  var templateName = prefix + "." + entry.type;
+  <!-- Loads BeardAch trigger/reward definitions into the application  -->
+  <!-- Doesn't seem to want to work from external file :/ -->
+  <script type="text/javascript">
+  function _generateTemplate(prefix,entry,tempCache){
+    var templateName = prefix + "." + entry.type;
 
-  $scope = angular.element("body").scope();
+    $scope = angular.element("body").scope();
 
-  if($scope["opt" + prefix] == undefined){
-    $scope["opt" + prefix] = {};
-  }
-  $scope["opt" + prefix][entry.type] = entry.name;
-  $scope.$apply();
+    if($scope["opt" + prefix] == undefined){
+      $scope["opt" + prefix] = {};
+    }
+    $scope["opt" + prefix][entry.type] = entry.name;
+    $scope.$apply();
 
 
-  var html = "<h2>" + entry.name + "</h2>";
-  html+="<button ng-click='testFunc()'>remove</button>";
-  html+="$parent.$index : {{$parent.$index}}<br>";
-  for(x in entry.fields){
-    html += tempCache.get("partial.ele." + entry.fields[x].type)
-    .replace(/\$\{label\}/g,entry.fields[x].name)
-    .replace(/\$\{model\.key\}/g,"entry." + entry.fields[x].key);
-  }
-  html+="<hr>";
-  console.log("template created: " + templateName);
-  tempCache.put(templateName,html);
-}
-
-initConfig = function(data){
-  tempCache = angular.element("body").injector().get("$templateCache");
-  for(x in data.triggers){
-    _generateTemplate("trigger",data.triggers[x],tempCache);
+    var html = "";
+    for(x in entry.fields){
+      html += tempCache.get("partial.ele." + entry.fields[x].type)
+      .replace(/\$\{label\}/g,entry.fields[x].name)
+      .replace(/\$\{model\.key\}/g,"entry." + entry.fields[x].key);
+    }
+    html+="<hr>";
+    console.log("template created: " + templateName);
+    tempCache.put(templateName,html);
   }
 
-  for(x in data.rewards){
-    _generateTemplate("reward",data.rewards[x],tempCache);
+  initConfig = function(data){
+    tempCache = angular.element("body").injector().get("$templateCache");
+    for(x in data.triggers){
+      _generateTemplate("trigger",data.triggers[x],tempCache);
+    }
+
+    for(x in data.rewards){
+      _generateTemplate("reward",data.rewards[x],tempCache);
+    }
   }
-}
-</script>
+  </script>
 
   <title>BeardAch::Editor</title>
   <!-- Bootstrap -->
- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
- <style type="text/css">
- .modal-body {
-    max-height: 800px;
-    max-width: 800px;
-}
- </style>
-<!-- Partials for the trigger / reward forms to build off of -->
-<script type="text/ng-template" id="partial.ele.text">
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <!-- custom styling -->
+  <style type="text/css">
+  .ach-segement {
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    margin-bottom: 2px;
+    padding: 3px;
+  }
+  </style>
+
+  <!-- Partials for the trigger / reward forms to build off of -->
+  <script type="text/ng-template" id="partial.ele.text">
   <div class="input-prepend">
   <label class="add-on">${label}</label>
   <input type="text" ng-model="${model.key}"/>
   </div>
-</script>
-<script type="text/ng-template" id="partial.ele.bool">
+  </script>
+  <script type="text/ng-template" id="partial.ele.bool">
   <div class="input-prepend">
   <label class="add-on">${label}</label>
   <input type="checkbox" ng-model="${model.key}"/>
   </div>
-</script>
-<script type="text/ng-template" id="partial.ele.location">
+  </script>
+  <script type="text/ng-template" id="partial.ele.location">
   <div class="input-prepend input-append"><label class="add-on">${label}</label>
-    <span class="add-on">World</span><input type="text" ng-model="${model.key}.world"/>
-    <span class="add-on">X</span><input class="input-mini" type="text" ng-model="${model.key}.x"/>
-    <span class="add-on">Y</span><input class="input-mini" type="text" ng-model="${model.key}.y"/>
-    <span class="add-on">Z</span><input class="input-mini" type="text" ng-model="${model.key}.z"/>
+  <span class="add-on">World</span><input type="text" ng-model="${model.key}.world"/>
+  <span class="add-on">X</span><input class="input-mini" type="text" ng-model="${model.key}.x"/>
+  <span class="add-on">Y</span><input class="input-mini" type="text" ng-model="${model.key}.y"/>
+  <span class="add-on">Z</span><input class="input-mini" type="text" ng-model="${model.key}.z"/>
   </div>
-</script>
-<script type="text/ng-template" id="partial.ele.cuboid">
+  </script>
+  <script type="text/ng-template" id="partial.ele.cuboid">
   <div class="input-prepend input-append"><label class="add-on">${label}</label>
-    <span class="add-on">World</span><input type="text" ng-model="${model.key}.world"/>
+  <span class="add-on">World</span><input type="text" ng-model="${model.key}.world"/>
   </div>
   <div class="input-prepend input-append">
-    <span class="add-on">x1</span><input class="input-mini" type="text" ng-model="${model.key}.v1.x"/>
-    <span class="add-on">y1</span><input class="input-mini" type="text" ng-model="${model.key}.v1.y"/>
-    <span class="add-on">z1</span><input class="input-mini" type="text" ng-model="${model.key}.v1.z"/>
+  <span class="add-on">x1</span><input class="input-mini" type="text" ng-model="${model.key}.v1.x"/>
+  <span class="add-on">y1</span><input class="input-mini" type="text" ng-model="${model.key}.v1.y"/>
+  <span class="add-on">z1</span><input class="input-mini" type="text" ng-model="${model.key}.v1.z"/>
   </div>
   <div class="input-prepend input-append">
-    <span class="add-on">x2</span><input class="input-mini" type="text" ng-model="${model.key}.v2.x"/>
-    <span class="add-on">y2</span><input class="input-mini" type="text" ng-model="${model.key}.v2.y"/>
-    <span class="add-on">z2</span><input class="input-mini" type="text" ng-model="${model.key}.v2.z"/>
+  <span class="add-on">x2</span><input class="input-mini" type="text" ng-model="${model.key}.v2.x"/>
+  <span class="add-on">y2</span><input class="input-mini" type="text" ng-model="${model.key}.v2.y"/>
+  <span class="add-on">z2</span><input class="input-mini" type="text" ng-model="${model.key}.v2.z"/>
   </div>
-</script>
+  </script>
 
-<script type="text/ng-template" id="newAchJSON">
+  <script type="text/ng-template" id="newAchJSON">
   {
     "slug": "",
     "name": "",
@@ -108,7 +110,7 @@ initConfig = function(data){
     "triggers": [],
     "rewards": []
   }
-</script>
+  </script>
 <!-- 
 <script type="text/ng-template" id="partial."></script>
 <script type="text/ng-template" id="partial."></script>
@@ -116,138 +118,143 @@ initConfig = function(data){
 
 </head>
 <body ng-controller="achList">
-<div class="container">
-<div class="row">
-<div class="span10">
-<!-- App Start -->
-<h1>BeardAch Editor</h1>
-<div class="form-horizontal" style="margin:auto">
-  <button class="btn" ng-click="load()">Load</button>
-  <button class="btn" ng-click="save()">Save</button>
-  <button class="btn" ng-click="newAch()" class="btn">add</button>
-  <input type="text" placeholder="filter list" ng-model="ui.search" ng-change="ui.pageStart=1">
-  <div class="input-prepend input-append">
-  <button class="btn btn-info" ng-click="ui.dec()"><<</button>
-  <input class="input-mini" type="text" ng-model="ui.pageStart"/>
-  <span class="add-on">{{ui.pages()}}</span>
-  <button class="btn btn-info" ng-click="ui.inc()">>></button>
-  <select class="input-mini" type="text" ng-model="ui.perPage">
-  <option>5</option>
-  <option>10</option>
-  <option>20</option>
-  <option>50</option>
-  <option>100</option>
-  </select>
-  </div>
-</div>
-<table class="table table-striped">
-<thead><th>Slug</th><th>Name</th><th>Description</th><th>Edit</th><th>Remove</th></thead>
-<tbody>
-<tr ng-repeat="ach in achievements | achsearch:ui.search | startat:((ui.pageStart-1)*ui.perPage) | limitTo:ui.perPage">
-<td>{{ach.slug}}</td>
-<td>{{ach.name}}</td>
-<td>{{ach.descrip}}</td>
-<td><button ng-click="edit($index)" class="btn">edit</button></td>
-<td><button ng-click="remove($index)" class="btn">remove</button></td>
-</tr>
-</tbody>
-</table>
-<pre>
-{{opttrigger | json}}
-</pre>
-
-</div>
-<!-- App End -->
-</div>
-</div>
-
-
-<!-- Modal -->
-<div id="modalConfirmDelete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Confirm delete achievement</h3>
-  </div>
-  <div class="modal-body">
-    <p>Are you sure you wish to delete achievement <br/>
-      ID: {{achievements[ui.deleteIndex].slug}}<br/>
-      Name: {{achievements[ui.deleteIndex].name}}</p>
-    
-
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal">!ABORT!</button>
-    <button ng-click="_actualDelete()" class="btn btn-danger">Corfirm</button>
-  </div>
-</div>
-
-<!-- Editor window -->
-<div id="modalEdit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Edit achievement</h3>
-  </div>
-  <div class="modal-body form-horizontal">
-    <pre>{{achievements[ui.editIndex]}}</pre>
-    <div class="control-group"><label class="control-label">id:</label><div class="controls"><input type="text" ng-model="achievements[ui.editIndex].slug"/></div></div>
-    <div class="control-group"><label class="control-label">name:</label><div class="controls"><input type="text" ng-model="achievements[ui.editIndex].name"/></div></div>
-    <div class="control-group"><label class="control-label">description:</label><div class="controls"><input type="text" ng-model="achievements[ui.editIndex].descrip"/></div></div>
-    <div class="control-group"><label class="control-label">Hidden:</label><div class="controls"><input type="checkbox" ng-model="achievements[ui.editIndex].hidden"/></div></div>
-    <div class="control-group"><label class="control-label">broadcast:</label><div class="controls"><select ng-model="achievements[ui.editIndex].broadcast">
-      <option value="BROADCAST">all</option>
-      <option value="PERSON">person</option>
-      <option value="NONE">noone</option>
-    </select></div></div>
-    <hr>
-    <h3>Triggers</h3>
-    <div class="input-append"><select ng-model="ui.triggerSelected" ng-options="k as v for (k,v) in opttrigger"></select><button class="btn" ng-click="ui.addTrigger()">Add</button></div>
-    <!-- TODO: TRIGGER ADDER -->
-    <div ng-repeat="trigger in achievements[ui.editIndex].triggers" >
-      <ach-trigger entry="trigger"></ach-trigger>
+  <!-- App Start -->
+  <div class="container">
+    <div class="row">
+      <div class="span10">
+        <h1>BeardAch Editor</h1>
+      </div>
     </div>
-    <hr>
-    <h3>Rewards</h3>
-    <div class="input-append"><select ng-model="ui.rewardSelected" ng-options="k as v for (k,v) in optreward"></select><button class="btn" ng-click="ui.addReward()">Add</button></div>
-    <!-- TODO: REWARD ADDER -->
-    <div  ng-repeat="reward in achievements[ui.editIndex].rewards" >
-      <ach-reward entry="reward">{{reward | json}}</ach-reward>
+
+    <div class="row" ng-show="ui.editIndex == -1 ">
+      <div class="span10">
+        <div class="form-horizontal" style="margin:auto">
+          <button class="btn" ng-click="load()">Load</button>
+          <button class="btn" ng-click="save()">Save</button>
+          <button class="btn" ng-click="newAch()" class="btn">add</button>
+          <input type="text" placeholder="filter list" ng-model="ui.search" ng-change="ui.pageStart=1">
+          <div class="input-prepend input-append">
+            <button class="btn btn-info" ng-click="ui.dec()"><<</button>
+            <input class="input-mini" type="text" ng-model="ui.pageStart"/>
+            <span class="add-on">{{ui.pages()}}</span>
+            <button class="btn btn-info" ng-click="ui.inc()">>></button>
+            <select class="input-mini" type="text" ng-model="ui.perPage">
+              <option>5</option>
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+              <option>100</option>
+            </select>
+          </div>
+        </div>    
+        <table class="table table-striped">
+          <thead><th>Slug</th><th>Name</th><th>Description</th><th>Edit</th><th>Remove</th></thead>
+          <tbody>
+            <tr ng-repeat="ach in achievements | achsearch:ui.search | startat:((ui.pageStart-1)*ui.perPage) | limitTo:ui.perPage">
+              <td>{{ach.slug}}</td>
+              <td>{{ach.name}}</td>
+              <td>{{ach.descrip}}</td>
+              <td><button ng-click="edit(ach)" class="btn">edit</button></td>
+              <td><button ng-click="remove(ach)" class="btn">remove</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- App End -->
+    </div>
+
+    <!-- Editor window -->
+    <div class="row" ng-show="ui.editIndex != -1">
+      <div id="editor" class="span10">
+        <a ng-click="ui.editIndex = -1">Return to achievement list</a>
+        <h3 id="myModalLabel">Edit achievement</h3>
+        <!--<pre>{{achievements[ui.editIndex]}}</pre>-->
+        <form class="form form-horizontal">
+        <div class="control-group"><label class="control-label">id:</label><div class="controls"><input type="text" ng-model="achievements[ui.editIndex].slug"/></div></div>
+        <div class="control-group"><label class="control-label">name:</label><div class="controls"><input type="text" ng-model="achievements[ui.editIndex].name"/></div></div>
+        <div class="control-group"><label class="control-label">description:</label><div class="controls"><input type="text" ng-model="achievements[ui.editIndex].descrip"/></div></div>
+        <div class="control-group"><label class="control-label">Hidden:</label><div class="controls"><input type="checkbox" ng-model="achievements[ui.editIndex].hidden"/></div></div>
+        <div class="control-group"><label class="control-label">broadcast:</label><div class="controls"><select ng-model="achievements[ui.editIndex].broadcast">
+          <option value="BROADCAST">all</option>
+          <option value="PERSON">person</option>
+          <option value="NONE">noone</option>
+        </select></div></div>
+        </form>
+        <hr>
+        <h3>Triggers</h3>
+        <div class="input-append"><select ng-model="ui.triggerSelected" ng-options="k as v for (k,v) in opttrigger"></select><button class="btn" ng-click="ui.addTrigger()">Add</button></div>
+        <div ng-repeat="trigger in achievements[ui.editIndex].triggers" class="ach-segement">
+          <div class="input-append">
+          <div class="add-on btn-large"><b>{{opttrigger[trigger._type]}}</b></div><button class="btn btn-danger" ng-click='remItem(achievements[ui.editIndex].triggers,$index)'>remove</button>
+          </div>
+          <ach-trigger entry="trigger"></ach-trigger>
+        </div>
+        <hr>
+        <h3>Rewards</h3>
+          <div class="input-append"><select ng-model="ui.rewardSelected" ng-options="k as v for (k,v) in optreward"></select><button class="btn" ng-click="ui.addReward()">Add</button></div>
+          <div ng-repeat="reward in achievements[ui.editIndex].rewards" class="ach-segement" >
+            <div class="input-append">
+              <div class="add-on btn-large"><b>{{optreward[reward._type]}}</b></div><button class="btn btn-danger" ng-click='remItem(achievements[ui.editIndex].rewards,$index)'>remove</button>
+            </div>
+            <ach-reward entry="reward">{{reward | json}}</ach-reward>
+          </div>
+      </div>
     </div>
   </div>
-  <div class="modal-footer">
-  </div>
-</div>
 
-<!-- Load window -->
-<div id="modalLoad" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Edit achievement</h3>
-  </div>
-  <div class="modal-body">
-   <input type="file" id="loadFile" title="Select JSON config to load">
 
-  </div>
-  <div class="modal-footer">
-    <button class="btn" ng-click="loadFromFile('#loadFile')">Load</button>
-  </div>
-</div>
+  <!-- Modal -->
+  <div id="modalConfirmDelete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Confirm delete achievement</h3>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you wish to delete achievement <br/>
+        ID: {{achievements[ui.deleteIndex].slug}}<br/>
+        Name: {{achievements[ui.deleteIndex].name}}</p>
 
-<!-- save window -->
-<div id="modalSave" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Save achievements</h3>
-  </div>
-  <div class="modal-body">
-    <h4>Click button to save as file or copy textarea below.</h4>
-   <textarea readonly rows="15" cols="240" style="width:480px;height:320px">
-    {{achievements | json}}
-   </textarea>
 
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal">!ABORT!</button>
+        <button ng-click="_actualDelete()" class="btn btn-danger">Corfirm</button>
+      </div>
+    </div>
+
+
+
+    <!-- Load window -->
+    <div id="modalLoad" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Edit achievement</h3>
+      </div>
+      <div class="modal-body">
+       <input type="file" id="loadFile" title="Select JSON config to load">
+
+     </div>
+     <div class="modal-footer">
+      <button class="btn" ng-click="loadFromFile('#loadFile')">Load</button>
+    </div>
   </div>
-  <div class="modal-footer">
-   <button class="btn btn-primary" ng-click="saveAsFile()">Save to file</button>
-  </div>
-</div>
+
+  <!-- save window -->
+  <div id="modalSave" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Save achievements</h3>
+    </div>
+    <div class="modal-body">
+      <h4>Click button to save as file or copy textarea below.</h4>
+      <textarea readonly rows="15" cols="240" style="width:480px;height:320px">
+        {{achievements | json}}
+      </textarea>
+
+    </div>
+    <div class="modal-footer">
+     <button class="btn btn-primary" ng-click="saveAsFile()">Save to file</button>
+   </div>
+ </div>
 </body>
 </html>

@@ -23,10 +23,8 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
     $scope.achievements[$scope.ui.editIndex].rewards.push({_type:$scope.ui.rewardSelected});
   }
 
-  $scope.remove_trigger = function(idx){
-    console.log(idx);
-    $scope.achievements[$scope.ui.editIndex].triggers.splice(idx,1);
-    $scope.$apply();
+  $scope.remItem = function(list,idx){
+    list.splice(idx,1);
   }
 
 
@@ -52,19 +50,20 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
 
   $scope.newAch = function(){
   	$scope.achievements.unshift(JSON.parse($templateCache.get('newAchJSON')));
-  	$scope.achievements[0].slug = "" + $scope.achievements.length;
+  	$scope.achievements[0].slug = "ach_" + $scope.achievements.length;
+    $scope.ui.editIndex = 0;
   }
 
   /*
   Show the remove modal
   */
-  $scope.remove = function(idx){
-  	$scope.ui.deleteIndex = idx;
+  $scope.remove = function(ach){
+  	$scope.ui.deleteIndex = $scope.achievements.indexOf(ach);
   	$("#modalConfirmDelete").modal('show');
   }
 
-  $scope.edit = function(idx){
-  	$scope.ui.editIndex = idx;
+  $scope.edit = function(ach){
+    $scope.ui.editIndex = $scope.achievements.indexOf(ach);
   	$("#modalEdit").modal('show');
   }
 
