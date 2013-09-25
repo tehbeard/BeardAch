@@ -11,7 +11,6 @@
   <script type="text/javascript" src="js/ach.directives.js"></script>
   <script type="text/javascript" src="js/ach.main.js"></script>
 
-
   <!-- Loads BeardAch trigger/reward definitions into the application  -->
   <!-- Doesn't seem to want to work from external file :/ -->
   <script type="text/javascript">
@@ -25,7 +24,6 @@
     }
     $scope["opt" + prefix][entry.type] = entry.name;
     $scope.$apply();
-
 
     var html = "";
     for(x in entry.fields){
@@ -100,6 +98,7 @@
   </div>
   </script>
 
+  <!-- Default achievement JSON -->
   <script type="text/ng-template" id="newAchJSON">
   {
     "slug": "",

@@ -24,7 +24,9 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
   }
 
   $scope.remItem = function(list,idx){
-    list.splice(idx,1);
+    if(confirm("Really delete this item?")){
+      list.splice(idx,1);
+    }
   }
 
 
