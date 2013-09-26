@@ -259,8 +259,8 @@ public class SqlDataSource implements IDataSource{
 
     public void dumpFancy() {
         try {
-            conn.prepareStatement("DELETE FROM `ach_map`").execute();
-            PreparedStatement fancyStat = conn.prepareStatement("INSERT INTO `ach_map`  values (?,?,?)");
+            //conn.prepareStatement("DELETE FROM `ach_map`").execute();
+            PreparedStatement fancyStat = conn.prepareStatement("INSERT IGNORE INTO `ach_map` values (?,?,?)");
 
             fancyStat.clearBatch();
 
