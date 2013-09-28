@@ -4,6 +4,10 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
+
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
@@ -14,26 +18,32 @@ import com.tehbeard.BeardStat.containers.PlayerStatManager;
  * @author James
  *
  */
+@ComponentHelpDescription(description = "Triggers if statistic is between two values", name = "Stat within boundaries", type = ComponentType.TRIGGER)
 @Configurable(tag="statwithin",name="Stat within boundaries")
 public class StatWithinTrigger implements ITrigger {
 
 
+    @ComponentValueDescription(description="domain to check, for the regular stats use default as the value")
     @Expose
     @EditorField(alias="Domain")
     String domain = "default";
+    @ComponentValueDescription(description = "World to check stats for (* matches all worlds)")
     @Expose
     @EditorField(alias="World")
     String world = "*";
-
+    @ComponentValueDescription(description = "statistic category to check")
     @Expose
     @EditorField(alias="Category")
     String cat;
+    @ComponentValueDescription(description = "Statistic name to check")
     @Expose
-    @EditorField(alias="statistic")
+    @EditorField(alias="Statistic")
     String stat;
+    @ComponentValueDescription(description = "Threshold statistic must equal or greater than")
     @Expose
     @EditorField(alias="Lower bound threshold")
     int lowerThreshold;
+    @ComponentValueDescription(description = "Threshold statistic must equal or be less than")
     @Expose
     @EditorField(alias="Upper bound threshold")
     int upperThreshold;

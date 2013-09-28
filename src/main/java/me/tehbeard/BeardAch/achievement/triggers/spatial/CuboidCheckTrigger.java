@@ -8,8 +8,10 @@ import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 import me.tehbeard.utils.cuboid.Cuboid;
-
 
 import org.bukkit.entity.Player;
 
@@ -20,10 +22,12 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
+@ComponentHelpDescription(description = "Is player inside an area", name = "Cuboid", type = ComponentType.TRIGGER)
 @Configurable(tag="cuboid",name="cuboid")
 public class CuboidCheckTrigger implements ITrigger {
 
 
+    @ComponentValueDescription(description="Area to check")
     @Expose
     @EditorField(alias="cuboid",type=EditorFieldType.cuboid)
 	private Cuboid cuboid = new Cuboid();

@@ -8,21 +8,30 @@ import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 import me.tehbeard.utils.cuboid.Cuboid;
 
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 //TODO: Redo as worldguard based
+@ComponentHelpDescription(description = "Triggers if player gets between two points within the given time", name = "Speed run", type = ComponentType.TRIGGER)
 @Configurable(tag="speedrun",name="Speed run")
 public class SpeedRunTrigger implements ITrigger {
 
+    @ComponentValueDescription(description="Area player enters to start cuboid. NOTE: Entry into this area starts the timer, so for race areas with gates, place the cuboid immediately after the starting gate")
     @Expose
     @EditorField(alias="start cuboid",type=EditorFieldType.cuboid)
     private Cuboid startCuboid = new Cuboid();
+    
+    @ComponentValueDescription(description="Area player must enter to finish the race")
     @Expose
     @EditorField(alias="end cuboid",type=EditorFieldType.cuboid)
     private Cuboid endCuboid = new Cuboid();
+    
+    @ComponentValueDescription(description="Time player must beat in order to trigger this achievement")
     @Expose
     @EditorField(alias="time to beat (seconds)")
     long timing = 0L;

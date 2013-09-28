@@ -18,12 +18,15 @@ import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 
 @Configurable(tag="interact",name="Click block at location")
-
+@ComponentHelpDescription(description = "Player clicks a block", name = "Click block", type = ComponentType.TRIGGER)
 public class InteractTrigger implements ITrigger, Listener {
 
-    
+    @ComponentValueDescription(description="Block location to be clicked")
     @Expose
     @EditorField(alias="Block to interact",type=EditorFieldType.location)
     private Location l;

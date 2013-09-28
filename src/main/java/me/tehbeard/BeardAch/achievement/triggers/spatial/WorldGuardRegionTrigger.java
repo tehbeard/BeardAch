@@ -5,6 +5,9 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -19,13 +22,17 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
+@ComponentHelpDescription(description = "Player inside a worldGuard region", name = "WorldGuard region", type = ComponentType.TRIGGER,dependencies="WorldGuard")
 @Configurable(tag="wgregion",name="(WorldGuard) Inside region")
 public class WorldGuardRegionTrigger implements ITrigger,Listener{
 
     private RegionManager rm;
+    
+    @ComponentValueDescription(description = "name of region")
     @Expose
     @EditorField(alias="Region name")
     private String region = "";
+    @ComponentValueDescription(description = "name of world")
     @Expose
     @EditorField(alias="World name")
     private String world = "";

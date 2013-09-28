@@ -10,6 +10,9 @@ import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 import me.tehbeard.utils.cuboid.Cuboid;
 
 import org.bukkit.entity.Player;
@@ -25,13 +28,15 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
+@ComponentHelpDescription(description="Player stays in an area for a certain amount of time. Timer resets when a player walks out the area",name="King of the hill",type=ComponentType.TRIGGER)
 @Configurable(tag="koth",name="King of the hill")
 public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
 
-
+    @ComponentValueDescription(description="Area player must be inside of")
     @Expose
     @EditorField(alias="cuboid",type=EditorFieldType.cuboid)
     private Cuboid cuboid = new Cuboid();
+    @ComponentValueDescription(description="Time inside area")
     @Expose
     @EditorField(alias="Time inside hill(seconds)")
     private int time = 0;
