@@ -10,6 +10,9 @@ import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 
 import org.bukkit.entity.Player;
 
@@ -22,12 +25,15 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
+@ComponentHelpDescription(description = "Counts number of achievements with a specific id prefix", name = "Achievement count", type = ComponentType.TRIGGER)
 @Configurable(tag="achcount",name="Achievement count")
 public class AchCountTrigger implements ITrigger {
 
+    @ComponentValueDescription(description="Amount of achievements player must exceed, (Triggers if count > this value)")
     @Expose
     @EditorField(alias="achievement count threshold")
 	int threshold;
+    @ComponentValueDescription(description="The prefix of the ids of achievements to count",examples={"discovery_","pvpArena"})
     @Expose
     @EditorField(alias="achievement slug prefix")
 	String prefix;
@@ -42,7 +48,7 @@ public class AchCountTrigger implements ITrigger {
 	}
 
 	public boolean checkAchievement(Player player) {
-		//if player has an acheivement
+		//if player has an achievement
 		List<AchievementPlayerLink> achs = BeardAch.self.getAchievementManager().getAchievements(player.getName());
 		int count = 0;
 		if(achs !=null){

@@ -9,6 +9,9 @@ import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 
 import org.bukkit.entity.Player;
 
@@ -19,9 +22,11 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
+@ComponentHelpDescription(description = "Triggers only if the player does not have this achievement", name = "Does not have achievement", type = ComponentType.TRIGGER)
 @Configurable(tag="noach",name="Does not have achievement")
 public class NoAchCheckTrigger implements ITrigger {
 
+    @ComponentValueDescription(description="achievement slug to check for")
     @Expose
     @EditorField(alias="achievement slug")
 	String ach;

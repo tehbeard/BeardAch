@@ -12,6 +12,7 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
 import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 
 import org.bukkit.entity.Player;
 
@@ -26,6 +27,7 @@ import com.google.gson.annotations.Expose;
 @Configurable(tag="ach",name="has achievement")
 public class AchCheckTrigger implements ITrigger {
 
+    @ComponentValueDescription(description="The achievement id (slug) to check for")
     @Expose
     @EditorField(alias="achievement slug")
 	String ach;

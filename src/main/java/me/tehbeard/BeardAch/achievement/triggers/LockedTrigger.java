@@ -4,6 +4,8 @@ package me.tehbeard.BeardAch.achievement.triggers;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
 
 import org.bukkit.entity.Player;
 
@@ -12,6 +14,7 @@ import org.bukkit.entity.Player;
  * @author James
  *
  */
+@ComponentHelpDescription(description = "Locks an achievement ensuring it cannot be triggered", name = "Lock Achievement", type = ComponentType.TRIGGER)
 @Configurable(tag="locked",name="Lock this achievement")
 public class LockedTrigger implements ITrigger {
 
