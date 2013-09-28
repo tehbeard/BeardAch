@@ -11,7 +11,10 @@
     <fileSet>
       <directory>src/editor</directory>
       <outputDirectory>/</outputDirectory>
-      
+  </fileSet>
+  <fileSet>
+     <directory>${project.build.directory}/generated-files/editor</directory>
+     <outputDirectory>/</outputDirectory>
   </fileSet>
 </fileSets>
  </assembly>

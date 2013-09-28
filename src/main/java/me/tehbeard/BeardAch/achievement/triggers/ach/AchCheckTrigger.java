@@ -10,6 +10,8 @@ import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
 
 import org.bukkit.entity.Player;
 
@@ -20,6 +22,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
+@ComponentHelpDescription(description = "Checks if the player has an achievement", name = "Achievement check", type = ComponentType.TRIGGER)
 @Configurable(tag="ach",name="has achievement")
 public class AchCheckTrigger implements ITrigger {
 

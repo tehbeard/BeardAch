@@ -91,7 +91,7 @@
 		<dependency>
 			<groupId>tehbeard.annotate</groupId>
 			<artifactId>annotate</artifactId>
-			<version>1.2</version>
+			<version>1.3-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -216,7 +216,7 @@
 				<configuration>
 					<processors>
 						<processor>com.tehbeard.annotations.ConfigurableAnnotationProcessor</processor>
-
+						<processor>com.tehbeard.annotations.BeardAchHelpProcessor</processor>
 					</processors>
 					<outputDirectory>${project.build.directory}/generated-files</outputDirectory>
 				</configuration>
