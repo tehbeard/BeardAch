@@ -12,7 +12,11 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
 
+
+@ComponentHelpDescription(description = "Sets the group of a player using vault, \\n Exact behaviour will depend on the permissions plugin, consult your permissions plugin as needed. \\n Should expected behaviour not occur, consider using the execute console command reward instead.", name = "give money", type = ComponentType.REWARD,dependencies={"Vault","Permissions plugin that works with Vault"})
 @Configurable(tag="vaultaddgroup",name="(Vault) add/set group")
 public class SetGroupReward implements IReward {
     

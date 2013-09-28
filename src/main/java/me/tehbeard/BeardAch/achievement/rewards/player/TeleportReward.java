@@ -11,7 +11,10 @@ import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
 
+@ComponentHelpDescription(description = "Teleports a player to a particular location", name = "Teleport", type = ComponentType.REWARD)
 @Configurable(tag="teleport",name="Teleport to location")
 public class TeleportReward implements IReward {
 

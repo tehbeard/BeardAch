@@ -10,10 +10,15 @@ import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 
+@ComponentHelpDescription(description = "Throws a lightning bolt at the player", name = "Lightning", type = ComponentType.REWARD)
 @Configurable(tag="lightning",name="Strike lightning on player")
 public class LightningReward implements IReward {
 
+    @ComponentValueDescription(description="If false, uses bukkit's fake lightning that does not injure a player")
     @Expose
     @EditorField(alias="Real Lightning?",type=EditorFieldType.bool)
     private boolean real = false;

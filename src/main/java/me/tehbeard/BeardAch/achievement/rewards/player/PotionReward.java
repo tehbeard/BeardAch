@@ -5,6 +5,8 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
 
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -12,6 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.google.gson.annotations.Expose;
 
+@ComponentHelpDescription(description = "Applies a potion effect to a player", name = "Apply potion", type = ComponentType.REWARD)
 @Configurable(tag="potion",name="Apply potion effect")
 public class PotionReward implements IReward {
 
@@ -24,6 +27,10 @@ public class PotionReward implements IReward {
     @Expose
     @EditorField(alias="Duration")
     private int duration;
+    
+    @Expose
+    @EditorField(alias="Ambient")
+    private boolean ambient = false;
     
     private PotionEffect effect;
     public void configure(Achievement ach, String config) {

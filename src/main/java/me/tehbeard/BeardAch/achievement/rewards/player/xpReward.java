@@ -8,7 +8,10 @@ import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
 
+@ComponentHelpDescription(description = "Gives a player some xp", name = "give xp", type = ComponentType.REWARD)
 @Configurable(tag="xp",name="Give xp")
 public class xpReward implements IReward {
 
