@@ -11,7 +11,10 @@ import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
 
+@ComponentHelpDescription(description="Sets the player's compass target to new location",name="Set Compass target",type=ComponentType.REWARD)
 @Configurable(tag="compass",name="set compass target")
 public class CompassTargetReward implements IReward {
 
