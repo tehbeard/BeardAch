@@ -22,8 +22,6 @@ import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.json.ClassCatalogue;
 import me.tehbeard.BeardAch.dataSource.json.LocationJSONParser;
-import me.tehbeard.BeardAch.dataSource.json.RewardJSONParser;
-import me.tehbeard.BeardAch.dataSource.json.TriggerJSONParser;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,6 +29,9 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
+import me.tehbeard.BeardAch.dataSource.json.ClassBasedParser;
+import me.tehbeard.BeardAch.dataSource.json.CuboidJSONParser;
+import me.tehbeard.utils.cuboid.Cuboid;
 
 
 /**
@@ -52,9 +53,10 @@ public class AchievementLoader {
 	private static Gson gson = new GsonBuilder().
 			excludeFieldsWithoutExposeAnnotation().
 			setPrettyPrinting().
-			registerTypeHierarchyAdapter(ITrigger.class, new TriggerJSONParser()).
-			registerTypeHierarchyAdapter(IReward.class, new RewardJSONParser()).
-			registerTypeHierarchyAdapter(Location.class,new LocationJSONParser()).
+			registerTypeAdapter(ITrigger.class, new ClassBasedParser<ITrigger>(triggerFactory)).
+			registerTypeAdapter(IReward.class, new ClassBasedParser<IReward>(rewardFactory)).
+                        registerTypeAdapter(Cuboid.class,new CuboidJSONParser()).
+                        registerTypeAdapter(Location.class,new LocationJSONParser()).
 			create();
 
 	private static List<Achievement> loadAchievementsFromJSONFile(File file){

@@ -14,7 +14,7 @@ commands:
         usage: /<command>
     ach-admin:
         description: Administrative functions
-        usage:/<command> dumpmeta|clearmeta
+        usage: /<command> dumpmeta|clearmeta
 permissions:
   beardach.reload:
     description: Allows you to reload the achievements list
