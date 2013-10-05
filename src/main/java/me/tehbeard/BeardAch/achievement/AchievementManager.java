@@ -11,11 +11,14 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
+import me.tehbeard.BeardAch.achievement.triggers.meta.MetaTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.spatial.CuboidCheckTrigger;
 import me.tehbeard.BeardAch.achievement.triggers.spatial.SpeedRunTrigger;
 import me.tehbeard.BeardAch.dataSource.AchievementLoader;
 import me.tehbeard.BeardAch.dataSource.IDataSource;
 import me.tehbeard.BeardAch.dataSource.configurable.RunnableTime;
+import static me.tehbeard.BeardAch.dataSource.configurable.RunnableTime.SyncType.ASYNC;
+import static me.tehbeard.BeardAch.dataSource.configurable.RunnableTime.SyncType.SYNC;
 import me.tehbeard.utils.cuboid.ChunkCache;
 import me.tehbeard.utils.cuboid.CuboidEntry;
 
@@ -105,37 +108,57 @@ public class AchievementManager implements Listener {
 	public void addAchievement(Achievement ach){
 		achievements.add(ach);
 		for(ITrigger t : ach.getTrigs()){
-			if(t instanceof CuboidCheckTrigger){
-				Cuboid cuboid = ((CuboidCheckTrigger)t).getCuboid();
-				chunkCache.addEntry(cuboid, ach);
-			}
-
-			if(t instanceof SpeedRunTrigger){
-
-				Cuboid cuboid = ((SpeedRunTrigger)t).getStartCuboid();
-				chunkCache.addEntry(cuboid, ach);
-				cuboid = ((SpeedRunTrigger)t).getEndCuboid();
-				chunkCache.addEntry(cuboid, ach);
-			}
-			if(t instanceof Listener){
-				BeardAch.printDebugCon("Adding listener trigger");
-				Bukkit.getPluginManager().registerEvents((Listener)t, BeardAch.self);
-			}
-			if(t instanceof Runnable){
-				RunnableTime rt = t.getClass().getAnnotation(RunnableTime.class);
-				if(rt != null){
-					switch(rt.type()){
-					case SYNC:
-						Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.self, (Runnable)t, rt.value(), rt.value());
-						break;
-					case ASYNC:
-						Bukkit.getScheduler().runTaskTimerAsynchronously(BeardAch.self, (Runnable)t, rt.value(), rt.value());
-					}
-				}
-			}
+                    processSpecialTriggers(t, ach);    
 		}
 
 	}
+        
+        /**
+         * Certain triggers need special processing to add to chunk pools, hook events etc.
+         * @param t
+         * @param ach
+         * @throws IllegalArgumentException 
+         */
+        private void processSpecialTriggers(ITrigger t, Achievement ach) throws IllegalArgumentException {
+        
+        // Add Cuboid Check Triggers to the global cache
+        if(t instanceof CuboidCheckTrigger){
+                Cuboid cuboid = ((CuboidCheckTrigger)t).getCuboid();
+                chunkCache.addEntry(cuboid, ach);
+        }
+        //Add Speed Run triggers to global cache
+        if(t instanceof SpeedRunTrigger){
+
+                Cuboid cuboid = ((SpeedRunTrigger)t).getStartCuboid();
+                chunkCache.addEntry(cuboid, ach);
+                cuboid = ((SpeedRunTrigger)t).getEndCuboid();
+                chunkCache.addEntry(cuboid, ach);
+        }
+        //Register this trigger as a listener
+        if(t instanceof Listener){
+                BeardAch.printDebugCon("Adding listener trigger");
+                Bukkit.getPluginManager().registerEvents((Listener)t, BeardAch.self);
+        }
+        //Setup this runnable
+        if(t instanceof Runnable){
+                RunnableTime rt = t.getClass().getAnnotation(RunnableTime.class);
+                if(rt != null){
+                        switch(rt.type()){
+                        case SYNC:
+                                Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.self, (Runnable)t, rt.value(), rt.value());
+                                break;
+                        case ASYNC:
+                                Bukkit.getScheduler().runTaskTimerAsynchronously(BeardAch.self, (Runnable)t, rt.value(), rt.value());
+                        }
+                }
+        }
+        //Process sub triggers of meta triggers
+        if(t instanceof MetaTrigger){
+            for(ITrigger tt : ((MetaTrigger)t).getTriggers()){
+                    processSpecialTriggers(tt, ach);    
+		}
+        }
+    }
 
 	/**
 	 * Load the achievements for a player
@@ -332,7 +355,7 @@ public class AchievementManager implements Listener {
 	private Set<String> getListOfPlayersToCheck(Achievement ach){
 		HashSet<String> list = playerCheckCache.get(ach);
 		return new HashSet<String>(list);
-	}
+        }
 }
 
 
