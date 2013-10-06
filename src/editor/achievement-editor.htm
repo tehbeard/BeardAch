@@ -36,6 +36,10 @@
     tempCache.put(templateName,html);
   }
 
+  function peekCache(type){
+    console.log(angular.element("body").injector().get("$templateCache").get(type));
+  }
+
   initConfig = function(data){
     tempCache = angular.element("body").injector().get("$templateCache");
     for(x in data.triggers){
@@ -54,14 +58,15 @@
   <!-- custom styling -->
   <style type="text/css">
   .ach-segement {
-    border: 1px solid #CCC;
+/*    border: 1px solid #CCC;
     border-radius: 5px;
     margin-bottom: 2px;
-    padding: 3px;
+    padding: 3px;*/
   }
   .ach-list{
-    border-left: 1px;
+    border-left: 1px solid #CCC;
     padding-left: 5px;
+    margin-left:3px;
   }
   </style>
 
@@ -103,15 +108,21 @@
   </script>
 
   <script type="text/ng-template" id="partial.ele.trigger">
+    <h4>${label}</h4>
+    <ach-trigger-list list="${model.key}"></ach-trigger-list>
+  </script>
+
+  <script type="text/ng-template" id="achListTriggerTemplate">
   <div class="ach-list">
-   <div class="input-append"><select ng-model="ui.selected" ng-options="k as v for (k,v) in opttrigger"></select><button class="btn" ng-click="ui.addTrigger()">Add</button></div>
+   <div class="input-append"><select ng-model="ui.selected" ng-options="k as v for (k,v) in getTriggers()"></select><button class="btn" ng-click="ui.addTrigger()">Add</button></div>
   <!-- loop -->
   <div ng-repeat="trigger in list" class="ach-segement">
-    <div class="input-append"><div class="add-on btn-large"><b>{{opttrigger[trigger._type]}}</b></div><button class="btn btn-danger" ng-click='remItem(list,$index)'>remove</button></div>
+    <div class="input-append"><div class="add-on btn-large"><b>{{getTriggers()[trigger._type]}}</b></div><button class="btn btn-danger" ng-click='ui.remItem(list,$index)'>remove</button></div>
   <ach-trigger entry="trigger"></ach-trigger>
   </div>
   </div>
   </script>
+
 
 
   <!-- Default achievement JSON -->
@@ -197,15 +208,6 @@
         </form>
         <hr>
         <h3>Triggers</h3>
-        <!-- OLD CODE
-        <div class="input-append"><select ng-model="ui.triggerSelected" ng-options="k as v for (k,v) in opttrigger"></select><button class="btn" ng-click="ui.addTrigger()">Add</button></div>
-        <div ng-repeat="trigger in achievements[ui.editIndex].triggers" class="ach-segement">
-          <div class="input-append">
-          <div class="add-on btn-large"><b>{{opttrigger[trigger._type]}}</b></div><button class="btn btn-danger" ng-click='remItem(achievements[ui.editIndex].triggers,$index)'>remove</button>
-          </div>
-          <ach-trigger entry="trigger"></ach-trigger>
-        </div>
-      -->
         <ach-trigger-list list="achievements[ui.editIndex].triggers"></ach-trigger-list>
 
         <hr>
@@ -222,7 +224,7 @@
   </div>
 
 
-  <!-- Modal -->
+  <!-- Confirm delete achievement -->
   <div id="modalConfirmDelete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

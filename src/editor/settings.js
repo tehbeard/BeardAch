@@ -3,6 +3,21 @@ $(function(){
   "triggers":[
   {
     "fields":[
+      {"key":"triggers","name":"Triggers","type":"trigger"}
+    ],
+    "type":"metaor",
+    "name":"[Meta] OR"
+  },
+  {
+    "fields":[
+      {"key":"triggers","name":"Triggers","type":"trigger"}
+    ],
+    "type":"metaand",
+    "name":"[Meta] AND"
+  },
+
+  {
+    "fields":[
       {"key":"ach","name":"achievement slug","type":"text"}
     ],
     "type":"ach",

@@ -35,26 +35,24 @@ angular.module('achDirectives',[]).directive('achReward', ['$compile','$template
 .directive('achTriggerList', ['$compile','$templateCache', function($compile,$templateCache) {
   var linker = function(scope, element, attrs) {
 
-    var html = $templateCache.get('partial.ele.trigger');
-    element.html(html);
-    element.replaceWith($compile(element.html())(scope));
-
+    var html = $templateCache.get('achListTriggerTemplate');
+    element.html($compile(html)(scope));
   }
 
   return {
     restrict: 'E',
     scope: {
-        list:'=',
-        
+        list:'='       
     },
     link: linker,
     controller: function($scope){
-      selected = -1;
       $scope.ui = {
-        addTrigger: function(){$scope.list.push({_type:$scope.ui.selected});},
-        remItem: function(list,index){if(confirm("Really delete this item?")){list.splice(idx,1);}},
+        addTrigger: function(){if($scope.list == null){$scope.list = [];}$scope.list.push({_type:$scope.ui.selected});},
+        remItem: function(list,index){if(confirm("Really delete this item?")){list.splice(index,1);}}
       }
+      $scope.getTriggers = function(){
+          return angular.element("body").scope().opttrigger;
+        }
   }
-    }
   };
 }]);
