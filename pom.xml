@@ -136,10 +136,21 @@
 				</includes>
 			</resource>
 
-			<resource>
+			<!--<resource>
 				<targetPath>.</targetPath>
 				<filtering>false</filtering>
-				<directory>${project.build.directory}/generated-files/</directory>
+				<directory>${project.build.directory}/generated-sources/</directory>
+			</resource>-->
+			<resource>
+				<targetPath>.</targetPath>
+				<directory>${project.build.directory}/generated-sources/assembly/</directory>
+			</resource>
+			<resource>
+				<targetPath>.</targetPath>
+				<directory>${project.build.directory}/generated-sources/apt</directory>
+				<includes>
+					<include>components.txt</include>
+				</includes>
 			</resource>
 
 		</resources>
@@ -160,7 +171,7 @@
 				</executions>
 				<configuration>
 					<finalName>editor</finalName>
-					<outputDirectory>${project.build.directory}/generated-files</outputDirectory>
+					<outputDirectory>${project.build.directory}/generated-sources/assembly</outputDirectory>
 					<appendAssemblyId>false</appendAssemblyId>
 					<descriptors>
 						<descriptor>src/main/assembly/package.xml</descriptor>
@@ -196,6 +207,14 @@
 									<shadedPattern>me.tehbeard.BeardAch.gson</shadedPattern>
 								</relocation>
 							</relocations>
+							<filters>
+								<filter>
+									<artifact>tehbeard.annotate:annotate</artifact>
+									<excludes>
+										<exclude>*.html</exclude>
+									</excludes>
+								</filter>
+							</filters>
 							<minimizeJar>true</minimizeJar>
 						</configuration>
 					</execution>
@@ -218,7 +237,6 @@
 						<processor>com.tehbeard.annotations.ConfigurableAnnotationProcessor</processor>
 						<processor>com.tehbeard.annotations.BeardAchHelpProcessor</processor>
 					</processors>
-					<outputDirectory>${project.build.directory}/generated-files</outputDirectory>
 				</configuration>
 			</plugin>
 
