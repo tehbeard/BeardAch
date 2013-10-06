@@ -59,6 +59,10 @@
     margin-bottom: 2px;
     padding: 3px;
   }
+  .ach-list{
+    border-left: 1px;
+    padding-left: 5px;
+  }
   </style>
 
   <!-- Partials for the trigger / reward forms to build off of -->
@@ -97,6 +101,18 @@
   <span class="add-on">z2</span><input class="input-mini" type="text" ng-model="${model.key}.v2.z"/>
   </div>
   </script>
+
+  <script type="text/ng-template" id="partial.ele.trigger">
+  <div class="ach-list">
+   <div class="input-append"><select ng-model="ui.selected" ng-options="k as v for (k,v) in opttrigger"></select><button class="btn" ng-click="ui.addTrigger()">Add</button></div>
+  <!-- loop -->
+  <div ng-repeat="trigger in list" class="ach-segement">
+    <div class="input-append"><div class="add-on btn-large"><b>{{opttrigger[trigger._type]}}</b></div><button class="btn btn-danger" ng-click='remItem(list,$index)'>remove</button></div>
+  <ach-trigger entry="trigger"></ach-trigger>
+  </div>
+  </div>
+  </script>
+
 
   <!-- Default achievement JSON -->
   <script type="text/ng-template" id="newAchJSON">
@@ -181,6 +197,7 @@
         </form>
         <hr>
         <h3>Triggers</h3>
+        <!-- OLD CODE
         <div class="input-append"><select ng-model="ui.triggerSelected" ng-options="k as v for (k,v) in opttrigger"></select><button class="btn" ng-click="ui.addTrigger()">Add</button></div>
         <div ng-repeat="trigger in achievements[ui.editIndex].triggers" class="ach-segement">
           <div class="input-append">
@@ -188,6 +205,9 @@
           </div>
           <ach-trigger entry="trigger"></ach-trigger>
         </div>
+      -->
+        <ach-trigger-list list="achievements[ui.editIndex].triggers"></ach-trigger-list>
+
         <hr>
         <h3>Rewards</h3>
           <div class="input-append"><select ng-model="ui.rewardSelected" ng-options="k as v for (k,v) in optreward"></select><button class="btn" ng-click="ui.addReward()">Add</button></div>
