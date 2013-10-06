@@ -7,12 +7,15 @@ package me.tehbeard.BeardAch.achievement.triggers.meta;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
 import org.bukkit.entity.Player;
 
 /**
  *
  * @author James
  */
+@ComponentHelpDescription(name = "[Meta] OR trigger",description = "Meta trigger, will fire if any trigger under it returns true",type = ComponentType.TRIGGER)
 @Configurable(name = "Meta OR trigger",tag = "metaor")
 public class ORTrigger extends MetaTrigger{
 

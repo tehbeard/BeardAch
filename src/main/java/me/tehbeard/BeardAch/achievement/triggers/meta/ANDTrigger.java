@@ -7,12 +7,15 @@ package me.tehbeard.BeardAch.achievement.triggers.meta;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
 import org.bukkit.entity.Player;
 
 /**
  *
  * @author James
  */
+@ComponentHelpDescription(name = "[Meta] AND trigger",description = "Meta trigger, will fire if all triggers under it return true",type = ComponentType.TRIGGER)
 @Configurable(name = "Meta AND trigger",tag = "metaand")
 public class ANDTrigger extends MetaTrigger{
 
