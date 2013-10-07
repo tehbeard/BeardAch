@@ -120,15 +120,16 @@ public class EditorJSON {
 
     public void write(File file) throws IOException {
         FileWriter fw = new FileWriter(file);
-        fw.write("initConfig(");
+        fw.write("$(function(){initConfig(");
         JsonWriter writer = new JsonWriter(fw);
+        writer.setIndent("  ");
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 
         gson.toJson(this, new TypeToken<EditorJSON>() {
         }.getType(), writer);
         writer.flush();
-        fw.write(");");
+        fw.write(");});");
         fw.flush();
         writer.close();
     }
