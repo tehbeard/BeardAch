@@ -27,7 +27,7 @@ public class PlaySoundReward implements IReward{
     @ComponentValueDescription(description = "Name of the sound to play (same as playsound command)")
     @EditorField(alias = "sound name",type = EditorFieldType.selection,options = "org.bukkit.Sound")
     @Expose
-    String soundName = "";
+    Sound sound;
     
     @ComponentValueDescription(description = "Volume to play at")
     @EditorField(alias = "volume (decimal, 1.0 is normal)",type = EditorFieldType.text)
@@ -41,7 +41,7 @@ public class PlaySoundReward implements IReward{
 
     @Override
     public void giveReward(Player player) {
-        player.playSound(player.getLocation(), Sound.valueOf(soundName), volume, pitch);
+        player.playSound(player.getLocation(),sound, volume, pitch);
     }
 
     @Override

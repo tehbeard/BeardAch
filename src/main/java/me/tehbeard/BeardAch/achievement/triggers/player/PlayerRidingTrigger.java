@@ -22,7 +22,7 @@ public class PlayerRidingTrigger implements ITrigger {
     @ComponentValueDescription(description = "Entity type to check")
     @Expose
     @EditorField(alias = "Entity",type = EditorFieldType.selection,options = "org.bukkit.entity.EntityType")
-    private String type;
+    private EntityType entityType;
 
     @Override
     public void configure(Achievement ach, String config) {
@@ -35,7 +35,7 @@ public class PlayerRidingTrigger implements ITrigger {
     @Override
     public boolean checkAchievement(Player player) {
         for (Entity e : player.getNearbyEntities(8, 8, 8)) {
-            if(!e.getType().equals(EntityType.valueOf(type))){continue;}
+            if(!e.getType().equals(entityType)){continue;}
             Entity passenger = e.getPassenger();
             
             if (passenger != null) {

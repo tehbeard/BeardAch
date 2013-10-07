@@ -22,20 +22,23 @@ import org.bukkit.block.Biome;
  */
 @ComponentHelpDescription(description = "Is player in a biome", name = "Biome check", type = ComponentType.TRIGGER)
 @Configurable(tag = "biome", name = "Biome check")
-public class BiomeCheckkTrigger implements ITrigger {
+public class BiomeCheckTrigger implements ITrigger {
 
     @ComponentValueDescription(description = "Biome to check for")
     @Expose
-    @EditorField(alias = "Biome",type = EditorFieldType.selection,options = " org.bukkit.block.Biome")
-    String biome;
+    @EditorField(alias = "Biome",type = EditorFieldType.selection,options = "org.bukkit.block.Biome")
+    Biome biome;
 
+    @Override
     public void configure(Achievement ach, String config) {
     }
 
+    @Override
     public boolean checkAchievement(Player player) {
-        return player.getWorld().getBiome(player.getLocation().getBlockX(), player.getLocation().getBlockX()) == Biome.valueOf(biome);
+        return player.getWorld().getBiome(player.getLocation().getBlockX(), player.getLocation().getBlockX()).equals(biome);
     }
 
+    @Override
     public void configure(Achievement ach) {
     }
 }
