@@ -11,6 +11,7 @@ import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 import org.bukkit.block.Biome;
 
 /**
@@ -25,7 +26,7 @@ public class BiomeCheckkTrigger implements ITrigger {
 
     @ComponentValueDescription(description = "Biome to check for")
     @Expose
-    @EditorField(alias = "Biome")
+    @EditorField(alias = "Biome",type = EditorFieldType.selection,options = " org.bukkit.block.Biome")
     String biome;
 
     public void configure(Achievement ach, String config) {

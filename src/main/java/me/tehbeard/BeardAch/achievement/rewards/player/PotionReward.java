@@ -13,13 +13,14 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.google.gson.annotations.Expose;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 
 @ComponentHelpDescription(description = "Applies a potion effect to a player", name = "Apply potion", type = ComponentType.REWARD)
 @Configurable(tag="potion",name="Apply potion effect")
 public class PotionReward implements IReward {
 
     @Expose
-    @EditorField(alias="Potion Type")
+    @EditorField(alias="Potion Type",type = EditorFieldType.selection,options = "org.bukkit.potion.PotionEffectType")
     private String potionType;
     @Expose
     @EditorField(alias="Amplifier")

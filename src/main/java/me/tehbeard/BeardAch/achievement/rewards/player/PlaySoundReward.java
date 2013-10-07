@@ -25,7 +25,7 @@ import org.bukkit.entity.Player;
 public class PlaySoundReward implements IReward{
     
     @ComponentValueDescription(description = "Name of the sound to play (same as playsound command)")
-    @EditorField(alias = "sound name",type = EditorFieldType.text)
+    @EditorField(alias = "sound name",type = EditorFieldType.selection,options = "org.bukkit.Sound")
     @Expose
     String soundName = "";
     
