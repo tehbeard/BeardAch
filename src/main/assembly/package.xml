@@ -11,13 +11,14 @@
     <fileSet>
       <directory>src/editor</directory>
       <outputDirectory>/</outputDirectory>
+      <excludes>
+         <exclude>*settings.js</exclude>
+     </excludes>
   </fileSet>
   <fileSet>
      <directory>${project.build.directory}/generated-sources/apt/editor/</directory>
      <outputDirectory>/</outputDirectory>
-     <excludes>
-         <exclude>settings.js</exclude>
-     </excludes>
+     
   </fileSet>
 </fileSets>
  </assembly>

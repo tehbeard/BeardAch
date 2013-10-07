@@ -27,9 +27,20 @@
 
     var html = "";
     for(x in entry.fields){
-      html += tempCache.get("partial.ele." + entry.fields[x].type)
+      console.log(entry.fields[x].type);
+      tmpHtml = tempCache.get("partial.ele." + entry.fields[x].type)
       .replace(/\$\{label\}/g,entry.fields[x].name)
       .replace(/\$\{model\.key\}/g,"entry." + entry.fields[x].key);
+
+      if(entry.fields[x].values != null){
+        selectHtml = "";
+        for(y in entry.fields[x].values){
+          selectHtml += "<option>" +  entry.fields[x].values[y] + "</option>\n";
+        }
+        tmpHtml = tmpHtml.replace(/\$\{values\}/g,selectHtml);
+      }
+
+      html += tmpHtml;
     }
     html+="<hr>";
     console.log("template created: " + templateName);
@@ -106,6 +117,12 @@
   <span class="add-on">z2</span><input class="input-mini" type="text" ng-model="${model.key}.v2.z"/>
   </div>
   </script>
+    <script type="text/ng-template" id="partial.ele.selection">
+    <div class="input-prepend input-append">
+    <span class="add-on">label</span><select type="text" ng-model="${model.key}">
+    ${values}
+    </select>
+    </script>
 
   <script type="text/ng-template" id="partial.ele.trigger">
     <h4>${label}</h4>
