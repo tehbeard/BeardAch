@@ -20,7 +20,7 @@ import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 public class PotionReward implements IReward {
 
     @Expose
-    @EditorField(alias="Potion Type",type = EditorFieldType.selection,options = "org.bukkit.potion.PotionEffectType")
+    @EditorField(alias="Potion Type",type = EditorFieldType.selection,options = "org.bukkit.potion.PotionType")
     private String potionType;
     @Expose
     @EditorField(alias="Amplifier")
