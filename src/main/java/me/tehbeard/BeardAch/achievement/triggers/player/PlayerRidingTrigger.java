@@ -1,6 +1,5 @@
 package me.tehbeard.BeardAch.achievement.triggers.player;
 
-import com.avaje.ebeaninternal.server.deploy.BeanDescriptor;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
@@ -12,6 +11,7 @@ import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
@@ -21,7 +21,7 @@ public class PlayerRidingTrigger implements ITrigger {
 
     @ComponentValueDescription(description = "Entity type to check")
     @Expose
-    @EditorField(alias = "Entity")
+    @EditorField(alias = "Entity",type = EditorFieldType.selection,options = "org.bukkit.entity.EntityType")
     private String type;
 
     @Override
