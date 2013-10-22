@@ -4,11 +4,15 @@
  */
 package me.tehbeard.BeardAch.achievement.triggers.meta;
 
+import com.google.gson.annotations.Expose;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
+import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
 import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
+import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 import org.bukkit.entity.Player;
 
 /**
@@ -17,7 +21,16 @@ import org.bukkit.entity.Player;
  */
 @ComponentHelpDescription(name = "[Meta] AND trigger",description = "Meta trigger, will fire if all triggers under it return true",type = ComponentType.TRIGGER)
 @Configurable(name = "Meta AND trigger",tag = "metaand")
-public class ANDTrigger extends MetaTrigger{
+public class ANDTrigger implements MetaTrigger{
+    
+    @ComponentValueDescription(description = "list of triggers")
+    @Expose
+    @EditorField(type = EditorFieldType.trigger,alias = "triggers")
+    private ITrigger[] triggers;
+    
+    public ITrigger[] getTriggers(){
+        return triggers;
+    }
 
     @Override
     public boolean checkAchievement(Player player) {
