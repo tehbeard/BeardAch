@@ -28,8 +28,8 @@ import org.bukkit.event.entity.EntityDeathEvent;
  *
  * @author James
  */
-@ComponentHelpDescription(name = "Kill entity",description = "plays a sound",type = ComponentType.REWARD)
-@Configurable(name = "play sound",tag = "playsnd")
+@ComponentHelpDescription(name = "Kill entity",description = "plays a sound",type = ComponentType.TRIGGER)
+@Configurable(name = "Kill entity",tag = "killentity")
 public class PlayerKillTrigger  extends AbstractEventTrigger{
 
     @ComponentValueDescription(description = "Entity type to kill")
