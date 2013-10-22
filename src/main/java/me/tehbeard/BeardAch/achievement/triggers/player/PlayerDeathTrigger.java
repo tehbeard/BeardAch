@@ -7,7 +7,6 @@ package me.tehbeard.BeardAch.achievement.triggers.player;
 import com.google.gson.annotations.Expose;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.achievement.triggers.AbstractEventTrigger;
-import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorField;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
@@ -28,11 +27,11 @@ import org.bukkit.event.entity.EntityDeathEvent;
  *
  * @author James
  */
-@ComponentHelpDescription(name = "Kill entity",description = "fires when killing a specific entity",type = ComponentType.TRIGGER)
-@Configurable(name = "Kill entity",tag = "killentity")
-public class PlayerKillTrigger  extends AbstractEventTrigger{
+@ComponentHelpDescription(name = "Killed by entity",description = "fires when killed by a specific entity",type = ComponentType.TRIGGER)
+@Configurable(name = "Killed by",tag = "deathentity")
+public class PlayerDeathTrigger  extends AbstractEventTrigger{
 
-    @ComponentValueDescription(description = "Entity type to kill")
+    @ComponentValueDescription(description = "Entity type to kill player")
     @Expose
     @EditorField(alias = "Entity",type = EditorFieldType.selection,options = "org.bukkit.entity.EntityType")
     private EntityType entityType;
@@ -49,7 +48,8 @@ public class PlayerKillTrigger  extends AbstractEventTrigger{
     
     @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
     public void onKill(EntityDeathEvent event){
-        if(event.getEntity().getType() == entityType){
+        if(event.getEntity() instanceof Player){
+            Player player = (Player)event.getEntity();
             EntityDamageEvent damage = event.getEntity().getLastDamageCause();
             if(damage instanceof EntityDamageByEntityEvent){
                 EntityDamageByEntityEvent ede = (EntityDamageByEntityEvent)damage;
@@ -59,10 +59,10 @@ public class PlayerKillTrigger  extends AbstractEventTrigger{
                     entity = ((Projectile)entity).getShooter();
                 }
                 
-                if(entity instanceof Player){
-                    add((Player)entity);
-                    checkAchievement((Player) entity);
-                    remove((Player) entity);
+                if(entity.getType() == entityType){
+                    add(player);
+                    checkAchievement(player);
+                    remove(player);
                 }
             }
         }

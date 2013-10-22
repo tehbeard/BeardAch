@@ -7,7 +7,7 @@
 	<name>BearchAch</name>
 	<description>Achievements plugin for BeardStat</description>
 	<properties>
-		<project.plugin.flavour>Banana Split</project.plugin.flavour>
+		<project.plugin.flavour>Coconut milkshake</project.plugin.flavour>
 		<project.plugin.version>${project.version}-${project.plugin.flavour}</project.plugin.version>
 	</properties>
 
