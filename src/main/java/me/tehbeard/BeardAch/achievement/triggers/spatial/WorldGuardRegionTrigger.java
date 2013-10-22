@@ -21,10 +21,11 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import me.tehbeard.BeardAch.achievement.triggers.AbstractEventTrigger;
 
 @ComponentHelpDescription(description = "Player inside a worldGuard region", name = "WorldGuard region", type = ComponentType.TRIGGER,dependencies="WorldGuard")
 @Configurable(tag="wgregion",name="(WorldGuard) Inside region")
-public class WorldGuardRegionTrigger implements ITrigger,Listener{
+public class WorldGuardRegionTrigger extends AbstractEventTrigger{
 
     private RegionManager rm;
     
@@ -36,21 +37,8 @@ public class WorldGuardRegionTrigger implements ITrigger,Listener{
     @Expose
     @EditorField(alias="World name")
     private String world = "";
-    private Achievement ach;
 
-    public void configure(Achievement ach, String config) {
-        this.ach=ach;
-        String[] c = config.split(":");
-        if(c.length !=2){
-            throw new IllegalArgumentException("Region AND World must be defined");
-        }
-        
-        world = c[0];
-        region = c[1];
-
-
-    }
-
+    @Override
     public boolean checkAchievement(Player player) {
         if(rm==null){
             return false;
@@ -75,14 +63,15 @@ public class WorldGuardRegionTrigger implements ITrigger,Listener{
                 ){
             if(event.getPlayer().getWorld().getName().equals(world)){
                 if(checkAchievement(event.getPlayer())){
-                    ach.checkAchievement(event.getPlayer());
+                    getAchievement().checkAchievement(event.getPlayer());
                 }
             }
         }
     }
 
+    @Override
     public void configure(Achievement ach) {
-        this.ach = ach;
+        super.configure(ach);
         World w = Bukkit.getWorld(world);
         WorldGuardPlugin wg = BeardAch.self.getWorldGuard();
         if(wg==null){

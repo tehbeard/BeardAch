@@ -16,14 +16,14 @@ import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import com.google.gson.annotations.Expose;
+import me.tehbeard.BeardAch.achievement.triggers.AbstractEventTrigger;
 
 @ComponentHelpDescription(description = "Triggers when a user attempts to execute a command", name = "on Command executed", type = ComponentType.TRIGGER)
 @Configurable(name="On command",tag="oncommand")
-public class CommandCheckTrigger implements ITrigger, Listener {
+public class CommandCheckTrigger extends AbstractEventTrigger {
 
     @ComponentValueDescription(description="Certain commands use the preprocess event instead of Bukkit's command api, check this to allow those commands")
     @Expose
@@ -42,22 +42,15 @@ public class CommandCheckTrigger implements ITrigger, Listener {
 
     private Pattern pattern = null;
 
-    private Set<String> active = new HashSet<String>();
-    private Achievement ach;
-
     public void configure(Achievement ach, String config) {
         throw new UnsupportedOperationException("This trigger is not designed for old systems!");
     }
 
     public void configure(Achievement ach) {
-        this.ach = ach;
+        super.configure(ach);
         if(isRegex){
             pattern = Pattern.compile(commandText);
         }
-    }
-
-    public boolean checkAchievement(Player player) {
-        return active.contains(player.getName());
     }
 
     @EventHandler(priority=EventPriority.MONITOR)
@@ -65,17 +58,17 @@ public class CommandCheckTrigger implements ITrigger, Listener {
         if(!event.isCancelled() || includeIgnored){
             if(isRegex){
                 if(pattern.matcher(event.getMessage()).matches()){
-                    active.add(event.getPlayer().getName());
-                    ach.checkAchievement(event.getPlayer());
-                    active.remove(event.getPlayer().getName());
+                    add(event.getPlayer());
+                    getAchievement().checkAchievement(event.getPlayer());
+                    remove(event.getPlayer());
                 }
             }
             else
             {
                 if(event.getMessage().startsWith(commandText)){
-                    active.add(event.getPlayer().getName());
-                    ach.checkAchievement(event.getPlayer());
-                    active.remove(event.getPlayer().getName());
+                    add(event.getPlayer());
+                    getAchievement().checkAchievement(event.getPlayer());
+                    remove(event.getPlayer());
                 }
             }
         }
