@@ -31,8 +31,8 @@ import me.tehbeard.utils.cuboid.Cuboid;
  */
 public class AchievementManager implements Listener {
 
-	private HashMap<String,HashSet<AchievementPlayerLink>> playerHasCache = new  HashMap<String,HashSet<AchievementPlayerLink>>();
-	private HashMap<Achievement,HashSet<String>> playerCheckCache = new  HashMap<Achievement,HashSet<String>>();
+	private HashMap<String,Set<AchievementPlayerLink>> playerHasCache = new  HashMap<String,Set<AchievementPlayerLink>>();
+	private HashMap<Achievement,Set<String>> playerCheckCache = new  HashMap<Achievement,Set<String>>();
 	public IDataSource database = null;
 	private final ChunkCache<Achievement> chunkCache = new ChunkCache<Achievement>();
 
@@ -40,7 +40,7 @@ public class AchievementManager implements Listener {
 
 
 	public AchievementManager(){
-		playerHasCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
+		playerHasCache = new HashMap<String,Set<AchievementPlayerLink>>();
 
 	}
 	public void loadAchievements(){
@@ -63,7 +63,7 @@ public class AchievementManager implements Listener {
 		database.flush();
 		chunkCache.clearCache();
 		achievements = new LinkedList<Achievement>();
-		playerCheckCache = new HashMap<Achievement,HashSet<String>>();
+		playerCheckCache = new HashMap<Achievement,Set<String>>();
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class AchievementManager implements Listener {
 	 * @param player
 	 */
 	public void loadPlayersAchievements(String player){
-		HashSet<AchievementPlayerLink> got = database.getPlayersAchievements(player);
+		Set<AchievementPlayerLink> got = database.getPlayersAchievements(player);
 		//put to cache
 		if(got!=null){
 			playerHasCache.put(player,got);
@@ -353,7 +353,7 @@ public class AchievementManager implements Listener {
 
 
 	private Set<String> getListOfPlayersToCheck(Achievement ach){
-		HashSet<String> list = playerCheckCache.get(ach);
+		Set<String> list = playerCheckCache.get(ach);
 		return new HashSet<String>(list);
         }
 }

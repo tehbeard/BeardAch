@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 
@@ -163,7 +164,7 @@ public class SqlDataSource implements IDataSource{
 
 
 
-    public HashSet<AchievementPlayerLink> getPlayersAchievements(String player) {
+    public Set<AchievementPlayerLink> getPlayersAchievements(String player) {
         HashSet<AchievementPlayerLink> c = new HashSet<AchievementPlayerLink>();
         try {
         	if(!checkConnection()){
