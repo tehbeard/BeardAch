@@ -30,7 +30,7 @@ public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
             ZipEntry manifest = addon.getEntry("bundle.properties");
 
             if(manifest!=null){
-                BeardAch.printCon("Loading addon");
+                BeardAch.printCon("Addon manifest located");
 
                 Scanner scanner;
 
