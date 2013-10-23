@@ -65,7 +65,7 @@ public class YamlDataSource implements IDataSource {
 
 	}
 
-	public HashSet<AchievementPlayerLink> getPlayersAchievements(String player) {
+	public Set<AchievementPlayerLink> getPlayersAchievements(String player) {
 		HashSet<AchievementPlayerLink> ret = new HashSet<AchievementPlayerLink>();
 		ConfigurationSection playerData = db.getConfigurationSection("database."+player);
 		if(playerData != null){

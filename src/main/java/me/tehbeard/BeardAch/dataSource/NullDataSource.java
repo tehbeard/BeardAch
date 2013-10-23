@@ -1,6 +1,7 @@
 package me.tehbeard.BeardAch.dataSource;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.AchievementPlayerLink;
@@ -15,7 +16,7 @@ public class NullDataSource implements IDataSource{
 	}
 
 
-	public HashSet<AchievementPlayerLink> getPlayersAchievements(String Player) {
+	public Set<AchievementPlayerLink> getPlayersAchievements(String Player) {
 		HashSet<AchievementPlayerLink> d = new HashSet<AchievementPlayerLink>();
 		//d.add("test");
 		return d;
