@@ -25,6 +25,7 @@ public class YamlDataSource implements IDataSource {
 		dbFile = new File(plugin.getDataFolder(),"database.yml");
 		fancy = new File(plugin.getDataFolder(),"ach.html");
 		db = YamlConfiguration.loadConfiguration(dbFile);
+                plugin.getLogger().warning("Alert, Yaml provider is now deprecated, json provider will take it's place in the future.");
 	}
 
 	public void dumpFancy() {

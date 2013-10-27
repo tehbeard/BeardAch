@@ -11,7 +11,8 @@ import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
-import com.tehbeard.BeardStat.containers.PlayerStatManager;
+import com.tehbeard.BeardStat.DataProviders.IStatDataProvider;
+import com.tehbeard.BeardStat.manager.EntityStatManager;
 
 /**
  * Checks if a players stat is above certain threshold, then triggers. 
@@ -48,7 +49,7 @@ public class StatWithinTrigger implements ITrigger {
     @EditorField(alias="Upper bound threshold")
     int upperThreshold;
 
-    private static PlayerStatManager manager = null;
+    private static EntityStatManager manager = null;
 
     public void configure(Achievement ach,String config) {
 
@@ -66,7 +67,7 @@ public class StatWithinTrigger implements ITrigger {
     public boolean checkAchievement(Player player) {
         if(manager!=null){
             //if player has stat
-            int value = manager.findPlayerBlob(player.getName()).getStat(domain,world,cat, stat).getValue();
+            int value = manager.getBlobByNameType(player.getName(), IStatDataProvider.PLAYER_TYPE).getValue().getStat(domain,world,cat, stat).getValue();
             return (value>=lowerThreshold && value<=upperThreshold);
         }
         else

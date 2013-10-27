@@ -18,7 +18,7 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorJSON;
 import com.tehbeard.BeardStat.BeardStat;
-import com.tehbeard.BeardStat.containers.PlayerStatManager;
+
 import me.tehbeard.utils.addons.AddonLoader;
 import me.tehbeard.utils.factory.ConfigurableFactory;
 
@@ -31,14 +31,16 @@ import org.mcstats.Metrics.Graph;
 import org.mcstats.Metrics.Plotter;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.tehbeard.BeardStat.manager.EntityStatManager;
 
 import de.hydrox.bukkit.DroxPerms.DroxPerms;
 import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
+import org.bukkit.plugin.Plugin;
 
 public class BeardAch extends JavaPlugin {
 
     public static BeardAch self;
-    private PlayerStatManager stats = null;
+
     private AddonLoader<IConfigurable> addonLoader;
     private Metrics metrics;
 
@@ -53,6 +55,7 @@ public class BeardAch extends JavaPlugin {
     private EditorJSON json = new EditorJSON();
     
     private BeardAchCuboidListener cuboidListener = new BeardAchCuboidListener();
+    private EntityStatManager stats;
     
     /**
      * Load BeardAch
@@ -92,9 +95,16 @@ public class BeardAch extends JavaPlugin {
                 return annotation.tag();
             }
         };
+        
+        Plugin bs = Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
+        if(bs!=null && bs.isEnabled()){
+            dataSourceFactory.addProduct(BeardStatDataSource.class);
+        }
+        
         dataSourceFactory.addProduct(YamlDataSource.class);
         dataSourceFactory.addProduct(SqlDataSource.class);
         dataSourceFactory.addProduct(NullDataSource.class);
+        dataSourceFactory.addProduct(GSONDataSource.class);
 
         achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type",""));
 
@@ -418,7 +428,7 @@ public class BeardAch extends JavaPlugin {
      * Returns BeardStat instance
      * @return
      */
-    public PlayerStatManager getStats(){
+    public EntityStatManager getStats(){
         return stats;
     }
 
