@@ -8,12 +8,12 @@ import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
 import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
 import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 
-import com.tehbeard.BeardStat.manager.EntityStatManager;
 
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
-import com.tehbeard.BeardStat.DataProviders.IStatDataProvider;
+import com.tehbeard.beardstat.dataproviders.IStatDataProvider;
+import com.tehbeard.beardstat.manager.EntityStatManager;
 
 @ComponentHelpDescription(description = "Increment counter value. Counters are stored in BeardStat and accessible from the stats triggers", name = "Increment counter", type = ComponentType.REWARD, dependencies = {"BeardStat"})
 @Configurable(tag = "counter", name = "Increment counter")

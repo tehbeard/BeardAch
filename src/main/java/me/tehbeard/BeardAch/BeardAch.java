@@ -17,7 +17,6 @@ import me.tehbeard.BeardAch.dataSource.*;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorJSON;
-import com.tehbeard.BeardStat.BeardStat;
 
 import me.tehbeard.utils.addons.AddonLoader;
 import me.tehbeard.utils.factory.ConfigurableFactory;
@@ -31,7 +30,9 @@ import org.mcstats.Metrics.Graph;
 import org.mcstats.Metrics.Plotter;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.tehbeard.BeardStat.manager.EntityStatManager;
+import com.tehbeard.beardstat.BeardStat;
+import com.tehbeard.beardstat.manager.EntityStatManager;
+
 
 import de.hydrox.bukkit.DroxPerms.DroxPerms;
 import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
@@ -95,11 +96,6 @@ public class BeardAch extends JavaPlugin {
                 return annotation.tag();
             }
         };
-        
-        Plugin bs = Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
-        if(bs!=null && bs.isEnabled()){
-            dataSourceFactory.addProduct(BeardStatDataSource.class);
-        }
         
         dataSourceFactory.addProduct(YamlDataSource.class);
         dataSourceFactory.addProduct(SqlDataSource.class);

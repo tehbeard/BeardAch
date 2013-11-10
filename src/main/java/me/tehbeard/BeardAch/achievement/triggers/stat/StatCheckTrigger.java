@@ -11,8 +11,9 @@ import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
-import com.tehbeard.BeardStat.DataProviders.IStatDataProvider;
-import com.tehbeard.BeardStat.manager.EntityStatManager;
+import com.tehbeard.beardstat.dataproviders.IStatDataProvider;
+import com.tehbeard.beardstat.manager.EntityStatManager;
+
 
 /**
  * Checks if a players stat is between certain threshold, then triggers. 
