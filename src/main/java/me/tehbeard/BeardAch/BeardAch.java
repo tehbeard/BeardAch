@@ -36,7 +36,6 @@ import com.tehbeard.beardstat.manager.EntityStatManager;
 
 import de.hydrox.bukkit.DroxPerms.DroxPerms;
 import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
-import org.bukkit.plugin.Plugin;
 
 public class BeardAch extends JavaPlugin {
 
@@ -58,6 +57,11 @@ public class BeardAch extends JavaPlugin {
     private BeardAchCuboidListener cuboidListener = new BeardAchCuboidListener();
     private EntityStatManager stats;
     
+    private static boolean allowExecRewards = false;
+    public static boolean isAllowExecRewards(){
+        return allowExecRewards;
+    }
+    
     /**
      * Load BeardAch
      */
@@ -75,6 +79,11 @@ public class BeardAch extends JavaPlugin {
         saveConfig();
         reloadConfig();
 
+        allowExecRewards = getConfig().getBoolean("ach.allow-exec-shell-reward",false);
+        if(allowExecRewards){
+            printCon("ALERT, SHELL EXEC REWARD ACTIVE, BE CAREFUL WHO YOU GIVE ACCESS TO ACHIEVEMENT DEFINITIONS");
+        }
+            
         EnableBeardStat();
 
         Bukkit.getPluginManager().registerEvents(cuboidListener, this);

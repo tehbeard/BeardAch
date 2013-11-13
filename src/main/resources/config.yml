@@ -2,6 +2,7 @@ general:
   debug: false
   plugin-stats-opt-out: false
 ach:
+  allow-exec-shell-reward: false
   database:
     type: file
     host: localhost
