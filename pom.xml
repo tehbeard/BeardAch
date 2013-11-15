@@ -92,6 +92,7 @@
 			<groupId>tehbeard.annotate</groupId>
 			<artifactId>annotate</artifactId>
 			<version>1.3.2-SNAPSHOT</version>
+                        <scope>compile</scope>
 		</dependency>
 
 		<dependency>
