@@ -4,7 +4,7 @@ general:
 ach:
   allow-exec-shell-reward: false
   database:
-    type: file
+    type: json
     host: localhost
     username: Beardstats
     password: changeme

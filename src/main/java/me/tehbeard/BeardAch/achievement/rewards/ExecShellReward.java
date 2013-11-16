@@ -48,6 +48,10 @@ public class ExecShellReward implements IReward {
             if(BeardAch.isAllowExecRewards()){
               Runtime.getRuntime().exec(cmd.replaceAll("<PLAYER>", player.getName()), envVars,workDirFile);
             }
+            else
+            {
+                BeardAch.self.getLogger().warning("ExecShell reward called but disabled in config");
+            }
         } catch (IOException ex) {
             Logger.getLogger(ExecShellReward.class.getName()).log(Level.SEVERE, null, ex);
         }

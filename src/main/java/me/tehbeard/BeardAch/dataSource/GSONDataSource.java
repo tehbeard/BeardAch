@@ -27,7 +27,7 @@ public class GSONDataSource implements IDataSource {
     private File dbFile;
 
     public GSONDataSource() {
-        BeardAch.self.getLogger().warning("Alert, Yaml provider is now deprecated, json provider will take it's place in the future.");
+        //BeardAch.self.getLogger().warning("Alert, Yaml provider is now deprecated, json provider will take it's place in the future.");
         dbFile = new File(BeardAch.self.getDataFolder(), "database.json");
     }
 
