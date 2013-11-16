@@ -45,7 +45,7 @@ public class EconomyReward implements IReward {
 		}
 		else
 		{
-			BeardAch.printError("Economy reward was not given because economy support did not load");
+			BeardAch.instance().getLogger().severe("[ERROR] " + "Economy reward was not given because economy support did not load");
 		}
 	}
 

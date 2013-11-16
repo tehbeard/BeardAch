@@ -19,7 +19,7 @@ public class AchReloadCommand implements CommandExecutor{
 
 		if(!sender.hasPermission("beardach.reload")){return true;}
 		sender.sendMessage("Reloading Achievements");
-		BeardAch.self.getAchievementManager().loadAchievements();
+		BeardAch.instance().getAchievementManager().loadAchievements();
 		sender.sendMessage("Reloaded Achievements");
 		return true;
 	}

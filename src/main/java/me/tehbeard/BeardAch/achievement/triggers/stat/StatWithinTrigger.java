@@ -71,17 +71,13 @@ public class StatWithinTrigger implements ITrigger {
             int value = manager.getBlobByNameType(player.getName(), IStatDataProvider.PLAYER_TYPE).getValue().getStat(domain,world,cat, stat).getValue();
             return (value>=lowerThreshold && value<=upperThreshold);
         }
-        else
-        {
-            BeardAch.printCon("[PANIC] Attempting to use Statwithin trigger when BeardStat not loaded!!!");
-        }
         return false;
     }
 
 
     public void configure(Achievement ach) {
         if(manager==null){
-            manager = BeardAch.self.getStats();
+            manager = BeardAch.instance().getStats();
         }
 
     }

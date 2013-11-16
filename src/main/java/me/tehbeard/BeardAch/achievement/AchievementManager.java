@@ -1,5 +1,6 @@
 package me.tehbeard.BeardAch.achievement;
 import java.util.*;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -136,8 +137,8 @@ public class AchievementManager implements Listener {
         }
         //Register this trigger as a listener
         if(t instanceof Listener){
-                BeardAch.printDebugCon("Adding listener trigger");
-                Bukkit.getPluginManager().registerEvents((Listener)t, BeardAch.self);
+                BeardAch.instance().getLogger().fine("Adding listener trigger");
+                Bukkit.getPluginManager().registerEvents((Listener)t, BeardAch.instance());
         }
         //Setup this runnable
         if(t instanceof Runnable){
@@ -145,10 +146,10 @@ public class AchievementManager implements Listener {
                 if(rt != null){
                         switch(rt.type()){
                         case SYNC:
-                                Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.self, (Runnable)t, rt.value(), rt.value());
+                                Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), (Runnable)t, rt.value(), rt.value());
                                 break;
                         case ASYNC:
-                                Bukkit.getScheduler().runTaskTimerAsynchronously(BeardAch.self, (Runnable)t, rt.value(), rt.value());
+                                Bukkit.getScheduler().runTaskTimerAsynchronously(BeardAch.instance(), (Runnable)t, rt.value(), rt.value());
                         }
                 }
         }
@@ -174,7 +175,7 @@ public class AchievementManager implements Listener {
 		}
 		else
 		{
-			BeardAch.printCon("Failed to load for " + player);
+			BeardAch.instance().getLogger().log(Level.SEVERE, "Failed to load for {0}", player);
 		}
 
 	}
@@ -219,12 +220,12 @@ public class AchievementManager implements Listener {
 
 		boolean keepChecking = true;
 		while(keepChecking){
-			BeardAch.printDebugCon("Beggining Check player loop");
+			BeardAch.instance().getLogger().finer("Beggining Check player loop");
 			keepChecking = false;
 
 			for( Achievement ach : playerCheckCache.keySet()){
 
-				BeardAch.printDebugCon("ach:"+ach.getName());
+				BeardAch.instance().getLogger().log(Level.FINER, "ach:{0}", ach.getName());
 				//loop all players, check them.
 
 				Set<String> list = getListOfPlayersToCheck(ach);
@@ -234,7 +235,7 @@ public class AchievementManager implements Listener {
 					//get player object for offline detection
 					p =Bukkit.getPlayer(ply);
 					if(p instanceof Player){
-						BeardAch.printDebugCon("Player "+ply+" online");
+						BeardAch.instance().getLogger().log(Level.FINER, "Player {0} online", ply);
 						//check for bleep bloop
 						if(ach.checkAchievement(p)){
 							keepChecking = true;
@@ -247,7 +248,7 @@ public class AchievementManager implements Listener {
 				}
 
 			}
-			BeardAch.printDebugCon("Ending Check player loop");
+			BeardAch.instance().getLogger().finer("Ending Check player loop");
 		}
 
 
@@ -268,6 +269,7 @@ public class AchievementManager implements Listener {
 			}
 			Collections.sort(l,new Comparator<AchievementPlayerLink>() {
 
+                                @Override
 				public int compare(AchievementPlayerLink o1, AchievementPlayerLink o2) {
 					long res = o1.getDate().getTime() - o2.getDate().getTime();
 					if(res==0){
@@ -311,7 +313,7 @@ public class AchievementManager implements Listener {
 			//get player object for offline detection
 			p =Bukkit.getPlayer(ply);
 			if(p instanceof Player){
-				BeardAch.printDebugCon("Player "+ply+" online");
+				BeardAch.instance().getLogger().log(Level.FINE, "Player {0} online", ply);
 				//check for bleep bloop
 				ach.checkAchievement(p);
 

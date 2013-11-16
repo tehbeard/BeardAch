@@ -12,7 +12,7 @@ public class NullDataSource implements IDataSource{
 
 
 	public NullDataSource(){
-		BeardAch.printCon("Loading Null DataSource");
+		BeardAch.instance().getLogger().info("Loading Null DataSource");
 	}
 
 
@@ -24,7 +24,7 @@ public class NullDataSource implements IDataSource{
 
 	public void setPlayersAchievements(String player,
 			String achievement) {
-		BeardAch.printCon("[" + player + "] stored "+ achievement);
+		BeardAch.instance().getLogger().fine("[" + player + "] stored "+ achievement);
 
 	}
 

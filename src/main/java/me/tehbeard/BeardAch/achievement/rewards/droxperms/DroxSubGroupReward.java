@@ -28,7 +28,7 @@ public class DroxSubGroupReward implements IReward{
 	public void giveReward(Player player) {
 		if(BeardAch.droxAPI!=null){
 			BeardAch.droxAPI.addPlayerSubgroup(player.getName(), subgroup);
-			BeardAch.printDebugCon("Played added to subgroup");
+			BeardAch.instance().getLogger().fine("Played added to subgroup");
 		}
 	}
 

@@ -22,14 +22,11 @@ public class AchievementPlayerLink {
 
     public AchievementPlayerLink(String slug, Timestamp date) {
 
-        BeardAch.printDebugCon("CREATING LINK");
-
         this.slug = slug;
         this.date = date;
     }
 
     public AchievementPlayerLink(String slug) {
-        BeardAch.printDebugCon("CREATING LINK NO DATE SPECIFIED");
         this.slug = slug;
 
         this.date = new Timestamp((new java.util.Date()).getTime());
@@ -37,6 +34,6 @@ public class AchievementPlayerLink {
     }
 
     public Achievement getAch() {
-        return BeardAch.self.getAchievementManager().getAchievementSlug(slug);
+        return BeardAch.instance().getAchievementManager().getAchievementSlug(slug);
     }
 }

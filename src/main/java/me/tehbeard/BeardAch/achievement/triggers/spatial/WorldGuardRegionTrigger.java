@@ -73,14 +73,14 @@ public class WorldGuardRegionTrigger extends AbstractEventTrigger{
     public void configure(Achievement ach) {
         super.configure(ach);
         World w = Bukkit.getWorld(world);
-        WorldGuardPlugin wg = BeardAch.self.getWorldGuard();
+        WorldGuardPlugin wg = BeardAch.instance().getWorldGuard();
         if(wg==null){
-            BeardAch.printError("WorldGuard not loaded! trigger will fail!");
+            BeardAch.instance().getLogger().severe("[ERROR] " + "WorldGuard not loaded! trigger will fail!");
             return;
         }
         rm = wg.getRegionManager(w);
         if(rm==null){
-            BeardAch.printError("World not found!");
+            BeardAch.instance().getLogger().severe("[ERROR] " + "World not found!");
             return;
         }
         

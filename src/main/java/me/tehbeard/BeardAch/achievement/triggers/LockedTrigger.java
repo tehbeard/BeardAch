@@ -1,6 +1,7 @@
 package me.tehbeard.BeardAch.achievement.triggers;
 
 
+import java.util.logging.Level;
 import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.Achievement;
 import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
@@ -20,7 +21,7 @@ public class LockedTrigger implements ITrigger {
 
 
 	public void configure(Achievement ach,String config) {
-	    BeardAch.printCon("[ALERT] Achievement " + ach.getName() + " is locked and will not trigger");
+	    BeardAch.instance().getLogger().log(Level.INFO, "[ALERT] Achievement {0} is locked and will not trigger", ach.getName());
 	}
 
 

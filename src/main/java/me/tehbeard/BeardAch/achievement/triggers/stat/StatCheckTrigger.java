@@ -46,6 +46,8 @@ public class StatCheckTrigger implements ITrigger {
     @EditorField(alias="Lower threshold")
     int threshold;
     private static EntityStatManager manager = null;
+    
+    private static boolean warningLock = false;
 
     public void configure(Achievement ach,String config) {
 
@@ -66,14 +68,17 @@ public class StatCheckTrigger implements ITrigger {
         }
         else
         {
-            BeardAch.printCon("[PANIC] Attempting to use Stat trigger when BeardStat not loaded!!!");
+            if(!warningLock){
+            BeardAch.instance().getLogger().warning("BeardStat was not loaded, stat check failed.");
+            warningLock = true;
+            }
         }
         return false;
     }
 
     public void configure(Achievement ach) {
         if(manager==null){
-            manager = BeardAch.self.getStats();
+            manager = BeardAch.instance().getStats();
         }
 
     }

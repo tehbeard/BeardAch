@@ -40,10 +40,10 @@ public class ClassBasedParser<T> implements JsonSerializer<T>,JsonDeserializer<T
             return context.deserialize(element, catalogue.get(element.getAsJsonObject().get("_type").getAsString()));
             }
             catch (NoClassDefFoundError e){
-            	BeardAch.printCon("Deserialization failed: " + element.getAsJsonObject().get("_type").getAsString());
-            	BeardAch.printDebugCon("Dumping JSON");
-            	BeardAch.printDebugCon(element.toString());
-            	BeardAch.printDebugCon("END Dumping JSON");
+            	BeardAch.instance().getLogger().severe("Deserialization failed: " + element.getAsJsonObject().get("_type").getAsString());
+            	BeardAch.instance().getLogger().severe("Dumping JSON");
+            	BeardAch.instance().getLogger().severe(element.toString());
+            	BeardAch.instance().getLogger().severe("END Dumping JSON");
             }
             return null;
     }

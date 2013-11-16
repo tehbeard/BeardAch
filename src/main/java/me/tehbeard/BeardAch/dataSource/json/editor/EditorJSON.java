@@ -13,7 +13,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -102,7 +101,7 @@ public class EditorJSON {
 
             list.add(ee);
         } catch (NoClassDefFoundError e) {
-            BeardAch.printCon("Skipping item " + ee.name);
+            BeardAch.instance().getLogger().log(Level.WARNING, "Skipping item {0}, class not found.", ee.name);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {

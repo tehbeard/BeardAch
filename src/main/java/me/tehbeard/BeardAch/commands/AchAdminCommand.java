@@ -16,7 +16,7 @@ public class AchAdminCommand implements CommandExecutor{
 	    if(args[0].startsWith("dumpmeta")){
 	        if(!sender.hasPermission("beardach.reload.fancy")){return true;}
 	        sender.sendMessage("Dumping achievement metadata to database");
-	        BeardAch.self.getAchievementManager().database.dumpFancy();
+	        BeardAch.instance().getAchievementManager().database.dumpFancy();
 	    }
 	    
 	    if(args[0].startsWith("clearmeta")){

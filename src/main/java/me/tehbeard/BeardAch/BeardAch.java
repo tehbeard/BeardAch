@@ -36,10 +36,17 @@ import com.tehbeard.beardstat.manager.EntityStatManager;
 
 import de.hydrox.bukkit.DroxPerms.DroxPerms;
 import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
+import java.util.logging.Handler;
+import java.util.logging.Level;
 
 public class BeardAch extends JavaPlugin {
 
-    public static BeardAch self;
+    private static BeardAch self;
+    
+    public static BeardAch instance(){
+        if(self == null){throw new IllegalStateException("No referenece to BeardAch found");}
+        return self;
+    }
 
     private AddonLoader<IConfigurable> addonLoader;
     private Metrics metrics;
@@ -71,17 +78,24 @@ public class BeardAch extends JavaPlugin {
         self = this;
         achievementManager = new AchievementManager();
         //Load config
-        printCon("Starting BeardAch");
+        getLogger().info("Starting BeardAch");
         /*if(!getConfig().getKeys(false).contains("achievements")){
             
         }*/
         getConfig().options().copyDefaults(true);
         saveConfig();
         reloadConfig();
+        
+        //Hopefully this pleases Diemex
+        Level level = Level.parse(getConfig().getString("general.loglevel","INFO"));
+        getLogger().setLevel(level);
+        for(Handler handler : getLogger().getHandlers()){
+            handler.setLevel(level);
+        }
 
         allowExecRewards = getConfig().getBoolean("ach.allow-exec-shell-reward",false);
         if(allowExecRewards){
-            printCon("ALERT, SHELL EXEC REWARD ACTIVE, BE CAREFUL WHO YOU GIVE ACCESS TO ACHIEVEMENT DEFINITIONS");
+            getLogger().info("ALERT, SHELL EXEC REWARD ACTIVE, BE CAREFUL WHO YOU GIVE ACCESS TO ACHIEVEMENT DEFINITIONS");
         }
             
         EnableBeardStat();
@@ -97,7 +111,7 @@ public class BeardAch extends JavaPlugin {
         //check WorldGuard
         worldGuard = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
 
-        printCon("Loading Data Adapters");
+        getLogger().info("Loading Data Adapters");
         ConfigurableFactory<IDataSource,DataSourceDescriptor> dataSourceFactory = new ConfigurableFactory<IDataSource, DataSourceDescriptor>(DataSourceDescriptor.class) {
 
             @Override
@@ -114,14 +128,14 @@ public class BeardAch extends JavaPlugin {
         achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type",""));
 
         if(achievementManager.database == null){
-            printError("NO SUITABLE DATABASE SELECTED!!");
-            printError("DISABLING PLUGIN!!");
+            self.getLogger().severe("[ERROR] " + "NO SUITABLE DATABASE SELECTED!!");
+            self.getLogger().severe("[ERROR] " + "DISABLING PLUGIN!!");
 
             //onDisable();
             setEnabled(false);
             return;
         }
-        printCon("Installing default triggers and rewards");
+        getLogger().info("Installing default triggers and rewards");
         
         Scanner s = new Scanner(getResource("components.txt"));
         while(s.hasNextLine()){
@@ -148,7 +162,7 @@ public class BeardAch extends JavaPlugin {
 
         if(bundle!=null){
             try{
-                printCon("Loading bundled addons");
+                getLogger().info("Loading bundled addons");
 
                 Scanner scanner;
 
@@ -157,7 +171,7 @@ public class BeardAch extends JavaPlugin {
                     String ln = scanner.nextLine();
                     String[] l = ln.split("=");
                     if(l[0].equalsIgnoreCase("name")){
-                        BeardAch.printCon("Loading bundled addon " + l[1]);
+                        getLogger().info("Loading bundled addon " + l[1]);
                     }else if(l[0].equalsIgnoreCase("class")){
                         Class<?> c = getClassLoader().loadClass(l[1]);
                         if(c!=null){
@@ -175,12 +189,12 @@ public class BeardAch extends JavaPlugin {
                 }
                 scanner.close();
             } catch (ClassNotFoundException e) {
-                printCon("[PANIC] Could not load a class listed in the bundle file");
+                getLogger().info("[PANIC] Could not load a class listed in the bundle file");
             }
         }        
 
 
-        printCon("Preparing to load addons");
+        getLogger().info("Preparing to load addons");
         //Create addon dir if it doesn't exist
         File addonDir = (new File(getDataFolder(),"addons"));
         if(!addonDir.exists()){
@@ -190,10 +204,10 @@ public class BeardAch extends JavaPlugin {
         //create the addon loader
         addonLoader = new BeardAchAddonLoader(addonDir);
 
-        printCon("Loading addons");
+        getLogger().info("Loading addons");
         addonLoader.loadAddons();
 
-        printCon("Writing editor settings");
+        getLogger().info("Writing editor settings");
         new File(getDataFolder(),"editor").mkdirs();
         try {
             File settingsFile = new File(getDataFolder(),"editor/settings.js");
@@ -204,7 +218,7 @@ public class BeardAch extends JavaPlugin {
 		}
         exportEditor();
 
-        printCon("Loading Achievements");
+        getLogger().info("Loading Achievements");
 
         achievementManager.loadAchievements();
 
@@ -289,16 +303,16 @@ public class BeardAch extends JavaPlugin {
                 metrics.start();
 
             } catch (Exception e) {
-                printCon("Could not load metrics :(");
-                printCon("Please send the following stack trace to Tehbeard");
-                printCon("=======================");
+                getLogger().info("Could not load metrics :(");
+                getLogger().info("Please send the following stack trace to Tehbeard");
+                getLogger().info("=======================");
                 e.printStackTrace();
-                printCon("=======================");
+                getLogger().info("=======================");
             }
 
         }
 
-        printCon("Starting achievement checker");
+        getLogger().info("Starting achievement checker");
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 
             public void run() {
@@ -310,13 +324,13 @@ public class BeardAch extends JavaPlugin {
         //setup events
         getServer().getPluginManager().registerEvents(achievementManager,this);
 
-        printCon("Loading commands");
+        getLogger().info("Loading commands");
         //commands
 
         getCommand("ach-reload").setExecutor(new AchReloadCommand());
         getCommand("ach").setExecutor(new AchCommand());
         getCommand("ach-fancy").setExecutor(new AchFancyCommand());
-        printCon("Loaded Version:" + getDescription().getVersion());
+        getLogger().info("Loaded Version:" + getDescription().getVersion());
 
 
     }
@@ -377,14 +391,6 @@ public class BeardAch extends JavaPlugin {
         }
         return msg;
     }
-
-    /**
-     * Print error message
-     * @param errMsg
-     */
-    public static void printError(String errMsg){
-        self.getLogger().severe("[ERROR] " + errMsg);
-    }
     /**
      * Print error message with an exception
      * @param errMsg
@@ -417,7 +423,7 @@ public class BeardAch extends JavaPlugin {
         }
         else
         {
-            printError("BeardStat not installed! stat and statwithin triggers will not function!");
+            self.getLogger().severe("[ERROR] " + "BeardStat not installed! stat and statwithin triggers will not function!");
         }
     }
 
@@ -435,24 +441,6 @@ public class BeardAch extends JavaPlugin {
      */
     public EntityStatManager getStats(){
         return stats;
-    }
-
-    /**
-     * Print console message
-     * @param line
-     */
-    public static void printCon(String line){
-        self.getLogger().info(line);
-    }
-
-    /**
-     * Print message for debug
-     * @param line
-     */
-    public static void printDebugCon(String line){
-        if(self.getConfig().getBoolean("general.debug")){
-            printCon("[DEBUG] " + line);
-        }
     }
 
 

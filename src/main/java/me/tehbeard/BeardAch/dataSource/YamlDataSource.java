@@ -21,7 +21,7 @@ public class YamlDataSource implements IDataSource {
 	File dbFile;
 	File fancy;
 	public YamlDataSource(){
-	    Plugin plugin = BeardAch.self;
+	    Plugin plugin = BeardAch.instance();
 		dbFile = new File(plugin.getDataFolder(),"database.yml");
 		fancy = new File(plugin.getDataFolder(),"ach.html");
 		db = YamlConfiguration.loadConfiguration(dbFile);

@@ -95,7 +95,7 @@ public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
                 l(player.getName() + " was inside cuboid");
                 if((currentTime-getTime(player.getName()))>=time){
                     l(player.getName() + " was inside cuboid for required amount of time");
-                    BeardAch.self.getAchievementManager().checkAchievement(ach);
+                    BeardAch.instance().getAchievementManager().checkAchievement(ach);
                     
                 }
                 if(!isInside){

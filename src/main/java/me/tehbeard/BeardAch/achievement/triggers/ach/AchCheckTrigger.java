@@ -38,7 +38,7 @@ public class AchCheckTrigger implements ITrigger {
 
 	public boolean checkAchievement(Player player) {
 		//if player has an acheivement
-		List<AchievementPlayerLink> achs = BeardAch.self.getAchievementManager().getAchievements(player.getName());
+		List<AchievementPlayerLink> achs = BeardAch.instance().getAchievementManager().getAchievements(player.getName());
 		if(achs !=null){
 			for(AchievementPlayerLink a: achs){
 				if(a.getSlug().equals(ach)){return true;}

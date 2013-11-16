@@ -29,7 +29,7 @@ public class DroxTrackReward implements IReward{
 	public void giveReward(Player player) {
 		if(BeardAch.droxAPI!=null){
 			BeardAch.droxAPI.promotePlayer(player.getName(), track);
-			BeardAch.printDebugCon("Played Promoted");
+			BeardAch.instance().getLogger().fine("Played Promoted");
 		}
 	}
 

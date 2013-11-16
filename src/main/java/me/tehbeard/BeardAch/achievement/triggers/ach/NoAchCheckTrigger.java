@@ -37,7 +37,7 @@ public class NoAchCheckTrigger implements ITrigger {
 
 	public boolean checkAchievement(Player player) {
 		//if player has an acheivement, return false
-		List<AchievementPlayerLink> achs = BeardAch.self.getAchievementManager().getAchievements(player.getName());
+		List<AchievementPlayerLink> achs = BeardAch.instance().getAchievementManager().getAchievements(player.getName());
 		boolean result = true;
 		if(achs !=null){
 			

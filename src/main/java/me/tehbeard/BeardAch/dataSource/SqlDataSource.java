@@ -36,13 +36,13 @@ public class SqlDataSource implements IDataSource{
 
     protected void createConnection(){
         String conUrl = String.format("jdbc:mysql://%s/%s",
-                BeardAch.self.getConfig().getString("ach.database.host"), 
-                BeardAch.self.getConfig().getString("ach.database.database"));
-        BeardAch.printCon("Configuring....");
+                BeardAch.instance().getConfig().getString("ach.database.host"), 
+                BeardAch.instance().getConfig().getString("ach.database.database"));
+        BeardAch.instance().getLogger().info("Configuring....");
         Properties conStr = new Properties();
-        conStr.put("user",BeardAch.self.getConfig().getString("ach.database.username",""));
-        conStr.put("password",BeardAch.self.getConfig().getString("ach.database.password",""));
-        BeardAch.printCon("Connecting....");
+        conStr.put("user",BeardAch.instance().getConfig().getString("ach.database.username",""));
+        conStr.put("password",BeardAch.instance().getConfig().getString("ach.database.password",""));
+        BeardAch.instance().getLogger().info("Connecting....");
         try {
             conn = DriverManager.getConnection(conUrl,conStr);
         } catch (SQLException e) {
@@ -52,10 +52,10 @@ public class SqlDataSource implements IDataSource{
 
     protected void checkAndBuildTable(){
         try{
-            BeardAch.printCon("Checking for storage table");
+            BeardAch.instance().getLogger().config("Checking for storage table");
             ResultSet rs = conn.getMetaData().getTables(null, null, "achievements", null);
             if (!rs.next()) {
-                BeardAch.printCon("Achievements table not found, creating table");
+                BeardAch.instance().getLogger().info("Achievements table not found, creating table");
                 PreparedStatement ps = conn.prepareStatement(
                         "CREATE TABLE IF NOT EXISTS `achievements` " +
                                 "( `player` varchar(32) NOT NULL,  " +
@@ -65,26 +65,26 @@ public class SqlDataSource implements IDataSource{
                         "ENGINE=InnoDB DEFAULT CHARSET=latin1;");
                 ps.executeUpdate();
                 ps.close();
-                BeardAch.printCon("created storage table");
+                BeardAch.instance().getLogger().info("created storage table");
             }
             else
             {
-                BeardAch.printCon("Table found");
+                BeardAch.instance().getLogger().info("Table found");
             }
             rs.close();
 
-            BeardAch.printCon("Checking for meta table");
+            BeardAch.instance().getLogger().fine("Checking for meta table");
             rs = conn.getMetaData().getTables(null, null, "ach_map", null);
             if (!rs.next()) {
-                BeardAch.printCon("meta table not found, creating table");
+                BeardAch.instance().getLogger().info("meta table not found, creating table");
                 PreparedStatement ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `ach_map` (`slug` char(255) NOT NULL,`name` char(255) NOT NULL,`description` char(255) NOT NULL,UNIQUE KEY `slug` (`slug`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
                 ps.executeUpdate();
                 ps.close();
-                BeardAch.printCon("created meta table");
+                BeardAch.instance().getLogger().info("created meta table");
             }
             else
             {
-                BeardAch.printCon("Table found");
+                BeardAch.instance().getLogger().info("Table found");
             }
             rs.close();
 
@@ -97,7 +97,7 @@ public class SqlDataSource implements IDataSource{
     }
 
     protected void prepareStatements(){
-        BeardAch.printDebugCon("Preparing statements");
+        BeardAch.instance().getLogger().fine("Preparing statements");
         try{
             prepGetAllPlayerAch = conn.prepareStatement("SELECT `achievement`,`timestamp` FROM `achievements` WHERE player=?");
             prepAddPlayerAch = conn.prepareStatement("INSERT INTO `achievements` (`player` ,`achievement`,`timestamp`) values (?,?,?)",Statement.RETURN_GENERATED_KEYS);
@@ -111,18 +111,18 @@ public class SqlDataSource implements IDataSource{
     }
     
     private synchronized boolean checkConnection(){
-		BeardAch.printDebugCon("Checking connection");
+		BeardAch.instance().getLogger().fine("Checking connection");
 		try {
 			if(conn == null || !conn.isValid(0)){
-				BeardAch.printCon("Connection to database interuptted, attempting to reconnect...");
+				BeardAch.instance().getLogger().warning("Connection to database interuptted, attempting to reconnect...");
 				createConnection();
 				if(conn!=null){
-					BeardAch.printDebugCon("Rebuilding statements");
+					BeardAch.instance().getLogger().info("Rebuilding statements");
 					prepareStatements();
 				}
 				else
 				{
-					BeardAch.printDebugCon("Reboot failed!");
+					BeardAch.instance().getLogger().severe("Connection reboot failed!");
 				}
 
 			}
@@ -132,7 +132,7 @@ public class SqlDataSource implements IDataSource{
 		}catch(AbstractMethodError e){
 
 		}
-		BeardAch.printDebugCon("Checking is " + conn != null ? "up" : "down");
+		BeardAch.instance().getLogger().fine("Checking is " + conn != null ? "up" : "down");
 		return conn != null;
 	}
 
@@ -146,18 +146,18 @@ public class SqlDataSource implements IDataSource{
             prepareStatements();
 
 
-            Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.self, new Runnable(){
+            Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), new Runnable(){
                 public void run() {
                     Runnable r = new SqlFlusher(writeCache);
                     writeCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
-                    Bukkit.getScheduler().runTaskAsynchronously(BeardAch.self, r);
+                    Bukkit.getScheduler().runTaskAsynchronously(BeardAch.instance(), r);
                     
                 }
 
             }, 2400L, 2400L);
-            BeardAch.printCon("Initaised MySQL Data Provider.");
+            BeardAch.instance().getLogger().info("Initaised MySQL Data Provider.");
         } catch (ClassNotFoundException e) {
-            BeardAch.printCon("MySQL Library not found!");
+            BeardAch.instance().getLogger().severe("MySQL Library not found!");
         }
     }
 
@@ -209,8 +209,8 @@ public class SqlDataSource implements IDataSource{
         }
 
         public void run() {
-            if(BeardAch.self.getConfig().getBoolean("general.verbose",false)){
-                BeardAch.printCon("Flushing to database");
+            if(BeardAch.instance().getConfig().getBoolean("general.verbose",false)){
+                BeardAch.instance().getLogger().fine("Flushing to database");
             }
             try {
                 //if connection is closed, attempt to rebuild connection
@@ -232,13 +232,13 @@ public class SqlDataSource implements IDataSource{
                 }
                 prepAddPlayerAch.executeBatch();
                 prepAddPlayerAch.clearBatch();
-                if(BeardAch.self.getConfig().getBoolean("general.verbose",false)){
-                    BeardAch.printCon("Flushed to database");
+                if(BeardAch.instance().getConfig().getBoolean("general.verbose",false)){
+                    BeardAch.instance().getLogger().fine("Flushed to database");
                 }
 
 
             } catch (SQLException e) {
-                BeardAch.printCon("Connection Could not be established, attempting to reconnect...");
+                BeardAch.instance().getLogger().fine("Connection Could not be established, attempting to reconnect...");
                 e.printStackTrace();
                 createConnection();
                 prepareStatements();
@@ -266,7 +266,7 @@ public class SqlDataSource implements IDataSource{
             fancyStat.clearBatch();
 
 
-            for(Achievement ach : BeardAch.self.getAchievementManager().getAchievementsList()){
+            for(Achievement ach : BeardAch.instance().getAchievementManager().getAchievementsList()){
                 fancyStat.setString(1, ach.getSlug());
                 fancyStat.setString(2, ach.getName());
                 fancyStat.setString(3, ach.getDescrip());

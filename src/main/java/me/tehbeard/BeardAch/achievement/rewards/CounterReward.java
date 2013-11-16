@@ -44,13 +44,13 @@ public class CounterReward implements IReward {
         if (manager != null) {
             manager.getBlobByNameType(player.getName(), IStatDataProvider.PLAYER_TYPE).getValue().getStat(DOMAIN, player.getWorld().getName(), "achCount", name).incrementStat(count);
         } else {
-            BeardAch.printError("BeardStat not loaded, reward not given!");
+            BeardAch.instance().getLogger().severe("[ERROR] " + "BeardStat not loaded, reward not given!");
         }
     }
 
     public void configure(Achievement ach) {
         if (manager == null) {
-            manager = BeardAch.self.getStats();
+            manager = BeardAch.instance().getStats();
         }
     }
 }

@@ -50,7 +50,7 @@ public class ExecShellReward implements IReward {
             }
             else
             {
-                BeardAch.self.getLogger().warning("ExecShell reward called but disabled in config");
+                BeardAch.instance().getLogger().warning("ExecShell reward called but disabled in config");
             }
         } catch (IOException ex) {
             Logger.getLogger(ExecShellReward.class.getName()).log(Level.SEVERE, null, ex);

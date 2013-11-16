@@ -68,6 +68,7 @@ public class Achievement {
             }
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -127,7 +128,7 @@ public class Achievement {
             return false;
         }
 
-        if (BeardAch.self.getAchievementManager().playerHas(player.getName(), slug)) {
+        if (BeardAch.instance().getAchievementManager().playerHas(player.getName(), slug)) {
             return false;
         }
 
@@ -149,14 +150,14 @@ public class Achievement {
                 reward.giveReward(player);
             }
         } else {
-            BeardAch.self.getLogger().info(player.getName() + " Exempt from achievement rewards.");
+            BeardAch.instance().getLogger().info(player.getName() + " Exempt from achievement rewards.");
         }
 
 
         switch (broadcast) {
             case BROADCAST: {
                 Bukkit.broadcastMessage(BeardAch.colorise(
-                        BeardAch.self.getConfig().getString("ach.msg.broadcast",
+                        BeardAch.instance().getConfig().getString("ach.msg.broadcast",
                         (ChatColor.AQUA + "<PLAYER> " + ChatColor.WHITE + "Unlocked: " + ChatColor.GOLD + "<ACH>")).replace("<ACH>", name).replace("<PLAYER>", player.getName())));
                 player.sendMessage(ChatColor.BLUE + descrip);
 
@@ -164,20 +165,20 @@ public class Achievement {
             break;
 
             case PERSON: {
-                player.sendMessage(BeardAch.colorise(BeardAch.self.getConfig().getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>", player.getName())));
+                player.sendMessage(BeardAch.colorise(BeardAch.instance().getConfig().getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>", player.getName())));
                 player.sendMessage(ChatColor.BLUE + descrip);
             }
             break;
             case NONE:
-                BeardAch.printDebugCon("Achievement get! " + player + " , " + name);
+                BeardAch.instance().getLogger().fine("Achievement get! " + player + " , " + name);
                 break;
             default:
                 break;
 
         }
 
-        BeardAch.self.getAchievementManager().makeAchievementLink(player.getName(), slug);
-        BeardAch.self.getAchievementManager().removeCheck(this, player.getName());
+        BeardAch.instance().getAchievementManager().makeAchievementLink(player.getName(), slug);
+        BeardAch.instance().getAchievementManager().removeCheck(this, player.getName());
     }
 
     public Set<ITrigger> getTrigs() {

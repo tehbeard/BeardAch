@@ -29,6 +29,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
+import java.util.logging.Level;
 import me.tehbeard.BeardAch.dataSource.json.ClassBasedParser;
 import me.tehbeard.BeardAch.dataSource.json.CuboidJSONParser;
 import me.tehbeard.utils.cuboid.Cuboid;
@@ -77,12 +78,12 @@ public class AchievementLoader {
 
 		try {
 			//Load and create file
-			File file = new File(BeardAch.self.getDataFolder(),"ach.json");
+			File file = new File(BeardAch.instance().getDataFolder(),"ach.json");
 			file.createNewFile();
 			List<Achievement> achievements = loadAchievementsFromJSONFile(file);
 			processAchievements(achievements);
 			
-			File achDir = new File(BeardAch.self.getDataFolder(),"config");
+			File achDir = new File(BeardAch.instance().getDataFolder(),"config");
 			if(achDir.isDirectory() && achDir.exists()){
 			    for(String f : achDir.list(new FilenameFilter() {
                     
@@ -105,8 +106,8 @@ public class AchievementLoader {
 			boolean tripped = false;
 			for(Achievement a:l){
 				tripped = true;
-				BeardAch.printCon("Loading achievement " + a.getName());
-				BeardAch.self.getAchievementManager().addAchievement(a);
+				BeardAch.instance().getLogger().config("Loading achievement " + a.getName());
+				BeardAch.instance().getAchievementManager().addAchievement(a);
 			}
 			//convert old to new json awesomeness
 			if(tripped){
@@ -114,7 +115,7 @@ public class AchievementLoader {
 				JsonWriter jw = new JsonWriter(new FileWriter(file));
 				jw.setIndent("  ");
 				gson.toJson(
-						BeardAch.self.getAchievementManager().getLoadedAchievements(),
+						BeardAch.instance().getAchievementManager().getLoadedAchievements(),
 						new TypeToken<List<Achievement>>(){}.getType(), 
 						jw
 						);
@@ -144,12 +145,12 @@ public class AchievementLoader {
 			//Run postLoad() on all achievements and add them to manager if successful 
 			for(Achievement a : achievements){
 				if(a.postLoad()){
-					BeardAch.printDebugCon("Loading achievement " + a.getName());
-					BeardAch.self.getAchievementManager().addAchievement(a);
+					BeardAch.instance().getLogger().log(Level.CONFIG, "Starting achievement {0}", a.getName());
+					BeardAch.instance().getAchievementManager().addAchievement(a);
 				}
 				else
 				{
-					BeardAch.printCon("Could not load " + a.getName());
+					BeardAch.instance().getLogger().warning("Could not load " + a.getName());
 				}
 			}
 		}
@@ -162,30 +163,30 @@ public class AchievementLoader {
 
 		List<Achievement> a = new ArrayList<Achievement>();
 
-		BeardAch.printDebugCon("Loading Achievement Data");
-		BeardAch.self.reloadConfig();
-		if(BeardAch.self.getConfig().isConfigurationSection("achievements")){
-			BeardAch.printCon("[PANIC] OLD ACHIEVEMENTS CONFIG FOUND, CONVERSION WILL BE DONE");
+		BeardAch.instance().getLogger().config("Loading Achievement Data");
+		BeardAch.instance().reloadConfig();
+		if(BeardAch.instance().getConfig().isConfigurationSection("achievements")){
+			BeardAch.instance().getLogger().config("[PANIC] OLD ACHIEVEMENTS CONFIG FOUND, CONVERSION WILL BE DONE");
 		}
 		else
 		{
 			return a;
 		}
 
-		Set<String> achs = BeardAch.self.getConfig().getConfigurationSection("achievements").getKeys(false);
+		Set<String> achs = BeardAch.instance().getConfig().getConfigurationSection("achievements").getKeys(false);
 
 		for(String slug : achs){
-			ConfigurationSection e = BeardAch.self.getConfig().getConfigurationSection("achievements").getConfigurationSection(slug);
+			ConfigurationSection e = BeardAch.instance().getConfig().getConfigurationSection("achievements").getConfigurationSection(slug);
 			if(e==null){
 				continue;
 			}
 			//load information
 			String name = e.getString("name");
 			String descrip = e.getString("descrip");
-			Display broadcast = Achievement.Display.valueOf(e.getString("broadcast",BeardAch.self.getConfig().getString("ach.msg.send","NONE")));
+			Display broadcast = Achievement.Display.valueOf(e.getString("broadcast",BeardAch.instance().getConfig().getString("ach.msg.send","NONE")));
 			slug = e.getString("alias",slug);
 			boolean hidden = e.getBoolean("hidden",false);
-			BeardAch.printDebugCon("Loading achievement " + name);
+			BeardAch.instance().getLogger().config("Loading achievement " + name);
 
 
 			Achievement ach = new Achievement(slug,name, descrip,broadcast,hidden);
@@ -197,23 +198,23 @@ public class AchievementLoader {
 				for(String trig: triggers){
 					String[] part = trig.split("\\|");
 					if(part.length==2){
-						BeardAch.printDebugCon("Trigger => " + trig);
+						BeardAch.instance().getLogger().log(Level.FINE, "Trigger => {0}", trig);
 						ITrigger trigger = triggerFactory.get(part[0]).newInstance();
-						if(trigger==null){BeardAch.printCon("[PANIC] TRIGGER " + part[0] + " NOT FOUND!!! SKIPPING.");continue;}
+						if(trigger==null){BeardAch.instance().getLogger().log(Level.WARNING, "[PANIC] TRIGGER {0} NOT FOUND!!! SKIPPING.", part[0]);continue;}
 						trigger.configure(ach,part[1]);
 						trigger.configure(ach);
 						ach.addTrigger(trigger);
 					}
 					else
 					{
-						BeardAch.printCon("[PANIC] ERROR! MALFORMED TRIGGER FOR ACHIEVEMENT " + name);
+						BeardAch.instance().getLogger().log(Level.WARNING, "[PANIC] ERROR! MALFORMED TRIGGER FOR ACHIEVEMENT {0}", name);
 					}
 				}
 				List<String> rewards = e.getStringList("rewards");
 				for(String reward: rewards){
 					String[] part = reward.split("\\|");
 					if(part.length==2){
-						BeardAch.printDebugCon("Reward => " + reward); 
+						BeardAch.instance().getLogger().log(Level.CONFIG, "Reward => {0}", reward); 
 						IReward rewardInst = rewardFactory.get(part[0]).newInstance();
 						rewardInst.configure(ach,part[1]);
 						rewardInst.configure(ach);
@@ -221,7 +222,7 @@ public class AchievementLoader {
 					}
 					else
 					{
-						BeardAch.printCon("[PANIC] ERROR! MALFORMED REWARD FOR ACHIEVEMENT " + name);
+						BeardAch.instance().getLogger().log(Level.WARNING, "[PANIC] ERROR! MALFORMED REWARD FOR ACHIEVEMENT {0}", name);
 					}
 				}
 
@@ -234,9 +235,9 @@ public class AchievementLoader {
 			a.add(ach);
 		}
 
-		BeardAch.self.getConfig().set("oldAchievements", BeardAch.self.getConfig().getConfigurationSection("achievements"));
-		BeardAch.self.getConfig().set("achievements",null);
-		BeardAch.self.saveConfig();
+		BeardAch.instance().getConfig().set("oldAchievements", BeardAch.instance().getConfig().getConfigurationSection("achievements"));
+		BeardAch.instance().getConfig().set("achievements",null);
+		BeardAch.instance().saveConfig();
 
 		return a;
 	}
