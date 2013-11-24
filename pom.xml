@@ -198,7 +198,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>me.tehbeard:utils</include>
+                                    <include>com.tehbeard:utils</include>
                                     <include>com.google.code.gson:gson</include>
                                     <include>tehbeard.annotate:annotate</include>
                                     <include>org.mcstats.bukkit:metrics</include>
