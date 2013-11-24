@@ -204,7 +204,7 @@
 									<shadedPattern>me.tehbeard.BeardAch.utils</shadedPattern>
 								</relocation>
 								<relocation>
-									<pattern>com.google.code.gson</pattern>
+									<pattern>com.google.gson</pattern>
 									<shadedPattern>me.tehbeard.BeardAch.gson</shadedPattern>
 								</relocation>
 							</relocations>
