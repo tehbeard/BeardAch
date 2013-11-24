@@ -18,8 +18,8 @@ import me.tehbeard.BeardAch.dataSource.configurable.Configurable;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
 import me.tehbeard.BeardAch.dataSource.json.editor.EditorJSON;
 
-import me.tehbeard.utils.addons.AddonLoader;
-import me.tehbeard.utils.factory.ConfigurableFactory;
+import com.tehbeard.utils.addons.AddonLoader;
+import com.tehbeard.utils.factory.ConfigurableFactory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

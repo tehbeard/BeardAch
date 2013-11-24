@@ -161,9 +161,6 @@ public class SqlDataSource implements IDataSource{
         }
     }
 
-
-
-
     public Set<AchievementPlayerLink> getPlayersAchievements(String player) {
         HashSet<AchievementPlayerLink> c = new HashSet<AchievementPlayerLink>();
         try {

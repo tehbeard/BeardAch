@@ -20,10 +20,9 @@ import me.tehbeard.BeardAch.dataSource.IDataSource;
 import me.tehbeard.BeardAch.dataSource.configurable.RunnableTime;
 import static me.tehbeard.BeardAch.dataSource.configurable.RunnableTime.SyncType.ASYNC;
 import static me.tehbeard.BeardAch.dataSource.configurable.RunnableTime.SyncType.SYNC;
-import me.tehbeard.utils.cuboid.ChunkCache;
-import me.tehbeard.utils.cuboid.CuboidEntry;
-
-import me.tehbeard.utils.cuboid.Cuboid;
+import com.tehbeard.utils.cuboid.ChunkCache;
+import com.tehbeard.utils.cuboid.CuboidEntry;
+import com.tehbeard.utils.cuboid.Cuboid;
 
 /**
  * Manages the link between achievements and players

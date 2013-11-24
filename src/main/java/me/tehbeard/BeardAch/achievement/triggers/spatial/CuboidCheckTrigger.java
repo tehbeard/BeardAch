@@ -11,7 +11,7 @@ import me.tehbeard.BeardAch.dataSource.json.editor.EditorFieldType;
 import me.tehbeard.BeardAch.dataSource.json.help.ComponentHelpDescription;
 import me.tehbeard.BeardAch.dataSource.json.help.ComponentType;
 import me.tehbeard.BeardAch.dataSource.json.help.ComponentValueDescription;
-import me.tehbeard.utils.cuboid.Cuboid;
+import com.tehbeard.utils.cuboid.Cuboid;
 
 import org.bukkit.entity.Player;
 

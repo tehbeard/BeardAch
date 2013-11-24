@@ -2,7 +2,7 @@ package me.tehbeard.BeardAch.dataSource.json;
 
 import java.lang.reflect.Type;
 
-import me.tehbeard.utils.cuboid.Cuboid;
+import com.tehbeard.utils.cuboid.Cuboid;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

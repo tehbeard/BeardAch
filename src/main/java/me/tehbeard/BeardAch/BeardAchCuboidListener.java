@@ -6,9 +6,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.tehbeard.BeardAch.achievement.Achievement;
-import me.tehbeard.utils.cuboid.ChunkCache;
-import me.tehbeard.utils.cuboid.Cuboid;
-import me.tehbeard.utils.cuboid.CuboidEntry;
+import com.tehbeard.utils.cuboid.ChunkCache;
+import com.tehbeard.utils.cuboid.Cuboid;
+import com.tehbeard.utils.cuboid.CuboidEntry;
 
 public class BeardAchCuboidListener implements Listener{
 

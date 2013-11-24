@@ -13,7 +13,7 @@ import me.tehbeard.BeardAch.BeardAch;
 import me.tehbeard.BeardAch.achievement.rewards.IReward;
 import me.tehbeard.BeardAch.achievement.triggers.ITrigger;
 import me.tehbeard.BeardAch.dataSource.configurable.IConfigurable;
-import me.tehbeard.utils.addons.AddonLoader;
+import com.tehbeard.utils.addons.AddonLoader;
 
 public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
 

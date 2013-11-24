@@ -32,7 +32,7 @@ import com.google.gson.stream.JsonWriter;
 import java.util.logging.Level;
 import me.tehbeard.BeardAch.dataSource.json.ClassBasedParser;
 import me.tehbeard.BeardAch.dataSource.json.CuboidJSONParser;
-import me.tehbeard.utils.cuboid.Cuboid;
+import com.tehbeard.utils.cuboid.Cuboid;
 
 
 /**
