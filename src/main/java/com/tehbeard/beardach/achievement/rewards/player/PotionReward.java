@@ -1,0 +1,54 @@
+package com.tehbeard.beardach.achievement.rewards.player;
+
+import com.tehbeard.beardach.BeardAch;
+import com.tehbeard.beardach.achievement.Achievement;
+import com.tehbeard.beardach.achievement.rewards.IReward;
+import com.tehbeard.beardach.dataSource.configurable.Configurable;
+import com.tehbeard.beardach.dataSource.json.editor.EditorField;
+import com.tehbeard.beardach.dataSource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.dataSource.json.help.ComponentType;
+
+import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import com.google.gson.annotations.Expose;
+import com.tehbeard.beardach.dataSource.json.editor.EditorFieldType;
+import org.bukkit.potion.PotionType;
+
+@ComponentHelpDescription(description = "Applies a potion effect to a player", name = "Apply potion", type = ComponentType.REWARD)
+@Configurable(tag="potion",name="Apply potion effect")
+public class PotionReward implements IReward {
+
+    @Expose
+    @EditorField(alias="Potion Type",type = EditorFieldType.selection,options = "org.bukkit.potion.PotionType")
+    private PotionType potionType;
+    @Expose
+    @EditorField(alias="Amplifier")
+    private int amplifier;
+    @Expose
+    @EditorField(alias="Duration")
+    private int duration;
+    
+    @Expose
+    @EditorField(alias="Ambient")
+    private boolean ambient = false;
+    
+    private PotionEffect effect;
+    
+    public void configure(Achievement ach, String config) {
+    }
+
+    public void giveReward(Player player) {
+        if(effect!=null){
+            effect.apply(player);
+        }
+    }
+
+    public void configure(Achievement ach) {
+        PotionEffectType type = PotionEffectType.getByName(potionType.name());
+        effect = new PotionEffect(type, duration, amplifier,ambient);
+        
+    }
+
+}

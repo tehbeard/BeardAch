@@ -1,0 +1,51 @@
+package com.tehbeard.beardach.achievement.rewards.player;
+
+import java.util.HashMap;
+
+import com.tehbeard.beardach.achievement.Achievement;
+import com.tehbeard.beardach.achievement.rewards.IReward;
+import com.tehbeard.beardach.dataSource.configurable.Configurable;
+import com.tehbeard.beardach.dataSource.json.editor.EditorField;
+import com.tehbeard.beardach.dataSource.json.editor.EditorFieldType;
+import com.tehbeard.beardach.dataSource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.dataSource.json.help.ComponentType;
+
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import com.google.gson.annotations.Expose;
+import com.tehbeard.utils.misc.ItemSyntax;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
+import org.bukkit.inventory.meta.FireworkMeta;
+
+@ComponentHelpDescription(description = "Launches a firework, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a>", name = "Launch firework", type = ComponentType.REWARD)
+@Configurable(name = "Launch firework", tag = "firework")
+public class FireworkReward implements IReward {
+
+    @Expose
+    @EditorField(alias = "Firework String (CraftBook item syntax)", type = EditorFieldType.text)
+    private String itemStr;
+    private FireworkMeta meta;
+
+    @Override
+    @Deprecated
+    public void configure(Achievement ach, String config) {
+    }
+
+    @Override
+    public void configure(Achievement ach) {
+        ItemStack item = ItemSyntax.getItem(itemStr);
+        if (item.getItemMeta() instanceof FireworkMeta == false) {
+            throw new IllegalStateException("Invalid item provided to firework reward for achievement " + ach.getSlug() + " :: " + ach.getName());
+        } else {
+            meta = (FireworkMeta) item.getItemMeta();
+        }
+    }
+
+    @Override
+    public void giveReward(Player player) {
+        ((Firework) player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK)).setFireworkMeta(meta);
+    }
+}

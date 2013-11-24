@@ -1,0 +1,49 @@
+package com.tehbeard.beardach.achievement.triggers.player;
+
+import com.tehbeard.beardach.achievement.Achievement;
+import com.tehbeard.beardach.achievement.triggers.ITrigger;
+import com.tehbeard.beardach.dataSource.configurable.Configurable;
+import com.tehbeard.beardach.dataSource.json.editor.EditorField;
+import com.tehbeard.beardach.dataSource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.dataSource.json.help.ComponentType;
+import com.tehbeard.beardach.dataSource.json.help.ComponentValueDescription;
+
+import org.bukkit.entity.Player;
+
+import com.google.gson.annotations.Expose;
+import com.tehbeard.beardach.dataSource.json.editor.EditorFieldType;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+
+@ComponentHelpDescription(description = "Is player riding an entity", name = "Riding entity", type = ComponentType.TRIGGER)
+@Configurable(name = "Riding entity", tag = "riding")
+public class PlayerRidingTrigger implements ITrigger {
+
+    @ComponentValueDescription(description = "Entity type to check")
+    @Expose
+    @EditorField(alias = "Entity",type = EditorFieldType.selection,options = "org.bukkit.entity.EntityType")
+    private EntityType entityType;
+
+    @Override
+    public void configure(Achievement ach, String config) {
+    }
+
+    @Override
+    public void configure(Achievement ach) {
+    }
+
+    @Override
+    public boolean checkAchievement(Player player) {
+        for (Entity e : player.getNearbyEntities(8, 8, 8)) {
+            if(!e.getType().equals(entityType)){continue;}
+            Entity passenger = e.getPassenger();
+            
+            if (passenger != null) {
+                if (passenger.equals(player)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
