@@ -3,8 +3,11 @@ package me.tehbeard.BeardAch.dataSource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,9 +29,10 @@ public class GSONDataSource implements IDataSource {
     private Map<String, Set<AchievementPlayerLink>> data = new HashMap<String, Set<AchievementPlayerLink>>();
     private File dbFile;
 
-    public GSONDataSource() {
-        //BeardAch.instance().getLogger().warning("Alert, Yaml provider is now deprecated, json provider will take it's place in the future.");
+    public GSONDataSource() throws FileNotFoundException, IOException {
         dbFile = new File(BeardAch.instance().getDataFolder(), "database.json");
+        dbFile.createNewFile();
+        data = gson.fromJson(new JsonReader(new FileReader(dbFile)),new TypeToken<Map<String, Set<AchievementPlayerLink>>>(){}.getType());
     }
 
     @Override
