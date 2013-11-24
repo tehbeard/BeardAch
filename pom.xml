@@ -206,12 +206,16 @@
                             </artifactSet>
                             <relocations>
                                 <relocation>
-                                    <pattern>me.tehbeard.utils</pattern>
-                                    <shadedPattern>me.tehbeard.BeardAch.utils</shadedPattern>
+                                    <pattern>com.tehbeard.utils</pattern>
+                                    <shadedPattern>com.tehbeard.beardach.utils</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.google.gson</pattern>
-                                    <shadedPattern>me.tehbeard.BeardAch.gson</shadedPattern>
+                                    <shadedPattern>com.tehbeard.beardach.gson</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.mcstats</pattern>
+                                    <shadedPattern>com.tehbeard.beardach.metrics</shadedPattern>
                                 </relocation>
                             </relocations>
                             <filters>
