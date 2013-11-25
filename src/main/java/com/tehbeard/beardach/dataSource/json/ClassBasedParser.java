@@ -13,6 +13,7 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.dataSource.configurable.Configurable;
+import java.util.logging.Level;
 
 /**
  *
@@ -37,10 +38,14 @@ public class ClassBasedParser<T> implements JsonSerializer<T>,JsonDeserializer<T
     @Override
     public T deserialize(JsonElement element, Type type, JsonDeserializationContext context) throws JsonParseException {
         try{
-            return context.deserialize(element, catalogue.get(element.getAsJsonObject().get("_type").getAsString()));
+            JsonElement key = element.getAsJsonObject().get("_type");
+            if(key == null){
+                BeardAch.instance().getLogger().log(Level.SEVERE, "Deserialization failed: Element lacks _type tag, {0}", element.getAsJsonObject().getAsString());
+            }
+            return context.deserialize(element, catalogue.get(key.getAsString()));
             }
             catch (NoClassDefFoundError e){
-            	BeardAch.instance().getLogger().severe("Deserialization failed: " + element.getAsJsonObject().get("_type").getAsString());
+            	BeardAch.instance().getLogger().log(Level.SEVERE, "Deserialization failed: {0}", element.getAsJsonObject().get("_type").getAsString());
             	BeardAch.instance().getLogger().severe("Dumping JSON");
             	BeardAch.instance().getLogger().severe(element.toString());
             	BeardAch.instance().getLogger().severe("END Dumping JSON");

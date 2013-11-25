@@ -106,7 +106,7 @@ public class AchievementLoader {
 			boolean tripped = false;
 			for(Achievement a:l){
 				tripped = true;
-				BeardAch.instance().getLogger().config("Loading achievement " + a.getName());
+				BeardAch.instance().getLogger().log(Level.CONFIG, "Loading achievement {0}", a.getName());
 				BeardAch.instance().getAchievementManager().addAchievement(a);
 			}
 			//convert old to new json awesomeness
