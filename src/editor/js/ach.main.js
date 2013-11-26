@@ -35,6 +35,7 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
   }
 
   $scope.ui.inc = function(){
+    if($scope.achievements.length == 0){return;}
     $scope.ui.pageStart ++;
 
     max = $scope.ui.pages();
@@ -44,6 +45,7 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
   }
 
   $scope.ui.dec = function(){
+    if($scope.achievements.length == 0){return;}
     $scope.ui.pageStart --;
     if($scope.ui.pageStart < 1){
     	$scope.ui.pageStart = 1;
