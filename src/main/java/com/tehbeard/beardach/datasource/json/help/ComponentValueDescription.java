@@ -9,5 +9,4 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface ComponentValueDescription {
 String description();
-String[] examples() default {};
 }

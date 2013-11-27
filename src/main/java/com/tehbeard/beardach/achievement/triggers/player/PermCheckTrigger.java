@@ -22,7 +22,7 @@ import com.google.gson.annotations.Expose;
 @Configurable(tag="perm",name="has permission node")
 public class PermCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(description="Permission node to check, does not have to one declared by a plugin",examples={"meta.group.veteran","madeup.check.for.something"})
+    @ComponentValueDescription(description="Permission node to check, does not have to one declared by a plugin")
     @Expose
     @EditorField(alias="permission node")
 	String perm;

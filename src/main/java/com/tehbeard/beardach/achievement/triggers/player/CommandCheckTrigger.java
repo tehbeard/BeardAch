@@ -35,7 +35,7 @@ public class CommandCheckTrigger extends AbstractEventTrigger {
     @EditorField(alias="Treat prefix as regex expression",type=EditorFieldType.bool)
     private boolean isRegex = false;
     
-    @ComponentValueDescription(description = "command prefix or regex expression to check",examples={"(prefix) /region","(regex) \\/[a-z]protect"})
+    @ComponentValueDescription(description = "command prefix or regex expression to check")
     @Expose
     @EditorField(alias="Command prefix to detect",type=EditorFieldType.text)
     private String commandText = "";
