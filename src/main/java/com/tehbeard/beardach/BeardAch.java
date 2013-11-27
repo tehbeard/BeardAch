@@ -166,40 +166,6 @@ public class BeardAch extends JavaPlugin {
             }
         }
 
-        // Load built in extras
-        InputStream bundle = getResource("bundle.properties");
-
-        if (bundle != null) {
-            try {
-                getLogger().info("Loading bundled addons");
-
-                Scanner scanner;
-
-                scanner = new Scanner(bundle);
-                while (scanner.hasNext()) {
-                    String ln = scanner.nextLine();
-                    String[] l = ln.split("=");
-                    if (l[0].equalsIgnoreCase("name")) {
-                        getLogger().info("Loading bundled addon " + l[1]);
-                    } else if (l[0].equalsIgnoreCase("class")) {
-                        Class<?> c = getClassLoader().loadClass(l[1]);
-                        if (c != null) {
-                            if (ITrigger.class.isAssignableFrom(c)) {
-                                triggersMetric++;
-                                addTrigger((Class<? extends ITrigger>) c);
-                            } else if (IReward.class.isAssignableFrom(c)) {
-                                rewardsMetric++;
-                                addReward((Class<? extends IReward>) c);
-                            }
-                        }
-                    }
-
-                }
-                scanner.close();
-            } catch (ClassNotFoundException e) {
-                getLogger().info("[PANIC] Could not load a class listed in the bundle file");
-            }
-        }
 
         getLogger().info("Preparing to load addons");
         // Create addon dir if it doesn't exist
