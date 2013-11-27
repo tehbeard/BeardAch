@@ -14,6 +14,9 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.file.FileConfiguration;
+
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
@@ -39,13 +42,14 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     @SQLFragment("ping")
     private PreparedStatement ping;
 
-    public JDBCAchievementDataSource(String host, String database, String username, String password) throws ClassNotFoundException, IOException, SQLException {
-        super("sql", "com.mysql.jdbc.Driver", Logger.getGlobal());
-        setConnectionUrl(String.format("jdbc:mysql://%s/%s", host, database));
+    public JDBCAchievementDataSource() throws ClassNotFoundException, IOException, SQLException {
+        super("sql", "com.mysql.jdbc.Driver", BeardAch.instance().getLogger());
+        Configuration cfg = BeardAch.instance().getConfig();
+        setConnectionUrl(String.format("jdbc:mysql://%s/%s", cfg.getString("ach.database.host"), cfg.getString("ach.database.database")));
 
         Properties auth = new Properties();
-        auth.put("user", username);
-        auth.put("password", password);
+        auth.put("user", cfg.getString("ach.database.username"));
+        auth.put("password", cfg.getString("ach.database.password"));
         setConnectionProperties(auth);
 
         Properties p = new Properties();
