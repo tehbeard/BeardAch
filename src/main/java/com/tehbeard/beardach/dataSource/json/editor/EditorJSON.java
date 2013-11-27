@@ -100,6 +100,7 @@ public class EditorJSON {
             list.add(ee);
         } catch (NoClassDefFoundError e) {
             BeardAch.instance().getLogger().log(Level.WARNING, "Skipping item {0}, class not found.", ee.name);
+            e.printStackTrace();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {

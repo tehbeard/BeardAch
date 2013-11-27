@@ -14,7 +14,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 
 @ComponentHelpDescription(description = "Sets the group of a player using vault, \\n Exact behaviour will depend on the permissions plugin, consult your permissions plugin as needed. \\n Should expected behaviour not occur, consider using the execute console command reward instead.", dependencies = {
-        "Vault", "Permissions plugin that works with Vault" })
+        "Vault"})
 @Configurable(tag = "vaultaddgroup", name = "(Vault) add/set group")
 public class SetGroupReward implements IReward {
 

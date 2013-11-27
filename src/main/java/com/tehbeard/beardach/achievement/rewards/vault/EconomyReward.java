@@ -14,7 +14,7 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 
-@ComponentHelpDescription(description = "Gives a player some money", dependencies = { "Vault", "Economy plugin that works with Vault" })
+@ComponentHelpDescription(description = "Gives a player some money", dependencies = { "Vault"})
 @Configurable(tag = "money", name = "(vault) Give money")
 public class EconomyReward implements IReward {
 

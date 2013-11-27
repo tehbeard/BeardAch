@@ -138,8 +138,8 @@ public class BeardAch extends JavaPlugin {
         achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type", ""));
 
         if (achievementManager.database == null) {
-            self.getLogger().severe("[ERROR] " + "NO SUITABLE DATABASE SELECTED!!");
-            self.getLogger().severe("[ERROR] " + "DISABLING PLUGIN!!");
+            self.getLogger().severe("NO SUITABLE DATABASE SELECTED!!");
+            self.getLogger().severe("[DISABLING PLUGIN!!");
 
             // onDisable();
             setEnabled(false);
