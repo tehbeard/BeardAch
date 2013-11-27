@@ -21,6 +21,7 @@ import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 import com.tehbeard.beardach.annotations.DataSourceDescriptor;
+import com.tehbeard.beardach.datasource.SqlDataSource.SqlFlusher;
 import com.tehbeard.utils.sql.JDBCDataSource;
 import com.tehbeard.utils.sql.SQLFragment;
 
@@ -108,7 +109,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     }
 
     @Override
-    public void setPlayersAchievements(String player, String achievements) {
+    public synchronized void setPlayersAchievements(String player, String achievements) {
         if (!writeCache.containsKey(player)) {
             writeCache.put(player, new HashSet<AchievementPlayerLink>());
         }
@@ -116,17 +117,9 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     }
 
     @Override
-    public void flush() {
-        throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                       // change
-                                                                       // body
-                                                                       // of
-                                                                       // generated
-                                                                       // methods,
-                                                                       // choose
-                                                                       // Tools
-                                                                       // |
-                                                                       // Templates.
+    public synchronized void flush() {
+        new SqlFlusher(writeCache).run();
+        writeCache = new HashMap<String, HashSet<AchievementPlayerLink>>();
     }
 
     @Override
