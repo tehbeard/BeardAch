@@ -10,22 +10,18 @@ import com.tehbeard.utils.cuboid.ChunkCache;
 import com.tehbeard.utils.cuboid.Cuboid;
 import com.tehbeard.utils.cuboid.CuboidEntry;
 
-public class BeardAchCuboidListener implements Listener{
+public class BeardAchCuboidListener implements Listener {
 
     private ChunkCache<Achievement> cache = new ChunkCache<Achievement>();
-    
-    
-    public void add(Cuboid cuboid,Achievement ach){
+
+    public void add(Cuboid cuboid, Achievement ach) {
         cache.addEntry(cuboid, ach);
     }
-    
-    @EventHandler(ignoreCancelled=true,priority=EventPriority.MONITOR)
-    public void onMove(PlayerMoveEvent event){
-        if(event.getTo().getBlockX() != event.getFrom().getBlockX() ||
-                event.getTo().getBlockY() != event.getFrom().getBlockY() || 
-                event.getTo().getBlockZ() != event.getFrom().getBlockZ()
-                ){
-            for(CuboidEntry<Achievement> entry : cache.getEntries(event.getTo())){
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    public void onMove(PlayerMoveEvent event) {
+        if (event.getTo().getBlockX() != event.getFrom().getBlockX() || event.getTo().getBlockY() != event.getFrom().getBlockY() || event.getTo().getBlockZ() != event.getFrom().getBlockZ()) {
+            for (CuboidEntry<Achievement> entry : cache.getEntries(event.getTo())) {
                 entry.getEntry().checkAchievement(event.getPlayer());
             }
         }

@@ -8,9 +8,10 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 
 /**
  * Base class for meta triggers, allows registering of the underlying triggers
+ * 
  * @author James
  */
-public interface MetaTrigger extends ITrigger{
-    
+public interface MetaTrigger extends ITrigger {
+
     public ITrigger[] getTriggers();
 }

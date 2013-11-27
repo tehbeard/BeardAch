@@ -1,6 +1,7 @@
 package com.tehbeard.beardach.achievement;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,26 +10,23 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
 import com.google.gson.annotations.Expose;
-import java.util.Set;
-
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 
 /**
  * Represents an achievement.
- *
+ * 
  * @author James
- *
+ * 
  */
 public class Achievement {
 
     public static enum Display {
 
-        BROADCAST,
-        PERSON,
-        NONE
+        BROADCAST, PERSON, NONE
     }
+
     @Expose
     private String slug;
     @Expose
@@ -53,13 +51,13 @@ public class Achievement {
     }
 
     public Achievement() {
-        this.id = nextId;
+        id = nextId;
         nextId++;
     }
 
     public boolean postLoad() {
         try {
-            this.exempt = new Permission("ach.exempt." + slug, PermissionDefault.FALSE);
+            exempt = new Permission("ach.exempt." + slug, PermissionDefault.FALSE);
             for (ITrigger t : triggers) {
                 t.configure(this);
             }
@@ -79,13 +77,12 @@ public class Achievement {
         this.name = name;
         this.descrip = descrip;
         this.broadcast = broadcast;
-        this.id = nextId;
+        id = nextId;
         nextId++;
         this.hidden = hidden;
-        this.exempt = new Permission("ach.exempt." + slug, PermissionDefault.FALSE);
-        //Bukkit.getPluginManager().removePermission(this.exempt);
-        //Bukkit.getPluginManager().addPermission(this.exempt);
-
+        exempt = new Permission("ach.exempt." + slug, PermissionDefault.FALSE);
+        // Bukkit.getPluginManager().removePermission(this.exempt);
+        // Bukkit.getPluginManager().addPermission(this.exempt);
 
     }
 
@@ -110,36 +107,30 @@ public class Achievement {
     }
 
     public void addTrigger(ITrigger trigger) {
-        if (trigger == null) {
+        if (trigger == null)
             return;
-        }
         triggers.add(trigger);
     }
 
     public void addReward(IReward reward) {
-        if (reward == null) {
+        if (reward == null)
             return;
-        }
         rewards.add(reward);
     }
 
     public boolean checkAchievement(Player player) {
-        if (player == null) {
+        if (player == null)
             return false;
-        }
 
-        if (BeardAch.instance().getAchievementManager().playerHas(player.getName(), slug)) {
+        if (BeardAch.instance().getAchievementManager().playerHas(player.getName(), slug))
             return false;
-        }
 
         for (ITrigger trigger : triggers) {
-            if (!trigger.checkAchievement(player)) {
+            if (!trigger.checkAchievement(player))
                 return false;
-            }
         }
 
         unlock(player);
-
 
         return true;
     }
@@ -153,22 +144,20 @@ public class Achievement {
             BeardAch.instance().getLogger().info(player.getName() + " Exempt from achievement rewards.");
         }
 
-
         switch (broadcast) {
             case BROADCAST: {
-                Bukkit.broadcastMessage(BeardAch.colorise(
-                        BeardAch.instance().getConfig().getString("ach.msg.broadcast",
-                        (ChatColor.AQUA + "<PLAYER> " + ChatColor.WHITE + "Unlocked: " + ChatColor.GOLD + "<ACH>")).replace("<ACH>", name).replace("<PLAYER>", player.getName())));
+                Bukkit.broadcastMessage(BeardAch.colorise(BeardAch.instance().getConfig().getString("ach.msg.broadcast", ChatColor.AQUA + "<PLAYER> " + ChatColor.WHITE + "Unlocked: " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name)
+                        .replace("<PLAYER>", player.getName())));
                 player.sendMessage(ChatColor.BLUE + descrip);
 
             }
-            break;
+                break;
 
             case PERSON: {
                 player.sendMessage(BeardAch.colorise(BeardAch.instance().getConfig().getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>", player.getName())));
                 player.sendMessage(ChatColor.BLUE + descrip);
             }
-            break;
+                break;
             case NONE:
                 BeardAch.instance().getLogger().fine("Achievement get! " + player + " , " + name);
                 break;

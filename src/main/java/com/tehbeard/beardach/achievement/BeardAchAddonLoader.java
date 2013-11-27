@@ -15,7 +15,7 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.datasource.configurable.IConfigurable;
 import com.tehbeard.utils.addons.AddonLoader;
 
-public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
+public class BeardAchAddonLoader extends AddonLoader<IConfigurable> {
 
     public int addonTriggersMetric = 0;
     public int addonRewardsMetric = 0;
@@ -30,27 +30,27 @@ public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
         try {
             ZipEntry manifest = addon.getEntry("bundle.properties");
 
-            if(manifest!=null){
+            if (manifest != null) {
                 BeardAch.instance().getLogger().fine("Addon manifest located");
 
                 Scanner scanner;
 
                 scanner = new Scanner(addon.getInputStream(manifest));
-                while(scanner.hasNext()){
+                while (scanner.hasNext()) {
                     String ln = scanner.nextLine();
                     String[] l = ln.split("=");
-                    if(l[0].equalsIgnoreCase("name")){
+                    if (l[0].equalsIgnoreCase("name")) {
                         BeardAch.instance().getLogger().log(Level.FINE, "Loading addon {0}", l[1]);
-                    }else if(l[0].equalsIgnoreCase("class")){
+                    } else if (l[0].equalsIgnoreCase("class")) {
                         classList.add(l[1]);
                     }
                 }
                 scanner.close();
-            }   
+            }
 
         } catch (IOException e) {
             BeardAch.instance().getLogger().severe("[ERROR] " + "An I/O error occured while trying to access an addon. " + addon.getName());
-            if(BeardAch.instance().getConfig().getBoolean("general.debug")){
+            if (BeardAch.instance().getConfig().getBoolean("general.debug")) {
                 e.printStackTrace();
             }
         }
@@ -60,16 +60,15 @@ public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {
     @SuppressWarnings("unchecked")
     @Override
     public void makeClass(Class<? extends IConfigurable> classType) {
-        if(classType!=null){
-            if(ITrigger.class.isAssignableFrom(classType)){
-                BeardAch.triggersMetric ++;
+        if (classType != null) {
+            if (ITrigger.class.isAssignableFrom(classType)) {
+                BeardAch.triggersMetric++;
                 BeardAch.instance().addTrigger((Class<? extends ITrigger>) classType);
-            }else if(IReward.class.isAssignableFrom(classType)){
-                BeardAch.rewardsMetric ++; 
+            } else if (IReward.class.isAssignableFrom(classType)) {
+                BeardAch.rewardsMetric++;
                 BeardAch.instance().addReward((Class<? extends IReward>) classType);
             }
         }
     }
-
 
 }

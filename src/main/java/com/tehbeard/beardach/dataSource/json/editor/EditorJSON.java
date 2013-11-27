@@ -4,19 +4,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
@@ -24,9 +22,9 @@ import com.tehbeard.beardach.annotations.Configurable;
 
 /**
  * Generates the json file for the achievements editor
- *
+ * 
  * @author James
- *
+ * 
  */
 public class EditorJSON {
 
@@ -42,9 +40,9 @@ public class EditorJSON {
 
     /**
      * Structural class for elements of a trigger/reward
-     *
+     * 
      * @author James
-     *
+     * 
      */
     public class EditorFormElement {
 
@@ -82,16 +80,16 @@ public class EditorJSON {
                     efe.type = a.type().toString().toLowerCase();
                     if (a.options().length > 0) {
                         if (a.options().length == 1) {
+                            @SuppressWarnings("unchecked")
                             Class<Enum> enumClass = (Class<Enum>) Class.forName(a.options()[0]);
+                            @SuppressWarnings("rawtypes")
                             Enum[] enums = (Enum[]) enumClass.getMethod("values").invoke(null);
                             String[] options = new String[enums.length];
-                            for(int i = 0;i<enums.length; i++){
+                            for (int i = 0; i < enums.length; i++) {
                                 options[i] = enums[i].name();
                             }
                             efe.values = options;
-                        }
-                        else
-                        {
+                        } else {
                             efe.values = a.options();
                         }
                     }
@@ -123,7 +121,6 @@ public class EditorJSON {
         JsonWriter writer = new JsonWriter(fw);
         writer.setIndent("  ");
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
 
         gson.toJson(this, new TypeToken<EditorJSON>() {
         }.getType(), writer);

@@ -1,21 +1,18 @@
 package com.tehbeard.beardach.achievement.rewards;
 
+import org.bukkit.entity.Player;
+
+import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
-
-
-import org.bukkit.entity.Player;
-
-import com.google.gson.annotations.Expose;
 import com.tehbeard.beardstat.dataproviders.IStatDataProvider;
 import com.tehbeard.beardstat.manager.EntityStatManager;
 
-@ComponentHelpDescription(description = "Increment counter value. Counters are stored in BeardStat and accessible from the stats triggers", dependencies = {"BeardStat"})
+@ComponentHelpDescription(description = "Increment counter value. Counters are stored in BeardStat and accessible from the stats triggers", dependencies = { "BeardStat" })
 @Configurable(tag = "counter", name = "Increment counter")
 public class CounterReward implements IReward {
 
@@ -30,6 +27,7 @@ public class CounterReward implements IReward {
     int count = 0;
     private static EntityStatManager manager = null;
 
+    @Override
     public void configure(Achievement Ach, String config) {
 
         String[] opt = config.split("\\:");
@@ -40,6 +38,7 @@ public class CounterReward implements IReward {
 
     }
 
+    @Override
     public void giveReward(Player player) {
         if (manager != null) {
             manager.getBlobByNameType(player.getName(), IStatDataProvider.PLAYER_TYPE).getValue().getStat(DOMAIN, player.getWorld().getName(), "achCount", name).incrementStat(count);
@@ -48,6 +47,7 @@ public class CounterReward implements IReward {
         }
     }
 
+    @Override
     public void configure(Achievement ach) {
         if (manager == null) {
             manager = BeardAch.instance().getStats();

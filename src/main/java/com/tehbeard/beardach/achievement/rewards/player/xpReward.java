@@ -3,32 +3,33 @@ package com.tehbeard.beardach.achievement.rewards.player;
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
-
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 
-
 @ComponentHelpDescription(description = "Gives a player some xp")
-@Configurable(tag="xp",name="Give xp")
+@Configurable(tag = "xp", name = "Give xp")
 public class xpReward implements IReward {
 
     @Expose
-    @EditorField(alias="Amount to give")
+    @EditorField(alias = "Amount to give")
     int xp;
 
+    @Override
     public void configure(Achievement arg0, String config) {
         xp = Integer.parseInt(config);
-        
+
     }
 
+    @Override
     public void giveReward(Player player) {
         player.giveExp(xp);
     }
 
-	public void configure(Achievement ach) {
-	}
-    
+    @Override
+    public void configure(Achievement ach) {
+    }
+
 }

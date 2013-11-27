@@ -2,13 +2,13 @@ package com.tehbeard.beardach.datasource;
 
 import java.util.Set;
 
-import com.tehbeard.beardach.achievement.*;
+import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 
 /**
  * Represents a datasource for achievements
- *
+ * 
  * @author James
- *
+ * 
  */
 public interface IDataSource {
 

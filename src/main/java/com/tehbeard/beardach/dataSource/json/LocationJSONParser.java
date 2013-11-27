@@ -15,13 +15,14 @@ import com.google.gson.JsonSerializer;
 
 /**
  * Allows location's to be transformed to/from JSON
+ * 
  * @author James
- *
+ * 
  */
-public class LocationJSONParser implements JsonSerializer<Location>,JsonDeserializer<Location>{
+public class LocationJSONParser implements JsonSerializer<Location>, JsonDeserializer<Location> {
 
-    public JsonElement serialize(Location location, Type type,
-            JsonSerializationContext context) {
+    @Override
+    public JsonElement serialize(Location location, Type type, JsonSerializationContext context) {
         System.out.println(location.toString());
         JsonObject element = new JsonObject();
         element.addProperty("world", location.getWorld().getName());
@@ -33,16 +34,11 @@ public class LocationJSONParser implements JsonSerializer<Location>,JsonDeserial
         return element;
     }
 
-    public Location deserialize(JsonElement e, Type type,
-            JsonDeserializationContext context) throws JsonParseException {
+    @Override
+    public Location deserialize(JsonElement e, Type type, JsonDeserializationContext context) throws JsonParseException {
         JsonObject l = (JsonObject) e;
-        return new Location(Bukkit.getWorld(l.get("world").getAsString()),
-                l.get("x").getAsDouble(),
-                l.get("y").getAsDouble(),
-                l.get("z").getAsDouble(),
-                (l.has("yaw") ? l.get("yaw").getAsFloat() : 0.0f),
-                (l.has("pitch") ? l.get("pitch").getAsFloat() : 0.0f)
-                );
+        return new Location(Bukkit.getWorld(l.get("world").getAsString()), l.get("x").getAsDouble(), l.get("y").getAsDouble(), l.get("z").getAsDouble(), l.has("yaw") ? l.get("yaw").getAsFloat() : 0.0f, l.has("pitch") ? l.get("pitch")
+                .getAsFloat() : 0.0f);
 
     }
 

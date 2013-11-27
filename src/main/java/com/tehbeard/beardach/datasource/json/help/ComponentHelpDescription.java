@@ -5,9 +5,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(value=ElementType.TYPE)
+@Target(value = ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
 public @interface ComponentHelpDescription {
-String description();
-String[] dependencies() default {}; 
+    String description();
+    String[] dependencies() default {};
+    String[] categories() default {};
 }

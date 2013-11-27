@@ -1,8 +1,8 @@
 package com.tehbeard.beardach.achievement;
 
-import com.google.gson.annotations.Expose;
 import java.sql.Timestamp;
 
+import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.BeardAch;
 
 public class AchievementPlayerLink {
@@ -29,7 +29,7 @@ public class AchievementPlayerLink {
     public AchievementPlayerLink(String slug) {
         this.slug = slug;
 
-        this.date = new Timestamp((new java.util.Date()).getTime());
+        date = new Timestamp(new java.util.Date().getTime());
         date.setNanos(0);
     }
 

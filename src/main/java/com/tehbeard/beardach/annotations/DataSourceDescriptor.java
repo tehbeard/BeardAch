@@ -5,6 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DataSourceDescriptor {
-String tag();
-String version();
+    String tag();
+
+    String version();
 }
