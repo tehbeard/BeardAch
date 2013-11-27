@@ -36,6 +36,7 @@ public class ANDTrigger implements MetaTrigger {
     @Override
     public boolean checkAchievement(Player player) {
         for (ITrigger t : getTriggers()) {
+            if(t == null){continue;}
             if (!t.checkAchievement(player))
                 return false;
         }
@@ -45,6 +46,7 @@ public class ANDTrigger implements MetaTrigger {
     @Override
     public void configure(Achievement ach) {
         for (ITrigger t : getTriggers()) {
+            if(t == null){continue;}
             t.configure(ach);
         }
     }

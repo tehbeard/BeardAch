@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS `ach_map` (
-  `slug` char(255) NOT NULL,
-  `name` char(255) NOT NULL,
-  `description` char(255) NOT NULL,
-  UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-

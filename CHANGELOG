@@ -1,3 +1,8 @@
+##coconut milkshake
+* Finally drop yaml data source, json is now the default file based source.
+* New refactored SQL data source, based on the same techniques as BeardStat's data source.
+* Tweaks to the trigger/reward loading, they will not load if a plugin they depend on is not found.
+* breaking: changed to com.tehbeard.beardach package.
 ##Banana Split
 * Support for BeardStat 0.6 and up
   * Will probably when loaded with 0.5 and below, DO NOT DO THIS.
