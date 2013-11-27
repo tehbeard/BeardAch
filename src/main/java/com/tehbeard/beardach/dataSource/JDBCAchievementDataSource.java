@@ -14,8 +14,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.file.FileConfiguration;
 
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
@@ -58,6 +58,21 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         setSqlFragments(p);
         setup();
         executeScript("makeTable");
+        
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), new Runnable() {
+            @Override
+            public void run() {
+                Runnable r = new SqlFlusher(getWriteCache());
+                writeCache = new HashMap<String, HashSet<AchievementPlayerLink>>();
+                Bukkit.getScheduler().runTaskAsynchronously(BeardAch.instance(), r);
+
+            }
+
+        }, 2400L, 2400L);
+    }
+    
+    protected synchronized HashMap<String, HashSet<AchievementPlayerLink>> getWriteCache(){
+        return writeCache;
     }
 
     @Override
