@@ -19,6 +19,7 @@ import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
+import com.tehbeard.beardach.datasource.json.AchievementParserException;
 import com.tehbeard.beardach.datasource.json.ClassBasedParser;
 import com.tehbeard.beardach.datasource.json.ClassCatalogue;
 import com.tehbeard.beardach.datasource.json.CuboidJSONParser;
@@ -48,6 +49,8 @@ public class AchievementLoader {
         try {
             return gson.fromJson(new FileReader(file), new TypeToken<List<Achievement>>() {
             }.getType());
+        } catch (AchievementParserException e){
+            BeardAch.printError("Error occured parsing an achievement",e);
         } catch (JsonIOException e) {
             BeardAch.printError("An error occured reading " + file.toString(), e);
         } catch (JsonSyntaxException e) {
@@ -65,6 +68,9 @@ public class AchievementLoader {
             File file = new File(BeardAch.instance().getDataFolder(), "ach.json");
             file.createNewFile();
             List<Achievement> achievements = loadAchievementsFromJSONFile(file);
+            if(achievements == null){
+                BeardAch.instance().getLogger().severe("Failed to load achievements from " + file);
+            }
             processAchievements(achievements);
 
             File achDir = new File(BeardAch.instance().getDataFolder(), "config");
@@ -77,6 +83,9 @@ public class AchievementLoader {
                     }
                 })) {
                     achievements = loadAchievementsFromJSONFile(new File(achDir, f));
+                    if(achievements == null){
+                        BeardAch.instance().getLogger().severe("Failed to load achievements from " + file);
+                    }
                     processAchievements(achievements);
                 }
             }

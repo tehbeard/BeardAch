@@ -37,19 +37,19 @@ public class ClassBasedParser<T> implements JsonSerializer<T>, JsonDeserializer<
 
     @Override
     public T deserialize(JsonElement element, Type type, JsonDeserializationContext context) throws JsonParseException {
-        try {
-            JsonElement key = element.getAsJsonObject().get("_type");
-            if (key == null) {
-                BeardAch.instance().getLogger().log(Level.SEVERE, "Deserialization failed: Element lacks _type tag, {0}", element.getAsJsonObject().getAsString());
-            }
-            return context.deserialize(element, catalogue.get(key.getAsString()));
-        } catch (NoClassDefFoundError e) {
-            BeardAch.instance().getLogger().log(Level.SEVERE, "Deserialization failed: {0}", element.getAsJsonObject().get("_type").getAsString());
-            BeardAch.instance().getLogger().severe("Dumping JSON");
-            BeardAch.instance().getLogger().severe(element.toString());
-            BeardAch.instance().getLogger().severe("END Dumping JSON");
+        JsonElement key = element.getAsJsonObject().get("_type");
+
+        if (key == null) {
+            throw new AchievementParserException("Deserialization failed: Element lacks _type tag, " + element.getAsJsonObject().getAsString());
         }
-        return null;
+
+        Class<? extends T> classType = catalogue.get(key.getAsString());
+
+        if (classType == null) {
+            throw new AchievementParserException("Cannot find class mapped to type " + key.getAsString());
+        }
+
+        return context.deserialize(element, classType);
     }
 
 }
