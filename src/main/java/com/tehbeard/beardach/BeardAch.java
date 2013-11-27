@@ -124,6 +124,7 @@ public class BeardAch extends JavaPlugin {
         dataSourceFactory.addProduct(SqlDataSource.class);
         dataSourceFactory.addProduct(NullDataSource.class);
         dataSourceFactory.addProduct(GSONDataSource.class);
+        dataSourceFactory.addProduct(JDBCAchievementDataSource.class);
 
         achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type",""));
 

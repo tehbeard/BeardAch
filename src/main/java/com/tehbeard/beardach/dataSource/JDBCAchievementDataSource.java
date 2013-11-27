@@ -23,6 +23,7 @@ import com.tehbeard.beardach.achievement.AchievementPlayerLink;
  *
  * @author James
  */
+@DataSourceDescriptor(tag="mysql",version="2.0")
 public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSource{
     
     private HashMap<String,HashSet<AchievementPlayerLink>> writeCache = new HashMap<String,HashSet<AchievementPlayerLink>>();
