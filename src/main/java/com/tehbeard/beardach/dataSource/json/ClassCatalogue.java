@@ -1,10 +1,10 @@
-package com.tehbeard.beardach.dataSource.json;
+package com.tehbeard.beardach.datasource.json;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.tehbeard.beardach.dataSource.configurable.Configurable;
+import com.tehbeard.beardach.annotations.Configurable;
 
 /**
  * Provides a string -> class mapping

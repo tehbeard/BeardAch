@@ -1,4 +1,4 @@
-package com.tehbeard.beardach.dataSource.json;
+package com.tehbeard.beardach.datasource.json;
 
 import java.lang.reflect.Type;
 

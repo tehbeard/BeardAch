@@ -1,4 +1,4 @@
-package com.tehbeard.beardach.dataSource;
+package com.tehbeard.beardach.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

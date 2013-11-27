@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tehbeard.beardach.dataSource.json;
+package com.tehbeard.beardach.datasource.json;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -12,7 +12,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import com.tehbeard.beardach.BeardAch;
-import com.tehbeard.beardach.dataSource.configurable.Configurable;
+import com.tehbeard.beardach.annotations.Configurable;
 import java.util.logging.Level;
 
 /**

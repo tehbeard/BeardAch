@@ -1,4 +1,4 @@
-package com.tehbeard.beardach.dataSource.configurable;
+package com.tehbeard.beardach.datasource.configurable;
 
 /**
  * Config for a runnable object

@@ -1,4 +1,4 @@
-package com.tehbeard.beardach.dataSource.json.editor;
+package com.tehbeard.beardach.datasource.json.editor;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
-import com.tehbeard.beardach.dataSource.configurable.Configurable;
+import com.tehbeard.beardach.annotations.Configurable;
 
 /**
  * Generates the json file for the achievements editor

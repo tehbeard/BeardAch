@@ -1,4 +1,4 @@
-package com.tehbeard.beardach.dataSource;
+package com.tehbeard.beardach.datasource;
 
 
 import java.sql.Connection;
@@ -19,6 +19,7 @@ import org.bukkit.Bukkit;
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
+import com.tehbeard.beardach.annotations.DataSourceDescriptor;
 
 @DataSourceDescriptor(tag="mysql",version="1.1")
 public class SqlDataSource implements IDataSource{

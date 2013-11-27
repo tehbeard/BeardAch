@@ -1,4 +1,4 @@
-package com.tehbeard.beardach.dataSource;
+package com.tehbeard.beardach.datasource;
 
 import java.util.Set;
 

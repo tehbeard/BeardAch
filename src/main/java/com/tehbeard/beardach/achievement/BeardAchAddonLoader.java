@@ -12,7 +12,7 @@ import java.util.zip.ZipFile;
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
-import com.tehbeard.beardach.dataSource.configurable.IConfigurable;
+import com.tehbeard.beardach.datasource.configurable.IConfigurable;
 import com.tehbeard.utils.addons.AddonLoader;
 
 public class BeardAchAddonLoader extends  AddonLoader<IConfigurable> {

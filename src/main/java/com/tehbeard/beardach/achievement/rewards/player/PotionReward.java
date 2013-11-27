@@ -3,17 +3,17 @@ package com.tehbeard.beardach.achievement.rewards.player;
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
-import com.tehbeard.beardach.dataSource.configurable.Configurable;
-import com.tehbeard.beardach.dataSource.json.editor.EditorField;
-import com.tehbeard.beardach.dataSource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.dataSource.json.help.ComponentType;
+import com.tehbeard.beardach.annotations.Configurable;
+import com.tehbeard.beardach.datasource.json.editor.EditorField;
+import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentType;
 
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.google.gson.annotations.Expose;
-import com.tehbeard.beardach.dataSource.json.editor.EditorFieldType;
+import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import org.bukkit.potion.PotionType;
 
 @ComponentHelpDescription(description = "Applies a potion effect to a player", name = "Apply potion", type = ComponentType.REWARD)

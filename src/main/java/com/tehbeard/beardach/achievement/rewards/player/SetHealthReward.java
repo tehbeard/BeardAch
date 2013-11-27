@@ -6,10 +6,10 @@ import com.google.gson.annotations.Expose;
 
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
-import com.tehbeard.beardach.dataSource.configurable.Configurable;
-import com.tehbeard.beardach.dataSource.json.editor.EditorField;
-import com.tehbeard.beardach.dataSource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.dataSource.json.help.ComponentType;
+import com.tehbeard.beardach.annotations.Configurable;
+import com.tehbeard.beardach.datasource.json.editor.EditorField;
+import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentType;
 
 @ComponentHelpDescription(description = "Sets the players health to certain value", name = "set player health", type = ComponentType.REWARD)
 @Configurable(tag="sethealth",name="Heal player")

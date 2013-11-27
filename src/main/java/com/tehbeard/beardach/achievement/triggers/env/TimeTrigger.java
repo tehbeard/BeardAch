@@ -6,11 +6,11 @@ import com.google.gson.annotations.Expose;
 
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
-import com.tehbeard.beardach.dataSource.configurable.Configurable;
-import com.tehbeard.beardach.dataSource.json.editor.EditorField;
-import com.tehbeard.beardach.dataSource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.dataSource.json.help.ComponentType;
-import com.tehbeard.beardach.dataSource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.annotations.Configurable;
+import com.tehbeard.beardach.datasource.json.editor.EditorField;
+import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentType;
+import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 @ComponentHelpDescription(description = "Checks if the worlds time is between two values", name = "Between (time)", type = ComponentType.TRIGGER)
 @Configurable(tag="time",name="Between two times")

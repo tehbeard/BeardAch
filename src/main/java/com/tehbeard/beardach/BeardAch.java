@@ -13,10 +13,10 @@ import com.tehbeard.beardach.achievement.*;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.commands.*;
-import com.tehbeard.beardach.dataSource.*;
-import com.tehbeard.beardach.dataSource.configurable.Configurable;
-import com.tehbeard.beardach.dataSource.configurable.IConfigurable;
-import com.tehbeard.beardach.dataSource.json.editor.EditorJSON;
+import com.tehbeard.beardach.datasource.*;
+import com.tehbeard.beardach.annotations.Configurable;
+import com.tehbeard.beardach.datasource.configurable.IConfigurable;
+import com.tehbeard.beardach.datasource.json.editor.EditorJSON;
 
 import com.tehbeard.utils.addons.AddonLoader;
 import com.tehbeard.utils.factory.ConfigurableFactory;
@@ -30,6 +30,7 @@ import org.mcstats.Metrics.Graph;
 import org.mcstats.Metrics.Plotter;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.tehbeard.beardach.annotations.DataSourceDescriptor;
 import com.tehbeard.beardstat.BeardStat;
 import com.tehbeard.beardstat.manager.EntityStatManager;
 

@@ -1,4 +1,4 @@
-package com.tehbeard.beardach.dataSource.configurable;
+package com.tehbeard.beardach.datasource.configurable;
 
 import com.tehbeard.beardach.achievement.Achievement;
 

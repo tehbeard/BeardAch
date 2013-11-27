@@ -1,4 +1,4 @@
-package com.tehbeard.beardach.dataSource;
+package com.tehbeard.beardach.datasource;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,8 +20,8 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.Achievement.Display;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
-import com.tehbeard.beardach.dataSource.json.ClassCatalogue;
-import com.tehbeard.beardach.dataSource.json.LocationJSONParser;
+import com.tehbeard.beardach.datasource.json.ClassCatalogue;
+import com.tehbeard.beardach.datasource.json.LocationJSONParser;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,8 +30,8 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 import java.util.logging.Level;
-import com.tehbeard.beardach.dataSource.json.ClassBasedParser;
-import com.tehbeard.beardach.dataSource.json.CuboidJSONParser;
+import com.tehbeard.beardach.datasource.json.ClassBasedParser;
+import com.tehbeard.beardach.datasource.json.CuboidJSONParser;
 import com.tehbeard.utils.cuboid.Cuboid;
 
 

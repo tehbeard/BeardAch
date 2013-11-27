@@ -7,12 +7,12 @@ import com.google.gson.annotations.Expose;
 
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
-import com.tehbeard.beardach.dataSource.configurable.Configurable;
-import com.tehbeard.beardach.dataSource.json.editor.EditorField;
-import com.tehbeard.beardach.dataSource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.dataSource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.dataSource.json.help.ComponentType;
-import com.tehbeard.beardach.dataSource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.annotations.Configurable;
+import com.tehbeard.beardach.datasource.json.editor.EditorField;
+import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
+import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentType;
+import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 @ComponentHelpDescription(description = "Throws a lightning bolt at the player", name = "Lightning", type = ComponentType.REWARD)
 @Configurable(tag="lightning",name="Strike lightning on player")

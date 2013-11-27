@@ -1,4 +1,4 @@
-package com.tehbeard.beardach.dataSource;
+package com.tehbeard.beardach.datasource;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -13,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
+import com.tehbeard.beardach.annotations.DataSourceDescriptor;
 
 @DataSourceDescriptor(tag="file",version="1.4")
 public class YamlDataSource implements IDataSource {

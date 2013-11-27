@@ -1,6 +1,6 @@
 package com.tehbeard.beardach.achievement.triggers;
 
-import com.tehbeard.beardach.dataSource.configurable.IConfigurable;
+import com.tehbeard.beardach.datasource.configurable.IConfigurable;
 
 import org.bukkit.entity.Player;
 

@@ -3,11 +3,11 @@ package com.tehbeard.beardach.achievement.rewards.command;
 
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
-import com.tehbeard.beardach.dataSource.configurable.Configurable;
-import com.tehbeard.beardach.dataSource.json.editor.EditorField;
-import com.tehbeard.beardach.dataSource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.dataSource.json.help.ComponentType;
-import com.tehbeard.beardach.dataSource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.annotations.Configurable;
+import com.tehbeard.beardach.datasource.json.editor.EditorField;
+import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentType;
+import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

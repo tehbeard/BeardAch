@@ -1,4 +1,4 @@
-package com.tehbeard.beardach.dataSource;
+package com.tehbeard.beardach.datasource;
 
 import com.tehbeard.utils.sql.JDBCDataSource;
 import com.tehbeard.utils.sql.SQLFragment;
@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
+import com.tehbeard.beardach.annotations.DataSourceDescriptor;
 
 /**
  *
