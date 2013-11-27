@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -83,15 +84,20 @@ public class BeardAch extends JavaPlugin {
     @Override
     @SuppressWarnings("unchecked")
     public void onEnable() {
+        
         self = this;
+        
         achievementManager = new AchievementManager();
         // Load config
+        
         getLogger().info("Starting BeardAch");
-        /*
-         * if(!getConfig().getKeys(false).contains("achievements")){
-         * 
-         * }
-         */
+        
+        //patch db version if not found.
+        if(!getConfig().isSet("ach.database.sql_db_version")){
+            getConfig().set("ach.database.sql_db_version", 0);
+            saveConfig();
+        }
+        
         getConfig().options().copyDefaults(true);
         saveConfig();
         reloadConfig();
@@ -135,9 +141,9 @@ public class BeardAch extends JavaPlugin {
         dataSourceFactory.addProduct(GSONDataSource.class);
         dataSourceFactory.addProduct(JDBCAchievementDataSource.class);
 
-        achievementManager.database = dataSourceFactory.getProduct(getConfig().getString("ach.database.type", ""));
+        IDataSource db = dataSourceFactory.getProduct(getConfig().getString("ach.database.type", ""));
 
-        if (achievementManager.database == null) {
+        if (db == null) {
             self.getLogger().severe("NO SUITABLE DATABASE SELECTED!!");
             self.getLogger().severe("[DISABLING PLUGIN!!");
 
@@ -145,6 +151,22 @@ public class BeardAch extends JavaPlugin {
             setEnabled(false);
             return;
         }
+        
+        //Do db migration if needed.
+        if(db instanceof JDBCAchievementDataSource){
+            
+            try {
+                JDBCAchievementDataSource jdbc = (JDBCAchievementDataSource)db;
+                jdbc.doMigration(getConfig().getInt("ach.database.sql_db_version"),getConfig().getDefaults().getInt("ach.database.sql_db_version"));
+                getConfig().set("ach.database.sql_db_version",getConfig().getDefaults().getInt("ach.database.sql_db_version"));
+                saveConfig();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+        }
+        
         getLogger().info("Installing default triggers and rewards");
 
         Scanner s = new Scanner(getResource("components.txt"));
@@ -260,7 +282,7 @@ public class BeardAch extends JavaPlugin {
                     rewardsGraph.addPlotter(p);
                 }
 
-                DataSourceDescriptor c = achievementManager.database.getClass().getAnnotation(DataSourceDescriptor.class);
+                DataSourceDescriptor c = db.getClass().getAnnotation(DataSourceDescriptor.class);
                 Graph g = metrics.createGraph("storage system");
                 g.addPlotter(new Plotter(c.tag() + " storage") {
 
@@ -311,7 +333,7 @@ public class BeardAch extends JavaPlugin {
     @Override
     public void onDisable() {
 
-        achievementManager.database.flush();
+        achievementManager.flush();
 
     }
 

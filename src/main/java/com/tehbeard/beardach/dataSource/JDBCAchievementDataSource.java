@@ -75,17 +75,8 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     }
 
     @Override
-    protected String getMigrationScriptPath(int fromVersion, int toVersion) {
-        throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                       // change
-                                                                       // body
-                                                                       // of
-                                                                       // generated
-                                                                       // methods,
-                                                                       // choose
-                                                                       // Tools
-                                                                       // |
-                                                                       // Templates.
+    protected String getMigrationScriptPath(int toVersion) {
+        return "migrate." + toVersion;
     }
 
     @Override

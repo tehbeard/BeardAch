@@ -10,6 +10,7 @@ ach:
     username: Beardstats
     password: changeme
     database: stats
+    sql_db_version: 1
   msg:
     person: "Achievement Unlocked: <ACH>"
     broadcast: "<PLAYER> Unlocked: <ACH>"
