@@ -18,12 +18,6 @@ public class xpReward implements IReward {
     int xp;
 
     @Override
-    public void configure(Achievement arg0, String config) {
-        xp = Integer.parseInt(config);
-
-    }
-
-    @Override
     public void giveReward(Player player) {
         player.giveExp(xp);
     }

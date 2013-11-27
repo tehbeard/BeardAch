@@ -36,12 +36,6 @@ public class EconomyTrigger implements ITrigger {
     }
 
     @Override
-    public void configure(Achievement ach, String config) {
-
-        amount = Double.parseDouble(config);
-    }
-
-    @Override
     public boolean checkAchievement(Player player) {
         if (setupEconomy())
             return economy.bankBalance(player.getName()).balance >= amount;

@@ -18,12 +18,6 @@ public class IgnitionReward implements IReward {
     int ticks;
 
     @Override
-    public void configure(Achievement arg0, String config) {
-        ticks = Integer.parseInt(config);
-
-    }
-
-    @Override
     public void giveReward(Player player) {
         player.setFireTicks(ticks);
     }

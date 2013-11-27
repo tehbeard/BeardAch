@@ -21,12 +21,6 @@ public class CommandReward implements IReward {
     String command = "";
 
     @Override
-    public void configure(Achievement Ach, String config) {
-        command = config;
-
-    }
-
-    @Override
     public void giveReward(Player player) {
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("<PLAYER>", player.getName()));

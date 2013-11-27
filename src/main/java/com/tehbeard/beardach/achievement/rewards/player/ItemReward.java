@@ -37,11 +37,6 @@ public class ItemReward implements IReward {
     private ItemStack item;
 
     @Override
-    @Deprecated
-    public void configure(Achievement ach, String config) {
-    }
-
-    @Override
     public void configure(Achievement ach) {
         item = ItemSyntax.getItem(itemStr);
     }

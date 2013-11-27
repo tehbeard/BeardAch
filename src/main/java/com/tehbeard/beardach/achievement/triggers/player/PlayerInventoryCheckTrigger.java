@@ -36,11 +36,6 @@ public class PlayerInventoryCheckTrigger implements ITrigger {
     private ItemStack item;
 
     @Override
-    public void configure(Achievement ach, String config) {
-
-    }
-
-    @Override
     public void configure(Achievement ach) {
         item = ItemSyntax.getItem(itemStr);
     }

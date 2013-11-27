@@ -27,10 +27,6 @@ public abstract class AbstractEventTrigger implements ITrigger, Listener {
     private Achievement achievement;
 
     @Override
-    public void configure(Achievement ach, String config) {
-    }
-
-    @Override
     public void configure(Achievement ach) {
         achievement = ach;
     }

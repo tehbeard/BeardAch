@@ -30,10 +30,6 @@ public class VelocityReward implements IReward {
     private float z;
 
     @Override
-    public void configure(Achievement ach, String config) {
-    }
-
-    @Override
     public void giveReward(Player player) {
         player.setVelocity(new Vector(x, y, z));
     }

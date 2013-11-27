@@ -30,11 +30,6 @@ public class AchCheckTrigger implements ITrigger {
     String ach;
 
     @Override
-    public void configure(Achievement Ach, String config) {
-        ach = config;
-    }
-
-    @Override
     public boolean checkAchievement(Player player) {
         // if player has an acheivement
         List<AchievementPlayerLink> achs = BeardAch.instance().getAchievementManager().getAchievements(player.getName());

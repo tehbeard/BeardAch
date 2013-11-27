@@ -26,10 +26,6 @@ public class ExplodeReward implements IReward {
     private float power = 4.0f;
 
     @Override
-    public void configure(Achievement ach, String config) {
-    }
-
-    @Override
     public void giveReward(Player player) {
         World world = player.getWorld();
         world.createExplosion(player.getLocation(), power, doFire);

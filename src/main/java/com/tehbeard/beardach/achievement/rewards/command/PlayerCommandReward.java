@@ -17,12 +17,6 @@ public class PlayerCommandReward implements IReward {
     String comm = "";
 
     @Override
-    public void configure(Achievement ach, String config) {
-        comm = config;
-
-    }
-
-    @Override
     public void giveReward(Player player) {
 
         Bukkit.dispatchCommand(player, comm);

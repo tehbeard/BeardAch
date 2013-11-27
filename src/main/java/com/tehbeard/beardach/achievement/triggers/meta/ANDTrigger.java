@@ -43,17 +43,6 @@ public class ANDTrigger implements MetaTrigger {
     }
 
     @Override
-    public void configure(Achievement ach, String config) {
-        throw new UnsupportedOperationException("Not supported."); // To change
-                                                                   // body of
-                                                                   // generated
-                                                                   // methods,
-                                                                   // choose
-                                                                   // Tools |
-                                                                   // Templates.
-    }
-
-    @Override
     public void configure(Achievement ach) {
         for (ITrigger t : getTriggers()) {
             t.configure(ach);

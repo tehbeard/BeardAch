@@ -18,12 +18,6 @@ public class SetHealthReward implements IReward {
     int health;
 
     @Override
-    public void configure(Achievement arg0, String config) {
-        health = Integer.parseInt(config);
-
-    }
-
-    @Override
     public void giveReward(Player player) {
         player.setHealth(health);
     }

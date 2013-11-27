@@ -3,7 +3,6 @@ package com.tehbeard.beardach.achievement.triggers.spatial;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -31,18 +30,6 @@ public class InteractTrigger implements ITrigger, Listener {
 
     private Achievement ach;
     private Set<String> active = new HashSet<String>();
-
-    @Override
-    public void configure(Achievement ach, String config) {
-        this.ach = ach;
-        String[] c = config.split(":");
-        if (c.length != 4)
-            throw new IllegalArgumentException("invalid interact config");
-        l = new Location(Bukkit.getWorld(c[0]), Double.parseDouble(c[1]), Double.parseDouble(c[2]), Double.parseDouble(c[3])
-
-        );
-
-    }
 
     @Override
     public boolean checkAchievement(Player player) {

@@ -34,12 +34,6 @@ public class EconomyReward implements IReward {
     }
 
     @Override
-    public void configure(Achievement Ach, String config) {
-        amount = Double.parseDouble(config);
-        setupEconomy();
-    }
-
-    @Override
     public void giveReward(Player player) {
         if (setupEconomy()) {
             economy.depositPlayer(player.getName(), amount);

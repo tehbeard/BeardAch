@@ -44,16 +44,6 @@ public class CuboidKingOfTheHillTrigger implements ITrigger, Listener {
     private Map<String, Long> times = new HashMap<String, Long>();
 
     @Override
-    public void configure(Achievement ach, String config) {
-        this.ach = ach;
-        String[] con = config.split("\\/");
-        if (con.length == 2) {
-            cuboid.setCuboid(con[0]);
-            time = Integer.parseInt(con[1]);
-        }
-    }
-
-    @Override
     public boolean checkAchievement(Player player) {
 
         long currentTime = System.currentTimeMillis() / 1000L;

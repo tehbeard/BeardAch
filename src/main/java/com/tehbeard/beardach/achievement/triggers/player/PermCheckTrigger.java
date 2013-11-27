@@ -26,11 +26,6 @@ public class PermCheckTrigger implements ITrigger {
     String perm;
 
     @Override
-    public void configure(Achievement ach, String config) {
-        perm = config;
-    }
-
-    @Override
     public boolean checkAchievement(Player player) {
         // if player has stat
         return player.hasPermission(perm);

@@ -51,19 +51,6 @@ public class StatWithinTrigger implements ITrigger {
     private static EntityStatManager manager = null;
 
     @Override
-    public void configure(Achievement ach, String config) {
-
-        String[] opt = config.split("\\:");
-        if (opt.length == 4) {
-            cat = opt[0];
-            stat = opt[1];
-            lowerThreshold = Integer.parseInt(opt[2]);
-            upperThreshold = Integer.parseInt(opt[3]);
-        }
-
-    }
-
-    @Override
     public boolean checkAchievement(Player player) {
         if (manager != null) {
             // if player has stat

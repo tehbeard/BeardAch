@@ -34,10 +34,6 @@ public class PotionReward implements IReward {
     private PotionEffect effect;
 
     @Override
-    public void configure(Achievement ach, String config) {
-    }
-
-    @Override
     public void giveReward(Player player) {
         if (effect != null) {
             effect.apply(player);

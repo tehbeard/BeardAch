@@ -21,19 +21,6 @@ public class StormTrigger implements ITrigger {
     private boolean isStormy;
 
     @Override
-    public void configure(Achievement arg0, String config) {
-        if (config.equalsIgnoreCase("true")) {
-            isStormy = true;
-        }
-
-        if (config.equalsIgnoreCase("false")) {
-            isStormy = false;
-        }
-        throw new IllegalArgumentException("invalid value for storm");
-
-    }
-
-    @Override
     public boolean checkAchievement(Player p) {
 
         return p.getWorld().hasStorm() == isStormy;

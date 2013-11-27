@@ -28,10 +28,6 @@ public class BiomeCheckTrigger implements ITrigger {
     Biome biome;
 
     @Override
-    public void configure(Achievement ach, String config) {
-    }
-
-    @Override
     public boolean checkAchievement(Player player) {
         return player.getWorld().getBiome(player.getLocation().getBlockX(), player.getLocation().getBlockX()).equals(biome);
     }

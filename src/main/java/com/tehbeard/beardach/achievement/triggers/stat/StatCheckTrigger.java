@@ -48,18 +48,6 @@ public class StatCheckTrigger implements ITrigger {
     private static boolean warningLock = false;
 
     @Override
-    public void configure(Achievement ach, String config) {
-
-        String[] opt = config.split("\\:");
-        if (opt.length == 3) {
-            cat = opt[0];
-            stat = opt[1];
-            threshold = Integer.parseInt(opt[2]);
-
-        }
-    }
-
-    @Override
     public boolean checkAchievement(Player player) {
         // if player has stat
         if (manager != null)

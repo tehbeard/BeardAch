@@ -37,11 +37,6 @@ public class CommandCheckTrigger extends AbstractEventTrigger {
     private Pattern pattern = null;
 
     @Override
-    public void configure(Achievement ach, String config) {
-        throw new UnsupportedOperationException("This trigger is not designed for old systems!");
-    }
-
-    @Override
     public void configure(Achievement ach) {
         super.configure(ach);
         if (isRegex) {

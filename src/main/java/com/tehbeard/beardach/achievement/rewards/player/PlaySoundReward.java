@@ -45,10 +45,6 @@ public class PlaySoundReward implements IReward {
     }
 
     @Override
-    public void configure(Achievement ach, String config) {
-    }
-
-    @Override
     public void configure(Achievement ach) {
     }
 

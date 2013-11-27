@@ -28,17 +28,6 @@ public class CounterReward implements IReward {
     private static EntityStatManager manager = null;
 
     @Override
-    public void configure(Achievement Ach, String config) {
-
-        String[] opt = config.split("\\:");
-        if (opt.length == 2) {
-            name = opt[0];
-            count = Integer.parseInt(opt[1]);
-        }
-
-    }
-
-    @Override
     public void giveReward(Player player) {
         if (manager != null) {
             manager.getBlobByNameType(player.getName(), IStatDataProvider.PLAYER_TYPE).getValue().getStat(DOMAIN, player.getWorld().getName(), "achCount", name).incrementStat(count);

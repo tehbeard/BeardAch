@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Scanner;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -36,10 +35,9 @@ import com.tehbeard.beardach.datasource.GSONDataSource;
 import com.tehbeard.beardach.datasource.IDataSource;
 import com.tehbeard.beardach.datasource.JDBCAchievementDataSource;
 import com.tehbeard.beardach.datasource.NullDataSource;
-import com.tehbeard.beardach.datasource.SqlDataSource;
-import com.tehbeard.beardach.datasource.YamlDataSource;
 import com.tehbeard.beardach.datasource.configurable.IConfigurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorJSON;
+import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardstat.BeardStat;
 import com.tehbeard.beardstat.manager.EntityStatManager;
 import com.tehbeard.utils.addons.AddonLoader;
@@ -132,8 +130,7 @@ public class BeardAch extends JavaPlugin {
             }
         };
 
-        dataSourceFactory.addProduct(YamlDataSource.class);
-        dataSourceFactory.addProduct(SqlDataSource.class);
+        //dataSourceFactory.addProduct(SqlDataSource.class);
         dataSourceFactory.addProduct(NullDataSource.class);
         dataSourceFactory.addProduct(GSONDataSource.class);
         dataSourceFactory.addProduct(JDBCAchievementDataSource.class);
@@ -153,6 +150,7 @@ public class BeardAch extends JavaPlugin {
         Scanner s = new Scanner(getResource("components.txt"));
         while (s.hasNextLine()) {
             try {
+                
                 Class<?> c = Class.forName(s.nextLine());
                 if (ITrigger.class.isAssignableFrom(c)) {
                     addTrigger((Class<? extends ITrigger>) c);
@@ -165,7 +163,7 @@ public class BeardAch extends JavaPlugin {
                 e.printStackTrace();
             }
         }
-
+        s.close();
 
         getLogger().info("Preparing to load addons");
         // Create addon dir if it doesn't exist
@@ -327,13 +325,27 @@ public class BeardAch extends JavaPlugin {
         return true;
     }
 
+    
+    private boolean hasDependencies(Class<?> c,String type){
+        ComponentHelpDescription desc = c.getAnnotation(ComponentHelpDescription.class);
+        Configurable config = c.getAnnotation(Configurable.class);
+        if(desc != null){
+            for(String pluginName : desc.dependencies()){
+                if(Bukkit.getPluginManager().getPlugin(pluginName) == null){
+                    getLogger().warning("[" + config.tag() + "] " + config.name() + " depends on " + pluginName + " which is not found, this " + type + " has been disabled. This may cause errors if an achievement is built using this.");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     /**
      * Add a trigger
      * 
      * @param trigger
      */
     public void addTrigger(Class<? extends ITrigger> trigger) {
-
+        if(!hasDependencies(trigger,"trigger")){return;}
         AchievementLoader.triggerFactory.addProduct(trigger);
         json.addTrigger(trigger);
     }
@@ -344,6 +356,7 @@ public class BeardAch extends JavaPlugin {
      * @param reward
      */
     public void addReward(Class<? extends IReward> reward) {
+        if(!hasDependencies(reward,"reward")){return;}
         AchievementLoader.rewardFactory.addProduct(reward);
         json.addReward(reward);
     }

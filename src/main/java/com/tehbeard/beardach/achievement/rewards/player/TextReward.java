@@ -21,10 +21,6 @@ public class TextReward implements IReward {
     private String text;
 
     @Override
-    public void configure(Achievement ach, String config) {
-    }
-
-    @Override
     public void giveReward(Player player) {
         player.sendMessage(text);
     }

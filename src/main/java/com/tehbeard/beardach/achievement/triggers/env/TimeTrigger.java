@@ -25,14 +25,6 @@ public class TimeTrigger implements ITrigger {
     long before = 0;
 
     @Override
-    public void configure(Achievement ach, String config) {
-        String[] c = config.split(":");
-        after = Integer.parseInt(c[0]);
-        before = Integer.parseInt(c[1]);
-
-    }
-
-    @Override
     public boolean checkAchievement(Player p) {
         Long t = p.getWorld().getTime();
         return after < before ? after < t && before > t : after < t || before > t;

@@ -37,10 +37,6 @@ public class PlayerDeathTrigger extends AbstractEventTrigger {
     private EntityType entityType;
 
     @Override
-    public void configure(Achievement ach, String config) {
-    }
-
-    @Override
     public void configure(Achievement ach) {
     }
 

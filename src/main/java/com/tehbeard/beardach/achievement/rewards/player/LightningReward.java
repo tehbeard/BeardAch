@@ -22,18 +22,6 @@ public class LightningReward implements IReward {
     private boolean real = false;
 
     @Override
-    public void configure(Achievement ach, String config) {
-        if (config.equalsIgnoreCase("true")) {
-            real = true;
-        }
-
-        if (config.equalsIgnoreCase("false")) {
-            real = false;
-        }
-        throw new IllegalArgumentException("invalid value for lightning");
-    }
-
-    @Override
     public void giveReward(Player player) {
         World world = player.getWorld();
         if (real) {

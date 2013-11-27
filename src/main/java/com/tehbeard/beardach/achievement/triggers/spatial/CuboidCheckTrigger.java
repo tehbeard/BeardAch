@@ -35,11 +35,6 @@ public class CuboidCheckTrigger implements ITrigger {
     }
 
     @Override
-    public void configure(Achievement ach, String config) {
-        cuboid.setCuboid(config);
-    }
-
-    @Override
     public boolean checkAchievement(Player player) {
         // if player has stat
         // if(player.getWorld().getName().equals(world)){

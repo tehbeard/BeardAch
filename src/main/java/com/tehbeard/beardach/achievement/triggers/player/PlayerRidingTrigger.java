@@ -23,10 +23,6 @@ public class PlayerRidingTrigger implements ITrigger {
     private EntityType entityType;
 
     @Override
-    public void configure(Achievement ach, String config) {
-    }
-
-    @Override
     public void configure(Achievement ach) {
     }
 

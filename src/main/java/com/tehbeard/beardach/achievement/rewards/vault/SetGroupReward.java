@@ -34,12 +34,6 @@ public class SetGroupReward implements IReward {
     }
 
     @Override
-    public void configure(Achievement ach, String config) {
-        group = config;
-
-    }
-
-    @Override
     public void giveReward(Player player) {
         if (setupPerms()) {
             perms.playerAddGroup(player, group);

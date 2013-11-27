@@ -18,13 +18,6 @@ public class DroxTrackReward implements IReward {
     String track = "";
 
     @Override
-    public void configure(Achievement Ach, String config) {
-
-        track = config;
-
-    }
-
-    @Override
     public void giveReward(Player player) {
         if (BeardAch.droxAPI != null) {
             BeardAch.droxAPI.promotePlayer(player.getName(), track);

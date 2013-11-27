@@ -1,6 +1,5 @@
 package com.tehbeard.beardach.achievement.rewards.player;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -19,15 +18,6 @@ public class TeleportReward implements IReward {
     @Expose
     @EditorField(alias = "Teleport to", type = EditorFieldType.location)
     private Location to;
-
-    @Override
-    public void configure(Achievement ach, String config) {
-        String[] c = config.split(":");
-        to = new Location(Bukkit.getWorld(c[0]), Double.parseDouble(c[1]), Double.parseDouble(c[2]), Double.parseDouble(c[3]), Float.parseFloat(c[4]), Float.parseFloat(c[5]));
-        if (c.length != 6)
-            throw new IllegalArgumentException("Teleport must be given a valid location");
-
-    }
 
     @Override
     public void giveReward(Player player) {

@@ -37,11 +37,6 @@ public class ExecShellReward implements IReward {
     private File workDirFile = null;
 
     @Override
-    public void configure(Achievement Ach, String config) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void giveReward(Player player) {
         try {
             if (BeardAch.isAllowExecRewards()) {

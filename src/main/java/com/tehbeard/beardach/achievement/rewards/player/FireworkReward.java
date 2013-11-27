@@ -25,11 +25,6 @@ public class FireworkReward implements IReward {
     private FireworkMeta meta;
 
     @Override
-    @Deprecated
-    public void configure(Achievement ach, String config) {
-    }
-
-    @Override
     public void configure(Achievement ach) {
         ItemStack item = ItemSyntax.getItem(itemStr);
         if (item.getItemMeta() instanceof FireworkMeta == false)

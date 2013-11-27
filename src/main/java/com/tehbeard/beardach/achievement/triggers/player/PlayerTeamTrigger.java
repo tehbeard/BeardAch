@@ -22,11 +22,6 @@ public class PlayerTeamTrigger implements ITrigger {
     private String name;
 
     @Override
-    public void configure(Achievement ach, String config) {
-
-    }
-
-    @Override
     public void configure(Achievement ach) {
 
     }

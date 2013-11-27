@@ -46,18 +46,6 @@ public class SpeedRunTrigger implements ITrigger {
     }
 
     @Override
-    public void configure(Achievement ach, String config) {
-        String[] c = config.split("\\/");
-        if (c.length == 3) {
-            startCuboid.setCuboid(c[0]);
-            endCuboid.setCuboid(c[1]);
-            timing = Long.parseLong(c[2]);
-        } else {
-            System.out.println("speedrun invalid");
-        }
-    }
-
-    @Override
     public boolean checkAchievement(Player player) {
 
         // if inside start cuboid and state does not exist, create record

@@ -19,11 +19,6 @@ public class DroxSubGroupReward implements IReward {
     String subgroup = "";
 
     @Override
-    public void configure(Achievement Ach, String config) {
-        subgroup = config;
-    }
-
-    @Override
     public void giveReward(Player player) {
         if (BeardAch.droxAPI != null) {
             BeardAch.droxAPI.addPlayerSubgroup(player.getName(), subgroup);

@@ -36,16 +36,6 @@ public class AchCountTrigger implements ITrigger {
     String prefix;
 
     @Override
-    public void configure(Achievement Ach, String config) {
-        String[] con = config.split("\\:");
-        if (con.length == 2) {
-            prefix = con[0];
-            threshold = Integer.parseInt(con[1]);
-        }
-
-    }
-
-    @Override
     public boolean checkAchievement(Player player) {
         // if player has an achievement
         List<AchievementPlayerLink> achs = BeardAch.instance().getAchievementManager().getAchievements(player.getName());
