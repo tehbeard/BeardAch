@@ -126,6 +126,7 @@ public class Achievement {
             return false;
 
         for (ITrigger trigger : triggers) {
+            if(trigger == null){continue;}
             if (!trigger.checkAchievement(player))
                 return false;
         }
@@ -138,6 +139,7 @@ public class Achievement {
     public void unlock(Player player) {
         if (!player.hasPermission(exemptAll) && !player.hasPermission(exempt)) {
             for (IReward reward : rewards) {
+                if(reward == null){continue;}
                 reward.giveReward(player);
             }
         } else {
