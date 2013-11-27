@@ -41,12 +41,13 @@ public class AchievementManager implements Listener {
 
     private HashMap<String, Set<AchievementPlayerLink>> playerHasCache = new HashMap<String, Set<AchievementPlayerLink>>();
     private HashMap<Achievement, Set<String>> playerCheckCache = new HashMap<Achievement, Set<String>>();
-    private IDataSource database = null;
+    private final IDataSource database;
     private final ChunkCache<Achievement> chunkCache = new ChunkCache<Achievement>();
 
     private List<Achievement> achievements = new LinkedList<Achievement>();
 
-    public AchievementManager() {
+    public AchievementManager(IDataSource database) {
+        this.database = database;
         playerHasCache = new HashMap<String, Set<AchievementPlayerLink>>();
 
     }
@@ -353,11 +354,6 @@ public class AchievementManager implements Listener {
     private Set<String> getListOfPlayersToCheck(Achievement ach) {
         Set<String> list = playerCheckCache.get(ach);
         return new HashSet<String>(list);
-    }
-    
-    public void setDatabase(IDataSource source){
-        if(database != null){throw new IllegalStateException("Database already set");}
-        database = source;
     }
 
     public void flush() {

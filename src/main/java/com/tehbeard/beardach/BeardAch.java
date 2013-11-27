@@ -87,7 +87,7 @@ public class BeardAch extends JavaPlugin {
         
         self = this;
         
-        achievementManager = new AchievementManager();
+        
         // Load config
         
         getLogger().info("Starting BeardAch");
@@ -160,6 +160,7 @@ public class BeardAch extends JavaPlugin {
             }
             
         }
+        achievementManager = new AchievementManager(db);
         
         getLogger().info("Installing default triggers and rewards");
 
