@@ -364,4 +364,9 @@ public class AchievementManager implements Listener {
         database.flush();
         
     }
+
+    public void dumpFancy() {
+        database.dumpFancy();
+        
+    }
 }

@@ -92,12 +92,6 @@ public class BeardAch extends JavaPlugin {
         
         getLogger().info("Starting BeardAch");
         
-        //patch db version if not found.
-        if(!getConfig().isSet("ach.database.sql_db_version")){
-            getConfig().set("ach.database.sql_db_version", 0);
-            saveConfig();
-        }
-        
         getConfig().options().copyDefaults(true);
         saveConfig();
         reloadConfig();

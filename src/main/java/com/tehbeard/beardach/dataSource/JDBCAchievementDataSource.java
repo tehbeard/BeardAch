@@ -76,7 +76,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
     @Override
     protected String getMigrationScriptPath(int toVersion) {
-        return "migrate." + toVersion;
+        return "migrate/v" + toVersion;
     }
 
     @Override

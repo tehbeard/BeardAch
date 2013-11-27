@@ -19,7 +19,7 @@ public class AchFancyCommand implements CommandExecutor {
         if (!sender.hasPermission("beardach.reload.fancy"))
             return true;
         sender.sendMessage("Dumping fancy achievement names");
-        BeardAch.instance().getAchievementManager().database.dumpFancy();
+        BeardAch.instance().getAchievementManager().dumpFancy();
         return true;
     }
 
