@@ -6,7 +6,7 @@ import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
@@ -15,7 +15,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.google.gson.annotations.Expose;
 
-@ComponentHelpDescription(description = "Gives a player some money", name = "give money", type = ComponentType.REWARD,dependencies={"Vault","Economy plugin that works with Vault"})
+@ComponentHelpDescription(description = "Gives a player some money", dependencies={"Vault","Economy plugin that works with Vault"})
 @Configurable(tag="money",name="(vault) Give money")
 public class EconomyReward implements IReward {
 

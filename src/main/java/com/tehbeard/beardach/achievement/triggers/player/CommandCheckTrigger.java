@@ -10,7 +10,7 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 import org.bukkit.entity.Player;
@@ -21,7 +21,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.achievement.triggers.AbstractEventTrigger;
 
-@ComponentHelpDescription(description = "Triggers when a user attempts to execute a command", name = "on Command executed", type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Triggers when a user attempts to execute a command")
 @Configurable(name="On command",tag="oncommand")
 public class CommandCheckTrigger extends AbstractEventTrigger {
 

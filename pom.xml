@@ -281,6 +281,23 @@
                                         <ignore></ignore>
                                     </action>
                                 </pluginExecution>
+                                <pluginExecution>
+                                	<pluginExecutionFilter>
+                                		<groupId>org.bsc.maven</groupId>
+                                		<artifactId>
+                                			maven-processor-plugin
+                                		</artifactId>
+                                		<versionRange>
+                                			[2.1.1,)
+                                		</versionRange>
+                                		<goals>
+                                			<goal>process</goal>
+                                		</goals>
+                                	</pluginExecutionFilter>
+                                	<action>
+                                		<ignore></ignore>
+                                	</action>
+                                </pluginExecution>
                             </pluginExecutions>
                         </lifecycleMappingMetadata>
                     </configuration>

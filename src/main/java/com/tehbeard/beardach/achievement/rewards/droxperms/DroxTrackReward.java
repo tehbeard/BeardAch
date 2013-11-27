@@ -7,13 +7,13 @@ import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 
-@ComponentHelpDescription(description="Track promotion player",name="promote along track",type=ComponentType.REWARD,dependencies="DroxPerms")
+@ComponentHelpDescription(description="Track promotion player",dependencies="DroxPerms")
 @Configurable(tag="promote",name="(DroxPerms) Promote along track")
 public class DroxTrackReward implements IReward{
     @Expose

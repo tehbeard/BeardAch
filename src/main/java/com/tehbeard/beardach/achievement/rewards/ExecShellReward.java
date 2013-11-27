@@ -4,7 +4,7 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.tehbeard.beardach.BeardAch;
 
-@ComponentHelpDescription(description = "Executes a shell command, this reward IS DANGEROUS, AND MUST BE ENABLED VIA CONFIG (DEFAULTS TO OFF)", name = "Exec. Shell", type = ComponentType.REWARD)
+@ComponentHelpDescription(description = "Executes a shell command, this reward IS DANGEROUS, AND MUST BE ENABLED VIA CONFIG (DEFAULTS TO OFF)")
 @Configurable(tag = "execshell", name = "Execute shell command")
 public class ExecShellReward implements IReward {
     

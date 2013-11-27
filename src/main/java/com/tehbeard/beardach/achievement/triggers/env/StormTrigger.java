@@ -10,10 +10,10 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
-@ComponentHelpDescription(description = "Triggers if world a player in is stormy", name = "Storm check", type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Triggers if world a player in is stormy")
 @Configurable(tag="storm",name="Is it stormy?")
 public class StormTrigger implements ITrigger {
 
@@ -40,8 +40,6 @@ public class StormTrigger implements ITrigger {
     }
 
 	public void configure(Achievement ach) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

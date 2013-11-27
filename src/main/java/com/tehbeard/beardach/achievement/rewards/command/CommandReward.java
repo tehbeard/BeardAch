@@ -6,7 +6,7 @@ import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 
-@ComponentHelpDescription(description="Execute a command as the console",name="Console command",type=ComponentType.REWARD)
+@ComponentHelpDescription(description="Execute a command as the console")
 @Configurable(tag="comm",name="Execute console command")
 public class CommandReward implements IReward{
 

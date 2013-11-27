@@ -5,7 +5,7 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ import org.bukkit.scoreboard.Team;
 
 import com.google.gson.annotations.Expose;
 
-@ComponentHelpDescription(description = "Is player on a team", name = "On team", type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Is player on a team")
 @Configurable(name="Player team",tag="onteam")
 public class PlayerTeamTrigger implements ITrigger {
     

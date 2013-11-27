@@ -6,7 +6,7 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 import org.bukkit.Bukkit;
@@ -23,7 +23,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.tehbeard.beardach.achievement.triggers.AbstractEventTrigger;
 
-@ComponentHelpDescription(description = "Player inside a worldGuard region", name = "WorldGuard region", type = ComponentType.TRIGGER,dependencies="WorldGuard")
+@ComponentHelpDescription(description = "Player inside a worldGuard region",dependencies="WorldGuard")
 @Configurable(tag="wgregion",name="(WorldGuard) Inside region")
 public class WorldGuardRegionTrigger extends AbstractEventTrigger{
 

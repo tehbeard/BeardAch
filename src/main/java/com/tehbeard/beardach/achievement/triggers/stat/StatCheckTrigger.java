@@ -5,7 +5,7 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ import com.tehbeard.beardstat.manager.EntityStatManager;
  * @author James
  *
  */
-@ComponentHelpDescription(description = "Value of statistic is atleast provided value. This trigger supports regex values", name = "Stat Threshold", type = ComponentType.TRIGGER,dependencies="BeardStat")
+@ComponentHelpDescription(description = "Value of statistic is atleast provided value. This trigger supports regex values",dependencies="BeardStat")
 @Configurable(tag="stat",name="stat above threshold")
 public class StatCheckTrigger implements ITrigger {
 

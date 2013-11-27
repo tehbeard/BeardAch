@@ -9,10 +9,10 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
-@ComponentHelpDescription(description = "Checks if the worlds time is between two values", name = "Between (time)", type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Checks if the worlds time is between two values")
 @Configurable(tag="time",name="Between two times")
 public class TimeTrigger implements ITrigger {
 
@@ -38,8 +38,6 @@ public class TimeTrigger implements ITrigger {
     }
 
 	public void configure(Achievement ach) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

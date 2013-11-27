@@ -9,7 +9,7 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import com.tehbeard.utils.cuboid.Cuboid;
 
@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
 //TODO: Redo as worldguard based
-@ComponentHelpDescription(description = "Triggers if player gets between two points within the given time", name = "Speed run", type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Triggers if player gets between two points within the given time")
 @Configurable(tag="speedrun",name="Speed run")
 public class SpeedRunTrigger implements ITrigger {
 

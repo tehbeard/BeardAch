@@ -12,11 +12,11 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import org.bukkit.util.Vector;
 
-@ComponentHelpDescription(description = "Apply a force to a player", name = "Apply force", type = ComponentType.REWARD)
+@ComponentHelpDescription(description = "Apply a force to a player")
 @Configurable(tag = "applyforce", name = "Apply force to player")
 public class VelocityReward implements IReward {
 

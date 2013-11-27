@@ -11,10 +11,10 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
-@ComponentHelpDescription(description = "Throws a lightning bolt at the player", name = "Lightning", type = ComponentType.REWARD)
+@ComponentHelpDescription(description = "Throws a lightning bolt at the player")
 @Configurable(tag="lightning",name="Strike lightning on player")
 public class LightningReward implements IReward {
 
@@ -45,8 +45,6 @@ public class LightningReward implements IReward {
     }
 
 	public void configure(Achievement ach) {
-		// TODO Auto-generated method stub
-		
 	}
 
      

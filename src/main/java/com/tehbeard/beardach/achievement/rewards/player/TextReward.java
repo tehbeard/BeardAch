@@ -10,10 +10,10 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
-@ComponentHelpDescription(description = "Display text to a player", name = "Display text", type = ComponentType.REWARD)
+@ComponentHelpDescription(description = "Display text to a player")
 @Configurable(tag = "text", name = "Display text")
 public class TextReward implements IReward {
 

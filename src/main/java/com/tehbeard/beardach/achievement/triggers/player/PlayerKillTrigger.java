@@ -12,7 +12,7 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -28,7 +28,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
  *
  * @author James
  */
-@ComponentHelpDescription(name = "Kill entity",description = "fires when killing a specific entity",type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "fires when killing a specific entity")
 @Configurable(name = "Kill entity",tag = "killentity")
 public class PlayerKillTrigger  extends AbstractEventTrigger{
 

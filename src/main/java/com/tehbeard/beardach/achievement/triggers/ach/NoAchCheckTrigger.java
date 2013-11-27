@@ -10,7 +10,7 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@ComponentHelpDescription(description = "Triggers only if the player does not have this achievement", name = "Does not have achievement", type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Triggers only if the player does not have this achievement")
 @Configurable(tag="noach",name="Does not have achievement")
 public class NoAchCheckTrigger implements ITrigger {
 

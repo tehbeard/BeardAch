@@ -9,9 +9,9 @@ import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
 
-@ComponentHelpDescription(description="Sets a player on fire",name="ignite player",type=ComponentType.REWARD)
+
+@ComponentHelpDescription(description="Sets a player on fire")
 @Configurable(tag="ignite",name="Ignite the player")
 public class IgnitionReward implements IReward {
 

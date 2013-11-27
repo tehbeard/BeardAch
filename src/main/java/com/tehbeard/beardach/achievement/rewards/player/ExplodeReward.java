@@ -10,21 +10,21 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import org.bukkit.World;
 
-@ComponentHelpDescription(description = "BE AS AWESOME AS MR TORGUE. EXPLOSIONS!", name = "EXPLOSIONS?", type = ComponentType.REWARD)
-@Configurable(tag = "explode", name = "Cause an explosion")
+@ComponentHelpDescription(description = "BE AS AWESOME AS MR TORGUE. EXPLOSIONS!")
+@Configurable(tag = "explode", name = "EXPLOSIONS?")
 public class ExplodeReward implements IReward {
 
     @ComponentValueDescription(description = "ADD PYRO TECHNICS TO THIS BADASS EXPLOSION")
     @Expose
-    @EditorField(alias = "fire explosion", type = EditorFieldType.bool)
+    @EditorField(alias = "explosion causes fire", type = EditorFieldType.bool)
     private boolean doFire = false;
     @ComponentValueDescription(description = "HOW BADASS IS THIS EXPLOSION? (4.0 IS TNT)")
     @Expose
-    @EditorField(alias = "fire explosion", type = EditorFieldType.text)
+    @EditorField(alias = "Explosion power", type = EditorFieldType.text)
     private float power = 4.0f;
 
     public void configure(Achievement ach, String config) {

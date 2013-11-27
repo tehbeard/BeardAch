@@ -6,7 +6,7 @@ import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -16,7 +16,7 @@ import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import org.bukkit.potion.PotionType;
 
-@ComponentHelpDescription(description = "Applies a potion effect to a player", name = "Apply potion", type = ComponentType.REWARD)
+@ComponentHelpDescription(description = "Applies a potion effect to a player")
 @Configurable(tag="potion",name="Apply potion effect")
 public class PotionReward implements IReward {
 

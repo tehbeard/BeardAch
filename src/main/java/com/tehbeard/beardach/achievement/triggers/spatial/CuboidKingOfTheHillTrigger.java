@@ -11,7 +11,7 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import com.tehbeard.utils.cuboid.Cuboid;
 
@@ -28,7 +28,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@ComponentHelpDescription(description="Player stays in an area for a certain amount of time. Timer resets when a player walks out the area",name="King of the hill",type=ComponentType.TRIGGER)
+@ComponentHelpDescription(description="Player stays in an area for a certain amount of time. Timer resets when a player walks out the area")
 @Configurable(tag="koth",name="King of the hill")
 public class CuboidKingOfTheHillTrigger implements ITrigger,Listener {
 

@@ -9,7 +9,7 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import com.tehbeard.utils.cuboid.Cuboid;
 
@@ -22,7 +22,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@ComponentHelpDescription(description = "Is player inside an area", name = "Cuboid", type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Is player inside an area")
 @Configurable(tag="cuboid",name="cuboid")
 public class CuboidCheckTrigger implements ITrigger {
 

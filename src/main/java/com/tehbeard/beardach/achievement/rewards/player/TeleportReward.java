@@ -12,9 +12,9 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
 
-@ComponentHelpDescription(description = "Teleports a player to a particular location", name = "Teleport", type = ComponentType.REWARD)
+
+@ComponentHelpDescription(description = "Teleports a player to a particular location")
 @Configurable(tag="teleport",name="Teleport to location")
 public class TeleportReward implements IReward {
 

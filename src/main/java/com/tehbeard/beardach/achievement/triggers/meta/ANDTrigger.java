@@ -11,7 +11,7 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import org.bukkit.entity.Player;
 
@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
  *
  * @author James
  */
-@ComponentHelpDescription(name = "[Meta] AND trigger",description = "Meta trigger, will fire if all triggers under it return true",type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Meta trigger, will fire if all triggers under it return true")
 @Configurable(name = "Meta AND trigger",tag = "metaand")
 public class ANDTrigger implements MetaTrigger{
     

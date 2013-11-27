@@ -5,7 +5,7 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import net.milkbowl.vault.economy.Economy;
 
@@ -15,7 +15,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.google.gson.annotations.Expose;
 
-@ComponentHelpDescription(description = "Checks the players bank balance", name = "Check bank balance", type = ComponentType.TRIGGER,dependencies={"Vault","Economy plugin with Vault support"})
+@ComponentHelpDescription(description = "Checks the players bank balance", dependencies={"Vault","Economy plugin with Vault support"})
 @Configurable(tag="bankbalance",name="(Vault)Check bank balance")
 public class EconomyTrigger implements ITrigger {
 

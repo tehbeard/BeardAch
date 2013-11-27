@@ -5,7 +5,7 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
-@ComponentHelpDescription(description = "Is player riding an entity", name = "Riding entity", type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Is player riding an entity")
 @Configurable(name = "Riding entity", tag = "riding")
 public class PlayerRidingTrigger implements ITrigger {
 

@@ -12,9 +12,9 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
 
-@ComponentHelpDescription(description="Sets the player's compass target to new location",name="Set Compass target",type=ComponentType.REWARD)
+
+@ComponentHelpDescription(description="Sets the player's compass target to new location")
 @Configurable(tag="compass",name="set compass target")
 public class CompassTargetReward implements IReward {
 

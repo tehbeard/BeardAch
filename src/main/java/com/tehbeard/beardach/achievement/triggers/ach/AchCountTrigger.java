@@ -11,7 +11,7 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 import org.bukkit.entity.Player;
@@ -25,7 +25,7 @@ import com.google.gson.annotations.Expose;
  * @author James
  *
  */
-@ComponentHelpDescription(description = "Counts number of achievements with a specific id prefix", name = "Achievement count", type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Counts number of achievements with a specific id prefix")
 @Configurable(tag="achcount",name="Achievement count")
 public class AchCountTrigger implements ITrigger {
 
@@ -33,7 +33,7 @@ public class AchCountTrigger implements ITrigger {
     @Expose
     @EditorField(alias="achievement count threshold")
 	int threshold;
-    @ComponentValueDescription(description="The prefix of the ids of achievements to count",examples={"discovery_","pvpArena"})
+    @ComponentValueDescription(description="The prefix of the ids of achievements to count")
     @Expose
     @EditorField(alias="achievement slug prefix")
 	String prefix;

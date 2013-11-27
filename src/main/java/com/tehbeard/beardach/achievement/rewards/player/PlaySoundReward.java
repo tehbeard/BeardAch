@@ -11,7 +11,7 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ import org.bukkit.entity.Player;
  *
  * @author James
  */
-@ComponentHelpDescription(name = "Play sound",description = "plays a sound",type = ComponentType.REWARD)
+@ComponentHelpDescription(description = "plays a sound")
 @Configurable(name = "play sound",tag = "playsnd")
 public class PlaySoundReward implements IReward{
     

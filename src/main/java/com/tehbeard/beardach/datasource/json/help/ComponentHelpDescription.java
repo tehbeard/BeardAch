@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 @Target(value=ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
 public @interface ComponentHelpDescription {
-ComponentType type();
-String name();
 String description();
 String[] dependencies() default {}; 
 }

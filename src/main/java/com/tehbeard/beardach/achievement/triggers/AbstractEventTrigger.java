@@ -50,7 +50,6 @@ public abstract class AbstractEventTrigger implements ITrigger,Listener{
 
 	@Override
 	public boolean checkAchievement(Player player) {
-		// TODO Auto-generated method stub
 		return active.contains(player.getName());
 	}
 

@@ -5,7 +5,7 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ import com.tehbeard.beardstat.manager.EntityStatManager;
  * @author James
  *
  */
-@ComponentHelpDescription(description = "Triggers if statistic is between two values", name = "Stat within boundaries", type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Triggers if statistic is between two values")
 @Configurable(tag="statwithin",name="Stat within boundaries")
 public class StatWithinTrigger implements ITrigger {
 

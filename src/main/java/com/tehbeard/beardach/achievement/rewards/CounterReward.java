@@ -5,7 +5,7 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 
@@ -15,7 +15,7 @@ import com.google.gson.annotations.Expose;
 import com.tehbeard.beardstat.dataproviders.IStatDataProvider;
 import com.tehbeard.beardstat.manager.EntityStatManager;
 
-@ComponentHelpDescription(description = "Increment counter value. Counters are stored in BeardStat and accessible from the stats triggers", name = "Increment counter", type = ComponentType.REWARD, dependencies = {"BeardStat"})
+@ComponentHelpDescription(description = "Increment counter value. Counters are stored in BeardStat and accessible from the stats triggers", dependencies = {"BeardStat"})
 @Configurable(tag = "counter", name = "Increment counter")
 public class CounterReward implements IReward {
 

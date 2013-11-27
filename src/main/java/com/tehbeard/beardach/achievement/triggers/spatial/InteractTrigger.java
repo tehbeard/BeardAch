@@ -19,11 +19,11 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentType;
+
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 @Configurable(tag="interact",name="Click block at location")
-@ComponentHelpDescription(description = "Player clicks a block", name = "Click block", type = ComponentType.TRIGGER)
+@ComponentHelpDescription(description = "Player clicks a block")
 public class InteractTrigger implements ITrigger, Listener {
 
     @ComponentValueDescription(description="Block location to be clicked")
