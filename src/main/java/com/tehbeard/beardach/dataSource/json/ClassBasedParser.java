@@ -5,7 +5,6 @@
 package com.tehbeard.beardach.datasource.json;
 
 import java.lang.reflect.Type;
-import java.util.logging.Level;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -13,7 +12,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.annotations.Configurable;
 
 /**

@@ -21,7 +21,6 @@ import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 import com.tehbeard.beardach.annotations.DataSourceDescriptor;
-import com.tehbeard.beardach.datasource.SqlDataSource.SqlFlusher;
 import com.tehbeard.utils.sql.JDBCDataSource;
 import com.tehbeard.utils.sql.SQLFragment;
 
