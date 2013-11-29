@@ -31,6 +31,7 @@ import com.tehbeard.beardach.annotations.DataSourceDescriptor;
 import com.tehbeard.beardach.commands.AchCommand;
 import com.tehbeard.beardach.commands.AchFancyCommand;
 import com.tehbeard.beardach.commands.AchReloadCommand;
+import com.tehbeard.beardach.commands.ExportEditorCommand;
 import com.tehbeard.beardach.datasource.AchievementLoader;
 import com.tehbeard.beardach.datasource.GSONDataSource;
 import com.tehbeard.beardach.datasource.IDataSource;
@@ -67,7 +68,7 @@ public class BeardAch extends JavaPlugin {
     private WorldGuardPlugin worldGuard;
     private AchievementManager achievementManager;
 
-    private EditorJSON json = new EditorJSON();
+    private EditorJSON jsonEditorSettings = new EditorJSON();
 
     private BeardAchCuboidListener cuboidListener = new BeardAchCuboidListener();
     private EntityStatManager stats;
@@ -195,19 +196,6 @@ public class BeardAch extends JavaPlugin {
         getLogger().info("Loading addons");
         addonLoader.loadAddons();
 
-        getLogger().info("Writing editor settings");
-        new File(getDataFolder(), "editor").mkdirs();
-        try {
-            File settingsFile = new File(getDataFolder(), "editor/settings.js");
-            if (settingsFile.exists()) {
-                settingsFile.delete();
-            }
-            json.write(settingsFile);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        exportEditor();
-
         getLogger().info("Loading Achievements");
 
         achievementManager.loadAchievements();
@@ -318,6 +306,7 @@ public class BeardAch extends JavaPlugin {
         getCommand("ach-reload").setExecutor(new AchReloadCommand());
         getCommand("ach").setExecutor(new AchCommand());
         getCommand("ach-fancy").setExecutor(new AchFancyCommand());
+        getCommand("ach-export").setExecutor(new ExportEditorCommand());
         getLogger().info("Loaded Version:" + getDescription().getVersion());
 
     }
@@ -364,7 +353,7 @@ public class BeardAch extends JavaPlugin {
     public void addTrigger(Class<? extends ITrigger> trigger) {
         if(!hasDependencies(trigger,"trigger")){return;}
         AchievementLoader.triggerFactory.addProduct(trigger);
-        json.addTrigger(trigger);
+        jsonEditorSettings.addTrigger(trigger);
     }
 
     /**
@@ -375,7 +364,7 @@ public class BeardAch extends JavaPlugin {
     public void addReward(Class<? extends IReward> reward) {
         if(!hasDependencies(reward,"reward")){return;}
         AchievementLoader.rewardFactory.addProduct(reward);
-        json.addReward(reward);
+        jsonEditorSettings.addReward(reward);
     }
 
     /**
@@ -449,7 +438,20 @@ public class BeardAch extends JavaPlugin {
 
     public static final int BUFFER_SIZE = 8192;
 
-    private void exportEditor() {
+    public void exportEditor() {
+        
+        getLogger().info("Writing editor settings");
+        new File(getDataFolder(), "editor").mkdirs();
+        try {
+            File settingsFile = new File(getDataFolder(), "editor/settings.js");
+            if (settingsFile.exists()) {
+                settingsFile.delete();
+            }
+            jsonEditorSettings.write(settingsFile);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        
         try {
             ZipInputStream zis = new ZipInputStream(getResource("editor.zip"));
             ZipEntry entry = null;

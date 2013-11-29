@@ -19,6 +19,7 @@ import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
+import com.tehbeard.beardach.datasource.json.help.HelpEntry;
 
 /**
  * Generates the json file for the achievements editor
@@ -30,6 +31,9 @@ public class EditorJSON {
 
     public List<EditorElement> triggers = new ArrayList<EditorElement>();
     public List<EditorElement> rewards = new ArrayList<EditorElement>();
+    
+    public List<HelpEntry> triggerHelp = new ArrayList<HelpEntry>();
+    public List<HelpEntry> rewardHelp = new ArrayList<HelpEntry>();
 
     public class EditorElement {
 
@@ -54,10 +58,19 @@ public class EditorJSON {
 
     public void addTrigger(Class<? extends ITrigger> t) {
         addItem(t, triggers);
+        addHelpEntry(t,triggerHelp);
     }
 
     public void addReward(Class<? extends IReward> r) {
         addItem(r, rewards);
+        addHelpEntry(r,rewardHelp);
+    }
+    
+    private void addHelpEntry(Class<?> _c,List<HelpEntry> list){
+        try{
+        list.add(new HelpEntry(_c));
+        }catch(Exception e){}
+        
     }
 
     private void addItem(Class<?> c, List<EditorElement> list) {
@@ -129,3 +142,4 @@ public class EditorJSON {
         writer.close();
     }
 }
+
