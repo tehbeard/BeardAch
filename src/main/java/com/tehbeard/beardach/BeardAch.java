@@ -296,6 +296,8 @@ public class BeardAch extends JavaPlugin {
             }
 
         }, 200L, 200L);
+        
+        exportEditor();
 
         // setup events
         getServer().getPluginManager().registerEvents(achievementManager, this);
