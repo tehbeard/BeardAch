@@ -15,7 +15,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "comm", name = "Execute console command")
 public class CommandReward implements IReward {
 
-    @ComponentValueDescription(description = "Command to execute, <PLAYER> is replaced with the player's name")
+    @ComponentValueDescription(value = "Command to execute, <PLAYER> is replaced with the player's name")
     @Expose
     @EditorField(alias = "Command")
     String command = "";

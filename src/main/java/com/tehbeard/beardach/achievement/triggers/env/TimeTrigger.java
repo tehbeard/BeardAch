@@ -14,12 +14,12 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "time", name = "Between two times")
 public class TimeTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "World time must have progressed past")
+    @ComponentValueDescription(value = "World time must have progressed past")
     @Expose
     @EditorField(alias = "After this time(ticks)")
     long after = 0;
 
-    @ComponentValueDescription(description = "World time must be before")
+    @ComponentValueDescription(value = "World time must be before")
     @Expose
     @EditorField(alias = "Before this time(ticks)")
     long before = 0;

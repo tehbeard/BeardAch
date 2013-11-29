@@ -16,11 +16,11 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "explode", name = "EXPLOSIONS?")
 public class ExplodeReward implements IReward {
 
-    @ComponentValueDescription(description = "ADD PYRO TECHNICS TO THIS BADASS EXPLOSION")
+    @ComponentValueDescription(value = "ADD PYRO TECHNICS TO THIS BADASS EXPLOSION")
     @Expose
     @EditorField(alias = "explosion causes fire", type = EditorFieldType.bool)
     private boolean doFire = false;
-    @ComponentValueDescription(description = "HOW BADASS IS THIS EXPLOSION? (4.0 IS TNT)")
+    @ComponentValueDescription(value = "HOW BADASS IS THIS EXPLOSION? (4.0 IS TNT)")
     @Expose
     @EditorField(alias = "Explosion power", type = EditorFieldType.text)
     private float power = 4.0f;

@@ -26,11 +26,11 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "achcount", name = "Achievement count")
 public class AchCountTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "Amount of achievements player must exceed, (Triggers if count > this value)")
+    @ComponentValueDescription(value = "Amount of achievements player must exceed, (Triggers if count > this value)")
     @Expose
     @EditorField(alias = "achievement count threshold")
     int threshold;
-    @ComponentValueDescription(description = "The prefix of the ids of achievements to count")
+    @ComponentValueDescription(value = "The prefix of the ids of achievements to count")
     @Expose
     @EditorField(alias = "achievement slug prefix")
     String prefix;

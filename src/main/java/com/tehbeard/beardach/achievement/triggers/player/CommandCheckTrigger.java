@@ -19,17 +19,17 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(name = "On command", tag = "oncommand")
 public class CommandCheckTrigger extends AbstractEventTrigger {
 
-    @ComponentValueDescription(description = "Certain commands use the preprocess event instead of Bukkit's command api, check this to allow those commands")
+    @ComponentValueDescription(value = "Certain commands use the preprocess event instead of Bukkit's command api, check this to allow those commands")
     @Expose
     @EditorField(alias = "Include commands that have been cancelled by preprocess event", type = EditorFieldType.bool)
     private boolean includeIgnored = true;
 
-    @ComponentValueDescription(description = "Use a regex expression instead of checking if command starts with")
+    @ComponentValueDescription(value = "Use a regex expression instead of checking if command starts with")
     @Expose
     @EditorField(alias = "Treat prefix as regex expression", type = EditorFieldType.bool)
     private boolean isRegex = false;
 
-    @ComponentValueDescription(description = "command prefix or regex expression to check")
+    @ComponentValueDescription(value = "command prefix or regex expression to check")
     @Expose
     @EditorField(alias = "Command prefix to detect", type = EditorFieldType.text)
     private String commandText = "";

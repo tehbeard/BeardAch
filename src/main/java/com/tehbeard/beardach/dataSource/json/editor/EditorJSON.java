@@ -122,9 +122,7 @@ public class EditorJSON {
         JsonWriter writer = new JsonWriter(fw);
         writer.setIndent("  ");
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        gson.toJson(this, new TypeToken<EditorJSON>() {
-        }.getType(), writer);
+        gson.toJson(this, TypeToken.get(EditorJSON.class).getType(), writer);
         writer.flush();
         fw.write(");});");
         fw.flush();

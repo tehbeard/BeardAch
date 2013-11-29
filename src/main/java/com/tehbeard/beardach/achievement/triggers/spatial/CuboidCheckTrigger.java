@@ -25,7 +25,7 @@ import com.tehbeard.utils.cuboid.Cuboid;
 @Configurable(tag = "cuboid", name = "cuboid")
 public class CuboidCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "Area to check")
+    @ComponentValueDescription(value = "Area to check")
     @Expose
     @EditorField(alias = "cuboid", type = EditorFieldType.cuboid)
     private Cuboid cuboid = new Cuboid();

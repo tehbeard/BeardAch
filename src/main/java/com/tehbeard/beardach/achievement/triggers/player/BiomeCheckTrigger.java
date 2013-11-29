@@ -22,7 +22,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "biome", name = "Biome check")
 public class BiomeCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "Biome to check for")
+    @ComponentValueDescription(value = "Biome to check for")
     @Expose
     @EditorField(alias = "Biome", type = EditorFieldType.selection, options = "org.bukkit.block.Biome")
     Biome biome;

@@ -20,17 +20,17 @@ import com.tehbeard.utils.cuboid.Cuboid;
 @Configurable(tag = "speedrun", name = "Speed run")
 public class SpeedRunTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "Area player enters to start cuboid. NOTE: Entry into this area starts the timer, so for race areas with gates, place the cuboid immediately after the starting gate")
+    @ComponentValueDescription(value = "Area player enters to start cuboid. NOTE: Entry into this area starts the timer, so for race areas with gates, place the cuboid immediately after the starting gate")
     @Expose
     @EditorField(alias = "start cuboid", type = EditorFieldType.cuboid)
     private Cuboid startCuboid = new Cuboid();
 
-    @ComponentValueDescription(description = "Area player must enter to finish the race")
+    @ComponentValueDescription(value = "Area player must enter to finish the race")
     @Expose
     @EditorField(alias = "end cuboid", type = EditorFieldType.cuboid)
     private Cuboid endCuboid = new Cuboid();
 
-    @ComponentValueDescription(description = "Time player must beat in order to trigger this achievement")
+    @ComponentValueDescription(value = "Time player must beat in order to trigger this achievement")
     @Expose
     @EditorField(alias = "time to beat (seconds)")
     long timing = 0L;

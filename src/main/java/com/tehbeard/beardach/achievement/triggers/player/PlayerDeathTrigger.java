@@ -31,7 +31,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(name = "Killed by", tag = "deathentity")
 public class PlayerDeathTrigger extends AbstractEventTrigger {
 
-    @ComponentValueDescription(description = "Entity type to kill player")
+    @ComponentValueDescription(value = "Entity type to kill player")
     @Expose
     @EditorField(alias = "Entity", type = EditorFieldType.selection, options = "org.bukkit.entity.EntityType")
     private EntityType entityType;

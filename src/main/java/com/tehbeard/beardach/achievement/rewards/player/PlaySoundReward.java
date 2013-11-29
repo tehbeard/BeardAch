@@ -24,17 +24,17 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(name = "play sound", tag = "playsnd")
 public class PlaySoundReward implements IReward {
 
-    @ComponentValueDescription(description = "Name of the sound to play (same as playsound command)")
+    @ComponentValueDescription(value = "Name of the sound to play (same as playsound command)")
     @EditorField(alias = "sound name", type = EditorFieldType.selection, options = "org.bukkit.Sound")
     @Expose
     Sound sound;
 
-    @ComponentValueDescription(description = "Volume to play at")
+    @ComponentValueDescription(value = "Volume to play at")
     @EditorField(alias = "volume (decimal, 1.0 is normal)", type = EditorFieldType.text)
     @Expose
     float volume = 1.0f;
 
-    @ComponentValueDescription(description = "pitch to play at")
+    @ComponentValueDescription(value = "pitch to play at")
     @EditorField(alias = "pitch (decimal, 1.0 is normal)", type = EditorFieldType.text)
     @Expose
     float pitch = 1.0f;

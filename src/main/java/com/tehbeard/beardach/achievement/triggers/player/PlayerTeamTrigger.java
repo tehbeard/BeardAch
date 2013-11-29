@@ -16,7 +16,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(name = "Player team", tag = "onteam")
 public class PlayerTeamTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "Team name to check for (Case Sensitive)")
+    @ComponentValueDescription(value = "Team name to check for (Case Sensitive)")
     @Expose
     @EditorField(alias = "Team name")
     private String name;

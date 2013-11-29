@@ -20,7 +20,7 @@ public class EconomyTrigger implements ITrigger {
 
     private static Economy economy = null;
 
-    @ComponentValueDescription(description = "Balance must be atleast this value to trigger, supports decimal values")
+    @ComponentValueDescription(value = "Balance must be atleast this value to trigger, supports decimal values")
     @Expose
     @EditorField(alias = "Lower threshold")
     private double amount;

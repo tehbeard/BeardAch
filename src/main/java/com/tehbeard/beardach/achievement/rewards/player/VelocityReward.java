@@ -16,15 +16,15 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "applyforce", name = "Apply force to player")
 public class VelocityReward implements IReward {
 
-    @ComponentValueDescription(description = "force along x  axis to apply")
+    @ComponentValueDescription(value = "force along x  axis to apply")
     @Expose
     @EditorField(alias = "X", type = EditorFieldType.text)
     private float x;
-    @ComponentValueDescription(description = "force along y axis to apply")
+    @ComponentValueDescription(value = "force along y axis to apply")
     @Expose
     @EditorField(alias = "Y", type = EditorFieldType.text)
     private float y;
-    @ComponentValueDescription(description = "force along z axis to apply")
+    @ComponentValueDescription(value = "force along z axis to apply")
     @Expose
     @EditorField(alias = "Z", type = EditorFieldType.text)
     private float z;

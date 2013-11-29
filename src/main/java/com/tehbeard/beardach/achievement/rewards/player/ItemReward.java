@@ -24,12 +24,12 @@ public class ItemReward implements IReward {
     @EditorField(alias = "Item String (CraftBook item syntax)", type = EditorFieldType.text)
     private String itemStr;
 
-    @ComponentValueDescription(description = "Attempts to place the item in the users enderchest if ticked")
+    @ComponentValueDescription(value = "Attempts to place the item in the users enderchest if ticked")
     @Expose
     @EditorField(alias = "try placed in enderchest", type = EditorFieldType.bool)
     private boolean tryEnderChest = true;
 
-    @ComponentValueDescription(description = "Attempts to drop the item in world if inventory/s are full")
+    @ComponentValueDescription(value = "Attempts to drop the item in world if inventory/s are full")
     @Expose
     @EditorField(alias = "drop item in world", type = EditorFieldType.bool)
     private boolean tryDrop = true;

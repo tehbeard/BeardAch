@@ -15,7 +15,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "text", name = "Display text")
 public class TextReward implements IReward {
 
-    @ComponentValueDescription(description = "Text to display to a user")
+    @ComponentValueDescription(value = "Text to display to a user")
     @Expose
     @EditorField(alias = "message", type = EditorFieldType.text)
     private String text;

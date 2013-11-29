@@ -21,15 +21,15 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "execshell", name = "Execute shell command")
 public class ExecShellReward implements IReward {
 
-    @ComponentValueDescription(description = "Command to execute, <PLAYER> token replaced with player name")
+    @ComponentValueDescription(value = "Command to execute, <PLAYER> token replaced with player name")
     @Expose
     @EditorField(alias = "Command")
     String cmd = "";
-    @ComponentValueDescription(description = "Environment variables, using var=value&var2=value2 format, use \\& and \\\\ for & and \\ respectively")
+    @ComponentValueDescription(value = "Environment variables, using var=value&var2=value2 format, use \\& and \\\\ for & and \\ respectively")
     @Expose
     @EditorField(alias = "Env. variables")
     String env = "";
-    @ComponentValueDescription(description = "Working directory, will default to however bukkit was started.")
+    @ComponentValueDescription(value = "Working directory, will default to however bukkit was started.")
     @Expose
     @EditorField(alias = "Working directory")
     String workDir = "";

@@ -24,7 +24,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "noach", name = "Does not have achievement")
 public class NoAchCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "achievement slug to check for")
+    @ComponentValueDescription(value = "achievement slug to check for")
     @Expose
     @EditorField(alias = "achievement slug")
     String ach;

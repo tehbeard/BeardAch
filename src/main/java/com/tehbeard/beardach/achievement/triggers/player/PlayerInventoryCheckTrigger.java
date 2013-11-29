@@ -18,17 +18,17 @@ import com.tehbeard.utils.misc.ItemSyntax;
 @Configurable(name = "Inventory check", tag = "invcheck")
 public class PlayerInventoryCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "Item stack to look for")
+    @ComponentValueDescription(value = "Item stack to look for")
     @Expose
     @EditorField(alias = "Item String (CraftBook item syntax)", type = EditorFieldType.text)
     private String itemStr;
 
-    @ComponentValueDescription(description = "Whether to ignore the durability (damage) of the item")
+    @ComponentValueDescription(value = "Whether to ignore the durability (damage) of the item")
     @Expose
     @EditorField(alias = "Ignore durability values", type = EditorFieldType.bool)
     private boolean ignoreDurability = false;
 
-    @ComponentValueDescription(description = "Ignore metadata such as enchantments, lore etc")
+    @ComponentValueDescription(value = "Ignore metadata such as enchantments, lore etc")
     @Expose
     @EditorField(alias = "Ignore metadata (Enchantments, Lore)", type = EditorFieldType.bool)
     private boolean ignoreMetadata = false;

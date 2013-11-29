@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Target(value = ElementType.FIELD)
 @Retention(RetentionPolicy.SOURCE)
 public @interface ComponentValueDescription {
-    String description();
+    String value();
 }

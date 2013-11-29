@@ -24,7 +24,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "ach", name = "has achievement")
 public class AchCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "The achievement id (slug) to check for")
+    @ComponentValueDescription(value = "The achievement id (slug) to check for")
     @Expose
     @EditorField(alias = "achievement slug")
     String ach;

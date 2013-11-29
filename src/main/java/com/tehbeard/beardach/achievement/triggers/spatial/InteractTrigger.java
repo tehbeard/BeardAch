@@ -23,7 +23,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @ComponentHelpDescription(description = "Player clicks a block")
 public class InteractTrigger implements ITrigger, Listener {
 
-    @ComponentValueDescription(description = "Block location to be clicked")
+    @ComponentValueDescription(value = "Block location to be clicked")
     @Expose
     @EditorField(alias = "Block to interact", type = EditorFieldType.location)
     private Location l;

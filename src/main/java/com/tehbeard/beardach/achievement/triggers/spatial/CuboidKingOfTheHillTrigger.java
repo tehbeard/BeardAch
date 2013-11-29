@@ -31,11 +31,11 @@ import com.tehbeard.utils.cuboid.Cuboid;
 @Configurable(tag = "koth", name = "King of the hill")
 public class CuboidKingOfTheHillTrigger implements ITrigger, Listener {
 
-    @ComponentValueDescription(description = "Area player must be inside of")
+    @ComponentValueDescription(value = "Area player must be inside of")
     @Expose
     @EditorField(alias = "cuboid", type = EditorFieldType.cuboid)
     private Cuboid cuboid = new Cuboid();
-    @ComponentValueDescription(description = "Time inside area")
+    @ComponentValueDescription(value = "Time inside area")
     @Expose
     @EditorField(alias = "Time inside hill(seconds)")
     private int time = 0;

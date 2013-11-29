@@ -17,7 +17,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(name = "Riding entity", tag = "riding")
 public class PlayerRidingTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "Entity type to check")
+    @ComponentValueDescription(value = "Entity type to check")
     @Expose
     @EditorField(alias = "Entity", type = EditorFieldType.selection, options = "org.bukkit.entity.EntityType")
     private EntityType entityType;

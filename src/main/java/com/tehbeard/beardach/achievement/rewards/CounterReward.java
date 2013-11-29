@@ -17,11 +17,11 @@ import com.tehbeard.beardstat.manager.EntityStatManager;
 public class CounterReward implements IReward {
 
     private static final String DOMAIN = "beardach";
-    @ComponentValueDescription(description = "Name of the counter")
+    @ComponentValueDescription(value = "Name of the counter")
     @Expose
     @EditorField(alias = "Counter name")
     String name = "";
-    @ComponentValueDescription(description = "Amount to increment counter by")
+    @ComponentValueDescription(value = "Amount to increment counter by")
     @Expose
     @EditorField(alias = "Amount to increment")
     int count = 0;

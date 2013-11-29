@@ -23,23 +23,23 @@ import com.tehbeard.beardstat.manager.EntityStatManager;
 @Configurable(tag = "stat", name = "stat above threshold")
 public class StatCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "domain to check, for the regular stats use default as the value")
+    @ComponentValueDescription(value = "domain to check, for the regular stats use default as the value")
     @Expose
     @EditorField(alias = "Domain")
     String domain = "default";
-    @ComponentValueDescription(description = "World to check stats for (* matches all worlds)")
+    @ComponentValueDescription(value = "World to check stats for (* matches all worlds)")
     @Expose
     @EditorField(alias = "World")
     String world = "*";
-    @ComponentValueDescription(description = "statistic category to check")
+    @ComponentValueDescription(value = "statistic category to check")
     @Expose
     @EditorField(alias = "Category")
     String cat;
-    @ComponentValueDescription(description = "Statistic name to check")
+    @ComponentValueDescription(value = "Statistic name to check")
     @Expose
     @EditorField(alias = "Statistic")
     String stat;
-    @ComponentValueDescription(description = "Threshold statistic must equal or beat")
+    @ComponentValueDescription(value = "Threshold statistic must equal or beat")
     @Expose
     @EditorField(alias = "Lower threshold")
     int threshold;

@@ -23,7 +23,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(name = "Meta AND trigger", tag = "metaand")
 public class ANDTrigger implements MetaTrigger {
 
-    @ComponentValueDescription(description = "list of triggers")
+    @ComponentValueDescription(value = "list of triggers")
     @Expose
     @EditorField(type = EditorFieldType.trigger, alias = "triggers")
     private ITrigger[] triggers;

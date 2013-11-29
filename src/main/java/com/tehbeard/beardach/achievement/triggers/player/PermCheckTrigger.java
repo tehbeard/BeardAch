@@ -20,7 +20,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "perm", name = "has permission node")
 public class PermCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "Permission node to check, does not have to one declared by a plugin")
+    @ComponentValueDescription(value = "Permission node to check, does not have to one declared by a plugin")
     @Expose
     @EditorField(alias = "permission node")
     String perm;

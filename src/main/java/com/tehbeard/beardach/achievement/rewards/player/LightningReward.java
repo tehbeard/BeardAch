@@ -16,7 +16,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "lightning", name = "Strike lightning on player")
 public class LightningReward implements IReward {
 
-    @ComponentValueDescription(description = "If false, uses bukkit's fake lightning that does not injure a player")
+    @ComponentValueDescription(value = "If false, uses bukkit's fake lightning that does not injure a player")
     @Expose
     @EditorField(alias = "Real Lightning?", type = EditorFieldType.bool)
     private boolean real = false;

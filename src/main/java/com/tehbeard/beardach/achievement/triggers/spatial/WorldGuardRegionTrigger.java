@@ -25,11 +25,11 @@ public class WorldGuardRegionTrigger extends AbstractEventTrigger {
 
     private RegionManager rm;
 
-    @ComponentValueDescription(description = "name of region")
+    @ComponentValueDescription(value = "name of region")
     @Expose
     @EditorField(alias = "Region name")
     private String region = "";
-    @ComponentValueDescription(description = "name of world")
+    @ComponentValueDescription(value = "name of world")
     @Expose
     @EditorField(alias = "World name")
     private String world = "";

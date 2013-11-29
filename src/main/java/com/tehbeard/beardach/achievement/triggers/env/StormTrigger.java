@@ -15,7 +15,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 @Configurable(tag = "storm", name = "Is it stormy?")
 public class StormTrigger implements ITrigger {
 
-    @ComponentValueDescription(description = "Set true for should have a storm, false for should be clear")
+    @ComponentValueDescription(value = "Set true for should have a storm, false for should be clear")
     @Expose
     @EditorField(alias = "Storm currently?", type = EditorFieldType.bool)
     private boolean isStormy;
