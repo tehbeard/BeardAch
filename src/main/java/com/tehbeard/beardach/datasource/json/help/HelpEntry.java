@@ -35,8 +35,8 @@ public class HelpEntry {
         for(Field f : _class.getDeclaredFields()){
             EditorField ff = f.getAnnotation(EditorField.class);
             ComponentValueDescription v = f.getAnnotation(ComponentValueDescription.class);
-            if(v == null){continue;}
-            fields.add(new HelpFieldEntry(ff.alias(), v.value()));
+            if(v == ff){continue;}
+            fields.add(new HelpFieldEntry(ff.alias(), v != null ? v.value() : ""));
         }
         
     }
