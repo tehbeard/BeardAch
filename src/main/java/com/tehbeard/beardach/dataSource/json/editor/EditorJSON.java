@@ -94,7 +94,7 @@ public class EditorJSON {
                     if (a.options().length > 0) {
                         if (a.options().length == 1) {
                             @SuppressWarnings("unchecked")
-                            Class<Enum> enumClass = (Class<Enum>) Class.forName(a.options()[0]);
+                            Class<Enum<?>> enumClass = (Class<Enum<?>>) Class.forName(a.options()[0]);
                             @SuppressWarnings("rawtypes")
                             Enum[] enums = (Enum[]) enumClass.getMethod("values").invoke(null);
                             String[] options = new String[enums.length];
@@ -130,11 +130,12 @@ public class EditorJSON {
     }
 
     public void write(File file) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        
         FileWriter fw = new FileWriter(file);
         fw.write("$(function(){initConfig(");
         JsonWriter writer = new JsonWriter(fw);
         writer.setIndent("  ");
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         gson.toJson(this, TypeToken.get(EditorJSON.class).getType(), writer);
         writer.flush();
         fw.write(");});");
