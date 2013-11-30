@@ -1,4 +1,4 @@
-angular.module('achMain',['achDirectives']).controller('achList',function($scope,$templateCache,$filter){
+angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$scope','$templateCache','$filter','achHelpDB',function($scope,$templateCache,$filter,achHelpDB){
   console.log("Loading achievement list");
   $scope.achievements = [];
 
@@ -10,21 +10,8 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
   $scope.ui.search      = "";
   $scope.ui.triggerSelected = "";
   $scope.ui.rewardSelected = "";
-  $scope.help = {};
-  $scope.help.selected = {
-      "name": "xp",
-      "description": "Gives a player some xp",
-      "dependencies": [
-        "none"
-      ],
-      "fields": [
-        {
-          "name": "Amount to give",
-          "description": ""
-        }
-      ]
-    };
-
+  $scope.help = achHelpDB;
+  
   $scope.testFunc = function(){
     alert("TEST");
   }
@@ -116,7 +103,7 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
     }
     fr.readAsText($(selector)[0].files[0]);
   }
-})
+}])
 .filter('startat',function(){
 	return function(input,start){
 		na = [];
