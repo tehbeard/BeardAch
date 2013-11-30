@@ -10,11 +10,11 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 
 public class HelpEntry {
     
-    private String name;
-    private String description;
-    private String[] dependencies = {"none"};
-    public transient String[] categories= {};
-    private List<HelpFieldEntry> fields = new ArrayList<HelpFieldEntry>();
+    public String name;
+    public String description;
+    public String[] dependencies = {"none"};
+    public String[] categories= {};
+    public List<HelpFieldEntry> fields = new ArrayList<HelpFieldEntry>();
     /**
      * @param id
      * @param name

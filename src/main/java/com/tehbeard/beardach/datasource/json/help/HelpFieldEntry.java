@@ -1,8 +1,8 @@
 package com.tehbeard.beardach.datasource.json.help;
 
 public class HelpFieldEntry {
-    private String name;
-    private String description;
+    public String name;
+    public String description;
     /**
      * @param name
      * @param description
