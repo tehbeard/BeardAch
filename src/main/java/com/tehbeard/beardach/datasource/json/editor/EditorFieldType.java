@@ -7,7 +7,7 @@ package com.tehbeard.beardach.datasource.json.editor;
  * 
  */
 public enum EditorFieldType {
-    text("Text"), bool("Boolean"), location("Location"), cuboid("Cuboid"), trigger("Trigger list"), selection("Selection");
+    text("Text"), bool("Boolean"), location("Location"), cuboid("Cuboid"), trigger("Trigger list"), selection("Selection"),number("Number");
 
     public final String label;
 

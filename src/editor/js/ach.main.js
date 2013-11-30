@@ -10,6 +10,20 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
   $scope.ui.search      = "";
   $scope.ui.triggerSelected = "";
   $scope.ui.rewardSelected = "";
+  $scope.help = {};
+  $scope.help.selected = {
+      "name": "xp",
+      "description": "Gives a player some xp",
+      "dependencies": [
+        "none"
+      ],
+      "fields": [
+        {
+          "name": "Amount to give",
+          "description": ""
+        }
+      ]
+    };
 
   $scope.testFunc = function(){
     alert("TEST");
