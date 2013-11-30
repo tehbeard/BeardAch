@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,8 +34,8 @@ public class EditorJSON {
     public List<EditorElement> triggers = new ArrayList<EditorElement>();
     public List<EditorElement> rewards = new ArrayList<EditorElement>();
 
-    public List<HelpEntry> triggerHelp = new ArrayList<HelpEntry>();
-    public List<HelpEntry> rewardHelp = new ArrayList<HelpEntry>();
+    public Map<String,HelpEntry> triggerHelp = new HashMap<String,HelpEntry>();
+    public Map<String,HelpEntry> rewardHelp = new HashMap<String,HelpEntry>();
 
     public class EditorElement {
 
@@ -68,9 +70,9 @@ public class EditorJSON {
         addHelpEntry(r,rewardHelp);
     }
 
-    private void addHelpEntry(Class<?> _c,List<HelpEntry> list){
+    private void addHelpEntry(Class<?> _c,Map<String,HelpEntry> list){
         try{
-            list.add(new HelpEntry(_c));
+            list.put(_c.getAnnotation(Configurable.class).tag(),new HelpEntry(_c));
         }catch(Exception e){}
 
     }

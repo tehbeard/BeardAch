@@ -10,7 +10,6 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 
 public class HelpEntry {
     
-    public transient String id;
     private String name;
     private String description;
     private String[] dependencies = {"none"};
@@ -27,8 +26,7 @@ public class HelpEntry {
         Configurable cfg = _class.getAnnotation(Configurable.class);
         ComponentHelpDescription helpDesc = _class.getAnnotation(ComponentHelpDescription.class);
         if(cfg == null || helpDesc == null){throw new IllegalArgumentException();}
-        id = cfg.tag();
-        name = cfg.tag();
+        name = cfg.name();
         description = helpDesc.description();
         dependencies = helpDesc.dependencies().length > 0 ? helpDesc.dependencies() : dependencies;
         categories = helpDesc.categories();
