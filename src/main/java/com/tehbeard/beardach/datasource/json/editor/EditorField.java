@@ -10,4 +10,7 @@ public @interface EditorField {
     EditorFieldType type() default EditorFieldType.text;
 
     String[] options() default {};
+    
+    int min() default Integer.MIN_VALUE;
+    int max() default Integer.MAX_VALUE;
 }

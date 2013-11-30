@@ -16,12 +16,12 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 public class xpReward implements IReward {
 
     @Expose
-    @EditorField(alias = "Amount to give",type=EditorFieldType.number)
+    @EditorField(alias = "Amount to give",type=EditorFieldType.number,min=0)
     @ComponentValueDescription("Raw amount of XP to give a player (for example, a blaze drops 10 xp")
     int xp;
     
     @Expose
-    @EditorField(alias = "Amount of levels to add",type=EditorFieldType.number)
+    @EditorField(alias = "Amount of levels to add",type=EditorFieldType.number,min=0)
     @ComponentValueDescription("XP levels to add to a player (note: negative values will take away, and cap at 0)")
     int xpLevels = 0;
 

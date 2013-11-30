@@ -30,7 +30,9 @@
       console.log(entry.fields[x].type);
       tmpHtml = tempCache.get("partial.ele." + entry.fields[x].type)
       .replace(/\$\{label\}/g,entry.fields[x].name)
-      .replace(/\$\{model\.key\}/g,"entry." + entry.fields[x].key);
+      .replace(/\$\{model\.key\}/g,"entry." + entry.fields[x].key)
+      .replace(/\$\{model\.min\}/g,""+ entry.fields[x].min)
+      .replace(/\$\{model\.max\}/g,""+ entry.fields[x].max);
 
       if(entry.fields[x].values != null){
         selectHtml = "";
@@ -131,7 +133,7 @@
   <script type="text/ng-template" id="partial.ele.number">
     <div class="input-prepend">
     <label class="add-on">${label}</label>
-    <input type="number" ng-model="${model.key}"/>
+    <input type="number" min=${model.min} max=${model.max} ng-model="${model.key}"/>
     </div>
   </script>
 

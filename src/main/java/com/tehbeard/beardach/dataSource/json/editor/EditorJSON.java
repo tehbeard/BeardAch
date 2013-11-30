@@ -31,7 +31,7 @@ public class EditorJSON {
 
     public List<EditorElement> triggers = new ArrayList<EditorElement>();
     public List<EditorElement> rewards = new ArrayList<EditorElement>();
-    
+
     public List<HelpEntry> triggerHelp = new ArrayList<HelpEntry>();
     public List<HelpEntry> rewardHelp = new ArrayList<HelpEntry>();
 
@@ -54,6 +54,8 @@ public class EditorJSON {
         public String name;
         public String type;
         public String[] values = null;
+        public Object min = false;
+        public Object max = false;
     }
 
     public void addTrigger(Class<? extends ITrigger> t) {
@@ -65,12 +67,12 @@ public class EditorJSON {
         addItem(r, rewards);
         addHelpEntry(r,rewardHelp);
     }
-    
+
     private void addHelpEntry(Class<?> _c,List<HelpEntry> list){
         try{
-        list.add(new HelpEntry(_c));
+            list.add(new HelpEntry(_c));
         }catch(Exception e){}
-        
+
     }
 
     private void addItem(Class<?> c, List<EditorElement> list) {
@@ -91,20 +93,28 @@ public class EditorJSON {
                 if (a != null) {
                     efe.name = a.alias();
                     efe.type = a.type().toString().toLowerCase();
-                    if (a.options().length > 0) {
-                        if (a.options().length == 1) {
-                            @SuppressWarnings("unchecked")
-                            Class<Enum<?>> enumClass = (Class<Enum<?>>) Class.forName(a.options()[0]);
-                            @SuppressWarnings("rawtypes")
-                            Enum[] enums = (Enum[]) enumClass.getMethod("values").invoke(null);
-                            String[] options = new String[enums.length];
-                            for (int i = 0; i < enums.length; i++) {
-                                options[i] = enums[i].name();
+                    //Parse selection
+                    if(a.type() == EditorFieldType.selection){
+                        if (a.options().length > 0) {
+                            if (a.options().length == 1) {
+                                @SuppressWarnings("unchecked")
+                                Class<Enum<?>> enumClass = (Class<Enum<?>>) Class.forName(a.options()[0]);
+                                @SuppressWarnings("rawtypes")
+                                Enum[] enums = (Enum[]) enumClass.getMethod("values").invoke(null);
+                                String[] options = new String[enums.length];
+                                for (int i = 0; i < enums.length; i++) {
+                                    options[i] = enums[i].name();
+                                }
+                                efe.values = options;
+                            } else {
+                                efe.values = a.options();
                             }
-                            efe.values = options;
-                        } else {
-                            efe.values = a.options();
                         }
+                    }
+                    
+                    if(a.type() == EditorFieldType.number){
+                        efe.min = a.min() == Integer.MIN_VALUE ? false : a.min();
+                        efe.max = a.max() == Integer.MAX_VALUE ? false : a.max();
                     }
                 }
                 ee.fields.add(efe);
@@ -131,7 +141,7 @@ public class EditorJSON {
 
     public void write(File file) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        
+
         FileWriter fw = new FileWriter(file);
         fw.write("$(function(){initConfig(");
         JsonWriter writer = new JsonWriter(fw);
