@@ -353,9 +353,10 @@ public class BeardAch extends JavaPlugin {
      * @param trigger
      */
     public void addTrigger(Class<? extends ITrigger> trigger) {
+        jsonEditorSettings.addTrigger(trigger);
         if(!hasDependencies(trigger,"trigger")){return;}
         AchievementLoader.triggerFactory.addProduct(trigger);
-        jsonEditorSettings.addTrigger(trigger);
+        
     }
 
     /**
@@ -364,9 +365,10 @@ public class BeardAch extends JavaPlugin {
      * @param reward
      */
     public void addReward(Class<? extends IReward> reward) {
+        jsonEditorSettings.addReward(reward);
         if(!hasDependencies(reward,"reward")){return;}
         AchievementLoader.rewardFactory.addProduct(reward);
-        jsonEditorSettings.addReward(reward);
+        
     }
 
     /**
