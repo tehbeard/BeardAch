@@ -32,6 +32,7 @@ import com.tehbeard.beardach.commands.AchCommand;
 import com.tehbeard.beardach.commands.AchFancyCommand;
 import com.tehbeard.beardach.commands.AchReloadCommand;
 import com.tehbeard.beardach.commands.ExportEditorCommand;
+import com.tehbeard.beardach.commands.TestAchCommand;
 import com.tehbeard.beardach.datasource.AchievementLoader;
 import com.tehbeard.beardach.datasource.GSONDataSource;
 import com.tehbeard.beardach.datasource.IDataSource;
@@ -156,7 +157,6 @@ public class BeardAch extends JavaPlugin {
                 getConfig().set("ach.database.sql_db_version",getConfig().getDefaults().getInt("ach.database.sql_db_version"));
                 saveConfig();
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             
@@ -309,6 +309,7 @@ public class BeardAch extends JavaPlugin {
         getCommand("ach").setExecutor(new AchCommand());
         getCommand("ach-fancy").setExecutor(new AchFancyCommand());
         getCommand("ach-export").setExecutor(new ExportEditorCommand());
+        getCommand("testach").setExecutor(new TestAchCommand(achievementManager));
         getLogger().info("Loaded Version:" + getDescription().getVersion());
 
     }

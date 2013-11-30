@@ -18,6 +18,9 @@ commands:
     ach-export:
         description: Exports the editor
         usage: /<command>
+    testach:
+        description: Test for achievement
+        usage: /<command> playerSelector achievementId
 permissions:
   beardach.reload:
     description: Allows you to reload the achievements list
