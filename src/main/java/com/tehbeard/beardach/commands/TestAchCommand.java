@@ -1,6 +1,5 @@
 package com.tehbeard.beardach.commands;
 
-import org.bukkit.block.CommandBlock;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
