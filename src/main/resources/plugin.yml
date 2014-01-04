@@ -9,12 +9,15 @@ commands:
     ach-reload:
         description: reloads the achievements
         usage: /<command>
+        permission: beardach.reload
     ach-fancy:
         description: dumps achievement definitions to database
         usage: /<command>
+        permission: beardach.reload.fancy
     ach-admin:
         description: Administrative functions
         usage: /<command> dumpmeta|clearmeta
+        permission: beardach.reload
 permissions:
   beardach.reload:
     description: Allows you to reload the achievements list
