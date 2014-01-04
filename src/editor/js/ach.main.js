@@ -1,4 +1,4 @@
-angular.module('achMain',['achDirectives']).controller('achList',function($scope,$templateCache,$filter){
+angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$scope','$templateCache','$filter','achHelpDB',function($scope,$templateCache,$filter,achHelpDB){
   console.log("Loading achievement list");
   $scope.achievements = [];
 
@@ -10,7 +10,8 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
   $scope.ui.search      = "";
   $scope.ui.triggerSelected = "";
   $scope.ui.rewardSelected = "";
-
+  $scope.help = achHelpDB;
+  
   $scope.testFunc = function(){
     alert("TEST");
   }
@@ -35,6 +36,7 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
   }
 
   $scope.ui.inc = function(){
+    if($scope.achievements.length == 0){return;}
     $scope.ui.pageStart ++;
 
     max = $scope.ui.pages();
@@ -44,6 +46,7 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
   }
 
   $scope.ui.dec = function(){
+    if($scope.achievements.length == 0){return;}
     $scope.ui.pageStart --;
     if($scope.ui.pageStart < 1){
     	$scope.ui.pageStart = 1;
@@ -100,7 +103,7 @@ angular.module('achMain',['achDirectives']).controller('achList',function($scope
     }
     fr.readAsText($(selector)[0].files[0]);
   }
-})
+}])
 .filter('startat',function(){
 	return function(input,start){
 		na = [];

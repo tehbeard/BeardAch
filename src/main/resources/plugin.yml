@@ -1,5 +1,5 @@
 name: BeardAch
-main: me.tehbeard.BeardAch.BeardAch
+main: com.tehbeard.beardach.BeardAch
 version: ${project.plugin.version}
 softdepend: [WorldGuard,DroxPerms,Vault,BeardStat] 
 commands:
@@ -18,6 +18,13 @@ commands:
         description: Administrative functions
         usage: /<command> dumpmeta|clearmeta
         permission: beardach.reload
+    ach-export:
+        description: Exports the editor
+        usage: /<command>
+        permission: beardach.reload
+    testach:
+        description: Test for achievement
+        usage: /<command> playerSelector achievementId
 permissions:
   beardach.reload:
     description: Allows you to reload the achievements list

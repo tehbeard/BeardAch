@@ -1,6 +1,13 @@
+##coconut milkshake
+* Finally drop yaml data source, json is now the default file based source.
+* New refactored SQL data source, based on the same techniques as BeardStat's data source.
+* Tweaks to the trigger/reward loading, they will not load if a plugin they depend on is not found.
+* breaking: changed to com.tehbeard.beardach package.
+* New help documentation in the editor
+* /ach-export command to export the editor
 ##Banana Split
 * Support for BeardStat 0.6 and up
-  * Will probably when loaded with 0.5 and below, DO NOT DO THIS.
+  * Will probably crash when loaded with 0.5 and below, DO NOT DO THIS.
   * stat and statwithin support domain and world entries.
     * By default, will use the "default" domain and world * (all worlds)
     * Counter reward now uses the "beardach" domain, and the world is set based on players current world, any triggers based on it will need to be changed.

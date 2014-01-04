@@ -8,6 +8,7 @@
   <script type="text/javascript" src="js/FileSaver.min.js"></script>
   <script type="text/javascript" src="js/angular.min.js"></script>
   <script type="text/javascript" src="settings.js"></script>
+  <script type="text/javascript" src="js/ach.help.js"></script>
   <script type="text/javascript" src="js/ach.directives.js"></script>
   <script type="text/javascript" src="js/ach.main.js"></script>
 
@@ -30,7 +31,9 @@
       console.log(entry.fields[x].type);
       tmpHtml = tempCache.get("partial.ele." + entry.fields[x].type)
       .replace(/\$\{label\}/g,entry.fields[x].name)
-      .replace(/\$\{model\.key\}/g,"entry." + entry.fields[x].key);
+      .replace(/\$\{model\.key\}/g,"entry." + entry.fields[x].key)
+      .replace(/\$\{model\.min\}/g,""+ entry.fields[x].min)
+      .replace(/\$\{model\.max\}/g,""+ entry.fields[x].max);
 
       if(entry.fields[x].values != null){
         selectHtml = "";
@@ -60,6 +63,11 @@
     for(x in data.rewards){
       _generateTemplate("reward",data.rewards[x],tempCache);
     }
+    var achHelpDatabase = angular.element("body").injector().get("achHelpDB");
+    achHelpDatabase.rewardHelp = data.rewardHelp;
+    achHelpDatabase.triggerHelp = data.triggerHelp;
+    achHelpDatabase.initial();
+
   }
   </script>
 
@@ -97,9 +105,9 @@
   <script type="text/ng-template" id="partial.ele.location">
   <div class="input-prepend input-append"><label class="add-on">${label}</label>
   <span class="add-on">World</span><input type="text" ng-model="${model.key}.world"/>
-  <span class="add-on">X</span><input class="input-mini" type="text" ng-model="${model.key}.x"/>
-  <span class="add-on">Y</span><input class="input-mini" type="text" ng-model="${model.key}.y"/>
-  <span class="add-on">Z</span><input class="input-mini" type="text" ng-model="${model.key}.z"/>
+  <span class="add-on">X</span><input class="input-mini" type="number" ng-model="${model.key}.x"/>
+  <span class="add-on">Y</span><input class="input-mini" type="number" ng-model="${model.key}.y"/>
+  <span class="add-on">Z</span><input class="input-mini" type="number" ng-model="${model.key}.z"/>
   </div>
   </script>
   <script type="text/ng-template" id="partial.ele.cuboid">
@@ -107,14 +115,14 @@
   <span class="add-on">World</span><input type="text" ng-model="${model.key}.world"/>
   </div>
   <div class="input-prepend input-append">
-  <span class="add-on">x1</span><input class="input-mini" type="text" ng-model="${model.key}.v1.x"/>
-  <span class="add-on">y1</span><input class="input-mini" type="text" ng-model="${model.key}.v1.y"/>
-  <span class="add-on">z1</span><input class="input-mini" type="text" ng-model="${model.key}.v1.z"/>
+  <span class="add-on">x1</span><input class="input-mini" type="number" ng-model="${model.key}.v1.x"/>
+  <span class="add-on">y1</span><input class="input-mini" type="number" ng-model="${model.key}.v1.y"/>
+  <span class="add-on">z1</span><input class="input-mini" type="number" ng-model="${model.key}.v1.z"/>
   </div>
   <div class="input-prepend input-append">
-  <span class="add-on">x2</span><input class="input-mini" type="text" ng-model="${model.key}.v2.x"/>
-  <span class="add-on">y2</span><input class="input-mini" type="text" ng-model="${model.key}.v2.y"/>
-  <span class="add-on">z2</span><input class="input-mini" type="text" ng-model="${model.key}.v2.z"/>
+  <span class="add-on">x2</span><input class="input-mini" type="number" ng-model="${model.key}.v2.x"/>
+  <span class="add-on">y2</span><input class="input-mini" type="number" ng-model="${model.key}.v2.y"/>
+  <span class="add-on">z2</span><input class="input-mini" type="number" ng-model="${model.key}.v2.z"/>
   </div>
   </script>
     <script type="text/ng-template" id="partial.ele.selection">
@@ -127,6 +135,12 @@
   <script type="text/ng-template" id="partial.ele.trigger">
     <h4>${label}</h4>
     <ach-trigger-list list="${model.key}"></ach-trigger-list>
+  </script>
+  <script type="text/ng-template" id="partial.ele.number">
+    <div class="input-prepend">
+    <label class="add-on">${label}</label>
+    <input type="number" min=${model.min} max=${model.max} ng-model="${model.key}"/>
+    </div>
   </script>
 
   <script type="text/ng-template" id="achListTriggerTemplate">
@@ -156,7 +170,6 @@
   </script>
 <!-- 
 <script type="text/ng-template" id="partial."></script>
-<script type="text/ng-template" id="partial."></script>
 -->
 
 </head>
@@ -175,6 +188,7 @@
           <button class="btn" ng-click="load()">Load</button>
           <button class="btn" ng-click="save()">Save</button>
           <button class="btn" ng-click="newAch()" class="btn">add</button>
+          <button class="btn" onclick="$('#modalHelp').modal()" class="btn">help</button>
           <input type="text" placeholder="filter list" ng-model="ui.search" ng-change="ui.pageStart=1">
           <div class="input-prepend input-append">
             <button class="btn btn-info" ng-click="ui.dec()"><<</button>
@@ -244,7 +258,7 @@
   <!-- Confirm delete achievement -->
   <div id="modalConfirmDelete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3 id="myModalLabel">Confirm delete achievement</h3>
     </div>
     <div class="modal-body">
@@ -265,7 +279,7 @@
     <!-- Load window -->
     <div id="modalLoad" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3 id="myModalLabel">Edit achievement</h3>
       </div>
       <div class="modal-body">
@@ -280,7 +294,7 @@
   <!-- save window -->
   <div id="modalSave" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3 id="myModalLabel">Save achievements</h3>
     </div>
     <div class="modal-body">
@@ -292,6 +306,24 @@
     </div>
     <div class="modal-footer">
      <button class="btn btn-primary" ng-click="saveAsFile()">Save to file</button>
+   </div>
+ </div>
+ <!-- save window -->
+  <div id="modalHelp" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3 id="myModalLabel">Help :: {{help.selectedReward.name}}</h3>
+    </div>
+    <div class="modal-body">
+      <b>name:</b> {{help.selectedReward.name}}<br />
+      <b>Description:</b> {{help.selectedReward.description}}<br />
+      <b>dependencies: </b>{{help.selectedReward.dependencies}}<br />
+      <ul>
+        <li ng-repeat="f in help.selectedReward.fields">{{f.name}} - {{f.description}}</li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+     
    </div>
  </div>
 </body>

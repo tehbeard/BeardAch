@@ -1,13 +1,16 @@
 general:
   debug: false
   plugin-stats-opt-out: false
+  loglevel: INFO
 ach:
+  allow-exec-shell-reward: false
   database:
-    type: file
+    type: json
     host: localhost
     username: Beardstats
     password: changeme
     database: stats
+    sql_db_version: 1
   msg:
     person: "Achievement Unlocked: <ACH>"
     broadcast: "<PLAYER> Unlocked: <ACH>"
