@@ -114,9 +114,10 @@ angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$sc
 	}
 }).filter('achsearch',function(){
 	return function(input,key){
+    k = key.toLowerCase();
 		na = [];
 		for(x = 0;x<input.length;x++){
-		  if(input[x].slug.indexOf(key) != -1 || input[x].name.indexOf(key) != -1 ){
+		  if(input[x].slug.toLowerCase().indexOf(k) != -1 || input[x].name.toLowerCase().indexOf(k) != -1 ){
 			na.push(input[x]);
 		  }
 		}

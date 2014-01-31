@@ -138,17 +138,8 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
     @Override
     public void clearAchievements(String player) {
-        throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                       // change
-                                                                       // body
-                                                                       // of
-                                                                       // generated
-                                                                       // methods,
-                                                                       // choose
-                                                                       // Tools
-                                                                       // |
-                                                                       // Templates.
-    }
+        throw new UnsupportedOperationException("Not supported yet."); 
+        }
 
     @Override
     public void dumpFancy() {
