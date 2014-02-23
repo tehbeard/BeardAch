@@ -122,7 +122,7 @@ public class Achievement {
         if (player == null)
             return false;
 
-        if (BeardAch.instance().getAchievementManager().playerHas(player.getName(), slug))
+        if (has(player))
             return false;
 
         for (ITrigger trigger : triggers) {
@@ -178,5 +178,9 @@ public class Achievement {
 
     public Set<IReward> getRewards() {
         return rewards;
+    }
+
+    public boolean has(Player player) {
+        return BeardAch.instance().getAchievementManager().playerHas(player.getName(), slug);
     }
 }

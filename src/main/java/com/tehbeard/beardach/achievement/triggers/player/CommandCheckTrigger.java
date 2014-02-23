@@ -49,15 +49,11 @@ public class CommandCheckTrigger extends AbstractEventTrigger {
         if (!event.isCancelled() || includeIgnored) {
             if (isRegex) {
                 if (pattern.matcher(event.getMessage()).matches()) {
-                    add(event.getPlayer());
-                    getAchievement().checkAchievement(event.getPlayer());
-                    remove(event.getPlayer());
+                    runCheck(event.getPlayer());
                 }
             } else {
                 if (event.getMessage().startsWith(commandText)) {
-                    add(event.getPlayer());
-                    getAchievement().checkAchievement(event.getPlayer());
-                    remove(event.getPlayer());
+                    runCheck(event.getPlayer());
                 }
             }
         }

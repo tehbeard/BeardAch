@@ -31,15 +31,20 @@ public abstract class AbstractEventTrigger implements ITrigger, Listener {
         achievement = ach;
     }
 
-    protected Achievement getAchievement() {
-        return achievement;
+
+    protected void runCheck(Player player){
+        if(!achievement.has(player)){
+            add(player);
+            achievement.checkAchievement(player);
+            remove(player);
+        }
     }
 
-    protected void add(Player p) {
+    private void add(Player p) {
         active.add(p.getName());
     }
 
-    protected void remove(Player p) {
+    private void remove(Player p) {
         active.remove(p.getName());
     }
 

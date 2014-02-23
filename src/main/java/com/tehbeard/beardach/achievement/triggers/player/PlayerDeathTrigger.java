@@ -13,9 +13,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.projectiles.ProjectileSource;
 
 import com.google.gson.annotations.Expose;
-import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.triggers.AbstractEventTrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
@@ -36,10 +36,6 @@ public class PlayerDeathTrigger extends AbstractEventTrigger {
     @EditorField(alias = "Entity", type = EditorFieldType.selection, options = "org.bukkit.entity.EntityType")
     private EntityType entityType;
 
-    @Override
-    public void configure(Achievement ach) {
-    }
-
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onKill(EntityDeathEvent event) {
         if (event.getEntity() instanceof Player) {
@@ -50,13 +46,13 @@ public class PlayerDeathTrigger extends AbstractEventTrigger {
                 Entity entity = ede.getDamager();
 
                 if (entity instanceof Projectile) {
-                    entity = ((Projectile) entity).getShooter();
+                    ProjectileSource src = ((Projectile) entity).getShooter();
+                    entity = src instanceof Entity ? (Entity)src : null;
+                    
                 }
-
-                if (entity.getType() == entityType) {
-                    add(player);
-                    checkAchievement(player);
-                    remove(player);
+                
+                if (entity != null && entity.getType() == entityType) {
+                    runCheck(player);
                 }
             }
         }
