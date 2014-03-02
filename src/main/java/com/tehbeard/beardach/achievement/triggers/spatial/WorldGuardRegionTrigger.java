@@ -54,9 +54,7 @@ public class WorldGuardRegionTrigger extends AbstractEventTrigger {
 
         if (event.getTo().getBlockX() != event.getFrom().getBlockX() || event.getTo().getBlockY() != event.getFrom().getBlockY() || event.getTo().getBlockZ() != event.getFrom().getBlockZ()) {
             if (event.getPlayer().getWorld().getName().equals(world)) {
-                if (checkAchievement(event.getPlayer())) {
-                    getAchievement().checkAchievement(event.getPlayer());
-                }
+                runCheck(event.getPlayer());
             }
         }
     }
