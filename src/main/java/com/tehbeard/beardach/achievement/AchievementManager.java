@@ -48,7 +48,6 @@ public class AchievementManager implements Listener {
 
     public AchievementManager(IDataSource database) {
         this.database = database;
-        playerHasCache = new HashMap<String, Set<AchievementPlayerLink>>();
 
     }
 
@@ -74,6 +73,7 @@ public class AchievementManager implements Listener {
         chunkCache.clearCache();
         achievements = new LinkedList<Achievement>();
         playerCheckCache = new HashMap<Achievement, Set<String>>();
+        playerHasCache = new HashMap<String, Set<AchievementPlayerLink>>();
     }
 
     /**
