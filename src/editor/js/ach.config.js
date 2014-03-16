@@ -57,6 +57,5 @@ function _generateTemplate(prefix,entry,tempCache){
     var achHelpDatabase = angular.element("body").injector().get("achHelpDB");
     achHelpDatabase.rewardHelp = data.rewardHelp;
     achHelpDatabase.triggerHelp = data.triggerHelp;
-    achHelpDatabase.initial();
 
   }

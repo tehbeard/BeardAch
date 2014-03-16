@@ -2,6 +2,26 @@ angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$sc
   console.log("Loading achievement list");
   $scope.achievements = [];
 
+  var localAutoSave = window.localStorage.getItem("autosavedAchievementList");
+  if(localAutoSave!=null){
+  $scope.achievements = JSON.parse(localAutoSave);
+  }
+
+  var _modelDirty = 0;
+  $scope.$watch("achievements",function(){
+    _modelDirty +=1;
+  },true);
+
+  setInterval(function(){
+    console.log("Checking in");
+    if(_modelDirty > 0){
+      $scope.autoSave();
+      console.log("Autosaved latest changes " + new Date());
+      _modelDirty -= 1;
+    }
+  },2000);
+
+
   $scope.ui                 = {};
   $scope.ui.deleteIndex     = -1;
   $scope.ui.editIndex       = -1;
@@ -66,6 +86,9 @@ angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$sc
   	$("#modalEdit").modal('show');
   }
 
+  $scope.new = function(){
+    achievements = [];
+  }
   $scope.load = function(){
   	$("#modalLoad").modal('show');
   }
@@ -73,6 +96,11 @@ angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$sc
   $scope.save = function(){
   	$('#modalSave').modal('show');
   }
+
+  $scope.autoSave = function(){
+    window.localStorage.setItem("autosavedAchievementList", angular.toJson($scope.achievements,"  "));
+  }
+
   $scope.saveAsFile = function(){
   	window.saveAs(new Blob([angular.toJson($scope.achievements,"  ")]), ($(".btn-file-label").val() || "ach.json"));
   }

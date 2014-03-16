@@ -139,6 +139,7 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <div class="nav navbar-nav">
+              <button class="btn navbar-btn" ng-click="new()">New</button>
               <button class="btn navbar-btn" ng-click="load()">Load</button>
               <button class="btn navbar-btn" ng-click="save()">Save</button>
               <button class="btn navbar-btn" ng-click="newAch()">add</button>
@@ -210,8 +211,8 @@
           <span class="input-group-btn"><button class="btn" ng-click="ui.addReward()">Add</button></span>
         </div>
         <div ng-repeat="reward in achievements[ui.editIndex].rewards" class="left-border-lined" >
-          <div class="input-append">
-            <div class="add-on btn-large"><b>{{optreward[reward._type]}}</b></div><button class="btn btn-danger" ng-click='remItem(achievements[ui.editIndex].rewards,$index)'>remove</button>
+          <div class="input-group">
+            <div class="input-group-addon"><b>{{optreward[reward._type]}}</b></div><button class="btn btn-danger" ng-click='remItem(achievements[ui.editIndex].rewards,$index)'>remove</button>
           </div>
           <ach-reward entry="reward">{{reward | json}}</ach-reward>
         </div>
