@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.tehbeard.beardach.achievement.triggers.player;
 
 
@@ -30,7 +27,7 @@ public class PlayerDeathByTypeTrigger extends AbstractEventTrigger {
 
     @ComponentValueDescription(value = "Damage type that killed the player")
     @Expose
-    @EditorField(alias = "Damage type", type = EditorFieldType.selection, options = "org.bukkit.event.entity.EntityDamageEvent.DamageCause")
+    @EditorField(alias = "Damage type", type = EditorFieldType.selection, options = "org.bukkit.event.entity.EntityDamageEvent$DamageCause")
     private DamageCause cause;
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

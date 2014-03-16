@@ -99,6 +99,7 @@ public class EditorJSON {
                     if(a.type() == EditorFieldType.selection){
                         if (a.options().length > 0) {
                             if (a.options().length == 1) {
+                                Logger.getLogger(EditorJSON.class.getName()).info("Loading class [" + a.options()[0] +"] as enum");
                                 @SuppressWarnings("unchecked")
                                 Class<Enum<?>> enumClass = (Class<Enum<?>>) Class.forName(a.options()[0]);
                                 @SuppressWarnings("rawtypes")
@@ -127,17 +128,17 @@ public class EditorJSON {
             BeardAch.instance().getLogger().log(Level.WARNING, "Skipping item {0}, class not found.", ee.name);
             e.printStackTrace();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, "Failed to load a class needed by " + ee.name, ex);
         } catch (IllegalArgumentException ex) {
             Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvocationTargetException ex) {
             Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchMethodException ex) {
-            Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, "No method found " + ee.name, ex);
         } catch (SecurityException ex) {
-            Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, "Security exception" + ee.name, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, "Illegal access exception " + ee.name, ex);
         }
     }
 
