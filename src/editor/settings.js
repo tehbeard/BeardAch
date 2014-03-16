@@ -16,6 +16,19 @@ $(function(){initConfig({
     {
       "fields": [
         {
+          "key": "ach",
+          "name": "achievement slug",
+          "type": "text",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "noach",
+      "name": "Does not have achievement"
+    },
+    {
+      "fields": [
+        {
           "key": "threshold",
           "name": "achievement count threshold",
           "type": "text",
@@ -32,19 +45,6 @@ $(function(){initConfig({
       ],
       "type": "achcount",
       "name": "Achievement count"
-    },
-    {
-      "fields": [
-        {
-          "key": "ach",
-          "name": "achievement slug",
-          "type": "text",
-          "min": false,
-          "max": false
-        }
-      ],
-      "type": "noach",
-      "name": "Does not have achievement"
     },
     {
       "fields": [
@@ -80,35 +80,133 @@ $(function(){initConfig({
       "name": "Between two times"
     },
     {
-      "fields": [],
-      "type": "locked",
-      "name": "Lock this achievement"
-    },
-    {
       "fields": [
         {
-          "key": "triggers",
-          "name": "triggers",
-          "type": "trigger",
+          "key": "domain",
+          "name": "Domain",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "world",
+          "name": "World",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "cat",
+          "name": "Category",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "stat",
+          "name": "Statistic",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "lowerThreshold",
+          "name": "Lower bound threshold",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "upperThreshold",
+          "name": "Upper bound threshold",
+          "type": "text",
           "min": false,
           "max": false
         }
       ],
-      "type": "metaand",
-      "name": "Meta AND trigger"
+      "type": "statwithin",
+      "name": "Stat within boundaries"
     },
     {
       "fields": [
         {
-          "key": "triggers",
-          "name": "triggers",
-          "type": "trigger",
+          "key": "domain",
+          "name": "Domain",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "world",
+          "name": "World",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "cat",
+          "name": "Category",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "stat",
+          "name": "Statistic",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "threshold",
+          "name": "Lower threshold",
+          "type": "text",
           "min": false,
           "max": false
         }
       ],
-      "type": "metaor",
-      "name": "Meta OR trigger"
+      "type": "stat",
+      "name": "stat above threshold"
+    },
+    {
+      "fields": [
+        {
+          "key": "isop",
+          "name": "is OP",
+          "type": "bool",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "isop",
+      "name": "is player an OP"
+    },
+    {
+      "fields": [
+        {
+          "key": "itemStr",
+          "name": "Item String (CraftBook item syntax)",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "ignoreDurability",
+          "name": "Ignore durability values",
+          "type": "bool",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "ignoreMetadata",
+          "name": "Ignore metadata (Enchantments, Lore)",
+          "type": "bool",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "invcheck",
+      "name": "Inventory check"
     },
     {
       "fields": [
@@ -139,7 +237,45 @@ $(function(){initConfig({
             "TAIGA_HILLS",
             "SMALL_MOUNTAINS",
             "JUNGLE",
-            "JUNGLE_HILLS"
+            "JUNGLE_HILLS",
+            "JUNGLE_EDGE",
+            "DEEP_OCEAN",
+            "STONE_BEACH",
+            "COLD_BEACH",
+            "BIRCH_FOREST",
+            "BIRCH_FOREST_HILLS",
+            "ROOFED_FOREST",
+            "COLD_TAIGA",
+            "COLD_TAIGA_HILLS",
+            "MEGA_TAIGA",
+            "MEGA_TAIGA_HILLS",
+            "EXTREME_HILLS_PLUS",
+            "SAVANNA",
+            "SAVANNA_PLATEAU",
+            "MESA",
+            "MESA_PLATEAU_FOREST",
+            "MESA_PLATEAU",
+            "SUNFLOWER_PLAINS",
+            "DESERT_MOUNTAINS",
+            "FLOWER_FOREST",
+            "TAIGA_MOUNTAINS",
+            "SWAMPLAND_MOUNTAINS",
+            "ICE_PLAINS_SPIKES",
+            "JUNGLE_MOUNTAINS",
+            "JUNGLE_EDGE_MOUNTAINS",
+            "COLD_TAIGA_MOUNTAINS",
+            "SAVANNA_MOUNTAINS",
+            "SAVANNA_PLATEAU_MOUNTAINS",
+            "MESA_BRYCE",
+            "MESA_PLATEAU_FOREST_MOUNTAINS",
+            "MESA_PLATEAU_MOUNTAINS",
+            "BIRCH_FOREST_MOUNTAINS",
+            "BIRCH_FOREST_HILLS_MOUNTAINS",
+            "ROOFED_FOREST_MOUNTAINS",
+            "MEGA_SPRUCE_TAIGA",
+            "EXTREME_HILLS_MOUNTAINS",
+            "EXTREME_HILLS_PLUS_MOUNTAINS",
+            "MEGA_SPRUCE_TAIGA_HILLS"
           ],
           "min": false,
           "max": false
@@ -147,33 +283,6 @@ $(function(){initConfig({
       ],
       "type": "biome",
       "name": "Biome check"
-    },
-    {
-      "fields": [
-        {
-          "key": "includeIgnored",
-          "name": "Include commands that have been cancelled by preprocess event",
-          "type": "bool",
-          "min": false,
-          "max": false
-        },
-        {
-          "key": "isRegex",
-          "name": "Treat prefix as regex expression",
-          "type": "bool",
-          "min": false,
-          "max": false
-        },
-        {
-          "key": "commandText",
-          "name": "Command prefix to detect",
-          "type": "text",
-          "min": false,
-          "max": false
-        }
-      ],
-      "type": "oncommand",
-      "name": "On command"
     },
     {
       "fields": [
@@ -191,29 +300,65 @@ $(function(){initConfig({
     {
       "fields": [
         {
-          "key": "itemStr",
-          "name": "Item String (CraftBook item syntax)",
+          "key": "name",
+          "name": "Team name",
           "type": "text",
-          "min": false,
-          "max": false
-        },
-        {
-          "key": "ignoreDurability",
-          "name": "Ignore durability values",
-          "type": "bool",
-          "min": false,
-          "max": false
-        },
-        {
-          "key": "ignoreMetadata",
-          "name": "Ignore metadata (Enchantments, Lore)",
-          "type": "bool",
           "min": false,
           "max": false
         }
       ],
-      "type": "wearitem",
-      "name": "wearingitem"
+      "type": "onteam",
+      "name": "Player team"
+    },
+    {
+      "fields": [
+        {
+          "key": "amount",
+          "name": "Lower threshold",
+          "type": "text",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "bankbalance",
+      "name": "(Vault)Check bank balance"
+    },
+    {
+      "fields": [
+        {
+          "key": "cause",
+          "name": "Damage type",
+          "type": "selection",
+          "values": [
+            "CONTACT",
+            "ENTITY_ATTACK",
+            "PROJECTILE",
+            "SUFFOCATION",
+            "FALL",
+            "FIRE",
+            "FIRE_TICK",
+            "MELTING",
+            "LAVA",
+            "DROWNING",
+            "BLOCK_EXPLOSION",
+            "ENTITY_EXPLOSION",
+            "VOID",
+            "LIGHTNING",
+            "SUICIDE",
+            "STARVATION",
+            "POISON",
+            "MAGIC",
+            "WITHER",
+            "FALLING_BLOCK",
+            "THORNS",
+            "CUSTOM"
+          ],
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "deathtype",
+      "name": "Killed by"
     },
     {
       "fields": [
@@ -238,6 +383,84 @@ $(function(){initConfig({
             "PRIMED_TNT",
             "FALLING_BLOCK",
             "FIREWORK",
+            "MINECART_COMMAND",
+            "BOAT",
+            "MINECART",
+            "MINECART_CHEST",
+            "MINECART_FURNACE",
+            "MINECART_TNT",
+            "MINECART_HOPPER",
+            "MINECART_MOB_SPAWNER",
+            "CREEPER",
+            "SKELETON",
+            "SPIDER",
+            "GIANT",
+            "ZOMBIE",
+            "SLIME",
+            "GHAST",
+            "PIG_ZOMBIE",
+            "ENDERMAN",
+            "CAVE_SPIDER",
+            "SILVERFISH",
+            "BLAZE",
+            "MAGMA_CUBE",
+            "ENDER_DRAGON",
+            "WITHER",
+            "BAT",
+            "WITCH",
+            "PIG",
+            "SHEEP",
+            "COW",
+            "CHICKEN",
+            "SQUID",
+            "WOLF",
+            "MUSHROOM_COW",
+            "SNOWMAN",
+            "OCELOT",
+            "IRON_GOLEM",
+            "HORSE",
+            "VILLAGER",
+            "ENDER_CRYSTAL",
+            "SPLASH_POTION",
+            "EGG",
+            "FISHING_HOOK",
+            "LIGHTNING",
+            "WEATHER",
+            "PLAYER",
+            "COMPLEX_PART",
+            "UNKNOWN"
+          ],
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "riding",
+      "name": "Riding entity"
+    },
+    {
+      "fields": [
+        {
+          "key": "entityType",
+          "name": "Entity",
+          "type": "selection",
+          "values": [
+            "DROPPED_ITEM",
+            "EXPERIENCE_ORB",
+            "LEASH_HITCH",
+            "PAINTING",
+            "ARROW",
+            "SNOWBALL",
+            "FIREBALL",
+            "SMALL_FIREBALL",
+            "ENDER_PEARL",
+            "ENDER_SIGNAL",
+            "THROWN_EXP_BOTTLE",
+            "ITEM_FRAME",
+            "WITHER_SKULL",
+            "PRIMED_TNT",
+            "FALLING_BLOCK",
+            "FIREWORK",
+            "MINECART_COMMAND",
             "BOAT",
             "MINECART",
             "MINECART_CHEST",
@@ -315,8 +538,8 @@ $(function(){initConfig({
           "max": false
         }
       ],
-      "type": "invcheck",
-      "name": "Inventory check"
+      "type": "wearitem",
+      "name": "wearingitem"
     },
     {
       "fields": [
@@ -341,6 +564,7 @@ $(function(){initConfig({
             "PRIMED_TNT",
             "FALLING_BLOCK",
             "FIREWORK",
+            "MINECART_COMMAND",
             "BOAT",
             "MINECART",
             "MINECART_CHEST",
@@ -397,104 +621,81 @@ $(function(){initConfig({
     {
       "fields": [
         {
-          "key": "entityType",
-          "name": "Entity",
-          "type": "selection",
-          "values": [
-            "DROPPED_ITEM",
-            "EXPERIENCE_ORB",
-            "LEASH_HITCH",
-            "PAINTING",
-            "ARROW",
-            "SNOWBALL",
-            "FIREBALL",
-            "SMALL_FIREBALL",
-            "ENDER_PEARL",
-            "ENDER_SIGNAL",
-            "THROWN_EXP_BOTTLE",
-            "ITEM_FRAME",
-            "WITHER_SKULL",
-            "PRIMED_TNT",
-            "FALLING_BLOCK",
-            "FIREWORK",
-            "BOAT",
-            "MINECART",
-            "MINECART_CHEST",
-            "MINECART_FURNACE",
-            "MINECART_TNT",
-            "MINECART_HOPPER",
-            "MINECART_MOB_SPAWNER",
-            "CREEPER",
-            "SKELETON",
-            "SPIDER",
-            "GIANT",
-            "ZOMBIE",
-            "SLIME",
-            "GHAST",
-            "PIG_ZOMBIE",
-            "ENDERMAN",
-            "CAVE_SPIDER",
-            "SILVERFISH",
-            "BLAZE",
-            "MAGMA_CUBE",
-            "ENDER_DRAGON",
-            "WITHER",
-            "BAT",
-            "WITCH",
-            "PIG",
-            "SHEEP",
-            "COW",
-            "CHICKEN",
-            "SQUID",
-            "WOLF",
-            "MUSHROOM_COW",
-            "SNOWMAN",
-            "OCELOT",
-            "IRON_GOLEM",
-            "HORSE",
-            "VILLAGER",
-            "ENDER_CRYSTAL",
-            "SPLASH_POTION",
-            "EGG",
-            "FISHING_HOOK",
-            "LIGHTNING",
-            "WEATHER",
-            "PLAYER",
-            "COMPLEX_PART",
-            "UNKNOWN"
-          ],
+          "key": "includeIgnored",
+          "name": "Include commands that have been cancelled by preprocess event",
+          "type": "bool",
           "min": false,
           "max": false
-        }
-      ],
-      "type": "riding",
-      "name": "Riding entity"
-    },
-    {
-      "fields": [
+        },
         {
-          "key": "name",
-          "name": "Team name",
+          "key": "isRegex",
+          "name": "Treat prefix as regex expression",
+          "type": "bool",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "commandText",
+          "name": "Command prefix to detect",
           "type": "text",
           "min": false,
           "max": false
         }
       ],
-      "type": "onteam",
-      "name": "Player team"
+      "type": "oncommand",
+      "name": "On command"
     },
     {
       "fields": [
         {
-          "key": "cuboid",
-          "name": "cuboid",
-          "type": "cuboid",
+          "key": "itemStr",
+          "name": "Fished item String (CraftBook item syntax)",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "ignoreDurability",
+          "name": "Ignore durability values",
+          "type": "bool",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "ignoreMetadata",
+          "name": "Ignore metadata (Enchantments, Lore)",
+          "type": "bool",
           "min": false,
           "max": false
         }
       ],
-      "type": "cuboid",
-      "name": "cuboid"
+      "type": "fisheditem",
+      "name": "Fished item"
+    },
+    {
+      "fields": [],
+      "type": "locked",
+      "name": "Lock this achievement"
+    },
+    {
+      "fields": [
+        {
+          "key": "region",
+          "name": "Region name",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "world",
+          "name": "World name",
+          "type": "text",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "wgregion",
+      "name": "(WorldGuard) Inside region"
     },
     {
       "fields": [
@@ -515,6 +716,19 @@ $(function(){initConfig({
       ],
       "type": "koth",
       "name": "King of the hill"
+    },
+    {
+      "fields": [
+        {
+          "key": "cuboid",
+          "name": "cuboid",
+          "type": "cuboid",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "cuboid",
+      "name": "cuboid"
     },
     {
       "fields": [
@@ -555,61 +769,86 @@ $(function(){initConfig({
       ],
       "type": "speedrun",
       "name": "Speed run"
+    },
+    {
+      "fields": [
+        {
+          "key": "triggers",
+          "name": "triggers",
+          "type": "trigger",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "metaand",
+      "name": "Meta AND trigger"
+    },
+    {
+      "fields": [
+        {
+          "key": "triggers",
+          "name": "triggers",
+          "type": "trigger",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "metaor",
+      "name": "Meta OR trigger"
     }
   ],
   "rewards": [
     {
       "fields": [
         {
-          "key": "command",
-          "name": "Command",
+          "key": "subgroup",
+          "name": "Subgroup to add",
           "type": "text",
           "min": false,
           "max": false
         }
       ],
-      "type": "comm",
-      "name": "Execute console command"
+      "type": "subgroup",
+      "name": "(DroxPerms) add subgroup"
     },
     {
       "fields": [
         {
-          "key": "comm",
-          "name": "Command",
+          "key": "track",
+          "name": "Track to promote along",
           "type": "text",
           "min": false,
           "max": false
         }
       ],
-      "type": "playercommand",
-      "name": "Execute command as player"
+      "type": "promote",
+      "name": "(DroxPerms) Promote along track"
     },
     {
       "fields": [
         {
-          "key": "cmd",
-          "name": "Command",
-          "type": "text",
-          "min": false,
-          "max": false
-        },
-        {
-          "key": "env",
-          "name": "Env. variables",
-          "type": "text",
-          "min": false,
-          "max": false
-        },
-        {
-          "key": "workDir",
-          "name": "Working directory",
+          "key": "group",
+          "name": "Group to add",
           "type": "text",
           "min": false,
           "max": false
         }
       ],
-      "type": "execshell",
-      "name": "Execute shell command"
+      "type": "vaultaddgroup",
+      "name": "(Vault) add/set group"
+    },
+    {
+      "fields": [
+        {
+          "key": "amount",
+          "name": "Amount to give (can be a decimal",
+          "type": "text",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "money",
+      "name": "(vault) Give money"
     },
     {
       "fields": [
@@ -627,48 +866,28 @@ $(function(){initConfig({
     {
       "fields": [
         {
-          "key": "doFire",
-          "name": "explosion causes fire",
-          "type": "bool",
-          "min": false,
-          "max": false
-        },
-        {
-          "key": "power",
-          "name": "Explosion power",
-          "type": "text",
+          "key": "to",
+          "name": "Teleport to",
+          "type": "location",
           "min": false,
           "max": false
         }
       ],
-      "type": "explode",
-      "name": "EXPLOSIONS?"
+      "type": "teleport",
+      "name": "Teleport to location"
     },
     {
       "fields": [
         {
-          "key": "itemStr",
-          "name": "Firework String (CraftBook item syntax)",
+          "key": "text",
+          "name": "message",
           "type": "text",
           "min": false,
           "max": false
         }
       ],
-      "type": "firework",
-      "name": "Launch firework"
-    },
-    {
-      "fields": [
-        {
-          "key": "ticks",
-          "name": "Ignite for (ticks)",
-          "type": "text",
-          "min": false,
-          "max": false
-        }
-      ],
-      "type": "ignite",
-      "name": "Ignite the player"
+      "type": "text",
+      "name": "Display text"
     },
     {
       "fields": [
@@ -724,7 +943,6 @@ $(function(){initConfig({
             "ANVIL_LAND",
             "ANVIL_USE",
             "ARROW_HIT",
-            "BREATH",
             "BURP",
             "CHEST_CLOSE",
             "CHEST_OPEN",
@@ -741,7 +959,6 @@ $(function(){initConfig({
             "FIZZ",
             "FUSE",
             "GLASS",
-            "HURT",
             "HURT_FLESH",
             "ITEM_BREAK",
             "ITEM_PICKUP",
@@ -865,6 +1082,7 @@ $(function(){initConfig({
             "ZOMBIE_INFECT",
             "ZOMBIE_UNFECT",
             "ZOMBIE_REMEDY",
+            "ZOMBIE_WALK",
             "ZOMBIE_PIG_IDLE",
             "ZOMBIE_PIG_ANGRY",
             "ZOMBIE_PIG_DEATH",
@@ -887,6 +1105,7 @@ $(function(){initConfig({
             "HORSE_ANGRY",
             "HORSE_ARMOR",
             "HORSE_BREATHE",
+            "HORSE_DEATH",
             "HORSE_GALLOP",
             "HORSE_HIT",
             "HORSE_IDLE",
@@ -900,6 +1119,7 @@ $(function(){initConfig({
             "DONKEY_HIT",
             "DONKEY_IDLE",
             "HORSE_SKELETON_DEATH",
+            "HORSE_SKELETON_HIT",
             "HORSE_SKELETON_IDLE",
             "HORSE_ZOMBIE_DEATH",
             "HORSE_ZOMBIE_HIT",
@@ -935,6 +1155,112 @@ $(function(){initConfig({
     {
       "fields": [
         {
+          "key": "ticks",
+          "name": "Ignite for (ticks)",
+          "type": "text",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "ignite",
+      "name": "Ignite the player"
+    },
+    {
+      "fields": [
+        {
+          "key": "x",
+          "name": "X",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "y",
+          "name": "Y",
+          "type": "text",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "z",
+          "name": "Z",
+          "type": "text",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "applyforce",
+      "name": "Apply force to player"
+    },
+    {
+      "fields": [
+        {
+          "key": "health",
+          "name": "Health to add",
+          "type": "text",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "sethealth",
+      "name": "Heal player"
+    },
+    {
+      "fields": [
+        {
+          "key": "doFire",
+          "name": "explosion causes fire",
+          "type": "bool",
+          "min": false,
+          "max": false
+        },
+        {
+          "key": "power",
+          "name": "Explosion power",
+          "type": "text",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "explode",
+      "name": "EXPLOSIONS?"
+    },
+    {
+      "fields": [
+        {
+          "key": "itemStr",
+          "name": "Firework String (CraftBook item syntax)",
+          "type": "text",
+          "min": false,
+          "max": false
+        }
+      ],
+      "type": "firework",
+      "name": "Launch firework"
+    },
+    {
+      "fields": [
+        {
+          "key": "xp",
+          "name": "Amount to give",
+          "type": "number",
+          "min": 0,
+          "max": false
+        },
+        {
+          "key": "xpLevels",
+          "name": "Amount of levels to add",
+          "type": "number",
+          "min": 0,
+          "max": false
+        }
+      ],
+      "type": "xp",
+      "name": "Give xp"
+    },
+    {
+      "fields": [
+        {
           "key": "potionType",
           "name": "Potion Type",
           "type": "selection",
@@ -950,6 +1276,7 @@ $(function(){initConfig({
             "STRENGTH",
             "SLOWNESS",
             "INSTANT_DAMAGE",
+            "WATER_BREATHING",
             "INVISIBILITY"
           ],
           "min": false,
@@ -983,118 +1310,85 @@ $(function(){initConfig({
     {
       "fields": [
         {
-          "key": "health",
-          "name": "Health to add",
+          "key": "comm",
+          "name": "Command",
           "type": "text",
           "min": false,
           "max": false
         }
       ],
-      "type": "sethealth",
-      "name": "Heal player"
+      "type": "playercommand",
+      "name": "Execute command as player"
     },
     {
       "fields": [
         {
-          "key": "to",
-          "name": "Teleport to",
-          "type": "location",
-          "min": false,
-          "max": false
-        }
-      ],
-      "type": "teleport",
-      "name": "Teleport to location"
-    },
-    {
-      "fields": [
-        {
-          "key": "text",
-          "name": "message",
+          "key": "command",
+          "name": "Command",
           "type": "text",
           "min": false,
           "max": false
         }
       ],
-      "type": "text",
-      "name": "Display text"
+      "type": "comm",
+      "name": "Execute console command"
     },
     {
       "fields": [
         {
-          "key": "x",
-          "name": "X",
+          "key": "cmd",
+          "name": "Command",
           "type": "text",
           "min": false,
           "max": false
         },
         {
-          "key": "y",
-          "name": "Y",
+          "key": "env",
+          "name": "Env. variables",
           "type": "text",
           "min": false,
           "max": false
         },
         {
-          "key": "z",
-          "name": "Z",
+          "key": "workDir",
+          "name": "Working directory",
           "type": "text",
           "min": false,
           "max": false
         }
       ],
-      "type": "applyforce",
-      "name": "Apply force to player"
+      "type": "execshell",
+      "name": "Execute shell command"
     },
     {
       "fields": [
         {
-          "key": "xp",
-          "name": "Amount to give",
-          "type": "number",
-          "min": 0,
+          "key": "name",
+          "name": "Counter name",
+          "type": "text",
+          "min": false,
           "max": false
         },
         {
-          "key": "xpLevels",
-          "name": "Amount of levels to add",
-          "type": "number",
-          "min": 0,
+          "key": "count",
+          "name": "Amount to increment",
+          "type": "text",
+          "min": false,
           "max": false
         }
       ],
-      "type": "xp",
-      "name": "Give xp"
+      "type": "counter",
+      "name": "Increment counter"
     }
   ],
   "triggerHelp": {
-    "oncommand": {
-      "name": "On command",
-      "description": "Triggers when a user attempts to execute a command",
-      "dependencies": [
-        "none"
-      ],
-      "fields": [
-        {
-          "name": "Include commands that have been cancelled by preprocess event",
-          "description": "Certain commands use the preprocess event instead of Bukkit\u0027s command api, check this to allow those commands"
-        },
-        {
-          "name": "Treat prefix as regex expression",
-          "description": "Use a regex expression instead of checking if command starts with"
-        },
-        {
-          "name": "Command prefix to detect",
-          "description": "command prefix or regex expression to check"
-        }
-      ]
-    },
     "speedrun": {
       "name": "Speed run",
       "description": "Triggers if player gets between two points within the given time",
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "start cuboid",
@@ -1116,6 +1410,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "cuboid",
@@ -1127,16 +1422,207 @@ $(function(){initConfig({
         }
       ]
     },
-    "deathentity": {
-      "name": "Killed by",
-      "description": "fires when killed by a specific entity",
+    "statwithin": {
+      "name": "Stat within boundaries",
+      "description": "Triggers if statistic is between two values",
+      "dependencies": [
+        "BeardStat"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Domain",
+          "description": "domain to check, for the regular stats use default as the value"
+        },
+        {
+          "name": "World",
+          "description": "World to check stats for (* matches all worlds)"
+        },
+        {
+          "name": "Category",
+          "description": "statistic category to check"
+        },
+        {
+          "name": "Statistic",
+          "description": "Statistic name to check"
+        },
+        {
+          "name": "Lower bound threshold",
+          "description": "Threshold statistic must equal or greater than"
+        },
+        {
+          "name": "Upper bound threshold",
+          "description": "Threshold statistic must equal or be less than"
+        }
+      ]
+    },
+    "wgregion": {
+      "name": "(WorldGuard) Inside region",
+      "description": "Player inside a worldGuard region",
+      "dependencies": [
+        "WorldGuard"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Region name",
+          "description": "name of region"
+        },
+        {
+          "name": "World name",
+          "description": "name of world"
+        }
+      ]
+    },
+    "perm": {
+      "name": "has permission node",
+      "description": "Does the player have a permission node",
       "dependencies": [
         "none"
       ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "permission node",
+          "description": "Permission node to check, does not have to one declared by a plugin"
+        }
+      ]
+    },
+    "storm": {
+      "name": "Is it stormy?",
+      "description": "Triggers if world a player in is stormy",
+      "dependencies": [
+        "none"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Storm currently?",
+          "description": "Set true for should have a storm, false for should be clear"
+        }
+      ]
+    },
+    "isop": {
+      "name": "is player an OP",
+      "description": "Is the player a vanilla OP",
+      "dependencies": [
+        "none"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "is OP",
+          "description": "Is the player a vanilla Operator"
+        }
+      ]
+    },
+    "noach": {
+      "name": "Does not have achievement",
+      "description": "Triggers only if the player does not have this achievement",
+      "dependencies": [
+        "none"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "achievement slug",
+          "description": "achievement slug to check for"
+        }
+      ]
+    },
+    "time": {
+      "name": "Between two times",
+      "description": "Checks if the worlds time is between two values",
+      "dependencies": [
+        "none"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "After this time(ticks)",
+          "description": "World time must have progressed past"
+        },
+        {
+          "name": "Before this time(ticks)",
+          "description": "World time must be before"
+        }
+      ]
+    },
+    "riding": {
+      "name": "Riding entity",
+      "description": "Is player riding an entity",
+      "dependencies": [
+        "none"
+      ],
+      "categories": [],
       "fields": [
         {
           "name": "Entity",
-          "description": "Entity type to kill player"
+          "description": "Entity type to check"
+        }
+      ]
+    },
+    "metaor": {
+      "name": "Meta OR trigger",
+      "description": "Meta trigger, will fire if any trigger under it returns true",
+      "dependencies": [
+        "none"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "triggers",
+          "description": "list of triggers"
+        }
+      ]
+    },
+    "deathtype": {
+      "name": "Killed by",
+      "description": "fires when killed by specific damage type",
+      "dependencies": [
+        "none"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Damage type",
+          "description": "Damage type that killed the player"
+        }
+      ]
+    },
+    "oncommand": {
+      "name": "On command",
+      "description": "Triggers when a user attempts to execute a command",
+      "dependencies": [
+        "none"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Include commands that have been cancelled by preprocess event",
+          "description": "Certain commands use the preprocess event instead of Bukkit\u0027s command api, check this to allow those commands"
+        },
+        {
+          "name": "Treat prefix as regex expression",
+          "description": "Use a regex expression instead of checking if command starts with"
+        },
+        {
+          "name": "Command prefix to detect",
+          "description": "command prefix or regex expression to check"
+        }
+      ]
+    },
+    "bankbalance": {
+      "name": "(Vault)Check bank balance",
+      "description": "Checks the players bank balance",
+      "dependencies": [
+        "Vault"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Lower threshold",
+          "description": "Balance must be atleast this value to trigger, supports decimal values"
         }
       ]
     },
@@ -1146,6 +1632,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Biome",
@@ -1153,16 +1640,17 @@ $(function(){initConfig({
         }
       ]
     },
-    "killentity": {
-      "name": "Kill entity",
-      "description": "fires when killing a specific entity",
+    "deathentity": {
+      "name": "Killed by",
+      "description": "fires when killed by a specific entity",
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Entity",
-          "description": "Entity type to kill"
+          "description": "Entity type to kill player"
         }
       ]
     },
@@ -1172,6 +1660,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Item String (CraftBook item syntax)",
@@ -1187,12 +1676,27 @@ $(function(){initConfig({
         }
       ]
     },
+    "killentity": {
+      "name": "Kill entity",
+      "description": "fires when killing a specific entity",
+      "dependencies": [
+        "none"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Entity",
+          "description": "Entity type to kill"
+        }
+      ]
+    },
     "wearitem": {
       "name": "wearingitem",
       "description": "Checks player is wearing an item, using \u003ca href\u003d\u0027http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax\u0027\u003eCraftBook item syntax\u003c/a\u003e",
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Item String (CraftBook item syntax)",
@@ -1214,6 +1718,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "achievement slug",
@@ -1227,6 +1732,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "triggers",
@@ -1234,29 +1740,55 @@ $(function(){initConfig({
         }
       ]
     },
-    "storm": {
-      "name": "Is it stormy?",
-      "description": "Triggers if world a player in is stormy",
+    "fisheditem": {
+      "name": "Fished item",
+      "description": "Triggers when a player fishes an item, using \u003ca href\u003d\u0027http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax\u0027\u003eCraftBook item syntax\u003c/a\u003e for the fish",
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
-          "name": "Storm currently?",
-          "description": "Set true for should have a storm, false for should be clear"
+          "name": "Fished item String (CraftBook item syntax)",
+          "description": "Item stack fished"
+        },
+        {
+          "name": "Ignore durability values",
+          "description": "Whether to ignore the durability (damage) of the item"
+        },
+        {
+          "name": "Ignore metadata (Enchantments, Lore)",
+          "description": "Ignore metadata such as enchantments, lore etc"
         }
       ]
     },
-    "perm": {
-      "name": "has permission node",
-      "description": "Does the player have a permission node",
+    "stat": {
+      "name": "stat above threshold",
+      "description": "Value of statistic is atleast provided value. This trigger supports regex values",
       "dependencies": [
-        "none"
+        "BeardStat"
       ],
+      "categories": [],
       "fields": [
         {
-          "name": "permission node",
-          "description": "Permission node to check, does not have to one declared by a plugin"
+          "name": "Domain",
+          "description": "domain to check, for the regular stats use default as the value"
+        },
+        {
+          "name": "World",
+          "description": "World to check stats for (* matches all worlds)"
+        },
+        {
+          "name": "Category",
+          "description": "statistic category to check"
+        },
+        {
+          "name": "Statistic",
+          "description": "Statistic name to check"
+        },
+        {
+          "name": "Lower threshold",
+          "description": "Threshold statistic must equal or beat"
         }
       ]
     },
@@ -1266,53 +1798,11 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "cuboid",
           "description": "Area to check"
-        }
-      ]
-    },
-    "noach": {
-      "name": "Does not have achievement",
-      "description": "Triggers only if the player does not have this achievement",
-      "dependencies": [
-        "none"
-      ],
-      "fields": [
-        {
-          "name": "achievement slug",
-          "description": "achievement slug to check for"
-        }
-      ]
-    },
-    "time": {
-      "name": "Between two times",
-      "description": "Checks if the worlds time is between two values",
-      "dependencies": [
-        "none"
-      ],
-      "fields": [
-        {
-          "name": "After this time(ticks)",
-          "description": "World time must have progressed past"
-        },
-        {
-          "name": "Before this time(ticks)",
-          "description": "World time must be before"
-        }
-      ]
-    },
-    "riding": {
-      "name": "Riding entity",
-      "description": "Is player riding an entity",
-      "dependencies": [
-        "none"
-      ],
-      "fields": [
-        {
-          "name": "Entity",
-          "description": "Entity type to check"
         }
       ]
     },
@@ -1322,6 +1812,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Team name",
@@ -1335,6 +1826,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Block to interact",
@@ -1348,6 +1840,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": []
     },
     "achcount": {
@@ -1356,6 +1849,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "achievement count threshold",
@@ -1366,28 +1860,30 @@ $(function(){initConfig({
           "description": "The prefix of the ids of achievements to count"
         }
       ]
-    },
-    "metaor": {
-      "name": "Meta OR trigger",
-      "description": "Meta trigger, will fire if any trigger under it returns true",
-      "dependencies": [
-        "none"
-      ],
-      "fields": [
-        {
-          "name": "triggers",
-          "description": "list of triggers"
-        }
-      ]
     }
   },
   "rewardHelp": {
+    "vaultaddgroup": {
+      "name": "(Vault) add/set group",
+      "description": "Sets the group of a player using vault, \\n Exact behaviour will depend on the permissions plugin, consult your permissions plugin as needed. \\n Should expected behaviour not occur, consider using the execute console command reward instead.",
+      "dependencies": [
+        "Vault"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Group to add",
+          "description": ""
+        }
+      ]
+    },
     "comm": {
       "name": "Execute console command",
       "description": "Execute a command as the console",
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Command",
@@ -1401,6 +1897,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Health to add",
@@ -1414,6 +1911,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "message",
@@ -1427,10 +1925,29 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Firework String (CraftBook item syntax)",
           "description": ""
+        }
+      ]
+    },
+    "counter": {
+      "name": "Increment counter",
+      "description": "Increment counter value. Counters are stored in BeardStat and accessible from the stats triggers",
+      "dependencies": [
+        "BeardStat"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Counter name",
+          "description": "Name of the counter"
+        },
+        {
+          "name": "Amount to increment",
+          "description": "Amount to increment counter by"
         }
       ]
     },
@@ -1440,6 +1957,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Amount to give",
@@ -1457,6 +1975,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Location",
@@ -1470,6 +1989,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Command",
@@ -1491,6 +2011,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "explosion causes fire",
@@ -1508,10 +2029,25 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Real Lightning?",
           "description": "If false, uses bukkit\u0027s fake lightning that does not injure a player"
+        }
+      ]
+    },
+    "promote": {
+      "name": "(DroxPerms) Promote along track",
+      "description": "Track promotion player",
+      "dependencies": [
+        "DroxPerms"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Track to promote along",
+          "description": ""
         }
       ]
     },
@@ -1521,6 +2057,7 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "X",
@@ -1536,25 +2073,13 @@ $(function(){initConfig({
         }
       ]
     },
-    "ignite": {
-      "name": "Ignite the player",
-      "description": "Sets a player on fire",
-      "dependencies": [
-        "none"
-      ],
-      "fields": [
-        {
-          "name": "Ignite for (ticks)",
-          "description": ""
-        }
-      ]
-    },
     "item": {
       "name": "Item reward",
       "description": "Gives a player an item, using \u003ca href\u003d\u0027http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax\u0027\u003eCraftBook item syntax\u003c/a\u003e",
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Item String (CraftBook item syntax)",
@@ -1570,12 +2095,27 @@ $(function(){initConfig({
         }
       ]
     },
+    "ignite": {
+      "name": "Ignite the player",
+      "description": "Sets a player on fire",
+      "dependencies": [
+        "none"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Ignite for (ticks)",
+          "description": ""
+        }
+      ]
+    },
     "potion": {
       "name": "Apply potion effect",
       "description": "Applies a potion effect to a player",
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Potion Type",
@@ -1595,12 +2135,27 @@ $(function(){initConfig({
         }
       ]
     },
+    "money": {
+      "name": "(vault) Give money",
+      "description": "Gives a player some money",
+      "dependencies": [
+        "Vault"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Amount to give (can be a decimal",
+          "description": ""
+        }
+      ]
+    },
     "playsnd": {
       "name": "play sound",
       "description": "plays a sound",
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "sound name",
@@ -1622,9 +2177,24 @@ $(function(){initConfig({
       "dependencies": [
         "none"
       ],
+      "categories": [],
       "fields": [
         {
           "name": "Teleport to",
+          "description": ""
+        }
+      ]
+    },
+    "subgroup": {
+      "name": "(DroxPerms) add subgroup",
+      "description": "Add a subgroup to a player",
+      "dependencies": [
+        "DroxPerms"
+      ],
+      "categories": [],
+      "fields": [
+        {
+          "name": "Subgroup to add",
           "description": ""
         }
       ]

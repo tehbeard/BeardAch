@@ -47,7 +47,7 @@ angular.module('achDirectives',[]).directive('achReward', ['$compile','$template
     link: linker,
     controller: function($scope){
       $scope.ui = {
-        addTrigger: function(){if($scope.list == null){$scope.list = [];}$scope.list.push({_type:$scope.ui.selected});},
+        addTrigger: function(){if($scope.list == null){$scope.list = [];};if($scope.ui.selected){$scope.list.push({_type:$scope.ui.selected});}},
         remItem: function(list,index){if(confirm("Really delete this item?")){list.splice(index,1);}}
       }
       $scope.getTriggers = function(){

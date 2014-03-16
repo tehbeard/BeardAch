@@ -2,26 +2,20 @@ angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$sc
   console.log("Loading achievement list");
   $scope.achievements = [];
 
-  $scope.ui = {};
-  $scope.ui.deleteIndex = -1;
-  $scope.ui.editIndex   = -1;
-  $scope.ui.pageStart   = 1;
-  $scope.ui.perPage   = 10;
-  $scope.ui.search      = "";
+  $scope.ui                 = {};
+  $scope.ui.deleteIndex     = -1;
+  $scope.ui.editIndex       = -1;
+  $scope.ui.pageStart       = 1;
+  $scope.ui.perPage         = 10;
+  $scope.ui.search          = "";
   $scope.ui.triggerSelected = "";
-  $scope.ui.rewardSelected = "";
-  $scope.help = achHelpDB;
+  $scope.ui.rewardSelected  = "";
+  $scope.help               = achHelpDB;
   
-  $scope.testFunc = function(){
-    alert("TEST");
-  }
-
-  $scope.ui.addTrigger = function(){
-    $scope.achievements[$scope.ui.editIndex].triggers.push({_type:$scope.ui.triggerSelected});
-  }
-
   $scope.ui.addReward = function(){
-    $scope.achievements[$scope.ui.editIndex].rewards.push({_type:$scope.ui.rewardSelected});
+    if($scope.ui.rewardSelected){
+      $scope.achievements[$scope.ui.editIndex].rewards.push({_type:$scope.ui.rewardSelected});
+    }
   }
 
   $scope.remItem = function(list,idx){
@@ -80,7 +74,7 @@ angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$sc
   	$('#modalSave').modal('show');
   }
   $scope.saveAsFile = function(){
-  	window.saveAs(new Blob([angular.toJson($scope.achievements,"  ")]),"ach.json");
+  	window.saveAs(new Blob([angular.toJson($scope.achievements,"  ")]), ($(".btn-file-label").val() || "ach.json"));
   }
 
   /*
