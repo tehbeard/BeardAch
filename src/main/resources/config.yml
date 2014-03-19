@@ -3,6 +3,7 @@ general:
   plugin-stats-opt-out: false
   loglevel: INFO
 ach:
+  add-no-creative-trigger: false
   allow-exec-shell-reward: false
   database:
     type: json

@@ -26,9 +26,9 @@ public class IsGamemodeTrigger implements ITrigger {
         
     }
     
-    public IsGamemodeTrigger(GameMode mode){
+    public IsGamemodeTrigger(GameMode mode,boolean inverse){
         this.mode = mode;
-        this.inverse = true;
+        this.inverse = inverse;
     }
 
     @ComponentValueDescription(value = "Invert this trigger to be NOT in this gamemode")

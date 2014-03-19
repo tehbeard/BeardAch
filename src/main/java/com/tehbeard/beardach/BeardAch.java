@@ -13,6 +13,7 @@ import java.util.zip.ZipInputStream;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,6 +27,7 @@ import com.tehbeard.beardach.achievement.AchievementManager;
 import com.tehbeard.beardach.achievement.BeardAchAddonLoader;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
+import com.tehbeard.beardach.achievement.triggers.player.IsGamemodeTrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.annotations.DataSourceDescriptor;
 import com.tehbeard.beardach.commands.AchCommand;
@@ -301,6 +303,14 @@ public class BeardAch extends JavaPlugin {
 
         // setup events
         getServer().getPluginManager().registerEvents(achievementManager, this);
+        
+        if(getConfig().getBoolean("ach.add-no-creative-trigger",false)){
+            getLogger().info("Adding no creative trigger to all achievements");
+            
+            for(Achievement ach : achievementManager.getAchievementsList()){
+                ach.addTrigger(new IsGamemodeTrigger(GameMode.CREATIVE, true));
+            }
+        }
 
         getLogger().info("Loading commands");
         // commands
