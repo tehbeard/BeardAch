@@ -1,5 +1,6 @@
 package com.tehbeard.beardach.datasource;
 
+import java.util.List;
 import java.util.Set;
 
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
@@ -21,4 +22,6 @@ public interface IDataSource {
     public void clearAchievements(String player);
 
     public void dumpFancy();
+    
+    public List<String> getPlayers();
 }

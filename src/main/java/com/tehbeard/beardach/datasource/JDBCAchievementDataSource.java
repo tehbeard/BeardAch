@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -41,12 +42,14 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
     @SQLFragment("ping")
     private PreparedStatement ping;
+    
+    @SQLFragment("player.list")
+    private PreparedStatement getPlayerList;
 
     public JDBCAchievementDataSource() throws ClassNotFoundException, IOException, SQLException {
         super("sql", "com.mysql.jdbc.Driver", BeardAch.instance().getLogger());
         Configuration cfg = BeardAch.instance().getConfig();
         setConnectionUrl(String.format("jdbc:mysql://%s/%s", cfg.getString("ach.database.host"), cfg.getString("ach.database.database")));
-
         Properties auth = new Properties();
         auth.put("user", cfg.getString("ach.database.username"));
         auth.put("password", cfg.getString("ach.database.password"));
@@ -229,5 +232,10 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
             }
         }
 
+    }
+
+    @Override
+    public List<String> getPlayers() {
+        return null;
     }
 }

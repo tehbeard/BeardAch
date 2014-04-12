@@ -1,6 +1,8 @@
 package com.tehbeard.beardach.datasource;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.tehbeard.beardach.BeardAch;
@@ -40,6 +42,11 @@ public class NullDataSource implements IDataSource {
     @Override
     public void dumpFancy() {
 
+    }
+
+    @Override
+    public List<String> getPlayers() {
+        return new ArrayList<String>();
     }
 
 }
