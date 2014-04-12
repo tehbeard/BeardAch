@@ -11,6 +11,7 @@ ach:
     username: Beardstats
     password: changeme
     database: stats
+    table_prefix: ach_
     sql_db_version: 1
   msg:
     person: "Achievement Unlocked: <ACH>"

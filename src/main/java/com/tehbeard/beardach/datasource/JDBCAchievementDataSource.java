@@ -53,6 +53,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         Properties auth = new Properties();
         auth.put("user", cfg.getString("ach.database.username"));
         auth.put("password", cfg.getString("ach.database.password"));
+        setTag("PREFIX", cfg.getString("ach.database.table_prefix"));
         setConnectionProperties(auth);
 
         Properties p = new Properties();
@@ -60,6 +61,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         setSqlFragments(p);
         setup();
         executeScript("sql/makeTable");
+        
         
         Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), new Runnable() {
             @Override
