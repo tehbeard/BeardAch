@@ -10,7 +10,6 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
-import com.tehbeard.beardstat.dataproviders.IStatDataProvider;
 import com.tehbeard.beardstat.manager.EntityStatManager;
 
 /**
@@ -54,7 +53,7 @@ public class StatWithinTrigger implements ITrigger {
     public boolean checkAchievement(Player player) {
         if (manager != null) {
             // if player has stat
-            int value = manager.getBlobByNameType(player.getName(), IStatDataProvider.PLAYER_TYPE).getValue().getStat(domain, world, cat, stat).getValue();
+            int value = manager.getBlobForPlayer(player).getStat(domain, world, cat, stat).getValue();
             return value >= lowerThreshold && value <= upperThreshold;
         }
         return false;

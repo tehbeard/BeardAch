@@ -10,7 +10,6 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
-import com.tehbeard.beardstat.dataproviders.IStatDataProvider;
 import com.tehbeard.beardstat.manager.EntityStatManager;
 
 /**
@@ -52,7 +51,7 @@ public class StatCheckTrigger implements ITrigger {
         // if player has stat
         if (manager != null)
             // if player exceeds threshold
-            return manager.getBlobByNameType(player.getName(), IStatDataProvider.PLAYER_TYPE).getValue().getStats(domain, world, cat, stat).getValue() >= threshold;
+            return manager.getBlobForPlayer(player).getStats(domain, world, cat, stat).getValue() >= threshold;
         else {
             if (!warningLock) {
                 BeardAch.instance().getLogger().warning("BeardStat was not loaded, stat check failed.");

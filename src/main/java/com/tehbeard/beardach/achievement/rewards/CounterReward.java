@@ -9,7 +9,6 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
-import com.tehbeard.beardstat.dataproviders.IStatDataProvider;
 import com.tehbeard.beardstat.manager.EntityStatManager;
 
 @ComponentHelpDescription(description = "Increment counter value. Counters are stored in BeardStat and accessible from the stats triggers", dependencies = { "BeardStat" })
@@ -30,7 +29,7 @@ public class CounterReward implements IReward {
     @Override
     public void giveReward(Player player) {
         if (manager != null) {
-            manager.getBlobByNameType(player.getName(), IStatDataProvider.PLAYER_TYPE).getValue().getStat(DOMAIN, player.getWorld().getName(), "achCount", name).incrementStat(count);
+            manager.getBlobForPlayer(player).getStat(DOMAIN, player.getWorld().getName(), "achCount", name).incrementStat(count);
         } else {
             BeardAch.instance().getLogger().severe("[ERROR] " + "BeardStat not loaded, reward not given!");
         }
