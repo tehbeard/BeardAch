@@ -6,12 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,8 +25,11 @@ import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 import com.tehbeard.beardach.annotations.DataSourceDescriptor;
+import com.tehbeard.utils.sql.DBVersion;
 import com.tehbeard.utils.sql.JDBCDataSource;
+import com.tehbeard.utils.sql.PostUpgrade;
 import com.tehbeard.utils.sql.SQLFragment;
+import com.tehbeard.utils.uuid.UUIDFetcher;
 
 /**
  * 
@@ -60,7 +66,19 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         p.load(getClass().getClassLoader().getResourceAsStream("sql/sql.properties"));
         setSqlFragments(p);
         setup();
+        
+        //v1 to v2 check
+        ResultSet rs = connection.getMetaData().getTables(connection.getCatalog(), null, cfg.getString("ach.database.table_prefix") + "_entity", null);
+        if(!rs.next()){
+            doMigration(1, 2);
+        }
+        
         executeScript("sql/makeTable");
+        
+        //Do migration checks
+        
+        
+        
         
         
         Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), new Runnable() {
@@ -100,7 +118,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
     @Override
     protected String getMigrationScriptPath(int toVersion) {
-        return "migrate/v" + toVersion;
+        return "sql/migrate/v" + toVersion;
     }
 
     @Override
@@ -238,6 +256,45 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
     @Override
     public List<String> getPlayers() {
-        return null;
+        ResultSet rs = getPlayerList.executeQuery();
+        List<String> players = new ArrayList<String>()
+        while(rs.next()){
+            players.add(rs.getString(1));
+        }
+        return players;
+    }
+    
+    /**
+     * Patch UUID in database post upgrade
+     */
+    @DBVersion(2)
+    @PostUpgrade
+    public void _doPostUUIDFix(){
+        List<String> players = getPlayers();
+        
+        final int PAGE_SIZE = 32;
+        int page = 0;
+        
+        /**
+         * Loop for each page
+         */
+        while((PAGE_SIZE*page) < players.size()){
+            int offset = (PAGE_SIZE*page);
+            int batchSize = Math.min(players.size() - offset,PAGE_SIZE);//Get the size of this batch (either 32 or however many are left
+            
+            UUIDFetcher fetcher = new UUIDFetcher(players.subList(offset, offset + batchSize));
+            try {
+                Map<String, UUID> map = fetcher.call();
+                for(Entry<String, UUID> entry : map.entrySet()){
+                    
+                }
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+            
+        }
+        
     }
 }
