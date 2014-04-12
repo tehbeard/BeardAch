@@ -56,10 +56,10 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         setConnectionProperties(auth);
 
         Properties p = new Properties();
-        p.load(getClass().getClassLoader().getResourceAsStream("sql.properties"));
+        p.load(getClass().getClassLoader().getResourceAsStream("sql/sql.properties"));
         setSqlFragments(p);
         setup();
-        executeScript("makeTable");
+        executeScript("sql/makeTable");
         
         Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), new Runnable() {
             @Override
