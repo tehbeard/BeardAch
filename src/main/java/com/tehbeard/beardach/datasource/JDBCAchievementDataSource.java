@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.Configuration;
 
 import com.tehbeard.beardach.BeardAch;
@@ -51,6 +52,12 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     
     @SQLFragment("player.list")
     private PreparedStatement getPlayerList;
+    
+    @SQLFragment("player.uuid.set")
+    private PreparedStatement setPlayerUUID;
+    
+    @SQLFragment("player.name.set")
+    private PreparedStatement setPlayerName;
 
     public JDBCAchievementDataSource() throws ClassNotFoundException, IOException, SQLException {
         super("sql", "com.mysql.jdbc.Driver", BeardAch.instance().getLogger());
@@ -122,12 +129,12 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     }
 
     @Override
-    public Set<AchievementPlayerLink> getPlayersAchievements(String player) {
+    public Set<AchievementPlayerLink> getPlayersAchievements(OfflinePlayer player) {
         HashSet<AchievementPlayerLink> c = new HashSet<AchievementPlayerLink>();
         try {
             if (!checkConnection())
                 throw new SQLException("Failed to reconnect to server, aborting load");
-            prepGetAllPlayerAch.setString(1, player);
+            prepGetAllPlayerAch.setString(1, player.getUniqueId().toString().replaceAll("-",""));
             ResultSet rs = prepGetAllPlayerAch.executeQuery();
 
             while (rs.next()) {
@@ -146,11 +153,11 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     }
 
     @Override
-    public synchronized void setPlayersAchievements(String player, String achievements) {
-        if (!writeCache.containsKey(player)) {
-            writeCache.put(player, new HashSet<AchievementPlayerLink>());
+    public synchronized void setPlayersAchievements(OfflinePlayer player, String achievements) {
+        if (!writeCache.containsKey(player.getUniqueId().toString().replaceAll("-",""))) {
+            writeCache.put(player.getUniqueId().toString().replaceAll("-",""), new HashSet<AchievementPlayerLink>());
         }
-        writeCache.get(player).add(new AchievementPlayerLink(achievements, new Timestamp(new java.util.Date().getTime())));
+        writeCache.get(player.getUniqueId().toString().replaceAll("-","")).add(new AchievementPlayerLink(achievements, new Timestamp(new java.util.Date().getTime())));
     }
 
     @Override
@@ -160,7 +167,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     }
 
     @Override
-    public void clearAchievements(String player) {
+    public void clearAchievements(OfflinePlayer player) {
         throw new UnsupportedOperationException("Not supported yet."); 
         }
 
@@ -256,12 +263,18 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
     @Override
     public List<String> getPlayers() {
+        try {
         ResultSet rs = getPlayerList.executeQuery();
-        List<String> players = new ArrayList<String>()
+        List<String> players = new ArrayList<String>();
         while(rs.next()){
             players.add(rs.getString(1));
         }
         return players;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return new ArrayList<String>();
     }
     
     /**

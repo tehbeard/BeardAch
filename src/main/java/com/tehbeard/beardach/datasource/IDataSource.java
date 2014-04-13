@@ -3,6 +3,8 @@ package com.tehbeard.beardach.datasource;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.OfflinePlayer;
+
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 
 /**
@@ -13,13 +15,13 @@ import com.tehbeard.beardach.achievement.AchievementPlayerLink;
  */
 public interface IDataSource {
 
-    public Set<AchievementPlayerLink> getPlayersAchievements(String Player);
+    public Set<AchievementPlayerLink> getPlayersAchievements(OfflinePlayer Player);
 
-    public void setPlayersAchievements(String player, String achievement);
+    public void setPlayersAchievements(OfflinePlayer player, String achievement);
 
     public void flush();
 
-    public void clearAchievements(String player);
+    public void clearAchievements(OfflinePlayer player);
 
     public void dumpFancy();
     

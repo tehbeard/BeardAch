@@ -12,7 +12,7 @@ ach:
     password: changeme
     database: stats
     table_prefix: ach
-    sql_db_version: 1
+    sql_db_version: 2
   msg:
     person: "Achievement Unlocked: <ACH>"
     broadcast: "<PLAYER> Unlocked: <ACH>"
