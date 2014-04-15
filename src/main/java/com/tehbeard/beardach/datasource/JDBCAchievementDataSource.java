@@ -31,7 +31,6 @@ import com.tehbeard.utils.sql.JDBCDataSource;
 import com.tehbeard.utils.sql.PostUpgrade;
 import com.tehbeard.utils.sql.SQLFragment;
 import com.tehbeard.utils.uuid.MojangWebAPI;
-import com.tehbeard.utils.uuid.UUIDFetcher;
 
 /**
  * 
@@ -50,13 +49,13 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
     @SQLFragment("ping")
     private PreparedStatement ping;
-    
+
     @SQLFragment("player.list")
     private PreparedStatement getPlayerList;
-    
+
     @SQLFragment("player.uuid.set")
     private PreparedStatement setPlayerUUID;
-    
+
     @SQLFragment("player.name.set")
     private PreparedStatement setPlayerName;
 
@@ -74,21 +73,21 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         p.load(getClass().getClassLoader().getResourceAsStream("sql/sql.properties"));
         setSqlFragments(p);
         setup();
-        
+
         //v1 to v2 check
         ResultSet rs = connection.getMetaData().getTables(connection.getCatalog(), null, cfg.getString("ach.database.table_prefix") + "_entity", null);
         if(!rs.next()){
             doMigration(1, 2);
         }
-        
+
         executeScript("sql/makeTable");
-        
+
         //Do migration checks
-        
-        
-        
-        
-        
+
+
+
+
+
         Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), new Runnable() {
             @Override
             public void run() {
@@ -100,7 +99,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
         }, 2400L, 2400L);
     }
-    
+
     protected synchronized HashMap<String, HashSet<AchievementPlayerLink>> getWriteCache(){
         return writeCache;
     }
@@ -170,7 +169,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     @Override
     public void clearAchievements(OfflinePlayer player) {
         throw new UnsupportedOperationException("Not supported yet."); 
-        }
+    }
 
     @Override
     public void dumpFancy() {
@@ -265,19 +264,19 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     @Override
     public List<String> getPlayers() {
         try {
-        ResultSet rs = getPlayerList.executeQuery();
-        List<String> players = new ArrayList<String>();
-        while(rs.next()){
-            players.add(rs.getString(1));
-        }
-        return players;
+            ResultSet rs = getPlayerList.executeQuery();
+            List<String> players = new ArrayList<String>();
+            while(rs.next()){
+                players.add(rs.getString(1));
+            }
+            return players;
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return new ArrayList<String>();
     }
-    
+
     /**
      * Patch UUID in database post upgrade
      */
@@ -285,11 +284,11 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     @PostUpgrade
     public void _doPostUUIDFix(){
         Map<String, UUID> uuidmapping = MojangWebAPI.lookupUUIDS(getPlayers());
-        
-        
-            
-            
-        }
-        
+
+
+
+
     }
+
+
 }
