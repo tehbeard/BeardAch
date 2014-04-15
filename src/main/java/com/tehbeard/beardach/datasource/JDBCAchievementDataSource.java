@@ -30,6 +30,7 @@ import com.tehbeard.utils.sql.DBVersion;
 import com.tehbeard.utils.sql.JDBCDataSource;
 import com.tehbeard.utils.sql.PostUpgrade;
 import com.tehbeard.utils.sql.SQLFragment;
+import com.tehbeard.utils.uuid.MojangWebAPI;
 import com.tehbeard.utils.uuid.UUIDFetcher;
 
 /**
@@ -283,28 +284,9 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     @DBVersion(2)
     @PostUpgrade
     public void _doPostUUIDFix(){
-        List<String> players = getPlayers();
+        Map<String, UUID> uuidmapping = MojangWebAPI.lookupUUIDS(getPlayers());
         
-        final int PAGE_SIZE = 32;
-        int page = 0;
         
-        /**
-         * Loop for each page
-         */
-        while((PAGE_SIZE*page) < players.size()){
-            int offset = (PAGE_SIZE*page);
-            int batchSize = Math.min(players.size() - offset,PAGE_SIZE);//Get the size of this batch (either 32 or however many are left
-            
-            UUIDFetcher fetcher = new UUIDFetcher(players.subList(offset, offset + batchSize));
-            try {
-                Map<String, UUID> map = fetcher.call();
-                for(Entry<String, UUID> entry : map.entrySet()){
-                    
-                }
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
             
             
         }
