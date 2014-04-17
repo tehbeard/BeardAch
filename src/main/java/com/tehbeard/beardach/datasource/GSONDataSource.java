@@ -14,6 +14,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bukkit.OfflinePlayer;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -39,16 +41,16 @@ public class GSONDataSource implements IDataSource {
     }
 
     @Override
-    public Set<AchievementPlayerLink> getPlayersAchievements(String player) {
+    public Set<AchievementPlayerLink> getPlayersAchievements(OfflinePlayer player) {
         if (!data.containsKey(player)) {
-            data.put(player, new HashSet<AchievementPlayerLink>());
+            data.put(player.getName(), new HashSet<AchievementPlayerLink>());
         }
 
         return data.get(player);
     }
 
     @Override
-    public void setPlayersAchievements(String player, String achievement) {
+    public void setPlayersAchievements(OfflinePlayer player, String achievement) {
         getPlayersAchievements(player).add(new AchievementPlayerLink(achievement));
     }
 
@@ -68,8 +70,8 @@ public class GSONDataSource implements IDataSource {
     }
 
     @Override
-    public void clearAchievements(String player) {
-        data.put(player, new HashSet<AchievementPlayerLink>());
+    public void clearAchievements(OfflinePlayer player) {
+        data.put(player.getName(), new HashSet<AchievementPlayerLink>());
     }
 
     @Override

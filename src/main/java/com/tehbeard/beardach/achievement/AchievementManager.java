@@ -9,9 +9,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -39,8 +41,8 @@ import com.tehbeard.utils.cuboid.CuboidEntry;
  */
 public class AchievementManager implements Listener {
 
-    private HashMap<String, Set<AchievementPlayerLink>> playerHasCache = new HashMap<String, Set<AchievementPlayerLink>>();
-    private HashMap<Achievement, Set<String>> playerCheckCache = new HashMap<Achievement, Set<String>>();
+    private HashMap<UUID, Set<AchievementPlayerLink>> playerHasCache = new HashMap<UUID, Set<AchievementPlayerLink>>();
+    private HashMap<Achievement, Set<UUID>> playerCheckCache = new HashMap<Achievement, Set<UUID>>();
     private final IDataSource database;
     private final ChunkCache<Achievement> chunkCache = new ChunkCache<Achievement>();
 
@@ -61,7 +63,7 @@ public class AchievementManager implements Listener {
 
         // load each players
         for (Player p : Bukkit.getOnlinePlayers()) {
-            loadPlayersAchievements(p.getName());
+            loadPlayersAchievements(p);
         }
     }
 
@@ -72,8 +74,8 @@ public class AchievementManager implements Listener {
         database.flush();
         chunkCache.clearCache();
         achievements = new LinkedList<Achievement>();
-        playerCheckCache = new HashMap<Achievement, Set<String>>();
-        playerHasCache = new HashMap<String, Set<AchievementPlayerLink>>();
+        playerCheckCache = new HashMap<Achievement, Set<UUID>>();
+        playerHasCache = new HashMap<UUID, Set<AchievementPlayerLink>>();
     }
 
     /**
@@ -179,11 +181,11 @@ public class AchievementManager implements Listener {
      * 
      * @param player
      */
-    public void loadPlayersAchievements(String player) {
+    public void loadPlayersAchievements(OfflinePlayer player) {
         Set<AchievementPlayerLink> got = database.getPlayersAchievements(player);
         // put to cache
         if (got != null) {
-            playerHasCache.put(player, got);
+            playerHasCache.put(player.getUniqueId(), got);
             // cycle all loaded achievements
             buildPlayerCheckCache(player);
         } else {
@@ -192,7 +194,7 @@ public class AchievementManager implements Listener {
 
     }
 
-    private void buildPlayerCheckCache(String player) {
+    private void buildPlayerCheckCache(OfflinePlayer player) {
 
         for (Achievement ach : achievements) {
 
@@ -204,10 +206,10 @@ public class AchievementManager implements Listener {
             if (!slugs.contains(ach.getSlug())) {
                 // push key if it doesn't exist
                 if (!playerCheckCache.containsKey(ach)) {
-                    playerCheckCache.put(ach, new HashSet<String>());
+                    playerCheckCache.put(ach, new HashSet<UUID>());
                 }
                 // add player to cache
-                playerCheckCache.get(ach).add(player);
+                playerCheckCache.get(ach).add(player.getUniqueId());
             }
         }
     }
@@ -238,9 +240,9 @@ public class AchievementManager implements Listener {
                 BeardAch.instance().getLogger().log(Level.FINER, "ach:{0}", ach.getName());
                 // loop all players, check them.
 
-                Set<String> list = getListOfPlayersToCheck(ach);
+                Set<UUID> list = getListOfPlayersToCheck(ach);
                 Player p;
-                for (String ply : list) {
+                for (UUID ply : list) {
 
                     // get player object for offline detection
                     p = Bukkit.getPlayer(ply);
@@ -263,7 +265,7 @@ public class AchievementManager implements Listener {
 
     }
 
-    public List<AchievementPlayerLink> getAchievements(String player) {
+    public List<AchievementPlayerLink> getAchievements(OfflinePlayer player) {
         if (playerHasCache.containsKey(player)) {
             List<AchievementPlayerLink> l = new LinkedList<AchievementPlayerLink>();
 
@@ -298,7 +300,7 @@ public class AchievementManager implements Listener {
         return null;
     }
 
-    public void makeAchievementLink(String player, String slug) {
+    public void makeAchievementLink(OfflinePlayer player, String slug) {
         // push to cache
         playerHasCache.get(player).add(new AchievementPlayerLink(slug));
         // push to DB
@@ -307,13 +309,12 @@ public class AchievementManager implements Listener {
 
     public void checkAchievement(Achievement ach) {
 
-        Iterator<String> it = getListOfPlayersToCheck(ach).iterator();
-        String ply;
+        Iterator<UUID> it = getListOfPlayersToCheck(ach).iterator();
+        UUID ply;
         Player p;
         while (it.hasNext()) {
             ply = it.next();
 
-            // get player object for offline detection
             p = Bukkit.getPlayer(ply);
             if (p instanceof Player) {
                 BeardAch.instance().getLogger().log(Level.FINE, "Player {0} online", ply);
@@ -327,7 +328,7 @@ public class AchievementManager implements Listener {
         }
     }
 
-    public void removeCheck(Achievement ach, String player) {
+    public void removeCheck(Achievement ach, UUID player) {
         playerCheckCache.get(ach).remove(player);
     }
 
@@ -347,13 +348,13 @@ public class AchievementManager implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        loadPlayersAchievements(event.getPlayer().getName());
+        loadPlayersAchievements(event.getPlayer());
 
     }
 
-    private Set<String> getListOfPlayersToCheck(Achievement ach) {
-        Set<String> list = playerCheckCache.get(ach);
-        return new HashSet<String>(list);
+    private Set<UUID> getListOfPlayersToCheck(Achievement ach) {
+        return playerCheckCache.get(ach);
+        
     }
 
     public void flush() {

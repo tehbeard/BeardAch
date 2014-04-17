@@ -168,8 +168,8 @@ public class Achievement {
 
         }
 
-        BeardAch.instance().getAchievementManager().makeAchievementLink(player.getName(), slug);
-        BeardAch.instance().getAchievementManager().removeCheck(this, player.getName());
+        BeardAch.instance().getAchievementManager().makeAchievementLink(player, slug);
+        BeardAch.instance().getAchievementManager().removeCheck(this, player.getUniqueId());
     }
 
     public Set<ITrigger> getTrigs() {

@@ -36,7 +36,7 @@ import com.tehbeard.utils.uuid.MojangWebAPI;
  * 
  * @author James
  */
-@DataSourceDescriptor(tag = "mysql", version = "2.0")
+@DataSourceDescriptor(tag = "mysql", version = "2.1")
 public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSource {
 
     private HashMap<String, HashSet<AchievementPlayerLink>> writeCache = new HashMap<String, HashSet<AchievementPlayerLink>>();
@@ -283,7 +283,17 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     @DBVersion(2)
     @PostUpgrade
     public void _doPostUUIDFix(){
-        Map<String, UUID> uuidmapping = MojangWebAPI.lookupUUIDS(getPlayers());
+        try {
+            for(Entry<String, UUID> entry: MojangWebAPI.lookupUUIDS(getPlayers()).entrySet()){
+                setPlayerUUID.setString(1, entry.getValue().toString().replaceAll("-", ""));
+                setPlayerUUID.setString(2, entry.getKey());
+                setPlayerUUID.executeUpdate();
+                
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
 
 

@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.OfflinePlayer;
+
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 import com.tehbeard.beardach.annotations.DataSourceDescriptor;
@@ -17,15 +19,15 @@ public class NullDataSource implements IDataSource {
     }
 
     @Override
-    public Set<AchievementPlayerLink> getPlayersAchievements(String Player) {
+    public Set<AchievementPlayerLink> getPlayersAchievements(OfflinePlayer Player) {
         HashSet<AchievementPlayerLink> d = new HashSet<AchievementPlayerLink>();
         // d.add("test");
         return d;
     }
 
     @Override
-    public void setPlayersAchievements(String player, String achievement) {
-        BeardAch.instance().getLogger().fine("[" + player + "] stored " + achievement);
+    public void setPlayersAchievements(OfflinePlayer player, String achievement) {
+        BeardAch.instance().getLogger().fine("[" + player.getName() + "] stored " + achievement);
 
     }
 
@@ -35,7 +37,7 @@ public class NullDataSource implements IDataSource {
     }
 
     @Override
-    public void clearAchievements(String player) {
+    public void clearAchievements(OfflinePlayer player) {
 
     }
 
