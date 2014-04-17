@@ -99,7 +99,6 @@ public class EditorJSON {
                     if(a.type() == EditorFieldType.selection){
                         if (a.options().length > 0) {
                             if (a.options().length == 1) {
-                                Logger.getLogger(EditorJSON.class.getName()).info("Loading class [" + a.options()[0] +"] as enum");
                                 @SuppressWarnings("unchecked")
                                 Class<Enum<?>> enumClass = (Class<Enum<?>>) Class.forName(a.options()[0]);
                                 @SuppressWarnings("rawtypes")
