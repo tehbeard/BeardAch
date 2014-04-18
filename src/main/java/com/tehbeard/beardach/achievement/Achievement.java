@@ -181,6 +181,6 @@ public class Achievement {
     }
 
     public boolean has(Player player) {
-        return BeardAch.instance().getAchievementManager().playerHas(player.getName(), slug);
+        return BeardAch.instance().getAchievementManager().playerHas(player, slug);
     }
 }

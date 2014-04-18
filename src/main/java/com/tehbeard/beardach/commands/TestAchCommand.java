@@ -1,5 +1,6 @@
 package com.tehbeard.beardach.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -35,7 +36,7 @@ public class TestAchCommand implements CommandExecutor {
             sender.sendMessage("This command is for command blocks only.");
             return false;
         }
-        return manager.playerHas(args[0], args[1]);
+        return manager.playerHas(Bukkit.getOfflinePlayer(args[0]), args[1]);
     }
 
   
