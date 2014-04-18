@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS `${PREFIX}_entity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `player` char(16) NOT NULL,
-  `uuid` char(32) NOT NULL,
+  `uuid` char(32),
   PRIMARY KEY (`id`),
-  UNIQUE (`player`),
+  UNIQUE (`player`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE IF NOT EXISTS `${PREFIX}_link` (
   `playerid` int(11) NOT NULL,

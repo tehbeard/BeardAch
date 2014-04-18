@@ -1,8 +1,6 @@
-#Pre generating table
-#!sql/makeTable
+#Pre generating table;
+#!sql/makeTable;
 #Generating list of players from old table;
-INSERT INTO ${PREFIX}_entity (`player`) SELECT DISTINCT(`player`) FROM `achievements`;
+INSERT IGNORE INTO ${PREFIX}_entity (`player`,`uuid`) SELECT DISTINCT(`player`),null as c FROM `achievements`;
 #Importing achievement data from old table;
-INSERT INTO ${PREFIX}_link (`playerid`,`slug`,`timestamp`)
-SELECT ${PREFIX}_entity.id,`achievement`,`timestamp` FROM achievements,${PREFIX}_entity
-WHERE ${PREFIX}_entity.player = achievements.player
+INSERT INTO ${PREFIX}_link (`playerid`,`slug`,`timestamp`) SELECT ${PREFIX}_entity.id,`achievement`,`timestamp` FROM achievements JOIN ${PREFIX}_entity ON ${PREFIX}_entity.player = achievements.player;

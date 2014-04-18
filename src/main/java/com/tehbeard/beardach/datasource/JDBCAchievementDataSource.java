@@ -70,14 +70,16 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         setConnectionProperties(auth);
 
         Properties p = new Properties();
-        p.load(getClass().getClassLoader().getResourceAsStream("sql/sql.properties"));
+        p.load(BeardAch.instance().getResource("sql/sql.properties"));
         setSqlFragments(p);
         setup();
 
         //v1 to v2 check
         ResultSet rs = connection.getMetaData().getTables(connection.getCatalog(), null, cfg.getString("ach.database.table_prefix") + "_entity", null);
         if(!rs.next()){
-            doMigration(1, 2);
+            if(doMigration(1, 2)){
+                BeardAch.instance().getConfig().set("ach.database.sql_db_version", 2);
+            }
         }
 
         executeScript("sql/makeTable");
