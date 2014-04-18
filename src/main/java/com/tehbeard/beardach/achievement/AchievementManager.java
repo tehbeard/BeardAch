@@ -200,7 +200,7 @@ public class AchievementManager implements Listener {
 
             // if they don't have that achievement, add them to the check cache
             HashSet<String> slugs = new HashSet<String>();
-            for (AchievementPlayerLink link : playerHasCache.get(player)) {
+            for (AchievementPlayerLink link : playerHasCache.get(player.getUniqueId())) {
                 slugs.add(link.getSlug());
             }
             if (!slugs.contains(ach.getSlug())) {
@@ -214,8 +214,8 @@ public class AchievementManager implements Listener {
         }
     }
 
-    public boolean playerHas(String player, String slug) {
-        for (AchievementPlayerLink link : playerHasCache.get(player)) {
+    public boolean playerHas(OfflinePlayer player, String slug) {
+        for (AchievementPlayerLink link : playerHasCache.get(player.getUniqueId())) {
             if (link.getSlug().equals(slug))
                 return true;
         }
@@ -266,10 +266,10 @@ public class AchievementManager implements Listener {
     }
 
     public List<AchievementPlayerLink> getAchievements(OfflinePlayer player) {
-        if (playerHasCache.containsKey(player)) {
+        if (playerHasCache.containsKey(player.getUniqueId())) {
             List<AchievementPlayerLink> l = new LinkedList<AchievementPlayerLink>();
 
-            for (AchievementPlayerLink link : playerHasCache.get(player)) {
+            for (AchievementPlayerLink link : playerHasCache.get(player.getUniqueId())) {
                 Achievement a = getAchievementSlug(link.getSlug());
                 if (a != null) {
                     l.add(link);
@@ -302,7 +302,7 @@ public class AchievementManager implements Listener {
 
     public void makeAchievementLink(OfflinePlayer player, String slug) {
         // push to cache
-        playerHasCache.get(player).add(new AchievementPlayerLink(slug));
+        playerHasCache.get(player.getUniqueId()).add(new AchievementPlayerLink(slug));
         // push to DB
         database.setPlayersAchievements(player, slug);
     }
