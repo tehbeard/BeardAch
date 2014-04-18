@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS `${PREFIX}_entity` (
 CREATE TABLE IF NOT EXISTS `${PREFIX}_link` (
   `playerid` int(11) NOT NULL,
   `slug` varchar(255) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (`playerid`,`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
  CREATE TABLE IF NOT EXISTS `${PREFIX}_map` (
  `slug` char(255) NOT NULL,
