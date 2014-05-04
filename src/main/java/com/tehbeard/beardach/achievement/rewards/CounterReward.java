@@ -29,7 +29,7 @@ public class CounterReward implements IReward {
     @Override
     public void giveReward(Player player) {
         if (manager != null) {
-            manager.getBlobForPlayer(player).getStat(DOMAIN, player.getWorld().getName(), "achCount", name).incrementStat(count);
+            manager.getPlayer(player).getValue().getStat(DOMAIN, player.getWorld().getName(), "achCount", name).incrementStat(count);
         } else {
             BeardAch.instance().getLogger().severe("[ERROR] " + "BeardStat not loaded, reward not given!");
         }
