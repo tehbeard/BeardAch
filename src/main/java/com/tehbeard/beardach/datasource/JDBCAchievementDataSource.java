@@ -79,6 +79,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         if(!rs.next()){
             if(doMigration(1, 2)){
                 BeardAch.instance().getConfig().set("ach.database.sql_db_version", 2);
+                BeardAch.instance().saveConfig();
             }
         }
 
