@@ -77,6 +77,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         //v1 to v2 check
         ResultSet rs = connection.getMetaData().getTables(connection.getCatalog(), null, cfg.getString("ach.database.table_prefix") + "_entity", null);
         if(!rs.next()){
+            BeardAch.instance().getLogger().info("No entity table detected, performing upgrade.");
             if(doMigration(1, 2)){
                 BeardAch.instance().getConfig().set("ach.database.sql_db_version", 2);
                 BeardAch.instance().saveConfig();
@@ -85,7 +86,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
         executeScript("sql/makeTable");
 
-        //Do migration checks
+        //TODO: Add migration check here.
 
 
 
@@ -97,7 +98,6 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
                 Runnable r = new SqlFlusher(getWriteCache());
                 writeCache = new HashMap<String, HashSet<AchievementPlayerLink>>();
                 Bukkit.getScheduler().runTaskAsynchronously(BeardAch.instance(), r);
-
             }
 
         }, 2400L, 2400L);
