@@ -294,10 +294,14 @@ public class AchievementManager implements Listener {
 
     }
 
-    public Achievement getAchievement(int i) {
-        if (i > 0 && i <= achievements.size())
-            return achievements.get(i - 1);
-        return null;
+    public List<Achievement> getAchievementBySlug(String slug){
+        List<Achievement> l = new ArrayList<Achievement>();
+        for(Achievement a : achievements){
+            if(a.getSlug().equals(slug)){
+                l.add(a);
+            }
+        }
+        return l;
     }
 
     public void makeAchievementLink(OfflinePlayer player, String slug) {

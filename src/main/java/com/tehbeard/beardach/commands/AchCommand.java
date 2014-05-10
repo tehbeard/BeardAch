@@ -1,18 +1,20 @@
 package com.tehbeard.beardach.commands;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 
-public class AchCommand implements CommandExecutor {
+public class AchCommand implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -21,7 +23,6 @@ public class AchCommand implements CommandExecutor {
             Player player = (Player) sender;
             if (args.length == 0) {
 
-                // SIMPLE PAGINATION, ONLY SHOW LAST 5 ACHIEVEMENTS
                 List<AchievementPlayerLink> list = BeardAch.instance().getAchievementManager().getAchievements(player);
                 AchievementPlayerLink a;
 
@@ -38,8 +39,20 @@ public class AchCommand implements CommandExecutor {
                     player.sendMessage(msg);
                 }
 
-            } else if (args.length == 1) {
-                Achievement a = BeardAch.instance().getAchievementManager().getAchievement(Integer.parseInt(args[0]));
+            } else if (args.length > 0) {
+                StringBuilder ach = new StringBuilder();
+                for(String s : args) {
+                    ach.append(s + " ");
+                }
+                Achievement a = null;
+                Iterator<Achievement> it = BeardAch.instance().getAchievementManager().getLoadedAchievements().iterator();
+                while(it.hasNext()){
+                    a = it.next();
+                    if(a.getName().equalsIgnoreCase(ach.toString().trim())){
+                        it = null;
+                        break;
+                    }
+                }
                 if (a != null) {
                     player.sendMessage(ChatColor.GOLD + a.getName());
                     player.sendMessage(ChatColor.BLUE + a.getDescrip());
@@ -52,11 +65,28 @@ public class AchCommand implements CommandExecutor {
                     }
 
                 }
+                else
+                {
+                    player.sendMessage("No achievement found with that name");
+                }
             }
 
         }
 
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String cmdlbl, String[] args) {
+        StringBuilder ach = new StringBuilder();
+        for(String s : args) {
+            ach.append(s + " ");
+        }
+        List<String> l = new ArrayList<String>();
+        for(Achievement a : BeardAch.instance().getAchievementManager().getAchievementsList()){
+            if(a.getName().contains(ach.toString().trim())){l.add(a.getName());}
+        }
+        return l;
     }
 
 }
