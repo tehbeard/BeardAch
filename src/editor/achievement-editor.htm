@@ -2,20 +2,19 @@
 <html ng-app="achMain">
 <head>
   <!-- Load base libraries -->
-  <script src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/lib/jquery.js"></script>
   <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="bootstrap/js/btn-file.js"></script>
   <!--<script type="text/javascript" src="bootstrap/js/bootstrap.file-input.js"></script>-->
-  <script type="text/javascript" src="js/FileSaver.min.js"></script>
-  <script type="text/javascript" src="js/angular.min.js"></script>
+  <script type="text/javascript" src="js/lib/FileSaver.min.js"></script>
+  <script type="text/javascript" src="js/lib/angular.min.js"></script>
+
   <script type="text/javascript" src="settings.js"></script>
+  <script type="text/javascript" src="js/bng.autosave.js"></script>
   <script type="text/javascript" src="js/ach.help.js"></script>
+  <script type="text/javascript" src="js/ach.jstmpl.js"></script>
   <script type="text/javascript" src="js/ach.directives.js"></script>
-  <script type="text/javascript" src="js/ach.main.js"></script>
-
-  <!-- Loads BeardAch trigger/reward definitions into the application  -->
-  <script type="text/javascript" src="js/ach.config.js"></script>  
-
+  <script type="text/javascript" src="js/ach.editor.js"></script>
 
   <title>BeardAch::Editor</title>
   <!-- Bootstrap -->
@@ -26,6 +25,12 @@
     border-left: 1px solid #CCC;
     padding-left: 5px;
     margin-left:3px;
+  }
+  footer{
+    text-align: center;
+    display:block;
+    margin: auto;
+    font-size: 0.8em;
   }
   </style>
 
@@ -207,14 +212,14 @@
         <hr>
         <h3>Rewards</h3>
         <div class="input-group col-md-4">
-          <select class="form-control" ng-model="ui.rewardSelected" ng-options="k as v for (k,v) in optreward"></select>
+          <select class="form-control" ng-model="ui.rewardSelected" ng-options="k as v for (k,v) in ui.opt.rewards"></select>
           <span class="input-group-btn"><button class="btn" ng-click="ui.addReward()">Add</button></span>
         </div>
         <div ng-repeat="reward in achievements[ui.editIndex].rewards" class="left-border-lined" >
           <div class="input-group">
-            <div class="input-group-addon"><b>{{optreward[reward._type]}}</b></div><button class="btn btn-danger" ng-click='remItem(achievements[ui.editIndex].rewards,$index)'>remove</button>
+            <div class="input-group-addon"><b>{{ui.opt.rewards[reward._type]}}</b></div><button class="btn btn-danger" ng-click='remItem(achievements[ui.editIndex].rewards,$index)'>remove</button>
           </div>
-          <ach-reward entry="reward">{{reward | json}}</ach-reward>
+          <ach-reward entry="reward"></ach-reward>
         </div>
         <br/>
         <button class="btn btn-primary" ng-click="ui.editIndex = -1"><i class="glyphicon glyphicon-arrow-left"></i> Return to achievement list</button>
@@ -316,6 +321,6 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
+    <footer>Last Autosave @ {{lastAutosave | date : 'medium'}}</footer>
 </body>
 </html>

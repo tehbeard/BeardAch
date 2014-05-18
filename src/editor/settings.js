@@ -1,4 +1,4 @@
-$(function(){initConfig({
+baseDataset = {
   "triggers": [
     {
       "fields": [
@@ -2200,4 +2200,4 @@ $(function(){initConfig({
       ]
     }
   }
-});});
+};

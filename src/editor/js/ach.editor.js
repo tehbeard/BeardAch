@@ -1,4 +1,11 @@
-angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$scope','$templateCache','$filter','achHelpDB',function($scope,$templateCache,$filter,achHelpDB){
+//"use strict";
+var app = angular.module('achMain',['achDirectives','achHelp','achJsHTML','bngAutosave']);
+app.config(['formConstructorProvider',function(JsHTML){
+  JsHTML.setData(baseDataset);
+
+  delete baseDataset;
+}]);
+app.controller('achList',['$scope','$templateCache','$filter','achHelpDB','autosave','formConstructor',function($scope,$templateCache,$filter,achHelpDB,autosave,formConstructor){
   console.log("Loading achievement list");
   $scope.achievements = [];
 
@@ -6,20 +13,10 @@ angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$sc
   if(localAutoSave!=null){
   $scope.achievements = JSON.parse(localAutoSave);
   }
+  $scope.lastAutosave = new Date();
+  autosave($scope,"achievements","autosavedAchievementList",500,function(){$scope.lastAutosave = new Date();});
 
-  var _modelDirty = 0;
-  $scope.$watch("achievements",function(){
-    _modelDirty +=1;
-  },true);
-
-  setInterval(function(){
-    console.log("Checking in");
-    if(_modelDirty > 0){
-      $scope.autoSave();
-      console.log("Autosaved latest changes " + new Date());
-      _modelDirty -= 1;
-    }
-  },2000);
+  
 
 
   $scope.ui                 = {};
@@ -30,6 +27,9 @@ angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$sc
   $scope.ui.search          = "";
   $scope.ui.triggerSelected = "";
   $scope.ui.rewardSelected  = "";
+  $scope.ui.opt             = {};
+  $scope.ui.opt.rewards     = formConstructor.getRewards();
+  $scope.ui.opt.triggers     = formConstructor.getTriggers();
   $scope.help               = achHelpDB;
   
   $scope.ui.addReward = function(){
@@ -87,7 +87,7 @@ angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$sc
   }
 
   $scope.new = function(){
-    achievements = [];
+    $scope.achievements = [];
   }
   $scope.load = function(){
   	$("#modalLoad").modal('show');
@@ -95,10 +95,6 @@ angular.module('achMain',['achDirectives','achHelp']).controller('achList',['$sc
 
   $scope.save = function(){
   	$('#modalSave').modal('show');
-  }
-
-  $scope.autoSave = function(){
-    window.localStorage.setItem("autosavedAchievementList", angular.toJson($scope.achievements,"  "));
   }
 
   $scope.saveAsFile = function(){

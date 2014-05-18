@@ -145,12 +145,12 @@ public class EditorJSON {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         FileWriter fw = new FileWriter(file);
-        fw.write("$(function(){initConfig(");
+        fw.write("baseDataset = ");
         JsonWriter writer = new JsonWriter(fw);
         writer.setIndent("  ");
         gson.toJson(this, TypeToken.get(EditorJSON.class).getType(), writer);
         writer.flush();
-        fw.write(");});");
+        fw.write(";");
         fw.flush();
         writer.close();
     }
