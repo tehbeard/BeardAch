@@ -44,11 +44,12 @@ public class AchCommand implements TabExecutor {
                 for(String s : args) {
                     ach.append(s + " ");
                 }
+                String searchString = ach.toString().trim();
                 Achievement a = null;
                 Iterator<Achievement> it = BeardAch.instance().getAchievementManager().getLoadedAchievements().iterator();
                 while(it.hasNext()){
                     a = it.next();
-                    if(a.getName().equalsIgnoreCase(ach.toString().trim())){
+                    if(a.getName().equalsIgnoreCase(searchString)){
                         it = null;
                         break;
                     }

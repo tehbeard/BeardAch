@@ -33,6 +33,12 @@ public class CommandCheckTrigger extends AbstractEventTrigger {
     @Expose
     @EditorField(alias = "Command prefix to detect", type = EditorFieldType.text)
     private String commandText = "";
+    
+    
+    @ComponentValueDescription("Set this true to prevent the command executing.")
+    @Expose
+    @EditorField(alias = "Stop command being processed by bukkit",type=EditorFieldType.bool)
+    private boolean cancelCommand = false;
 
     private Pattern pattern = null;
 
@@ -56,6 +62,7 @@ public class CommandCheckTrigger extends AbstractEventTrigger {
                     runCheck(event.getPlayer());
                 }
             }
+            if(cancelCommand){event.setCancelled(true);}
         }
 
     }
