@@ -48,28 +48,30 @@
   </div>
   </script>
   <script type="text/ng-template" id="partial.ele.location">
+  <h4>${label}</h4>
   <div class="input-group col-md-6">
-  <label class="input-group-addon">${label}</label>
   <span class="input-group-addon">World</span><input class="form-control" type="text" ng-model="${model.key}.world"/>
-  <span class="input-group-addon">X</span><input class="form-control" type="number" ng-model="${model.key}.x"/>
-  <span class="input-group-addon">Y</span><input class="form-control" type="number" ng-model="${model.key}.y"/>
-  <span class="input-group-addon">Z</span><input class="form-control" type="number" ng-model="${model.key}.z"/>
+  </div>
+  <div class="input-group col-md-6">
+  <span class="input-group-addon">X</span><input class="form-control" type="number" ng-model="${model.key}.x" int-fix//>
+  <span class="input-group-addon">Y</span><input class="form-control" type="number" ng-model="${model.key}.y" int-fix//>
+  <span class="input-group-addon">Z</span><input class="form-control" type="number" ng-model="${model.key}.z" int-fix//>
   </div>
   </script>
   <script type="text/ng-template" id="partial.ele.cuboid">
+  <h4>${label}</h4>
   <div class="input-group col-md-6">
-  <label class="input-group-addon">${label}</label>
   <span class="input-group-addon">World</span><input class="form-control" type="text" ng-model="${model.key}.world"/>
   </div>
   <div class="input-group col-md-6">
-  <span class="input-group-addon">x1</span><input class="form-control" type="number" ng-model="${model.key}.v1.x"/>
-  <span class="input-group-addon">y1</span><input class="form-control" type="number" ng-model="${model.key}.v1.y"/>
-  <span class="input-group-addon">z1</span><input class="form-control" type="number" ng-model="${model.key}.v1.z"/>
+  <span class="input-group-addon">x1</span><input class="form-control" type="number" ng-model="${model.key}.v1.x" int-fix/>
+  <span class="input-group-addon">y1</span><input class="form-control" type="number" ng-model="${model.key}.v1.y" int-fix//>
+  <span class="input-group-addon">z1</span><input class="form-control" type="number" ng-model="${model.key}.v1.z" int-fix//>
   </div>
   <div class="input-group col-md-6">
-  <span class="input-group-addon">x2</span><input class="form-control" type="number" ng-model="${model.key}.v2.x"/>
-  <span class="input-group-addon">y2</span><input class="form-control" type="number" ng-model="${model.key}.v2.y"/>
-  <span class="input-group-addon">z2</span><input class="form-control" type="number" ng-model="${model.key}.v2.z"/>
+  <span class="input-group-addon">x2</span><input class="form-control" type="number" ng-model="${model.key}.v2.x" int-fix//>
+  <span class="input-group-addon">y2</span><input class="form-control" type="number" ng-model="${model.key}.v2.y" int-fix//>
+  <span class="input-group-addon">z2</span><input class="form-control" type="number" ng-model="${model.key}.v2.z" int-fix//>
   </div>
   </script>
   <script type="text/ng-template" id="partial.ele.selection">
@@ -87,21 +89,25 @@
   <script type="text/ng-template" id="partial.ele.number">
   <div class="input-group col-md-6">
   <label class="input-group-addon">${label}</label>
-  <input class="form-control" type="number" min=${model.min} max=${model.max} ng-model="${model.key}"/>
+  <input class="form-control" type="number" min=${model.min} max=${model.max} ng-model="${model.key}" int-fix/>
   </div>
   </script>
 
   <script type="text/ng-template" id="achListTriggerTemplate">
-  <div class="left-border-lined">
-  <div class="input-group col-md-4">
+  <div>
+  <div class="input-group col-md-4" style="padding-bottom:10px">
   <select class="form-control" ng-model="ui.selected" ng-options="k as v for (k,v) in getTriggers()"></select>
   <span class="input-group-btn"><button class="btn" ng-click="ui.addTrigger()">Add</button></spawn>
   </div>
   <!-- loop -->
-  <div ng-repeat="trigger in list" class="left-border-lined">
-  <div class="input-group"><div class="input-group-addon"><b>{{getTriggers()[trigger._type]}}</b></div><button class="btn btn-danger" ng-click='ui.remItem(list,$index)'>remove</button></div><br/>
-  <ach-trigger entry="trigger"></ach-trigger>
-  </div>
+  <div ng-repeat="trigger in list" class="panel">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3 style="display:inline">{{getTriggers()[trigger._type]}}</h3> (<a href="#" ng-click='ui.remItem(list,$index)'>remove</a>)</div>
+        <div class="panel-body">
+          <ach-trigger entry="trigger"></ach-trigger>
+        </div>
+      </div>
+    </div>
   </div>
   </script>
 
@@ -198,7 +204,9 @@
           <div class="control-group"><label class="control-label">id:</label><div class="controls"><input class="form-control" type="text" ng-model="achievements[ui.editIndex].slug"/></div></div>
           <div class="control-group"><label class="control-label">name:</label><div class="controls"><input class="form-control" type="text" ng-model="achievements[ui.editIndex].name"/></div></div>
           <div class="control-group"><label class="control-label">description:</label><div class="controls"><input class="form-control" type="text" ng-model="achievements[ui.editIndex].descrip"/></div></div>
-          <label>Hidden: </label><input type="checkbox" ng-model="achievements[ui.editIndex].hidden"/>
+          <div class="checkbox">
+          <label>Hidden:</label><input type="checkbox" ng-model="achievements[ui.editIndex].hidden"/>
+          </div>
           <div class="control-group"><label class="control-label">broadcast:</label><div class="controls"><select class="form-control" ng-model="achievements[ui.editIndex].broadcast">
             <option value="PERSON">person</option>
             <option value="BROADCAST">all</option>

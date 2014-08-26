@@ -61,3 +61,16 @@ _app.directive('achTriggerList', ['$compile', function($compile) {
   }
   };
 }]);
+
+_app.directive('intFix', function(){
+    return {
+        require: 'ngModel',
+        link: function(scope, ele, attr, ctrl){
+            ctrl.$formatters.push(function(viewValue){
+              if(viewValue){
+                return parseInt(viewValue, 10);
+              }
+            });
+        }
+    };
+});
