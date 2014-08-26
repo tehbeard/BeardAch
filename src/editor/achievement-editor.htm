@@ -219,15 +219,17 @@
 
         <hr>
         <h3>Rewards</h3>
-        <div class="input-group col-md-4">
+        <div class="input-group col-md-4" style="padding-bottom:10px">
           <select class="form-control" ng-model="ui.rewardSelected" ng-options="k as v for (k,v) in ui.opt.rewards"></select>
           <span class="input-group-btn"><button class="btn" ng-click="ui.addReward()">Add</button></span>
         </div>
-        <div ng-repeat="reward in achievements[ui.editIndex].rewards" class="left-border-lined" >
-          <div class="input-group">
-            <div class="input-group-addon"><b>{{ui.opt.rewards[reward._type]}}</b></div><button class="btn btn-danger" ng-click='remItem(achievements[ui.editIndex].rewards,$index)'>remove</button>
+        <div ng-repeat="reward in achievements[ui.editIndex].rewards">
+          <div class="panel panel-default">
+            <div class="panel-heading"><h3 style="display:inline">{{ui.opt.rewards[reward._type]}}</h3> (<a href="#" ng-click='remItem(achievements[ui.editIndex].rewards,$index)'>remove</a>)</div>
+            <div class="panel-body">
+              <ach-reward entry="reward"></ach-reward>
+            </div>
           </div>
-          <ach-reward entry="reward"></ach-reward>
         </div>
         <br/>
         <button class="btn btn-primary" ng-click="ui.editIndex = -1"><i class="glyphicon glyphicon-arrow-left"></i> Return to achievement list</button>
