@@ -15,10 +15,6 @@ app.controller('achList',['$scope','$templateCache','$filter','achHelpDB','autos
   }
   $scope.lastAutosave = new Date();
   autosave($scope,"achievements","autosavedAchievementList",500,function(){$scope.lastAutosave = new Date();});
-
-  
-
-
   $scope.ui                 = {};
   $scope.ui.deleteIndex     = -1;
   $scope.ui.editIndex       = -1;
