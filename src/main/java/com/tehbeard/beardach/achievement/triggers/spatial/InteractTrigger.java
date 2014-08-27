@@ -20,7 +20,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
 @Configurable(tag = "interact", name = "Click block at location")
-@ComponentHelpDescription(description = "Player clicks a block")
+@ComponentHelpDescription(description = "Player clicks a block",categories = "spatial")
 public class InteractTrigger implements ITrigger, Listener {
 
     @ComponentValueDescription(value = "Block location to be clicked")

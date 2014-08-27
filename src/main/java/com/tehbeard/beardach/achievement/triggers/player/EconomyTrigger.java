@@ -14,7 +14,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
-@ComponentHelpDescription(description = "Checks the players bank balance", dependencies = { "Vault"})
+@ComponentHelpDescription(description = "Checks the players bank balance", dependencies = { "Vault"},categories ="player")
 @Configurable(tag = "bankbalance", name = "(Vault)Check bank balance")
 public class EconomyTrigger implements ITrigger {
 

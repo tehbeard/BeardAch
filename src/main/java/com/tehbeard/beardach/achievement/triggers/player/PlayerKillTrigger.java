@@ -27,7 +27,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * 
  * @author James
  */
-@ComponentHelpDescription(description = "fires when killing a specific entity")
+@ComponentHelpDescription(description = "fires when killing a specific entity",categories ={"evented","player"})
 @Configurable(name = "Kill entity", tag = "killentity")
 public class PlayerKillTrigger extends AbstractEventTrigger {
 

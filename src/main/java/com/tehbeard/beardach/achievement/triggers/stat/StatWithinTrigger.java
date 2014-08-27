@@ -18,7 +18,7 @@ import com.tehbeard.beardstat.manager.EntityStatManager;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Triggers if statistic is between two values",dependencies="BeardStat")
+@ComponentHelpDescription(description = "Triggers if statistic is between two values",dependencies="BeardStat",categories = "stat")
 @Configurable(tag = "statwithin", name = "Stat within boundaries")
 public class StatWithinTrigger implements ITrigger {
 

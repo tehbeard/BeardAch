@@ -18,7 +18,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Is the player in a certain gamemode")
+@ComponentHelpDescription(description = "Is the player in a certain gamemode",categories ={"player"})
 @Configurable(tag = "isgamemode", name = "is player in a certain gamemode")
 public class IsGamemodeTrigger implements ITrigger {
     

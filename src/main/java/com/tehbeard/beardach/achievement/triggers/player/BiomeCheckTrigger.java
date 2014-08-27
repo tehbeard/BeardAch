@@ -18,7 +18,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Is player in a biome")
+@ComponentHelpDescription(description = "Is player in a biome",categories ={"enviromental","player"})
 @Configurable(tag = "biome", name = "Biome check")
 public class BiomeCheckTrigger implements ITrigger {
 

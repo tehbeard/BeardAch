@@ -27,7 +27,7 @@ import com.tehbeard.utils.cuboid.Cuboid;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Player stays in an area for a certain amount of time. Timer resets when a player walks out the area")
+@ComponentHelpDescription(description = "Player stays in an area for a certain amount of time. Timer resets when a player walks out the area",categories = "spatial")
 @Configurable(tag = "koth", name = "King of the hill")
 public class CuboidKingOfTheHillTrigger implements ITrigger, Listener {
 

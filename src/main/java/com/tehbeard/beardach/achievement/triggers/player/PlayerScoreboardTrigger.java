@@ -14,7 +14,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
-@ComponentHelpDescription(description = "Check if a scoreboard objective meets certain criteria")
+@ComponentHelpDescription(description = "Check if a scoreboard objective meets certain criteria",categories ={"player"})
 @Configurable(name = "scoreboard value", tag = "scoreboard")
 public class PlayerScoreboardTrigger implements ITrigger {
 

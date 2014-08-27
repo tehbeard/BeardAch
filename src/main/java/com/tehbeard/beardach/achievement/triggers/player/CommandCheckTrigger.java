@@ -15,7 +15,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
-@ComponentHelpDescription(description = "Triggers when a user attempts to execute a command")
+@ComponentHelpDescription(description = "Triggers when a user attempts to execute a command",categories ={"evented","player"})
 @Configurable(name = "On command", tag = "oncommand")
 public class CommandCheckTrigger extends AbstractEventTrigger {
 

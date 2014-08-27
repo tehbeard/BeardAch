@@ -10,7 +10,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
-@ComponentHelpDescription(description = "Checks if the worlds time is between two values")
+@ComponentHelpDescription(description = "Checks if the worlds time is between two values",categories = "enviromental")
 @Configurable(tag = "time", name = "Between two times")
 public class TimeTrigger implements ITrigger {
 

@@ -13,7 +13,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
-@ComponentHelpDescription(description = "Is player riding an entity")
+@ComponentHelpDescription(description = "Is player riding an entity",categories ="player")
 @Configurable(name = "Riding entity", tag = "riding")
 public class PlayerRidingTrigger implements ITrigger {
 

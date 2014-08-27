@@ -20,7 +20,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Triggers only if the player does not have this achievement")
+@ComponentHelpDescription(description = "Triggers only if the player does not have this achievement",categories = "achievements")
 @Configurable(tag = "noach", name = "Does not have achievement")
 public class NoAchCheckTrigger implements ITrigger {
 

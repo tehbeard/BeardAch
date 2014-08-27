@@ -18,7 +18,7 @@ import com.tehbeard.beardstat.manager.EntityStatManager;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Value of statistic is atleast provided value. This trigger supports regex values", dependencies = "BeardStat")
+@ComponentHelpDescription(description = "Value of statistic is atleast provided value. This trigger supports regex values", dependencies = "BeardStat",categories = "stat")
 @Configurable(tag = "stat", name = "stat above threshold")
 public class StatCheckTrigger implements ITrigger {
 

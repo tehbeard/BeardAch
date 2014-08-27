@@ -16,7 +16,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Does the player have a permission node")
+@ComponentHelpDescription(description = "Does the player have a permission node",categories ={"player"})
 @Configurable(tag = "perm", name = "has permission node")
 public class PermCheckTrigger implements ITrigger {
 

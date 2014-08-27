@@ -11,7 +11,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
-@ComponentHelpDescription(description = "Triggers if world a player in is stormy")
+@ComponentHelpDescription(description = "Triggers if world a player in is stormy",categories = "enviromental")
 @Configurable(tag = "storm", name = "Is it stormy?")
 public class StormTrigger implements ITrigger {
 

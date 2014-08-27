@@ -21,7 +21,7 @@ import com.tehbeard.utils.cuboid.Cuboid;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Is player inside an area")
+@ComponentHelpDescription(description = "Is player inside an area",categories = "spatial")
 @Configurable(tag = "cuboid", name = "cuboid")
 public class CuboidCheckTrigger implements ITrigger {
 

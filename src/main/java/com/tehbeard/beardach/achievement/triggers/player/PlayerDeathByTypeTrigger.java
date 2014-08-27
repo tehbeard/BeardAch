@@ -21,8 +21,8 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * 
  * @author James
  */
-@ComponentHelpDescription(description = "fires when killed by specific damage type")
-@Configurable(name = "Killed by", tag = "deathtype")
+@ComponentHelpDescription(description = "fires when killed by specific damage type",categories ={"evented","player"})
+@Configurable(name = "Killed by damage", tag = "deathtype")
 public class PlayerDeathByTypeTrigger extends AbstractEventTrigger {
 
     @ComponentValueDescription(value = "Damage type that killed the player")

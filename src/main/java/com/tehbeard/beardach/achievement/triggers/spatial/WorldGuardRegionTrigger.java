@@ -19,7 +19,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 
-@ComponentHelpDescription(description = "Player inside a worldGuard region", dependencies = "WorldGuard")
+@ComponentHelpDescription(description = "Player inside a worldGuard region", dependencies = "WorldGuard",categories = "spatial")
 @Configurable(tag = "wgregion", name = "(WorldGuard) Inside region")
 public class WorldGuardRegionTrigger extends AbstractEventTrigger {
 

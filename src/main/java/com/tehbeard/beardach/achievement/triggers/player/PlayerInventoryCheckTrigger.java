@@ -14,7 +14,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import com.tehbeard.utils.misc.ItemSyntax;
 
-@ComponentHelpDescription(description = "Checks player has an item in their inventory, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a>")
+@ComponentHelpDescription(description = "Checks player has an item in their inventory, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a>",categories ={"inventory","player"})
 @Configurable(name = "Inventory check", tag = "invcheck")
 public class PlayerInventoryCheckTrigger implements ITrigger {
 

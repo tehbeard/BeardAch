@@ -20,7 +20,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Checks if the player has an achievement")
+@ComponentHelpDescription(description = "Checks if the player has an achievement",categories = "achievements")
 @Configurable(tag = "ach", name = "has achievement")
 public class AchCheckTrigger implements ITrigger {
 

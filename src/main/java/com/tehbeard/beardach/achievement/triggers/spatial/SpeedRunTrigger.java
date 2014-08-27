@@ -16,7 +16,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import com.tehbeard.utils.cuboid.Cuboid;
 
 //TODO: Redo as worldguard based
-@ComponentHelpDescription(description = "Triggers if player gets between two points within the given time")
+@ComponentHelpDescription(description = "Triggers if player gets between two points within the given time",categories = "spatial")
 @Configurable(tag = "speedrun", name = "Speed run")
 public class SpeedRunTrigger implements ITrigger {
 

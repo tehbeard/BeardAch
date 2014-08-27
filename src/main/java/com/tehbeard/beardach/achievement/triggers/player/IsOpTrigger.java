@@ -17,7 +17,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Is the player a vanilla OP")
+@ComponentHelpDescription(description = "Is the player a vanilla OP",categories ={"player"})
 @Configurable(tag = "isop", name = "is player an OP")
 public class IsOpTrigger implements ITrigger {
 

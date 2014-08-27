@@ -22,7 +22,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Counts number of achievements with a specific id prefix")
+@ComponentHelpDescription(description = "Counts number of achievements with a specific id prefix",categories = "achievements")
 @Configurable(tag = "achcount", name = "Achievement count")
 public class AchCountTrigger implements ITrigger {
 
