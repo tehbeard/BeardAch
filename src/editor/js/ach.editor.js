@@ -1,8 +1,8 @@
 //"use strict";
 var app = angular.module('achMain',['achDirectives','achHelp','achJsHTML','bngAutosave']);
-app.config(['formConstructorProvider',function(JsHTML){
+app.config(['formConstructorProvider','achHelpDBProvider',function(JsHTML,achHelpDB){
   JsHTML.setData(baseDataset);
-
+  achHelpDB.setData(baseDataset);
   delete baseDataset;
 }]);
 app.controller('achList',['$scope','$templateCache','$filter','achHelpDB','autosave','formConstructor',function($scope,$templateCache,$filter,achHelpDB,autosave,formConstructor){
@@ -29,7 +29,7 @@ app.controller('achList',['$scope','$templateCache','$filter','achHelpDB','autos
   $scope.ui.rewardSelected  = "";
   $scope.ui.opt             = {};
   $scope.ui.opt.rewards     = formConstructor.getRewards();
-  $scope.ui.opt.triggers     = formConstructor.getTriggers();
+  $scope.ui.opt.triggers    = formConstructor.getTriggers();
   $scope.help               = achHelpDB;
   
   $scope.ui.addReward = function(){
