@@ -3,22 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.tehbeard</groupId>
     <artifactId>BeardAch</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.8-SNAPSHOT</version>
     <name>BearchAch</name>
-    <description>Achievements plugin for BeardStat</description>
+    <description>Adaptable Achievements plugin</description>
     <properties>
-        <project.plugin.flavour>Coconut milkshake</project.plugin.flavour>
+        <project.plugin.flavour>Doughy</project.plugin.flavour>
         <project.plugin.version>${project.version}-${project.plugin.flavour}-${describe}</project.plugin.version>
     </properties>
 
     <repositories>
-        <!-- Repository for Bukkit -->
-        <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public/</url>
-        </repository>
-        <!--<repository> <id>vault-repo</id> <url>http://ci.herocraftonline.com/plugin/repository/everything</url> 
-        </repository> -->
         <repository>
             <id>SK89Q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
@@ -48,19 +41,12 @@
             <artifactId>Vault</artifactId>
             <version>1.2.16</version>
         </dependency>
-
-        <!-- BeardStat -->
-        <!-- DroxPerms -->
-
-        <!-- Bukkit -->
+        
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.7.8-R0.1-SNAPSHOT</version>
         </dependency>
-
-
-        <!-- WorldGuard -->
 
         <!-- Gson: Java to Json conversion -->
         <dependency>
@@ -69,28 +55,32 @@
             <version>2.2.2</version>
             <scope>compile</scope>
         </dependency>
+        <!-- DroxPerms -->
         <dependency>
             <groupId>de.hydrox.bukkit</groupId>
             <artifactId>DroxPerms</artifactId>
             <version>0.4.0-SNAPSHOT</version>
         </dependency>
+        <!-- WorldGuard -->
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
             <version>5.8.1-SNAPSHOT</version>
         </dependency>
+        <!-- BeardStat -->
         <dependency>
             <groupId>com.tehbeard</groupId>
             <artifactId>BeardStat</artifactId>
             <version>0.8.1-SNAPSHOT</version>
         </dependency>
+        <!-- Annotation parser -->
         <dependency>
             <groupId>tehbeard.annotate</groupId>
             <artifactId>annotate</artifactId>
             <version>2.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-
+        <!-- Metrics -->
         <dependency>
             <groupId>org.mcstats.bukkit</groupId>
             <artifactId>metrics</artifactId>
