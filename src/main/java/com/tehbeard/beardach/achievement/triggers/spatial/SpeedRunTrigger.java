@@ -6,6 +6,7 @@ import java.util.Map;
 import org.bukkit.entity.Player;
 
 import com.google.gson.annotations.Expose;
+import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
@@ -13,6 +14,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.utils.bukkit.BukkitUtils;
 import com.tehbeard.utils.cuboid.Cuboid;
 
 //TODO: Redo as worldguard based
@@ -49,12 +51,12 @@ public class SpeedRunTrigger implements ITrigger {
     public boolean checkAchievement(Player player) {
 
         // if inside start cuboid and state does not exist, create record
-        if (startCuboid.isInside(player.getLocation())) {
+        if (startCuboid.isInside(BukkitUtils.fromLocation(player.getLocation()))) {
             startTimer(player.getName());
             return false;
         }
         // if inside end cuboid, and state exists, check and return value
-        if (endCuboid.isInside(player.getLocation()) && inTime(player.getName())) {
+        if (endCuboid.isInside(BukkitUtils.fromLocation(player.getLocation())) && inTime(player.getName())) {
             clearTimer(player.getName());
             return true;
         }
@@ -104,7 +106,8 @@ public class SpeedRunTrigger implements ITrigger {
 
     @Override
     public void configure(Achievement ach) {
-
+        BeardAch.instance().getListener().add(startCuboid, ach);
+        BeardAch.instance().getListener().add(endCuboid, ach);
     }
 
 }

@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -73,7 +72,7 @@ public class BeardAch extends JavaPlugin {
 
     private EditorJSON jsonEditorSettings = new EditorJSON();
 
-    private BeardAchCuboidListener cuboidListener = new BeardAchCuboidListener();
+    private BeardAchListener cuboidListener = new BeardAchListener();
     private EntityStatManager stats;
 
     private static boolean allowExecRewards = false;
@@ -151,18 +150,6 @@ public class BeardAch extends JavaPlugin {
         }
         
         //Do db migration if needed.
-        if(db instanceof JDBCAchievementDataSource){
-            
-            try {
-                JDBCAchievementDataSource jdbc = (JDBCAchievementDataSource)db;
-                jdbc.doMigration(getConfig().getInt("ach.database.sql_db_version"),getConfig().getDefaults().getInt("ach.database.sql_db_version"));
-                getConfig().set("ach.database.sql_db_version",getConfig().getDefaults().getInt("ach.database.sql_db_version"));
-                saveConfig();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            
-        }
         achievementManager = new AchievementManager(db);
         
         getLogger().info("Installing default triggers and rewards");
@@ -302,7 +289,7 @@ public class BeardAch extends JavaPlugin {
         exportEditor();
 
         // setup events
-        getServer().getPluginManager().registerEvents(achievementManager, this);
+        getServer().getPluginManager().registerEvents(getListener(), this);
         
         if(getConfig().getBoolean("ach.add-no-creative-trigger",false)){
             getLogger().info("Adding no creative trigger to all achievements");
@@ -500,7 +487,7 @@ public class BeardAch extends JavaPlugin {
         }
     }
 
-    public BeardAchCuboidListener getCuboidListener() {
+    public BeardAchListener getListener() {
         return cuboidListener;
     }
 

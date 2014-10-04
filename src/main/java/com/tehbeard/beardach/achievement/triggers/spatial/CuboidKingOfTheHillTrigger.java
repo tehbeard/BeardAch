@@ -19,6 +19,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.utils.bukkit.BukkitUtils;
 import com.tehbeard.utils.cuboid.Cuboid;
 
 /**
@@ -73,8 +74,12 @@ public class CuboidKingOfTheHillTrigger implements ITrigger, Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         if (event.getTo().getBlockX() != event.getFrom().getBlockX() || event.getTo().getBlockY() != event.getFrom().getBlockY() || event.getTo().getBlockZ() != event.getFrom().getBlockZ()) {
             Player player = event.getPlayer();
-            boolean wasInside = cuboid.isInside(event.getFrom());
-            boolean isInside = cuboid.isInside(event.getTo());
+            if(!cuboid.getWorld().equals(event.getFrom().getWorld().getName())){
+                return;
+            }
+            
+            boolean wasInside = cuboid.isInside(BukkitUtils.fromLocation(event.getFrom()));
+            boolean isInside = cuboid.isInside(BukkitUtils.fromLocation(event.getTo()));
             long currentTime = System.currentTimeMillis() / 1000L;
 
             if (wasInside) {
@@ -103,7 +108,7 @@ public class CuboidKingOfTheHillTrigger implements ITrigger, Listener {
 
     @Override
     public void configure(Achievement ach) {
-
+        BeardAch.instance().getListener().add(cuboid, ach);
     }
 
 }

@@ -1,6 +1,15 @@
 package com.tehbeard.beardach.datasource;
 
-import java.io.File;
+import com.tehbeard.beardach.BeardAch;
+import com.tehbeard.beardach.achievement.Achievement;
+import com.tehbeard.beardach.achievement.AchievementPlayerLink;
+import com.tehbeard.beardach.annotations.DataSourceDescriptor;
+import com.tehbeard.beardstat.utils.uuid.MojangWebAPI;
+import com.tehbeard.utils.sql.DBVersion;
+import com.tehbeard.utils.sql.JDBCDataSource;
+import com.tehbeard.utils.sql.PostUpgrade;
+import com.tehbeard.utils.sql.SQLFragment;
+import com.tehbeard.utils.sql.SQLInitScript;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,22 +27,12 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-import com.tehbeard.beardach.BeardAch;
-import com.tehbeard.beardach.achievement.Achievement;
-import com.tehbeard.beardach.achievement.AchievementPlayerLink;
-import com.tehbeard.beardach.annotations.DataSourceDescriptor;
-import com.tehbeard.utils.sql.DBVersion;
-import com.tehbeard.utils.sql.JDBCDataSource;
-import com.tehbeard.utils.sql.PostUpgrade;
-import com.tehbeard.utils.sql.SQLFragment;
-import com.tehbeard.utils.uuid.MojangWebAPI;
-
 /**
  * 
  * @author James
  */
 @DataSourceDescriptor(tag = "mysql", version = "2.1")
+@SQLInitScript("sql/makeTable")
 public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSource {
 
     private HashMap<String, HashSet<AchievementPlayerLink>> writeCache = new HashMap<String, HashSet<AchievementPlayerLink>>();
@@ -59,11 +58,9 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     public JDBCAchievementDataSource(Properties cfg) throws ClassNotFoundException, IOException, SQLException {
         super("sql", "com.mysql.jdbc.Driver", BeardAch.instance().getLogger());
         setConnectionUrl(String.format("jdbc:mysql://%s/%s", cfg.get("host"), cfg.get("database")));
-        Properties auth = new Properties();
-        auth.put("user", cfg.get("username"));
-        auth.put("password", cfg.get("password"));
+        connectionProperties.put("user", cfg.get("username"));
+        connectionProperties.put("password", cfg.get("password"));
         setTag("PREFIX", (String) cfg.get("table_prefix"));
-        setConnectionProperties(auth);
 
         Properties p = new Properties();
         p.load(BeardAch.instance().getResource("sql/sql.properties"));
@@ -73,16 +70,12 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         //v1 to v2 check
         ResultSet rs = connection.getMetaData().getTables(connection.getCatalog(), null, cfg.get("table_prefix") + "_entity", null);
         if(!rs.next()){
+            getKeyValStore().set(KEY_SCHEMA_VERSION, "1");
             BeardAch.instance().getLogger().info("No entity table detected, performing upgrade.");
-            if(doMigration(1, 2)){
-                BeardAch.instance().getConfig().set("sql_db_version", 2);
-                BeardAch.instance().saveConfig();
-            }
+            doMigration(2);
         }
 
-        executeScript("sql/makeTable");
-
-        //TODO: Add migration check here.
+       //TODO: Add migration check here.
 
 
 
@@ -101,25 +94,6 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
     protected synchronized HashMap<String, HashSet<AchievementPlayerLink>> getWriteCache(){
         return writeCache;
-    }
-
-    @Override
-    protected boolean generateBackup(File file) {
-        return true;
-        // throw new UnsupportedOperationException("Not supported yet."); //To
-        // change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected boolean restoreBackup(File file) {
-        return true;
-        // throw new UnsupportedOperationException("Not supported yet."); //To
-        // change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected File getTempDir() {
-        return new File(System.getProperty("java.io.tmpdir"));
     }
 
     @Override
@@ -190,25 +164,19 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         }
     }
 
-    private synchronized boolean checkConnection() {
-        BeardAch.instance().getLogger().fine("Checking connection");
-        try {
-            if (connection == null || !connection.isValid(0)) {
-                BeardAch.instance().getLogger().warning("Connection to database interuptted, attempting to reconnect...");
-                setup();
-                if (connection == null) {
-                    BeardAch.instance().getLogger().severe("Connection reboot failed!");
-                }
+    @Override
+    public boolean generateBackup(String backupName) {
+        return true;//TODO - Implement
+    }
 
-            }
-        } catch (SQLException e) {
-            connection = null;
-            return false;
-        } catch (AbstractMethodError e) {
+    @Override
+    public boolean restoreBackup(String backupName) {
+        return true;//TODO - Implement
+    }
 
-        }
-        BeardAch.instance().getLogger().fine("Checking is " + connection != null ? "up" : "down");
-        return connection != null;
+    @Override
+    public int getDataSourceVersion() {
+        return 2;
     }
 
     class SqlFlusher implements Runnable {

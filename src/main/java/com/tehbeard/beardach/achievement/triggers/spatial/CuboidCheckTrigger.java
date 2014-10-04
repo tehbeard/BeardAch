@@ -13,6 +13,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.utils.bukkit.BukkitUtils;
 import com.tehbeard.utils.cuboid.Cuboid;
 
 /**
@@ -39,7 +40,7 @@ public class CuboidCheckTrigger implements ITrigger {
         // if player has stat
         // if(player.getWorld().getName().equals(world)){
 
-        return cuboid.isInside(player.getLocation());
+        return cuboid.isInside(BukkitUtils.fromLocation(player.getLocation()));
     }
 
     public ArrayList<String> getCache() {
@@ -49,7 +50,7 @@ public class CuboidCheckTrigger implements ITrigger {
     @Override
     public void configure(Achievement ach) {
         // Register with cuboid listener
-        BeardAch.instance().getCuboidListener().add(cuboid, ach);
+        BeardAch.instance().getListener().add(cuboid, ach);
     }
 
 }

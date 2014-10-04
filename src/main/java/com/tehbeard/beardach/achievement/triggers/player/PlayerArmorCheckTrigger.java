@@ -12,7 +12,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
-import com.tehbeard.utils.misc.ItemSyntax;
+import com.tehbeard.utils.bukkit.misc.ItemSyntax;
 
 @ComponentHelpDescription(description = "Checks player is wearing an item, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a>",categories ={"inventory","player"})
 @Configurable(name = "wearingitem", tag = "wearitem")

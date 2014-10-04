@@ -10,7 +10,6 @@ import com.tehbeard.beardach.datasource.IDataSource;
 import com.tehbeard.beardach.datasource.configurable.RunnableTime;
 import com.tehbeard.utils.cuboid.ChunkCache;
 import com.tehbeard.utils.cuboid.Cuboid;
-import com.tehbeard.utils.cuboid.CuboidEntry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,8 +21,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
  * Manages the link between achievements and players
@@ -36,7 +33,7 @@ public class AchievementManager {
     private HashMap<UUID, Set<AchievementPlayerLink>> playerHasCache = new HashMap<UUID, Set<AchievementPlayerLink>>();
     private HashMap<Achievement, Set<UUID>> playerCheckCache = new HashMap<Achievement, Set<UUID>>();
     private final IDataSource database;
-    private final ChunkCache<Achievement> chunkCache = new ChunkCache<Achievement>();
+    //private final ChunkCache<Achievement> chunkCache = new ChunkCache<Achievement>();
 
     private List<Achievement> achievements = new LinkedList<Achievement>();
 
@@ -64,7 +61,7 @@ public class AchievementManager {
      */
     public void clearAchievements() {
         database.flush();
-        chunkCache.clearCache();
+        //chunkCache.clearCache();
         achievements = new LinkedList<Achievement>();
         playerCheckCache = new HashMap<Achievement, Set<UUID>>();
         playerHasCache = new HashMap<UUID, Set<AchievementPlayerLink>>();
@@ -114,62 +111,7 @@ public class AchievementManager {
      */
     public void addAchievement(Achievement ach) {
         achievements.add(ach);
-        for (ITrigger t : ach.getTrigs()) {
-            processSpecialTriggers(t, ach);
-        }
 
-    }
-
-    /**
-     * Certain triggers need special processing to add to chunk pools, hook
-     * events etc.
-     *
-     * @param t
-     * @param ach
-     * @throws IllegalArgumentException
-     */
-    private void processSpecialTriggers(ITrigger t, Achievement ach) throws IllegalArgumentException {
-
-        // Add Cuboid Check Triggers to the global cache
-        if (t instanceof CuboidCheckTrigger) {
-            Cuboid cuboid = ((CuboidCheckTrigger) t).getCuboid();
-            chunkCache.addEntry(cuboid, ach);
-        }
-        // Add Speed Run triggers to global cache
-        if (t instanceof SpeedRunTrigger) {
-
-            Cuboid cuboid = ((SpeedRunTrigger) t).getStartCuboid();
-            chunkCache.addEntry(cuboid, ach);
-            cuboid = ((SpeedRunTrigger) t).getEndCuboid();
-            chunkCache.addEntry(cuboid, ach);
-        }
-        // Register this trigger as a listener
-        // TODO : Check if trigger implements Listeners and register
-//        if (t instanceof Listener) {
-//            BeardAch.instance().getLogger().fine("Adding listener trigger");
-//            Bukkit.getPluginManager().registerEvents((Listener) t, BeardAch.instance());
-//        }
-        // Setup this runnable
-        if (t instanceof Runnable) {
-            RunnableTime rt = t.getClass().getAnnotation(RunnableTime.class);
-            if (rt != null) {
-                switch (rt.type()) {
-                    case SYNC:
-                        //TODO : Add Trigger to sync scheduler
-//                        Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), (Runnable) t, rt.value(), rt.value());
-                        break;
-                    case ASYNC:
-                    //TODO : Add Trigger to async scheduler
-//                        Bukkit.getScheduler().runTaskTimerAsynchronously(BeardAch.instance(), (Runnable) t, rt.value(), rt.value());
-                }
-            }
-        }
-        // Process sub triggers of meta triggers
-        if (t instanceof MetaTrigger) {
-            for (ITrigger tt : ((MetaTrigger) t).getTriggers()) {
-                processSpecialTriggers(tt, ach);
-            }
-        }
     }
 
     /**
@@ -323,18 +265,6 @@ public class AchievementManager {
 
     public void removeCheck(Achievement ach, UUID player) {
         playerCheckCache.get(ach).remove(player);
-    }
-
-    // TODO : Listener to catch players moving for chunkCached achievements
-    public void onPlayerMove(PlayerMoveEvent event) {
-        for (CuboidEntry<Achievement> e : chunkCache.getEntries()) {
-            e.getEntry().checkAchievement(/*UUID*/);
-        }
-    }
-
-    // TODO : Load players on join.
-    public void onPlayerJoin(Object event) {
-//        loadPlayersAchievements(/*UUID*/);
     }
 
     private Set<UUID> getListOfPlayersToCheck(Achievement ach) {

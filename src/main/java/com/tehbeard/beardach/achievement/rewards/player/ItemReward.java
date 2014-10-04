@@ -1,11 +1,5 @@
 package com.tehbeard.beardach.achievement.rewards.player;
 
-import java.util.HashMap;
-
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
@@ -14,7 +8,11 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
-import com.tehbeard.utils.misc.ItemSyntax;
+import com.tehbeard.utils.bukkit.misc.ItemSyntax;
+import java.util.HashMap;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 @ComponentHelpDescription(description = "Gives a player an item, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a>")
 @Configurable(name = "Item reward", tag = "item")
