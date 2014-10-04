@@ -43,7 +43,7 @@ import com.tehbeard.beardach.datasource.NullDataSource;
 import com.tehbeard.beardach.datasource.configurable.IConfigurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorJSON;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardstat.BeardStat;
+import com.tehbeard.beardstat.bukkit.BukkitPlugin;
 import com.tehbeard.beardstat.manager.EntityStatManager;
 import com.tehbeard.utils.addons.AddonLoader;
 import com.tehbeard.utils.factory.ConfigurableFactory;
@@ -423,7 +423,7 @@ public class BeardAch extends JavaPlugin {
      * Try to load BeardStat
      */
     private void EnableBeardStat() {
-        BeardStat bs = (BeardStat) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
+        BukkitPlugin bs = (BukkitPlugin) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
         if (bs != null && bs.isEnabled()) {
             stats = bs.getStatManager();
         } else {

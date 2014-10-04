@@ -1,26 +1,5 @@
 package com.tehbeard.beardach.achievement;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import java.util.logging.Level;
-
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.achievement.triggers.meta.MetaTrigger;
@@ -32,14 +11,27 @@ import com.tehbeard.beardach.datasource.configurable.RunnableTime;
 import com.tehbeard.utils.cuboid.ChunkCache;
 import com.tehbeard.utils.cuboid.Cuboid;
 import com.tehbeard.utils.cuboid.CuboidEntry;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.logging.Level;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
  * Manages the link between achievements and players
- * 
+ *
  * @author James
- * 
+ *
  */
-public class AchievementManager implements Listener {
+public class AchievementManager {
 
     private HashMap<UUID, Set<AchievementPlayerLink>> playerHasCache = new HashMap<UUID, Set<AchievementPlayerLink>>();
     private HashMap<Achievement, Set<UUID>> playerCheckCache = new HashMap<Achievement, Set<UUID>>();
@@ -50,7 +42,6 @@ public class AchievementManager implements Listener {
 
     public AchievementManager(IDataSource database) {
         this.database = database;
-
     }
 
     public void loadAchievements() {
@@ -62,9 +53,10 @@ public class AchievementManager implements Listener {
         AchievementLoader.loadAchievements();
 
         // load each players
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            loadPlayersAchievements(p);
-        }
+        //TODO : Load all currently active players, (needed if reloaded while online)
+//        for (Player p : Bukkit.getOnlinePlayers()) {
+//            loadPlayersAchievements(p);
+//        }
     }
 
     /**
@@ -80,7 +72,7 @@ public class AchievementManager implements Listener {
 
     /**
      * Return the list of visible achievements
-     * 
+     *
      * @return
      */
     public List<Achievement> getAchievementsList() {
@@ -95,7 +87,7 @@ public class AchievementManager implements Listener {
 
     /**
      * Get a list of all achievements
-     * 
+     *
      * @return
      */
     public List<Achievement> getLoadedAchievements() {
@@ -108,15 +100,16 @@ public class AchievementManager implements Listener {
 
     public Achievement getAchievementSlug(String slug) {
         for (Achievement a : achievements) {
-            if (a.getSlug().equals(slug))
+            if (a.getSlug().equals(slug)) {
                 return a;
+            }
         }
         return null;
     }
 
     /**
      * Add achievement to the manager
-     * 
+     *
      * @param ach
      */
     public void addAchievement(Achievement ach) {
@@ -130,7 +123,7 @@ public class AchievementManager implements Listener {
     /**
      * Certain triggers need special processing to add to chunk pools, hook
      * events etc.
-     * 
+     *
      * @param t
      * @param ach
      * @throws IllegalArgumentException
@@ -151,20 +144,23 @@ public class AchievementManager implements Listener {
             chunkCache.addEntry(cuboid, ach);
         }
         // Register this trigger as a listener
-        if (t instanceof Listener) {
-            BeardAch.instance().getLogger().fine("Adding listener trigger");
-            Bukkit.getPluginManager().registerEvents((Listener) t, BeardAch.instance());
-        }
+        // TODO : Check if trigger implements Listeners and register
+//        if (t instanceof Listener) {
+//            BeardAch.instance().getLogger().fine("Adding listener trigger");
+//            Bukkit.getPluginManager().registerEvents((Listener) t, BeardAch.instance());
+//        }
         // Setup this runnable
         if (t instanceof Runnable) {
             RunnableTime rt = t.getClass().getAnnotation(RunnableTime.class);
             if (rt != null) {
                 switch (rt.type()) {
                     case SYNC:
-                        Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), (Runnable) t, rt.value(), rt.value());
+                        //TODO : Add Trigger to sync scheduler
+//                        Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), (Runnable) t, rt.value(), rt.value());
                         break;
                     case ASYNC:
-                        Bukkit.getScheduler().runTaskTimerAsynchronously(BeardAch.instance(), (Runnable) t, rt.value(), rt.value());
+                    //TODO : Add Trigger to async scheduler
+//                        Bukkit.getScheduler().runTaskTimerAsynchronously(BeardAch.instance(), (Runnable) t, rt.value(), rt.value());
                 }
             }
         }
@@ -178,14 +174,14 @@ public class AchievementManager implements Listener {
 
     /**
      * Load the achievements for a player
-     * 
+     *
      * @param player
      */
-    public void loadPlayersAchievements(OfflinePlayer player) {
+    public void loadPlayersAchievements(UUID player) {
         Set<AchievementPlayerLink> got = database.getPlayersAchievements(player);
         // put to cache
         if (got != null) {
-            playerHasCache.put(player.getUniqueId(), got);
+            playerHasCache.put(player, got);
             // cycle all loaded achievements
             buildPlayerCheckCache(player);
         } else {
@@ -194,13 +190,13 @@ public class AchievementManager implements Listener {
 
     }
 
-    private void buildPlayerCheckCache(OfflinePlayer player) {
+    private void buildPlayerCheckCache(UUID player) {
 
         for (Achievement ach : achievements) {
 
             // if they don't have that achievement, add them to the check cache
             HashSet<String> slugs = new HashSet<String>();
-            for (AchievementPlayerLink link : playerHasCache.get(player.getUniqueId())) {
+            for (AchievementPlayerLink link : playerHasCache.get(player)) {
                 slugs.add(link.getSlug());
             }
             if (!slugs.contains(ach.getSlug())) {
@@ -209,15 +205,16 @@ public class AchievementManager implements Listener {
                     playerCheckCache.put(ach, new HashSet<UUID>());
                 }
                 // add player to cache
-                playerCheckCache.get(ach).add(player.getUniqueId());
+                playerCheckCache.get(ach).add(player);
             }
         }
     }
 
-    public boolean playerHas(OfflinePlayer player, String slug) {
-        for (AchievementPlayerLink link : playerHasCache.get(player.getUniqueId())) {
-            if (link.getSlug().equals(slug))
+    public boolean playerHas(UUID player, String slug) {
+        for (AchievementPlayerLink link : playerHasCache.get(player)) {
+            if (link.getSlug().equals(slug)) {
                 return true;
+            }
         }
         return false;
     }
@@ -229,7 +226,6 @@ public class AchievementManager implements Listener {
 
         // wipe players not online
         // for each achievement
-
         boolean keepChecking = true;
         while (keepChecking) {
             BeardAch.instance().getLogger().finer("Beggining Check player loop");
@@ -239,25 +235,7 @@ public class AchievementManager implements Listener {
 
                 BeardAch.instance().getLogger().log(Level.FINER, "ach:{0}", ach.getName());
                 // loop all players, check them.
-
-                Set<UUID> list = getListOfPlayersToCheck(ach);
-                Player p;
-                for (UUID ply : list) {
-
-                    // get player object for offline detection
-                    p = Bukkit.getPlayer(ply);
-                    if (p instanceof Player) {
-                        BeardAch.instance().getLogger().log(Level.FINER, "Player {0} online", ply);
-                        // check for bleep bloop
-                        if (ach.checkAchievement(p)) {
-                            keepChecking = true;
-                        }
-
-                    } else {
-                        removeCheck(ach, ply);
-                    }
-
-                }
+                keepChecking = checkAchievement(ach);
 
             }
             BeardAch.instance().getLogger().finer("Ending Check player loop");
@@ -265,11 +243,11 @@ public class AchievementManager implements Listener {
 
     }
 
-    public List<AchievementPlayerLink> getAchievements(OfflinePlayer player) {
-        if (playerHasCache.containsKey(player.getUniqueId())) {
+    public List<AchievementPlayerLink> getAchievements(UUID player) {
+        if (playerHasCache.containsKey(player)) {
             List<AchievementPlayerLink> l = new LinkedList<AchievementPlayerLink>();
 
-            for (AchievementPlayerLink link : playerHasCache.get(player.getUniqueId())) {
+            for (AchievementPlayerLink link : playerHasCache.get(player)) {
                 Achievement a = getAchievementSlug(link.getSlug());
                 if (a != null) {
                     l.add(link);
@@ -280,12 +258,14 @@ public class AchievementManager implements Listener {
                 @Override
                 public int compare(AchievementPlayerLink o1, AchievementPlayerLink o2) {
                     long res = o1.getDate().getTime() - o2.getDate().getTime();
-                    if (res == 0)
+                    if (res == 0) {
                         return 0;
-                    if (res > 0)
+                    }
+                    if (res > 0) {
                         return 1;
-                    else
+                    } else {
                         return -1;
+                    }
                 }
             });
             return l;
@@ -294,80 +274,81 @@ public class AchievementManager implements Listener {
 
     }
 
-    public List<Achievement> getAchievementBySlug(String slug){
+    public List<Achievement> getAchievementBySlug(String slug) {
         List<Achievement> l = new ArrayList<Achievement>();
-        for(Achievement a : achievements){
-            if(a.getSlug().equals(slug)){
+        for (Achievement a : achievements) {
+            if (a.getSlug().equals(slug)) {
                 l.add(a);
             }
         }
         return l;
     }
 
-    public void makeAchievementLink(OfflinePlayer player, String slug) {
+    /**
+     * Mark an achievement slug as completed by a player
+     * @param player
+     * @param slug 
+     */
+    public void makeAchievementLink(UUID player, String slug) {
         // push to cache
-        playerHasCache.get(player.getUniqueId()).add(new AchievementPlayerLink(slug));
+        playerHasCache.get(player).add(new AchievementPlayerLink(slug));
         // push to DB
         database.setPlayersAchievements(player, slug);
     }
 
-    public void checkAchievement(Achievement ach) {
+    public boolean checkAchievement(Achievement ach) {
 
         Iterator<UUID> it = getListOfPlayersToCheck(ach).iterator();
-        UUID ply;
-        Player p;
-        while (it.hasNext()) {
-            ply = it.next();
-
-            p = Bukkit.getPlayer(ply);
-            if (p instanceof Player) {
-                BeardAch.instance().getLogger().log(Level.FINE, "Player {0} online", ply);
-                // check for bleep bloop
-                ach.checkAchievement(p);
-
-            } else {
-                it.remove();
-            }
-
-        }
+        boolean keepChecking = false;
+        //TODO : Get players, check achievement, return if it succeeded
+//        Player p;
+//        while (it.hasNext()) {
+//            UUID ply = it.next();
+//
+//            p = Bukkit.getPlayer(ply);
+//            if (p instanceof Player) {
+//                BeardAch.instance().getLogger().log(Level.FINE, "Player {0} online", ply);
+//                // check for bleep bloop
+//                if(ach.checkAchievement(p)){
+//                    keepChecking = true;
+//                }
+//
+//            } else {
+//                it.remove();
+//            }
+//
+//        }
+        return keepChecking;
     }
 
     public void removeCheck(Achievement ach, UUID player) {
         playerCheckCache.get(ach).remove(player);
     }
 
-    // /LISTENER
-
-    @EventHandler(priority = EventPriority.HIGHEST)
+    // TODO : Listener to catch players moving for chunkCached achievements
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (event.getTo().getBlockX() != event.getFrom().getBlockX() || event.getTo().getBlockY() != event.getFrom().getBlockY() || event.getTo().getBlockZ() != event.getFrom().getBlockZ()) {
-
-            for (CuboidEntry<Achievement> e : chunkCache.getEntries(event.getPlayer())) {
-
-                e.getEntry().checkAchievement(event.getPlayer());
-
-            }
+        for (CuboidEntry<Achievement> e : chunkCache.getEntries()) {
+            e.getEntry().checkAchievement(/*UUID*/);
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        loadPlayersAchievements(event.getPlayer());
-
+    // TODO : Load players on join.
+    public void onPlayerJoin(Object event) {
+//        loadPlayersAchievements(/*UUID*/);
     }
 
     private Set<UUID> getListOfPlayersToCheck(Achievement ach) {
         return playerCheckCache.get(ach);
-        
+
     }
 
     public void flush() {
         database.flush();
-        
+
     }
 
     public void dumpFancy() {
         database.dumpFancy();
-        
+
     }
 }

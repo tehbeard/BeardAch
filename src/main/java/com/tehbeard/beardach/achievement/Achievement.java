@@ -168,7 +168,7 @@ public class Achievement {
 
         }
 
-        BeardAch.instance().getAchievementManager().makeAchievementLink(player, slug);
+        BeardAch.instance().getAchievementManager().makeAchievementLink(player.getUniqueId(), slug);
         BeardAch.instance().getAchievementManager().removeCheck(this, player.getUniqueId());
     }
 
@@ -181,6 +181,6 @@ public class Achievement {
     }
 
     public boolean has(Player player) {
-        return BeardAch.instance().getAchievementManager().playerHas(player, slug);
+        return BeardAch.instance().getAchievementManager().playerHas(player.getUniqueId(), slug);
     }
 }

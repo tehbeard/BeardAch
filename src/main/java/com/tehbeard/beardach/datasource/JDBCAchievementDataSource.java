@@ -18,9 +18,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.Configuration;
 
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
@@ -59,14 +56,13 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     @SQLFragment("player.name.set")
     private PreparedStatement setPlayerName;
 
-    public JDBCAchievementDataSource() throws ClassNotFoundException, IOException, SQLException {
+    public JDBCAchievementDataSource(Properties cfg) throws ClassNotFoundException, IOException, SQLException {
         super("sql", "com.mysql.jdbc.Driver", BeardAch.instance().getLogger());
-        Configuration cfg = BeardAch.instance().getConfig();
-        setConnectionUrl(String.format("jdbc:mysql://%s/%s", cfg.getString("ach.database.host"), cfg.getString("ach.database.database")));
+        setConnectionUrl(String.format("jdbc:mysql://%s/%s", cfg.get("host"), cfg.get("database")));
         Properties auth = new Properties();
-        auth.put("user", cfg.getString("ach.database.username"));
-        auth.put("password", cfg.getString("ach.database.password"));
-        setTag("PREFIX", cfg.getString("ach.database.table_prefix"));
+        auth.put("user", cfg.get("username"));
+        auth.put("password", cfg.get("password"));
+        setTag("PREFIX", (String) cfg.get("table_prefix"));
         setConnectionProperties(auth);
 
         Properties p = new Properties();
@@ -75,11 +71,11 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         setup();
 
         //v1 to v2 check
-        ResultSet rs = connection.getMetaData().getTables(connection.getCatalog(), null, cfg.getString("ach.database.table_prefix") + "_entity", null);
+        ResultSet rs = connection.getMetaData().getTables(connection.getCatalog(), null, cfg.get("table_prefix") + "_entity", null);
         if(!rs.next()){
             BeardAch.instance().getLogger().info("No entity table detected, performing upgrade.");
             if(doMigration(1, 2)){
-                BeardAch.instance().getConfig().set("ach.database.sql_db_version", 2);
+                BeardAch.instance().getConfig().set("sql_db_version", 2);
                 BeardAch.instance().saveConfig();
             }
         }
@@ -91,16 +87,16 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
 
 
-
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), new Runnable() {
-            @Override
-            public void run() {
-                Runnable r = new SqlFlusher(getWriteCache());
-                writeCache = new HashMap<String, HashSet<AchievementPlayerLink>>();
-                Bukkit.getScheduler().runTaskAsynchronously(BeardAch.instance(), r);
-            }
-
-        }, 2400L, 2400L);
+//TODO : Fire off a Sql Flush on a async thread every so often.
+//        Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), new Runnable() {
+//            @Override
+//            public void run() {
+//                Runnable r = new SqlFlusher(getWriteCache());
+//                writeCache = new HashMap<String, HashSet<AchievementPlayerLink>>();
+//                Bukkit.getScheduler().runTaskAsynchronously(BeardAch.instance(), r);
+//            }
+//
+//        }, 2400L, 2400L);
     }
 
     protected synchronized HashMap<String, HashSet<AchievementPlayerLink>> getWriteCache(){
@@ -132,12 +128,12 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     }
 
     @Override
-    public Set<AchievementPlayerLink> getPlayersAchievements(OfflinePlayer player) {
+    public Set<AchievementPlayerLink> getPlayersAchievements(UUID player) {
         HashSet<AchievementPlayerLink> c = new HashSet<AchievementPlayerLink>();
         try {
             if (!checkConnection())
                 throw new SQLException("Failed to reconnect to server, aborting load");
-            prepGetAllPlayerAch.setString(1, player.getUniqueId().toString().replaceAll("-",""));
+            prepGetAllPlayerAch.setString(1, player.toString().replaceAll("-",""));
             ResultSet rs = prepGetAllPlayerAch.executeQuery();
 
             while (rs.next()) {
@@ -145,8 +141,8 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
             }
             rs.close();
-            if (writeCache.containsKey(player)) {
-                c.addAll(writeCache.get(player));
+            if (writeCache.containsKey(player.toString().replaceAll("-",""))) {
+                c.addAll(writeCache.get(player.toString().replaceAll("-","")));
             }
             return c;
         } catch (SQLException e) {
@@ -156,11 +152,11 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     }
 
     @Override
-    public synchronized void setPlayersAchievements(OfflinePlayer player, String achievements) {
-        if (!writeCache.containsKey(player.getUniqueId().toString().replaceAll("-",""))) {
-            writeCache.put(player.getUniqueId().toString().replaceAll("-",""), new HashSet<AchievementPlayerLink>());
+    public synchronized void setPlayersAchievements(UUID player, String achievements) {
+        if (!writeCache.containsKey(player.toString().replaceAll("-",""))) {
+            writeCache.put(player.toString().replaceAll("-",""), new HashSet<AchievementPlayerLink>());
         }
-        writeCache.get(player.getUniqueId().toString().replaceAll("-","")).add(new AchievementPlayerLink(achievements, new Timestamp(new java.util.Date().getTime())));
+        writeCache.get(player.toString().replaceAll("-","")).add(new AchievementPlayerLink(achievements, new Timestamp(new java.util.Date().getTime())));
     }
 
     @Override
@@ -170,7 +166,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     }
 
     @Override
-    public void clearAchievements(OfflinePlayer player) {
+    public void clearAchievements(UUID player) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 

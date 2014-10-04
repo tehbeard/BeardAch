@@ -1,15 +1,14 @@
 package com.tehbeard.beardach.datasource;
 
+import com.tehbeard.beardach.BeardAch;
+import com.tehbeard.beardach.achievement.AchievementPlayerLink;
+import com.tehbeard.beardach.annotations.DataSourceDescriptor;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.bukkit.OfflinePlayer;
-
-import com.tehbeard.beardach.BeardAch;
-import com.tehbeard.beardach.achievement.AchievementPlayerLink;
-import com.tehbeard.beardach.annotations.DataSourceDescriptor;
+import java.util.UUID;
+import java.util.logging.Level;
 
 @DataSourceDescriptor(tag = "test", version = "1.0")
 public class NullDataSource implements IDataSource {
@@ -19,15 +18,14 @@ public class NullDataSource implements IDataSource {
     }
 
     @Override
-    public Set<AchievementPlayerLink> getPlayersAchievements(OfflinePlayer Player) {
+    public Set<AchievementPlayerLink> getPlayersAchievements(UUID Player) {
         HashSet<AchievementPlayerLink> d = new HashSet<AchievementPlayerLink>();
-        // d.add("test");
         return d;
     }
 
     @Override
-    public void setPlayersAchievements(OfflinePlayer player, String achievement) {
-        BeardAch.instance().getLogger().fine("[" + player.getName() + "] stored " + achievement);
+    public void setPlayersAchievements(UUID player, String achievement) {
+        BeardAch.instance().getLogger().log(Level.FINE, "[{0}] stored {1}", new Object[]{player.toString(), achievement});
 
     }
 
@@ -37,7 +35,7 @@ public class NullDataSource implements IDataSource {
     }
 
     @Override
-    public void clearAchievements(OfflinePlayer player) {
+    public void clearAchievements(UUID player) {
 
     }
 

@@ -1,21 +1,5 @@
 package com.tehbeard.beardach.datasource;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.bukkit.OfflinePlayer;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -24,13 +8,26 @@ import com.google.gson.stream.JsonWriter;
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 import com.tehbeard.beardach.annotations.DataSourceDescriptor;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-@DataSourceDescriptor(tag = "json", version = "1.0")
+@DataSourceDescriptor(tag = "json", version = "2.0")
 public class GSONDataSource implements IDataSource {
 
     private final Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
 
-    private Map<String, Set<AchievementPlayerLink>> data = new HashMap<String, Set<AchievementPlayerLink>>();
+    private Map<UUID, Set<AchievementPlayerLink>> data = new HashMap<UUID, Set<AchievementPlayerLink>>();
     private final File dbFile;
 
     public GSONDataSource() throws FileNotFoundException, IOException {
@@ -41,16 +38,16 @@ public class GSONDataSource implements IDataSource {
     }
 
     @Override
-    public Set<AchievementPlayerLink> getPlayersAchievements(OfflinePlayer player) {
+    public Set<AchievementPlayerLink> getPlayersAchievements(UUID player) {
         if (!data.containsKey(player)) {
-            data.put(player.getName(), new HashSet<AchievementPlayerLink>());
+            data.put(player, new HashSet<AchievementPlayerLink>());
         }
 
         return data.get(player);
     }
 
     @Override
-    public void setPlayersAchievements(OfflinePlayer player, String achievement) {
+    public void setPlayersAchievements(UUID player, String achievement) {
         getPlayersAchievements(player).add(new AchievementPlayerLink(achievement));
     }
 
@@ -70,8 +67,8 @@ public class GSONDataSource implements IDataSource {
     }
 
     @Override
-    public void clearAchievements(OfflinePlayer player) {
-        data.put(player.getName(), new HashSet<AchievementPlayerLink>());
+    public void clearAchievements(UUID player) {
+        data.put(player, new HashSet<AchievementPlayerLink>());
     }
 
     @Override
@@ -90,6 +87,6 @@ public class GSONDataSource implements IDataSource {
 
     @Override
     public List<String> getPlayers() {
-        return new ArrayList<String>(data.keySet());
+        throw new UnsupportedOperationException("Needs to be fixed!");
     }
 }

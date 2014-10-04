@@ -23,7 +23,7 @@ public class AchCommand implements TabExecutor {
             Player player = (Player) sender;
             if (args.length == 0) {
 
-                List<AchievementPlayerLink> list = BeardAch.instance().getAchievementManager().getAchievements(player);
+                List<AchievementPlayerLink> list = BeardAch.instance().getAchievementManager().getAchievements(player.getUniqueId());
                 AchievementPlayerLink a;
 
                 int pageSize = Math.min(5, list.size());
@@ -59,7 +59,7 @@ public class AchCommand implements TabExecutor {
                     player.sendMessage(ChatColor.BLUE + a.getDescrip());
 
                     // if they have unlocked it, tell them when they did
-                    for (AchievementPlayerLink aLink : BeardAch.instance().getAchievementManager().getAchievements(player)) {
+                    for (AchievementPlayerLink aLink : BeardAch.instance().getAchievementManager().getAchievements(player.getUniqueId())) {
                         if (aLink.getSlug().equals(a.getSlug())) {
                             player.sendMessage(ChatColor.WHITE + "You Unlocked this: " + aLink.getDate().toString());
                         }

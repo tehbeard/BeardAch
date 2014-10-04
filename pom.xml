@@ -34,6 +34,12 @@
             <groupId>com.tehbeard</groupId>
             <artifactId>utils</artifactId>
             <version>2.2.1</version>
+<!--            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+            </exclusions>-->
         </dependency>
         <!-- Vault -->
         <dependency>
@@ -45,7 +51,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.7.8-R0.1-SNAPSHOT</version>
+            <version>1.7.9-R0.1-SNAPSHOT</version>
         </dependency>
 
         <!-- Gson: Java to Json conversion -->
@@ -71,7 +77,7 @@
         <dependency>
             <groupId>com.tehbeard</groupId>
             <artifactId>BeardStat</artifactId>
-            <version>0.8.1-SNAPSHOT</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <!-- Annotation parser -->
         <dependency>
@@ -119,7 +125,7 @@
                 <filtering>true</filtering>
                 <directory>${basedir}/src/main/resources/</directory>
             </resource>
-           <resource>
+            <resource>
                 <targetPath>.</targetPath>
                 <directory>${project.build.directory}/generated-sources/assembly/</directory>
             </resource>
@@ -280,21 +286,21 @@
                                     </action>
                                 </pluginExecution>
                                 <pluginExecution>
-                                	<pluginExecutionFilter>
-                                		<groupId>org.bsc.maven</groupId>
-                                		<artifactId>
-                                			maven-processor-plugin
-                                		</artifactId>
-                                		<versionRange>
-                                			[2.1.1,)
-                                		</versionRange>
-                                		<goals>
-                                			<goal>process</goal>
-                                		</goals>
-                                	</pluginExecutionFilter>
-                                	<action>
-                                		<ignore></ignore>
-                                	</action>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.bsc.maven</groupId>
+                                        <artifactId>
+                                            maven-processor-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [2.1.1,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>process</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
                                 </pluginExecution>
                             </pluginExecutions>
                         </lifecycleMappingMetadata>

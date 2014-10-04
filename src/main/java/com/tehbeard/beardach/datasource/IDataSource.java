@@ -1,11 +1,9 @@
 package com.tehbeard.beardach.datasource;
 
+import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 import java.util.List;
 import java.util.Set;
-
-import org.bukkit.OfflinePlayer;
-
-import com.tehbeard.beardach.achievement.AchievementPlayerLink;
+import java.util.UUID;
 
 /**
  * Represents a datasource for achievements
@@ -15,13 +13,13 @@ import com.tehbeard.beardach.achievement.AchievementPlayerLink;
  */
 public interface IDataSource {
 
-    public Set<AchievementPlayerLink> getPlayersAchievements(OfflinePlayer Player);
+    public Set<AchievementPlayerLink> getPlayersAchievements(UUID Player);
 
-    public void setPlayersAchievements(OfflinePlayer player, String achievement);
+    public void setPlayersAchievements(UUID player, String achievement);
 
     public void flush();
 
-    public void clearAchievements(OfflinePlayer player);
+    public void clearAchievements(UUID player);
 
     public void dumpFancy();
     

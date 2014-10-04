@@ -27,4 +27,5 @@ public class SimplePlotter extends Metrics.Plotter {
         this.value = value;
     }
 
+    
 }
