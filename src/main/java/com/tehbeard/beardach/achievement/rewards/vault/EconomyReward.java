@@ -3,7 +3,7 @@ package com.tehbeard.beardach.achievement.rewards.vault;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.spongepowered.api.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.google.gson.annotations.Expose;

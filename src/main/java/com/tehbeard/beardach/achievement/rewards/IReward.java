@@ -1,8 +1,7 @@
 package com.tehbeard.beardach.achievement.rewards;
 
-import org.bukkit.entity.Player;
-
 import com.tehbeard.beardach.datasource.configurable.IConfigurable;
+import org.spongepowered.api.entity.Player;
 
 /**
  * Interface for rewards for a player

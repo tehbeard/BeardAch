@@ -2,7 +2,7 @@ package com.tehbeard.beardach.achievement.triggers.ach;
 
 import java.util.List;
 
-import org.bukkit.entity.Player;
+import org.spongepowered.api.entity.Player;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.BeardAch;

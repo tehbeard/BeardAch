@@ -1,6 +1,6 @@
 package com.tehbeard.beardach.achievement.rewards.player;
 
-import org.bukkit.entity.Player;
+import org.spongepowered.api.entity.Player;
 import org.bukkit.util.Vector;
 
 import com.google.gson.annotations.Expose;

@@ -8,7 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
+import org.spongepowered.api.entity.Player;
 
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;

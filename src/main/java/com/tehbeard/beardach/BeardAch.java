@@ -1,26 +1,5 @@
 package com.tehbeard.beardach;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Scanner;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.Metrics;
-import org.mcstats.Metrics.Graph;
-import org.mcstats.Metrics.Plotter;
-
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementManager;
 import com.tehbeard.beardach.achievement.BeardAchAddonLoader;
@@ -42,23 +21,28 @@ import com.tehbeard.beardach.datasource.NullDataSource;
 import com.tehbeard.beardach.datasource.configurable.IConfigurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorJSON;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardstat.bukkit.BukkitPlugin;
 import com.tehbeard.beardstat.manager.EntityStatManager;
 import com.tehbeard.utils.addons.AddonLoader;
 import com.tehbeard.utils.factory.ConfigurableFactory;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import org.apache.logging.log4j.Logger;
+import org.mcstats.Metrics;
+import org.mcstats.Metrics.Graph;
+import org.mcstats.Metrics.Plotter;
+import org.spongepowered.api.Game;
+import org.spongepowered.api.event.SpongeEventHandler;
+import org.spongepowered.api.event.state.PreInitializationEvent;
+import org.spongepowered.api.plugin.Plugin;
 
-import de.hydrox.bukkit.DroxPerms.DroxPerms;
-import de.hydrox.bukkit.DroxPerms.DroxPermsAPI;
-
-public class BeardAch extends JavaPlugin {
-
-    private static BeardAch self;
-
-    public static BeardAch instance() {
-        if (self == null)
-            throw new IllegalStateException("No referenece to BeardAch found");
-        return self;
-    }
+@Plugin(id = "beardach",name = "BeardAch")
+public class BeardAch {
 
     private AddonLoader<IConfigurable> addonLoader;
     private Metrics metrics;
@@ -66,13 +50,11 @@ public class BeardAch extends JavaPlugin {
     public static int triggersMetric = 0;
     public static int rewardsMetric = 0;
 
-    public static DroxPermsAPI droxAPI = null;
-    private WorldGuardPlugin worldGuard;
     private AchievementManager achievementManager;
 
-    private EditorJSON jsonEditorSettings = new EditorJSON();
+    private final EditorJSON jsonEditorSettings = new EditorJSON();
 
-    private BeardAchListener cuboidListener = new BeardAchListener();
+    private final BeardAchListener cuboidListener = new BeardAchListener();
     private EntityStatManager stats;
 
     private static boolean allowExecRewards = false;
@@ -80,49 +62,42 @@ public class BeardAch extends JavaPlugin {
     public static boolean isAllowExecRewards() {
         return allowExecRewards;
     }
-
-    /**
-     * Load BeardAch
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public void onEnable() {
-        
-        self = this;
-        
-        
-        // Load config
-        
+    
+    private static Logger logger;
+    public static Logger getLogger(){
+        return logger;
+    }
+    
+    private static File configFolder;
+    public static File getDataFolder(){
+        return configFolder;
+    }
+    
+    private static Game game;
+    
+    public static InputStream getResource(String path){
+        return BeardAch.class.getClassLoader().getResourceAsStream(path);
+    }
+    
+    private static Configuration configuration;
+    public static Configuration getConfig(){
+        return configuration;
+    }
+    
+    @SpongeEventHandler
+    public void onEnable(PreInitializationEvent event) {
+        logger = event.getPluginLog(); //TODO - Fix when dependencies work
         getLogger().info("Starting BeardAch");
+        game = event.getGame();
+        //Load config
+        //Set Logger level
         
-        getConfig().options().copyDefaults(true);
-        saveConfig();
-        reloadConfig();
-
-        // Hopefully this pleases Diemex
-        Level level = Level.parse(getConfig().getString("general.loglevel", "INFO"));
-        getLogger().setLevel(level);
-        for (Handler handler : getLogger().getHandlers()) {
-            handler.setLevel(level);
-        }
-
-        allowExecRewards = getConfig().getBoolean("ach.allow-exec-shell-reward", false);
         if (allowExecRewards) {
             getLogger().info("ALERT, SHELL EXEC REWARD ACTIVE, BE CAREFUL WHO YOU GIVE ACCESS TO ACHIEVEMENT DEFINITIONS");
         }
 
-        EnableBeardStat();
 
-        Bukkit.getPluginManager().registerEvents(cuboidListener, this);
-
-        // check DroxPerms
-        DroxPerms droxPerms = (DroxPerms) this.getServer().getPluginManager().getPlugin("DroxPerms");
-        if (droxPerms != null) {
-            droxAPI = droxPerms.getAPI();
-        }
-
-        // check WorldGuard
-        worldGuard = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
+        //Bukkit.getPluginManager().registerEvents(cuboidListener, this);
 
         getLogger().info("Loading Data Adapters");
         ConfigurableFactory<IDataSource, DataSourceDescriptor> dataSourceFactory = new ConfigurableFactory<IDataSource, DataSourceDescriptor>(DataSourceDescriptor.class) {
@@ -138,14 +113,13 @@ public class BeardAch extends JavaPlugin {
         dataSourceFactory.addProduct(GSONDataSource.class);
         dataSourceFactory.addProduct(JDBCAchievementDataSource.class);
 
-        IDataSource db = dataSourceFactory.getProduct(getConfig().getString("ach.database.type", ""));
+        IDataSource db = dataSourceFactory.getProduct(getConfig().dbType);
 
         if (db == null) {
-            self.getLogger().severe("NO SUITABLE DATABASE SELECTED!!");
-            self.getLogger().severe("[DISABLING PLUGIN!!");
+            getLogger().fatal("NO SUITABLE DATABASE SELECTED!!");
+            getLogger().fatal("[DISABLING PLUGIN!!");
 
             // onDisable();
-            setEnabled(false);
             return;
         }
         
@@ -190,90 +164,7 @@ public class BeardAch extends JavaPlugin {
         achievementManager.loadAchievements();
 
         // metrics code
-        if (!getConfig().getBoolean("general.plugin-stats-opt-out", false)) {
-            try {
-                metrics = new Metrics(this);
-
-                // set up custom plotters for custom triggers and rewards
-                SimplePlotter ct = new SimplePlotter("Custom Triggers");
-                SimplePlotter cr = new SimplePlotter("Custom Rewards");
-                ct.set(triggersMetric);
-                cr.set(rewardsMetric);
-                final String bsInstalled = "BeardStat " + (getStats() == null ? "not " : "") + "found";
-                metrics.createGraph("BeardStat found").addPlotter(new Plotter(bsInstalled) {
-
-                    @Override
-                    public int getValue() {
-                        return 1;
-                    }
-
-                });
-                metrics.createGraph("Custom triggers").addPlotter(ct);
-                metrics.createGraph("Custom rewards").addPlotter(cr);
-
-                // total achievements on server
-                SimplePlotter totalAchievments = new SimplePlotter("Total Achievements");
-                totalAchievments.set(achievementManager.getAchievementsList().size());
-
-                // Triggers per achievement
-                Graph triggersGraph = metrics.createGraph("triggers");
-                for (final String trig : AchievementLoader.triggerFactory.getTags()) {
-                    SimplePlotter p = new SimplePlotter(trig + " Trigger");
-
-                    for (Achievement a : achievementManager.getAchievementsList()) {
-                        for (ITrigger t : a.getTrigs()) {
-                            Configurable c = t.getClass().getAnnotation(Configurable.class);
-                            if (c != null) {
-                                if (trig.equals(c.tag())) {
-                                    p.increment();
-                                }
-                            }
-                        }
-                    }
-
-                    triggersGraph.addPlotter(p);
-
-                }
-
-                // Rewards per achievement
-                Graph rewardsGraph = metrics.createGraph("rewards");
-                for (final String reward : AchievementLoader.rewardFactory.getTags()) {
-                    SimplePlotter p = new SimplePlotter(reward + " Reward");
-
-                    for (Achievement a : achievementManager.getAchievementsList()) {
-                        for (IReward r : a.getRewards()) {
-                            Configurable c = r.getClass().getAnnotation(Configurable.class);
-                            if (c != null) {
-                                if (reward.equals(c.tag())) {
-                                    p.increment();
-                                }
-                            }
-                        }
-                    }
-
-                    rewardsGraph.addPlotter(p);
-                }
-
-                DataSourceDescriptor c = db.getClass().getAnnotation(DataSourceDescriptor.class);
-                Graph g = metrics.createGraph("storage system");
-                g.addPlotter(new Plotter(c.tag() + " storage") {
-
-                    @Override
-                    public int getValue() {
-                        return 1;
-                    }
-                });
-
-                metrics.start();
-
-            } catch (Exception e) {
-                getLogger().info("Could not load metrics :(");
-                getLogger().info("Please send the following stack trace to Tehbeard");
-                getLogger().info("=======================");
-                e.printStackTrace();
-                getLogger().info("=======================");
-            }
-
+        if (!getConfig().statsOptOut){
         }
 
         getLogger().info("Starting achievement checker");
@@ -289,11 +180,10 @@ public class BeardAch extends JavaPlugin {
         exportEditor();
 
         // setup events
-        getServer().getPluginManager().registerEvents(getListener(), this);
+        game.getEventManager().register(getListener());
         
-        if(getConfig().getBoolean("ach.add-no-creative-trigger",false)){
+        if(getConfig().noCreativeTrigger){
             getLogger().info("Adding no creative trigger to all achievements");
-            
             for(Achievement ach : achievementManager.getAchievementsList()){
                 ach.addTrigger(new IsGamemodeTrigger(GameMode.CREATIVE, true));
             }
@@ -314,21 +204,10 @@ public class BeardAch extends JavaPlugin {
     /**
      * Unload BeardAch
      */
-    @Override
     public void onDisable() {
 
         achievementManager.flush();
 
-    }
-
-    /**
-     * Handle unfinished commands
-     */
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        sender.sendMessage("COMMAND NOT IMPLEMENTED");
-        return true;
     }
 
     
@@ -337,7 +216,7 @@ public class BeardAch extends JavaPlugin {
         Configurable config = c.getAnnotation(Configurable.class);
         if(desc != null){
             for(String pluginName : desc.dependencies()){
-                if(Bukkit.getPluginManager().getPlugin(pluginName) == null){
+                if(game.getPluginManager().getPlugin(pluginName) == null){
                     getLogger().warning("[" + config.tag() + "] " + config.name() + " depends on " + pluginName + " which is not found, this " + type + " has been disabled. This may cause errors if an achievement is built using this.");
                     return false;
                 }
@@ -391,10 +270,10 @@ public class BeardAch extends JavaPlugin {
      * @param e
      */
     public static void printError(String errMsg, Exception e) {
-        self.getLogger().severe("[ERROR] " + errMsg);
-        self.getLogger().severe("[ERROR] ==Stack trace dump==");
+        getLogger().severe("[ERROR] " + errMsg);
+        getLogger().severe("[ERROR] ==Stack trace dump==");
         e.printStackTrace();
-        self.getLogger().severe("[ERROR] ==Stack trace dump==");
+        getLogger().severe("[ERROR] ==Stack trace dump==");
     }
 
     /**
@@ -404,36 +283,6 @@ public class BeardAch extends JavaPlugin {
      */
     public AchievementManager getAchievementManager() {
         return achievementManager;
-    }
-
-    /**
-     * Try to load BeardStat
-     */
-    private void EnableBeardStat() {
-        BukkitPlugin bs = (BukkitPlugin) Bukkit.getServer().getPluginManager().getPlugin("BeardStat");
-        if (bs != null && bs.isEnabled()) {
-            stats = bs.getStatManager();
-        } else {
-            self.getLogger().severe("[ERROR] " + "BeardStat not installed! stat and statwithin triggers will not function!");
-        }
-    }
-
-    /**
-     * Return WorldGuard instance
-     * 
-     * @return
-     */
-    public WorldGuardPlugin getWorldGuard() {
-        return worldGuard;
-    }
-
-    /**
-     * Returns BeardStat instance
-     * 
-     * @return
-     */
-    public EntityStatManager getStats() {
-        return stats;
     }
 
     public static final int BUFFER_SIZE = 8192;

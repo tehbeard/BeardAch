@@ -1,6 +1,6 @@
 package com.tehbeard.beardach.achievement.triggers.stat;
 
-import org.bukkit.entity.Player;
+import org.spongepowered.api.entity.Player;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.BeardAch;

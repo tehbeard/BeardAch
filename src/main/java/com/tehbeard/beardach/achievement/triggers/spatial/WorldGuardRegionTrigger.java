@@ -2,7 +2,7 @@ package com.tehbeard.beardach.achievement.triggers.spatial;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
+import org.spongepowered.api.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 

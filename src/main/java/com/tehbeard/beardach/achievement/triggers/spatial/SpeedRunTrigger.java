@@ -3,7 +3,7 @@ package com.tehbeard.beardach.achievement.triggers.spatial;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.entity.Player;
+import org.spongepowered.api.entity.Player;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.BeardAch;

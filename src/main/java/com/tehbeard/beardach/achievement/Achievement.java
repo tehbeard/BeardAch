@@ -1,18 +1,12 @@
 package com.tehbeard.beardach.achievement;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
-
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
+import java.util.HashSet;
+import java.util.Set;
+import org.spongepowered.api.entity.Player;
 
 /**
  * Represents an achievement.
@@ -43,8 +37,8 @@ public class Achievement {
     Display broadcast;
     @Expose
     private boolean hidden;
-    private static final Permission exemptAll = new Permission("ach.exempt.*", PermissionDefault.FALSE);
-    private Permission exempt;
+    private static final String exemptAll = "ach.exempt.*";
+    private String exempt;
 
     public boolean isHidden() {
         return hidden;
@@ -57,7 +51,7 @@ public class Achievement {
 
     public boolean postLoad() {
         try {
-            exempt = new Permission("ach.exempt." + slug, PermissionDefault.FALSE);
+            exempt ="ach.exempt." + slug;
             for (ITrigger t : triggers) {
                 t.configure(this);
             }
@@ -69,21 +63,6 @@ public class Achievement {
             e.printStackTrace();
             return false;
         }
-    }
-
-    @Deprecated
-    public Achievement(String slug, String name, String descrip, Display broadcast, boolean hidden) {
-        this.slug = slug;
-        this.name = name;
-        this.descrip = descrip;
-        this.broadcast = broadcast;
-        id = nextId;
-        nextId++;
-        this.hidden = hidden;
-        exempt = new Permission("ach.exempt." + slug, PermissionDefault.FALSE);
-        // Bukkit.getPluginManager().removePermission(this.exempt);
-        // Bukkit.getPluginManager().addPermission(this.exempt);
-
     }
 
     public static void resetId() {

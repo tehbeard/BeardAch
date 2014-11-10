@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 
-import org.bukkit.Location;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;

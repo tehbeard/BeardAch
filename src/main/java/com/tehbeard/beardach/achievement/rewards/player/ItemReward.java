@@ -10,7 +10,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import com.tehbeard.utils.bukkit.misc.ItemSyntax;
 import java.util.HashMap;
-import org.bukkit.entity.Player;
+import org.spongepowered.api.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 

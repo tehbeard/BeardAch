@@ -1,7 +1,7 @@
 package com.tehbeard.beardach.achievement.triggers.player;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.spongepowered.api.entity.Player;
 import org.bukkit.scoreboard.Team;
 
 import com.google.gson.annotations.Expose;
