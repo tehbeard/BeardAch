@@ -2,7 +2,7 @@ package com.tehbeard.beardach.achievement.triggers;
 
 
 
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.annotations.Configurable;

@@ -5,7 +5,7 @@
 package com.tehbeard.beardach.achievement.rewards.player;
 
 import org.bukkit.Sound;
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.achievement.Achievement;

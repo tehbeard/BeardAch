@@ -3,7 +3,7 @@ package com.tehbeard.beardach.achievement.triggers;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 import org.bukkit.event.Listener;
 
 import com.tehbeard.beardach.achievement.Achievement;

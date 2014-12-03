@@ -1,6 +1,6 @@
 package com.tehbeard.beardach.achievement.triggers.env;
 
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.achievement.Achievement;

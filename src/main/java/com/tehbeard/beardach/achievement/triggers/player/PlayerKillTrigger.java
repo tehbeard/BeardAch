@@ -6,7 +6,7 @@ package com.tehbeard.beardach.achievement.triggers.player;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

@@ -9,7 +9,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
 import org.bukkit.Bukkit;
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
