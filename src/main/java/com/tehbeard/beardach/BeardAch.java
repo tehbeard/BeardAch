@@ -1,18 +1,11 @@
 package com.tehbeard.beardach;
 
-import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementManager;
 import com.tehbeard.beardach.achievement.BeardAchAddonLoader;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
-import com.tehbeard.beardach.achievement.triggers.player.IsGamemodeTrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.annotations.DataSourceDescriptor;
-import com.tehbeard.beardach.commands.AchCommand;
-import com.tehbeard.beardach.commands.AchFancyCommand;
-import com.tehbeard.beardach.commands.AchReloadCommand;
-import com.tehbeard.beardach.commands.ExportEditorCommand;
-import com.tehbeard.beardach.commands.TestAchCommand;
 import com.tehbeard.beardach.datasource.AchievementLoader;
 import com.tehbeard.beardach.datasource.GSONDataSource;
 import com.tehbeard.beardach.datasource.IDataSource;
@@ -32,14 +25,15 @@ import java.io.InputStream;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import org.apache.logging.log4j.Logger;
 import org.mcstats.Metrics;
 import org.mcstats.Metrics.Graph;
 import org.mcstats.Metrics.Plotter;
+import org.slf4j.Logger;
 import org.spongepowered.api.Game;
-import org.spongepowered.api.event.SpongeEventHandler;
+import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.util.event.Subscribe;
 
 @Plugin(id = "beardach",name = "BeardAch")
 public class BeardAch {
@@ -54,7 +48,7 @@ public class BeardAch {
 
     private final EditorJSON jsonEditorSettings = new EditorJSON();
 
-    private final BeardAchListener cuboidListener = new BeardAchListener();
+    private final BeardAchListener cuboidListener = new BeardAchListener(this);
     private EntityStatManager stats;
 
     private static boolean allowExecRewards = false;
@@ -84,11 +78,14 @@ public class BeardAch {
         return configuration;
     }
     
-    @SpongeEventHandler
-    public void onEnable(PreInitializationEvent event) {
+    @Subscribe
+    public void preBoot(PreInitializationEvent event) {
         logger = event.getPluginLog(); //TODO - Fix when dependencies work
         getLogger().info("Starting BeardAch");
         game = event.getGame();
+    }
+    @Subscribe
+    public void bootup(InitializationEvent event) {
         //Load config
         //Set Logger level
         
@@ -116,8 +113,8 @@ public class BeardAch {
         IDataSource db = dataSourceFactory.getProduct(getConfig().dbType);
 
         if (db == null) {
-            getLogger().fatal("NO SUITABLE DATABASE SELECTED!!");
-            getLogger().fatal("[DISABLING PLUGIN!!");
+            getLogger().error("NO SUITABLE DATABASE SELECTED!!");
+            getLogger().error("[DISABLING PLUGIN!!");
 
             // onDisable();
             return;
@@ -168,36 +165,37 @@ public class BeardAch {
         }
 
         getLogger().info("Starting achievement checker");
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+        
+        game.getScheduler().runRepeatingTask(game.getPluginManager().fromInstance(this).get(), new Runnable() {
 
             @Override
             public void run() {
                 achievementManager.checkPlayers();
             }
 
-        }, 200L, 200L);
+        }, 200L);
         
         exportEditor();
 
         // setup events
-        game.getEventManager().register(getListener());
+        game.getEventManager().register(this,getListener());
         
-        if(getConfig().noCreativeTrigger){
-            getLogger().info("Adding no creative trigger to all achievements");
-            for(Achievement ach : achievementManager.getAchievementsList()){
-                ach.addTrigger(new IsGamemodeTrigger(GameMode.CREATIVE, true));
-            }
-        }
+//        if(getConfig().noCreativeTrigger){
+//            getLogger().info("Adding no creative trigger to all achievements");
+//            for(Achievement ach : achievementManager.getAchievementsList()){
+//                ach.addTrigger(new IsGamemodeTrigger(GameMode.CREATIVE, true));
+//            }
+//        }
 
         getLogger().info("Loading commands");
         // commands
-
-        getCommand("ach-reload").setExecutor(new AchReloadCommand());
-        getCommand("ach").setExecutor(new AchCommand());
-        getCommand("ach-fancy").setExecutor(new AchFancyCommand());
-        getCommand("ach-export").setExecutor(new ExportEditorCommand());
-        getCommand("testach").setExecutor(new TestAchCommand(achievementManager));
-        getLogger().info("Loaded Version:" + getDescription().getVersion());
+        
+//        getCommand("ach-reload").setExecutor(new AchReloadCommand());
+//        getCommand("ach").setExecutor(new AchCommand());
+//        getCommand("ach-fancy").setExecutor(new AchFancyCommand());
+//        getCommand("ach-export").setExecutor(new ExportEditorCommand());
+//        getCommand("testach").setExecutor(new TestAchCommand(achievementManager));
+        
 
     }
 
@@ -217,7 +215,7 @@ public class BeardAch {
         if(desc != null){
             for(String pluginName : desc.dependencies()){
                 if(game.getPluginManager().getPlugin(pluginName) == null){
-                    getLogger().warning("[" + config.tag() + "] " + config.name() + " depends on " + pluginName + " which is not found, this " + type + " has been disabled. This may cause errors if an achievement is built using this.");
+                    getLogger().warn("[" + config.tag() + "] " + config.name() + " depends on " + pluginName + " which is not found, this " + type + " has been disabled. This may cause errors if an achievement is built using this.");
                     return false;
                 }
             }
@@ -252,14 +250,9 @@ public class BeardAch {
      * @param msg
      * @return
      */
+    @Deprecated
     public static String colorise(String msg) {
 
-        for (int i = 0; i <= 9; i++) {
-            msg = msg.replaceAll("&" + i, ChatColor.getByChar("" + i).toString());
-        }
-        for (char i = 'a'; i <= 'f'; i++) {
-            msg = msg.replaceAll("&" + i, ChatColor.getByChar(i).toString());
-        }
         return msg;
     }
 
@@ -270,10 +263,10 @@ public class BeardAch {
      * @param e
      */
     public static void printError(String errMsg, Exception e) {
-        getLogger().severe("[ERROR] " + errMsg);
-        getLogger().severe("[ERROR] ==Stack trace dump==");
+        getLogger().error("[ERROR] " + errMsg);
+        getLogger().error("[ERROR] ==Stack trace dump==");
         e.printStackTrace();
-        getLogger().severe("[ERROR] ==Stack trace dump==");
+        getLogger().error("[ERROR] ==Stack trace dump==");
     }
 
     /**

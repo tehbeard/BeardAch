@@ -6,7 +6,7 @@ import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import java.util.HashSet;
 import java.util.Set;
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 
 /**
  * Represents an achievement.

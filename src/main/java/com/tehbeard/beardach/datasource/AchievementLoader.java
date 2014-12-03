@@ -23,6 +23,7 @@ import com.tehbeard.beardach.datasource.json.ClassCatalogue;
 import com.tehbeard.beardach.datasource.json.CuboidJSONParser;
 import com.tehbeard.beardach.datasource.json.LocationJSONParser;
 import com.tehbeard.utils.cuboid.Cuboid;
+import org.spongepowered.api.world.Location;
 
 /**
  * Loads achievements from an external Gson file

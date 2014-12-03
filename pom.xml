@@ -13,6 +13,12 @@
 
     <repositories>
         <repository>
+            <id>sponge</id>
+            <name>Spongey Goodness</name>
+            <url>http://repo.spongepowered.org/Sponge/maven/</url>
+        </repository>
+        
+        <repository>
             <id>SK89Q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
@@ -29,66 +35,12 @@
 
 
     <dependencies>
+        <!--Sponge API-->
         <dependency>
             <groupId>org.spongepowered</groupId>
             <artifactId>spongeapi</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.0-beta9</version>
-        </dependency>
-        <!-- BeardUtils -->
-        <dependency>
-            <groupId>com.tehbeard</groupId>
-            <artifactId>utils</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>1.0</version>
             <type>jar</type>
-        </dependency>
-        <!-- Vault -->
-        <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>Vault</artifactId>
-            <version>1.2.16</version>
-        </dependency>
-        
-        <!--        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.7.9-R0.1-SNAPSHOT</version>
-        </dependency>-->
-
-        <!-- Gson: Java to Json conversion -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.2.2</version>
-            <scope>compile</scope>
-        </dependency>
-        <!-- DroxPerms -->
-        <dependency>
-            <groupId>de.hydrox.bukkit</groupId>
-            <artifactId>DroxPerms</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
-        </dependency>
-        <!-- WorldGuard -->
-        <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldguard</artifactId>
-            <version>5.8.1-SNAPSHOT</version>
-        </dependency>
-        <!-- BeardStat -->
-        <dependency>
-            <groupId>com.tehbeard</groupId>
-            <artifactId>BeardStat</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <!-- Annotation parser -->
         <dependency>
@@ -97,13 +49,26 @@
             <version>2.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <!-- Metrics -->
+        <!-- BeardUtils -->
         <dependency>
-            <groupId>org.mcstats.bukkit</groupId>
-            <artifactId>metrics</artifactId>
-            <version>R7</version>
+            <groupId>com.tehbeard</groupId>
+            <artifactId>utils</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <!-- Gson: Java to Json conversion -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.2</version>
             <scope>compile</scope>
         </dependency>
+        <!--END LIBRARY DEPS-->
+        <!-- Vault -->
+        <!-- DroxPerms -->
+        <!-- WorldGuard -->
+        <!-- BeardStat -->
+        <!-- Metrics -->
                 
         
     </dependencies>
