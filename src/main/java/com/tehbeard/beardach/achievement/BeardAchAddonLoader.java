@@ -49,10 +49,7 @@ public class BeardAchAddonLoader extends AddonLoader<IConfigurable> {
             }
 
         } catch (IOException e) {
-            BeardAch.getLogger().error("[ERROR] " + "An I/O error occured while trying to access an addon. " + addon.getName());
-            if (BeardAch.getConfig().getBoolean("general.debug")) {
-                e.printStackTrace();
-            }
+            BeardAch.getLogger().error("[ERROR] " + "An I/O error occured while trying to access an addon. " + addon.getName(),e);
         }
         return classList;
     }
@@ -62,10 +59,8 @@ public class BeardAchAddonLoader extends AddonLoader<IConfigurable> {
     public void makeClass(Class<? extends IConfigurable> classType) {
         if (classType != null) {
             if (ITrigger.class.isAssignableFrom(classType)) {
-                BeardAch.triggersMetric++;
                 BeardAch.addTrigger((Class<? extends ITrigger>) classType);
             } else if (IReward.class.isAssignableFrom(classType)) {
-                BeardAch.rewardsMetric++;
                 BeardAch.addReward((Class<? extends IReward>) classType);
             }
         }

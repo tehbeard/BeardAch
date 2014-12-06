@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Level;
 
 @DataSourceDescriptor(tag = "test", version = "1.0")
 public class NullDataSource implements IDataSource {
@@ -25,7 +24,7 @@ public class NullDataSource implements IDataSource {
 
     @Override
     public void setPlayersAchievements(UUID player, String achievement) {
-        BeardAch.getLogger().log(Level.FINE, "[{0}] stored {1}", new Object[]{player.toString(), achievement});
+        BeardAch.getLogger().debug("[{0}] stored {1}", player.toString(), achievement);
 
     }
 

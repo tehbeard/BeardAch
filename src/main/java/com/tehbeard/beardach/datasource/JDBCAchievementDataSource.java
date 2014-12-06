@@ -4,12 +4,12 @@ import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 import com.tehbeard.beardach.annotations.DataSourceDescriptor;
-import com.tehbeard.beardstat.utils.uuid.MojangWebAPI;
 import com.tehbeard.utils.sql.DBVersion;
 import com.tehbeard.utils.sql.JDBCDataSource;
 import com.tehbeard.utils.sql.PostUpgrade;
 import com.tehbeard.utils.sql.SQLFragment;
 import com.tehbeard.utils.sql.SQLInitScript;
+import com.tehbeard.utils.uuid.MojangWebAPI;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * 
+ *
  * @author James
  */
 @DataSourceDescriptor(tag = "mysql", version = "2.1")
@@ -56,7 +56,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     private PreparedStatement setPlayerName;
 
     public JDBCAchievementDataSource(Properties cfg) throws ClassNotFoundException, IOException, SQLException {
-        super("sql", "com.mysql.jdbc.Driver", BeardAch.getLogger());
+        super("sql", "com.mysql.jdbc.Driver", Logger.getGlobal());
         setConnectionUrl(String.format("jdbc:mysql://%s/%s", cfg.get("host"), cfg.get("database")));
         connectionProperties.put("user", cfg.get("username"));
         connectionProperties.put("password", cfg.get("password"));
@@ -69,17 +69,13 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
         //v1 to v2 check
         ResultSet rs = connection.getMetaData().getTables(connection.getCatalog(), null, cfg.get("table_prefix") + "_entity", null);
-        if(!rs.next()){
+        if (!rs.next()) {
             getKeyValStore().set(KEY_SCHEMA_VERSION, "1");
             BeardAch.getLogger().info("No entity table detected, performing upgrade.");
             doMigration(2);
         }
 
        //TODO: Add migration check here.
-
-
-
-
 //TODO : Fire off a Sql Flush on a async thread every so often.
 //        Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch, new Runnable() {
 //            @Override
@@ -92,7 +88,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 //        }, 2400L, 2400L);
     }
 
-    protected synchronized HashMap<String, HashSet<AchievementPlayerLink>> getWriteCache(){
+    protected synchronized HashMap<String, HashSet<AchievementPlayerLink>> getWriteCache() {
         return writeCache;
     }
 
@@ -105,9 +101,10 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     public Set<AchievementPlayerLink> getPlayersAchievements(UUID player) {
         HashSet<AchievementPlayerLink> c = new HashSet<AchievementPlayerLink>();
         try {
-            if (!checkConnection())
+            if (!checkConnection()) {
                 throw new SQLException("Failed to reconnect to server, aborting load");
-            prepGetAllPlayerAch.setString(1, player.toString().replaceAll("-",""));
+            }
+            prepGetAllPlayerAch.setString(1, player.toString().replaceAll("-", ""));
             ResultSet rs = prepGetAllPlayerAch.executeQuery();
 
             while (rs.next()) {
@@ -115,8 +112,8 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
             }
             rs.close();
-            if (writeCache.containsKey(player.toString().replaceAll("-",""))) {
-                c.addAll(writeCache.get(player.toString().replaceAll("-","")));
+            if (writeCache.containsKey(player.toString().replaceAll("-", ""))) {
+                c.addAll(writeCache.get(player.toString().replaceAll("-", "")));
             }
             return c;
         } catch (SQLException e) {
@@ -127,10 +124,10 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
     @Override
     public synchronized void setPlayersAchievements(UUID player, String achievements) {
-        if (!writeCache.containsKey(player.toString().replaceAll("-",""))) {
-            writeCache.put(player.toString().replaceAll("-",""), new HashSet<AchievementPlayerLink>());
+        if (!writeCache.containsKey(player.toString().replaceAll("-", ""))) {
+            writeCache.put(player.toString().replaceAll("-", ""), new HashSet<AchievementPlayerLink>());
         }
-        writeCache.get(player.toString().replaceAll("-","")).add(new AchievementPlayerLink(achievements, new Timestamp(new java.util.Date().getTime())));
+        writeCache.get(player.toString().replaceAll("-", "")).add(new AchievementPlayerLink(achievements, new Timestamp(new java.util.Date().getTime())));
     }
 
     @Override
@@ -141,7 +138,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
     @Override
     public void clearAchievements(UUID player) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -189,13 +186,12 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
         @Override
         public void run() {
-            if (BeardAch.getConfig().getBoolean("general.verbose", false)) {
-                BeardAch.getLogger().fine("Flushing to database");
-            }
+            BeardAch.getLogger().debug("Flushing to database");
             try {
                 // if connection is closed, attempt to rebuild connection
-                if (!checkConnection())
+                if (!checkConnection()) {
                     throw new SQLException("Failed to reconnect to SQL server");
+                }
 
                 ping.execute();
 
@@ -211,12 +207,11 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
                 }
                 prepAddPlayerAch.executeBatch();
                 prepAddPlayerAch.clearBatch();
-                if (BeardAch.getConfig().getBoolean("general.verbose", false)) {
-                    BeardAch.getLogger().fine("Flushed to database");
-                }
+                BeardAch.getLogger().debug("Flushed to database");
+
 
             } catch (SQLException e) {
-                BeardAch.getLogger().fine("Connection Could not be established, attempting to reconnect...");
+                BeardAch.getLogger().debug("Connection Could not be established, attempting to reconnect...");
                 e.printStackTrace();
                 try {
                     setup();
@@ -233,7 +228,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         try {
             ResultSet rs = getPlayerList.executeQuery();
             List<String> players = new ArrayList<String>();
-            while(rs.next()){
+            while (rs.next()) {
                 players.add(rs.getString(1));
             }
             return players;
@@ -249,23 +244,24 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
      */
     @DBVersion(2)
     @PostUpgrade
-    public void _doPostUUIDFix(){
+    public void _doPostUUIDFix() {
+        Map<String, UUID> mapping;
         try {
-            for(Entry<String, UUID> entry: MojangWebAPI.lookupUUIDS(getPlayers()).entrySet()){
+            mapping = MojangWebAPI.lookupUUIDS(getPlayers());
+        } catch (Exception ex) {
+            BeardAch.getLogger().error("Failure during fetching name=>uuid",ex);
+            return;
+        }
+        for (Entry<String, UUID> entry : mapping.entrySet()) {
+            try {
                 setPlayerUUID.setString(1, entry.getValue().toString().replaceAll("-", ""));
                 setPlayerUUID.setString(2, entry.getKey());
                 setPlayerUUID.executeUpdate();
-                
+            } catch (Exception e) {
+                BeardAch.getLogger().error("Failure during post fix for player " + entry.getKey(), e);
             }
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
 
-
-
-
     }
-
 
 }

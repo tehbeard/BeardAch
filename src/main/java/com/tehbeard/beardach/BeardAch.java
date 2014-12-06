@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
+import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.permission.PermissionService;
 import org.spongepowered.api.util.event.Subscribe;
@@ -193,17 +194,12 @@ public class BeardAch {
 
     }
 
-    /**
-     * Unload BeardAch
-     */
-    public void onDisable() {
-
+    public void shutdown(ServerStoppingEvent event) {
         achievementManager.flush();
-
     }
 
     
-    private boolean hasDependencies(Class<?> c,String type){
+    private static boolean hasDependencies(Class<?> c,String type){
         ComponentHelpDescription desc = c.getAnnotation(ComponentHelpDescription.class);
         Configurable config = c.getAnnotation(Configurable.class);
         if(desc != null){
@@ -221,7 +217,7 @@ public class BeardAch {
      * 
      * @param trigger
      */
-    public void addTrigger(Class<? extends ITrigger> trigger) {
+    public static void addTrigger(Class<? extends ITrigger> trigger) {
         if(!hasDependencies(trigger,"trigger")){return;}
         AchievementLoader.triggerFactory.addProduct(trigger);
         jsonEditorSettings.addTrigger(trigger);
@@ -232,22 +228,10 @@ public class BeardAch {
      * 
      * @param reward
      */
-    public void addReward(Class<? extends IReward> reward) {
+    public static void addReward(Class<? extends IReward> reward) {
         if(!hasDependencies(reward,"reward")){return;}
         AchievementLoader.rewardFactory.addProduct(reward);
         jsonEditorSettings.addReward(reward);
-    }
-
-    /**
-     * Colorises strings containing &0-f
-     * 
-     * @param msg
-     * @return
-     */
-    @Deprecated
-    public static String colorise(String msg) {
-
-        return msg;
     }
 
     /**
@@ -258,8 +242,7 @@ public class BeardAch {
      */
     public static void printError(String errMsg, Exception e) {
         getLogger().error("[ERROR] " + errMsg);
-        getLogger().error("[ERROR] ==Stack trace dump==");
-        e.printStackTrace();
+        getLogger().error("[ERROR] ==Stack trace dump==",e);
         getLogger().error("[ERROR] ==Stack trace dump==");
     }
 
