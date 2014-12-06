@@ -38,7 +38,7 @@ public class AchCountTrigger implements ITrigger {
     @Override
     public boolean checkAchievement(Player player) {
         // if player has an achievement
-        List<AchievementPlayerLink> achs = BeardAch.instance().getAchievementManager().getAchievements(player.getUniqueId());
+        List<AchievementPlayerLink> achs = BeardAch.getAchievementManager().getAchievements(player.getUniqueId());
         int count = 0;
         if (achs != null) {
             for (AchievementPlayerLink a : achs) {

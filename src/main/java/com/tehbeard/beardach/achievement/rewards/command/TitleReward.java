@@ -1,7 +1,7 @@
 package com.tehbeard.beardach.achievement.rewards.command;
 
 import org.bukkit.Bukkit;
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.achievement.Achievement;

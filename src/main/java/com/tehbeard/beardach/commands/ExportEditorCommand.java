@@ -12,7 +12,7 @@ public class ExportEditorCommand implements CommandExecutor{
     public boolean onCommand(CommandSender sender, Command cmd, String cmdlbl, String[] args) {
         if(!sender.isOp()){return true;}
         sender.sendMessage("Exporting BeardAch editor");
-        BeardAch.instance().exportEditor();
+        BeardAch.exportEditor();
         return true;
     }
 

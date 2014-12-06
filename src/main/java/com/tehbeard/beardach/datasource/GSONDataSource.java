@@ -31,7 +31,7 @@ public class GSONDataSource implements IDataSource {
     private final File dbFile;
 
     public GSONDataSource() throws FileNotFoundException, IOException {
-        dbFile = new File(BeardAch.instance().getDataFolder(), "database.json");
+        dbFile = new File(BeardAch.getDataFolder(), "database.json");
         dbFile.createNewFile();
         data = gson.fromJson(new JsonReader(new FileReader(dbFile)), new TypeToken<Map<String, Set<AchievementPlayerLink>>>() {
         }.getType());

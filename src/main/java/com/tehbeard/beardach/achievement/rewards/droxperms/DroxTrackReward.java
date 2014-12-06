@@ -1,6 +1,6 @@
 package com.tehbeard.beardach.achievement.rewards.droxperms;
 
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.BeardAch;
@@ -21,7 +21,7 @@ public class DroxTrackReward implements IReward {
     public void giveReward(Player player) {
         if (BeardAch.droxAPI != null) {
             BeardAch.droxAPI.promotePlayer(player.getName(), track);
-            BeardAch.instance().getLogger().fine("Played Promoted");
+            BeardAch.getLogger().fine("Played Promoted");
         }
     }
 

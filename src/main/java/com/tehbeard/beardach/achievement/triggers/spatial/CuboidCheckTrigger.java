@@ -50,7 +50,7 @@ public class CuboidCheckTrigger implements ITrigger {
     @Override
     public void configure(Achievement ach) {
         // Register with cuboid listener
-        BeardAch.instance().getListener().add(cuboid, ach);
+        BeardAch.getListener().add(cuboid, ach);
     }
 
 }

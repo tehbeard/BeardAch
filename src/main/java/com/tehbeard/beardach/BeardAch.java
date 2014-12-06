@@ -14,7 +14,6 @@ import com.tehbeard.beardach.datasource.NullDataSource;
 import com.tehbeard.beardach.datasource.configurable.IConfigurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorJSON;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardstat.manager.EntityStatManager;
 import com.tehbeard.utils.addons.AddonLoader;
 import com.tehbeard.utils.factory.ConfigurableFactory;
 import java.io.BufferedOutputStream;
@@ -25,38 +24,26 @@ import java.io.InputStream;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import org.mcstats.Metrics;
-import org.mcstats.Metrics.Graph;
-import org.mcstats.Metrics.Plotter;
+
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.service.permission.PermissionService;
 import org.spongepowered.api.util.event.Subscribe;
 
-@Plugin(id = "beardach",name = "BeardAch")
+@Plugin(id = "beardach",name = "BeardAch",version = "1.0.0")
 public class BeardAch {
-
-    private AddonLoader<IConfigurable> addonLoader;
-    private Metrics metrics;
-
-    public static int triggersMetric = 0;
-    public static int rewardsMetric = 0;
-
-    private AchievementManager achievementManager;
-
-    private final EditorJSON jsonEditorSettings = new EditorJSON();
-
-    private final BeardAchListener cuboidListener = new BeardAchListener(this);
-    private EntityStatManager stats;
-
-    private static boolean allowExecRewards = false;
-
-    public static boolean isAllowExecRewards() {
-        return allowExecRewards;
-    }
     
+    private static AddonLoader<IConfigurable> addonLoader;
+
+    private static AchievementManager achievementManager;
+
+    private static final EditorJSON jsonEditorSettings = new EditorJSON();
+
+    private static final BeardAchListener cuboidListener = new BeardAchListener();
+
     private static Logger logger;
     public static Logger getLogger(){
         return logger;
@@ -68,6 +55,13 @@ public class BeardAch {
     }
     
     private static Game game;
+    public static Game getGame(){
+        return game;
+    }
+    
+    public static PermissionService getPermissions(){
+        return getGame().getServiceManager().provide(PermissionService.class).orNull();
+    }
     
     public static InputStream getResource(String path){
         return BeardAch.class.getClassLoader().getResourceAsStream(path);
@@ -89,7 +83,7 @@ public class BeardAch {
         //Load config
         //Set Logger level
         
-        if (allowExecRewards) {
+        if (configuration.allowExecRewards) {
             getLogger().info("ALERT, SHELL EXEC REWARD ACTIVE, BE CAREFUL WHO YOU GIVE ACCESS TO ACHIEVEMENT DEFINITIONS");
         }
 
@@ -274,7 +268,7 @@ public class BeardAch {
      * 
      * @return
      */
-    public AchievementManager getAchievementManager() {
+    public static AchievementManager getAchievementManager() {
         return achievementManager;
     }
 

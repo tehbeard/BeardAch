@@ -56,14 +56,14 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
     private PreparedStatement setPlayerName;
 
     public JDBCAchievementDataSource(Properties cfg) throws ClassNotFoundException, IOException, SQLException {
-        super("sql", "com.mysql.jdbc.Driver", BeardAch.instance().getLogger());
+        super("sql", "com.mysql.jdbc.Driver", BeardAch.getLogger());
         setConnectionUrl(String.format("jdbc:mysql://%s/%s", cfg.get("host"), cfg.get("database")));
         connectionProperties.put("user", cfg.get("username"));
         connectionProperties.put("password", cfg.get("password"));
         setTag("PREFIX", (String) cfg.get("table_prefix"));
 
         Properties p = new Properties();
-        p.load(BeardAch.instance().getResource("sql/sql.properties"));
+        p.load(BeardAch.getResource("sql/sql.properties"));
         setSqlFragments(p);
         setup();
 
@@ -71,7 +71,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
         ResultSet rs = connection.getMetaData().getTables(connection.getCatalog(), null, cfg.get("table_prefix") + "_entity", null);
         if(!rs.next()){
             getKeyValStore().set(KEY_SCHEMA_VERSION, "1");
-            BeardAch.instance().getLogger().info("No entity table detected, performing upgrade.");
+            BeardAch.getLogger().info("No entity table detected, performing upgrade.");
             doMigration(2);
         }
 
@@ -81,12 +81,12 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
 
 //TODO : Fire off a Sql Flush on a async thread every so often.
-//        Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch.instance(), new Runnable() {
+//        Bukkit.getScheduler().scheduleSyncRepeatingTask(BeardAch, new Runnable() {
 //            @Override
 //            public void run() {
 //                Runnable r = new SqlFlusher(getWriteCache());
 //                writeCache = new HashMap<String, HashSet<AchievementPlayerLink>>();
-//                Bukkit.getScheduler().runTaskAsynchronously(BeardAch.instance(), r);
+//                Bukkit.getScheduler().runTaskAsynchronously(BeardAch, r);
 //            }
 //
 //        }, 2400L, 2400L);
@@ -152,7 +152,7 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
             fancyStat.clearBatch();
 
-            for (Achievement ach : BeardAch.instance().getAchievementManager().getAchievementsList()) {
+            for (Achievement ach : BeardAch.getAchievementManager().getAchievementsList()) {
                 fancyStat.setString(1, ach.getSlug());
                 fancyStat.setString(2, ach.getName());
                 fancyStat.setString(3, ach.getDescrip());
@@ -189,8 +189,8 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
 
         @Override
         public void run() {
-            if (BeardAch.instance().getConfig().getBoolean("general.verbose", false)) {
-                BeardAch.instance().getLogger().fine("Flushing to database");
+            if (BeardAch.getConfig().getBoolean("general.verbose", false)) {
+                BeardAch.getLogger().fine("Flushing to database");
             }
             try {
                 // if connection is closed, attempt to rebuild connection
@@ -211,12 +211,12 @@ public class JDBCAchievementDataSource extends JDBCDataSource implements IDataSo
                 }
                 prepAddPlayerAch.executeBatch();
                 prepAddPlayerAch.clearBatch();
-                if (BeardAch.instance().getConfig().getBoolean("general.verbose", false)) {
-                    BeardAch.instance().getLogger().fine("Flushed to database");
+                if (BeardAch.getConfig().getBoolean("general.verbose", false)) {
+                    BeardAch.getLogger().fine("Flushed to database");
                 }
 
             } catch (SQLException e) {
-                BeardAch.instance().getLogger().fine("Connection Could not be established, attempting to reconnect...");
+                BeardAch.getLogger().fine("Connection Could not be established, attempting to reconnect...");
                 e.printStackTrace();
                 try {
                     setup();

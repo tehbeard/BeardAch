@@ -7,9 +7,6 @@ import com.tehbeard.beardach.achievement.triggers.spatial.CuboidCheckTrigger;
 import com.tehbeard.beardach.achievement.triggers.spatial.SpeedRunTrigger;
 import com.tehbeard.beardach.datasource.AchievementLoader;
 import com.tehbeard.beardach.datasource.IDataSource;
-import com.tehbeard.beardach.datasource.configurable.RunnableTime;
-import com.tehbeard.utils.cuboid.ChunkCache;
-import com.tehbeard.utils.cuboid.Cuboid;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
+import org.spongepowered.api.entity.player.Player;
 
 /**
  * Manages the link between achievements and players
@@ -127,7 +125,7 @@ public class AchievementManager {
             // cycle all loaded achievements
             buildPlayerCheckCache(player);
         } else {
-            BeardAch.instance().getLogger().log(Level.SEVERE, "Failed to load for {0}", player);
+            BeardAch.getLogger().error("Failed to load for {0}", player);
         }
 
     }
@@ -170,17 +168,17 @@ public class AchievementManager {
         // for each achievement
         boolean keepChecking = true;
         while (keepChecking) {
-            BeardAch.instance().getLogger().finer("Beggining Check player loop");
+            BeardAch.getLogger().trace("Beggining Check player loop");
             keepChecking = false;
 
             for (Achievement ach : playerCheckCache.keySet()) {
 
-                BeardAch.instance().getLogger().log(Level.FINER, "ach:{0}", ach.getName());
+                BeardAch.getLogger().trace("ach:{0}", ach.getName());
                 // loop all players, check them.
                 keepChecking = checkAchievement(ach);
 
             }
-            BeardAch.instance().getLogger().finer("Ending Check player loop");
+            BeardAch.getLogger().trace("Ending Check player loop");
         }
 
     }
@@ -242,24 +240,24 @@ public class AchievementManager {
 
         Iterator<UUID> it = getListOfPlayersToCheck(ach).iterator();
         boolean keepChecking = false;
-        //TODO : Get players, check achievement, return if it succeeded
-//        Player p;
-//        while (it.hasNext()) {
-//            UUID ply = it.next();
-//
-//            p = Bukkit.getPlayer(ply);
-//            if (p instanceof Player) {
-//                BeardAch.instance().getLogger().log(Level.FINE, "Player {0} online", ply);
-//                // check for bleep bloop
-//                if(ach.checkAchievement(p)){
-//                    keepChecking = true;
-//                }
-//
-//            } else {
-//                it.remove();
-//            }
-//
-//        }
+//        TODO : Get players, check achievement, return if it succeeded
+        Player p;
+        while (it.hasNext()) {
+            UUID ply = it.next();
+
+            p = BeardAch.getGame().getPlayer(ply).orNull();
+            if (p instanceof Player) {
+                BeardAch.getLogger().debug("Player {0} online", ply);
+                // check for bleep bloop
+                if(ach.checkAchievement(p)){
+                    keepChecking = true;
+                }
+
+            } else {
+                it.remove();
+            }
+
+        }
         return keepChecking;
     }
 

@@ -2,7 +2,7 @@ package com.tehbeard.beardach.achievement.rewards.player;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 

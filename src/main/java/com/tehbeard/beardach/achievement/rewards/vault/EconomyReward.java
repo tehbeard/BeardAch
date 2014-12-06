@@ -38,7 +38,7 @@ public class EconomyReward implements IReward {
         if (setupEconomy()) {
             economy.depositPlayer(player.getName(), amount);
         } else {
-            BeardAch.instance().getLogger().severe("[ERROR] " + "Economy reward was not given because economy support did not load");
+            BeardAch.getLogger().severe("[ERROR] " + "Economy reward was not given because economy support did not load");
         }
     }
 

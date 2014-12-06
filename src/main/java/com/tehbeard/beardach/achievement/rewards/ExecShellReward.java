@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 
 @ComponentHelpDescription(description = "Executes a shell command, this reward IS DANGEROUS, AND MUST BE ENABLED VIA CONFIG (DEFAULTS TO OFF)")
 @Configurable(tag = "execshell", name = "Execute shell command")
@@ -40,7 +40,7 @@ public class ExecShellReward implements IReward {
             if (BeardAch.isAllowExecRewards()) {
                 Runtime.getRuntime().exec(cmd.replaceAll("<PLAYER>", player.getName()), envVars, workDirFile);
             } else {
-                BeardAch.instance().getLogger().warning("ExecShell reward called but disabled in config");
+                BeardAch.getLogger().warning("ExecShell reward called but disabled in config");
             }
         } catch (IOException ex) {
             Logger.getLogger(ExecShellReward.class.getName()).log(Level.SEVERE, null, ex);

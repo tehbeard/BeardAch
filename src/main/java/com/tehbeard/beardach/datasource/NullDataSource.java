@@ -14,7 +14,7 @@ import java.util.logging.Level;
 public class NullDataSource implements IDataSource {
 
     public NullDataSource() {
-        BeardAch.instance().getLogger().info("Loading Null DataSource");
+        BeardAch.getLogger().info("Loading Null DataSource");
     }
 
     @Override
@@ -25,7 +25,7 @@ public class NullDataSource implements IDataSource {
 
     @Override
     public void setPlayersAchievements(UUID player, String achievement) {
-        BeardAch.instance().getLogger().log(Level.FINE, "[{0}] stored {1}", new Object[]{player.toString(), achievement});
+        BeardAch.getLogger().log(Level.FINE, "[{0}] stored {1}", new Object[]{player.toString(), achievement});
 
     }
 

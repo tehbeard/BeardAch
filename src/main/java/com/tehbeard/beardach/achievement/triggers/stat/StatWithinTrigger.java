@@ -62,7 +62,7 @@ public class StatWithinTrigger implements ITrigger {
     @Override
     public void configure(Achievement ach) {
         if (manager == null) {
-            manager = BeardAch.instance().getStats();
+            manager = BeardAch.getStats();
         }
 
     }

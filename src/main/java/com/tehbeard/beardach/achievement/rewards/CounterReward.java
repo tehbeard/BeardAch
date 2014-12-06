@@ -1,6 +1,6 @@
 package com.tehbeard.beardach.achievement.rewards;
 
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.BeardAch;
@@ -31,14 +31,14 @@ public class CounterReward implements IReward {
         if (manager != null) {
             manager.getPlayer(player.getUniqueId()).getValue().getStat(DOMAIN, player.getWorld().getName(), "achCount", name).incrementStat(count);
         } else {
-            BeardAch.instance().getLogger().severe("[ERROR] " + "BeardStat not loaded, reward not given!");
+            BeardAch.getLogger().severe("[ERROR] " + "BeardStat not loaded, reward not given!");
         }
     }
 
     @Override
     public void configure(Achievement ach) {
         if (manager == null) {
-            manager = BeardAch.instance().getStats();
+            manager = BeardAch.getStats();
         }
     }
 }

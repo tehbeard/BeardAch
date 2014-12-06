@@ -54,7 +54,7 @@ public class StatCheckTrigger implements ITrigger {
             return manager.getPlayer(player.getUniqueId()).getValue().getStats(domain, world, cat, stat).getValue() >= threshold;
         else {
             if (!warningLock) {
-                BeardAch.instance().getLogger().warning("BeardStat was not loaded, stat check failed.");
+                BeardAch.getLogger().warning("BeardStat was not loaded, stat check failed.");
                 warningLock = true;
             }
         }
@@ -64,7 +64,7 @@ public class StatCheckTrigger implements ITrigger {
     @Override
     public void configure(Achievement ach) {
         if (manager == null) {
-            manager = BeardAch.instance().getStats();
+            manager = BeardAch.getStats();
         }
 
     }

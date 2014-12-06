@@ -31,7 +31,7 @@ public class BeardAchAddonLoader extends AddonLoader<IConfigurable> {
             ZipEntry manifest = addon.getEntry("bundle.properties");
 
             if (manifest != null) {
-                BeardAch.instance().getLogger().fine("Addon manifest located");
+                BeardAch.getLogger().debug("Addon manifest located");
 
                 Scanner scanner;
 
@@ -40,7 +40,7 @@ public class BeardAchAddonLoader extends AddonLoader<IConfigurable> {
                     String ln = scanner.nextLine();
                     String[] l = ln.split("=");
                     if (l[0].equalsIgnoreCase("name")) {
-                        BeardAch.instance().getLogger().log(Level.FINE, "Loading addon {0}", l[1]);
+                        BeardAch.getLogger().debug("Loading addon {0}", l[1]);
                     } else if (l[0].equalsIgnoreCase("class")) {
                         classList.add(l[1]);
                     }
@@ -49,8 +49,8 @@ public class BeardAchAddonLoader extends AddonLoader<IConfigurable> {
             }
 
         } catch (IOException e) {
-            BeardAch.instance().getLogger().severe("[ERROR] " + "An I/O error occured while trying to access an addon. " + addon.getName());
-            if (BeardAch.instance().getConfig().getBoolean("general.debug")) {
+            BeardAch.getLogger().error("[ERROR] " + "An I/O error occured while trying to access an addon. " + addon.getName());
+            if (BeardAch.getConfig().getBoolean("general.debug")) {
                 e.printStackTrace();
             }
         }
@@ -63,10 +63,10 @@ public class BeardAchAddonLoader extends AddonLoader<IConfigurable> {
         if (classType != null) {
             if (ITrigger.class.isAssignableFrom(classType)) {
                 BeardAch.triggersMetric++;
-                BeardAch.instance().addTrigger((Class<? extends ITrigger>) classType);
+                BeardAch.addTrigger((Class<? extends ITrigger>) classType);
             } else if (IReward.class.isAssignableFrom(classType)) {
                 BeardAch.rewardsMetric++;
-                BeardAch.instance().addReward((Class<? extends IReward>) classType);
+                BeardAch.addReward((Class<? extends IReward>) classType);
             }
         }
     }

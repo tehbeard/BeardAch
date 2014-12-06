@@ -13,10 +13,8 @@ import org.spongepowered.api.util.event.Subscribe;
 public class BeardAchListener {
 
     private ChunkCache<Achievement> cache = new ChunkCache<Achievement>();
-    private BeardAch self;
 
-    BeardAchListener(BeardAch self) {
-        this.self = self;
+    BeardAchListener() {
     }
 
     public void add(Cuboid cuboid, Achievement ach) {
@@ -29,7 +27,7 @@ public class BeardAchListener {
     
     @Subscribe
     public void onPlayerJoin(PlayerJoinEvent event) {
-        self.getAchievementManager().loadPlayersAchievements(event.getPlayer().getUniqueId());
+        BeardAch.getAchievementManager().loadPlayersAchievements(event.getPlayer().getUniqueId());
     }
     @Subscribe(ignoreCancelled = true)
     public void onMove(PlayerMoveEvent event) {

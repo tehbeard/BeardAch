@@ -64,15 +64,15 @@ public class AchievementLoader {
 
         try {
             // Load and create file
-            File file = new File(BeardAch.instance().getDataFolder(), "ach.json");
+            File file = new File(BeardAch.getDataFolder(), "ach.json");
             file.createNewFile();
             List<Achievement> achievements = loadAchievementsFromJSONFile(file);
             if(achievements == null){
-                BeardAch.instance().getLogger().severe("Failed to load achievements from " + file);
+                BeardAch.getLogger().error("Failed to load achievements from " + file);
             }
             processAchievements(achievements);
 
-            File achDir = new File(BeardAch.instance().getDataFolder(), "config");
+            File achDir = new File(BeardAch.getDataFolder(), "config");
             if (achDir.isDirectory() && achDir.exists()) {
                 for (String f : achDir.list(new FilenameFilter() {
 
@@ -83,7 +83,7 @@ public class AchievementLoader {
                 })) {
                     achievements = loadAchievementsFromJSONFile(new File(achDir, f));
                     if(achievements == null){
-                        BeardAch.instance().getLogger().severe("Failed to load achievements from " + file);
+                        BeardAch.getLogger().error("Failed to load achievements from " + file);
                     }
                     processAchievements(achievements);
                 }
@@ -110,10 +110,10 @@ public class AchievementLoader {
             // successful
             for (Achievement a : achievements) {
                 if (a.postLoad()) {
-                    BeardAch.instance().getLogger().log(Level.CONFIG, "Starting achievement {0}", a.getName());
-                    BeardAch.instance().getAchievementManager().addAchievement(a);
+                    BeardAch.getLogger().debug("Starting achievement {0}", a.getName());
+                    BeardAch.getAchievementManager().addAchievement(a);
                 } else {
-                    BeardAch.instance().getLogger().warning("Could not load " + a.getName());
+                    BeardAch.getLogger().warn("Could not load " + a.getName());
                 }
             }
         }

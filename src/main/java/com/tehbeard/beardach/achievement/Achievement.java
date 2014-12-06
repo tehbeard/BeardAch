@@ -7,6 +7,9 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import java.util.HashSet;
 import java.util.Set;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.text.format.TextStyle;
+import org.spongepowered.api.text.message.Messages;
 
 /**
  * Represents an achievement.
@@ -116,39 +119,47 @@ public class Achievement {
     }
 
     public void unlock(Player player) {
-        if (!player.hasPermission(exemptAll) && !player.hasPermission(exempt)) {
+        if (!BeardAch.getPermissions().login(player).isPermitted(exemptAll) && !BeardAch.getPermissions().login(player).isPermitted(exempt)) {
             for (IReward reward : rewards) {
                 if(reward == null){continue;}
                 reward.giveReward(player);
             }
         } else {
-            BeardAch.instance().getLogger().info(player.getName() + " Exempt from achievement rewards.");
+            BeardAch.getLogger().info(player.getName() + " Exempt from achievement rewards.");
         }
 
         switch (broadcast) {
             case BROADCAST: {
-                Bukkit.broadcastMessage(BeardAch.colorise(BeardAch.instance().getConfig().getString("ach.msg.broadcast", ChatColor.AQUA + "<PLAYER> " + ChatColor.WHITE + "Unlocked: " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name)
-                        .replace("<PLAYER>", player.getName())));
-                player.sendMessage(ChatColor.BLUE + descrip);
+                BeardAch.getGame().broadcastMessage(
+                Messages.builder(player.getName()).color(TextColors.AQUA).append(
+                        Messages.builder("Unlocked: ").color(TextColors.WHITE).build(),
+                        Messages.builder(name).color(TextColors.GOLD).build()
+                ).build()
+                );
+                
+                player.sendMessage(Messages.builder(descrip).color(TextColors.BLUE).build());
 
             }
                 break;
 
             case PERSON: {
-                player.sendMessage(BeardAch.colorise(BeardAch.instance().getConfig().getString("ach.msg.person", "Achievement Get! " + ChatColor.GOLD + "<ACH>").replace("<ACH>", name).replace("<PLAYER>", player.getName())));
-                player.sendMessage(ChatColor.BLUE + descrip);
+                player.sendMessage(
+                        Messages.builder("Achievement Get! ").append(
+                                Messages.builder(name).color(TextColors.GOLD).build()
+                        ).build());
+                player.sendMessage(Messages.builder(descrip).color(TextColors.BLUE).build());
             }
                 break;
             case NONE:
-                BeardAch.instance().getLogger().fine("Achievement get! " + player + " , " + name);
+                BeardAch.getLogger().info("Achievement get! " + player + " , " + name);
                 break;
             default:
                 break;
 
         }
 
-        BeardAch.instance().getAchievementManager().makeAchievementLink(player.getUniqueId(), slug);
-        BeardAch.instance().getAchievementManager().removeCheck(this, player.getUniqueId());
+        BeardAch.getAchievementManager().makeAchievementLink(player.getUniqueId(), slug);
+        BeardAch.getAchievementManager().removeCheck(this, player.getUniqueId());
     }
 
     public Set<ITrigger> getTrigs() {
@@ -160,6 +171,6 @@ public class Achievement {
     }
 
     public boolean has(Player player) {
-        return BeardAch.instance().getAchievementManager().playerHas(player.getUniqueId(), slug);
+        return BeardAch.getAchievementManager().playerHas(player.getUniqueId(), slug);
     }
 }

@@ -1,6 +1,6 @@
 package com.tehbeard.beardach.achievement.rewards.droxperms;
 
-import org.spongepowered.api.entity.Player;
+import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.BeardAch;
@@ -22,7 +22,7 @@ public class DroxSubGroupReward implements IReward {
     public void giveReward(Player player) {
         if (BeardAch.droxAPI != null) {
             BeardAch.droxAPI.addPlayerSubgroup(player.getName(), subgroup);
-            BeardAch.instance().getLogger().fine("Played added to subgroup");
+            BeardAch.getLogger().fine("Played added to subgroup");
         }
     }
 

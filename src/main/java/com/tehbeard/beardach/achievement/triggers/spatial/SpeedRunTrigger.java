@@ -106,8 +106,8 @@ public class SpeedRunTrigger implements ITrigger {
 
     @Override
     public void configure(Achievement ach) {
-        BeardAch.instance().getListener().add(startCuboid, ach);
-        BeardAch.instance().getListener().add(endCuboid, ach);
+        BeardAch.getListener().add(startCuboid, ach);
+        BeardAch.getListener().add(endCuboid, ach);
     }
 
 }

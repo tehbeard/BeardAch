@@ -23,7 +23,7 @@ public class AchCommand implements TabExecutor {
             Player player = (Player) sender;
             if (args.length == 0) {
 
-                List<AchievementPlayerLink> list = BeardAch.instance().getAchievementManager().getAchievements(player.getUniqueId());
+                List<AchievementPlayerLink> list = BeardAch.getAchievementManager().getAchievements(player.getUniqueId());
                 AchievementPlayerLink a;
 
                 int pageSize = Math.min(5, list.size());
@@ -33,7 +33,7 @@ public class AchCommand implements TabExecutor {
                     a = list.get(i);
                     player.sendMessage(ChatColor.WHITE + "#" + a.getAch().getId() + " " + ChatColor.GOLD + a.getAch().getName() + " - " + ChatColor.WHITE + a.getDate().toString());
                 }
-                String msg = BeardAch.instance().getConfig().getString("ach.msg.ach", null);
+                String msg = BeardAch.getConfig().getString("ach.msg.ach", null);
 
                 if (msg != null) {
                     player.sendMessage(msg);
@@ -46,7 +46,7 @@ public class AchCommand implements TabExecutor {
                 }
                 String searchString = ach.toString().trim();
                 Achievement a = null;
-                Iterator<Achievement> it = BeardAch.instance().getAchievementManager().getLoadedAchievements().iterator();
+                Iterator<Achievement> it = BeardAch.getAchievementManager().getLoadedAchievements().iterator();
                 while(it.hasNext()){
                     a = it.next();
                     if(a.getName().equalsIgnoreCase(searchString)){
@@ -59,7 +59,7 @@ public class AchCommand implements TabExecutor {
                     player.sendMessage(ChatColor.BLUE + a.getDescrip());
 
                     // if they have unlocked it, tell them when they did
-                    for (AchievementPlayerLink aLink : BeardAch.instance().getAchievementManager().getAchievements(player.getUniqueId())) {
+                    for (AchievementPlayerLink aLink : BeardAch.getAchievementManager().getAchievements(player.getUniqueId())) {
                         if (aLink.getSlug().equals(a.getSlug())) {
                             player.sendMessage(ChatColor.WHITE + "You Unlocked this: " + aLink.getDate().toString());
                         }
@@ -84,7 +84,7 @@ public class AchCommand implements TabExecutor {
             ach.append(s + " ");
         }
         List<String> l = new ArrayList<String>();
-        for(Achievement a : BeardAch.instance().getAchievementManager().getAchievementsList()){
+        for(Achievement a : BeardAch.getAchievementManager().getAchievementsList()){
             if(a.getName().contains(ach.toString().trim())){l.add(a.getName());}
         }
         return l;
