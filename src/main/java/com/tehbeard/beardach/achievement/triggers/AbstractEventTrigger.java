@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spongepowered.api.entity.player.Player;
-import org.bukkit.event.Listener;
 
 import com.tehbeard.beardach.achievement.Achievement;
 
@@ -21,7 +20,7 @@ import com.tehbeard.beardach.achievement.Achievement;
  * @author James
  * 
  */
-public abstract class AbstractEventTrigger implements ITrigger, Listener {
+public abstract class AbstractEventTrigger implements ITrigger {
 
     private Set<String> active = new HashSet<String>();
     private Achievement achievement;
