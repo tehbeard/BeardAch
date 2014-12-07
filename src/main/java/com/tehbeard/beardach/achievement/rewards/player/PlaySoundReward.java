@@ -4,7 +4,6 @@
  */
 package com.tehbeard.beardach.achievement.rewards.player;
 
-import org.bukkit.Sound;
 import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
@@ -15,6 +14,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import org.spongepowered.api.effect.Sound;
 
 /**
  * 
@@ -41,7 +41,7 @@ public class PlaySoundReward implements IReward {
 
     @Override
     public void giveReward(Player player) {
-        player.playSound(player.getLocation(), sound, volume, pitch);
+        player.playSound(sound,player.getLocation().getPosition() , volume, pitch);
     }
 
     @Override

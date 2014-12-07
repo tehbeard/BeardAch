@@ -19,14 +19,12 @@ public class DroxTrackReward implements IReward {
 
     @Override
     public void giveReward(Player player) {
-        if (BeardAch.droxAPI != null) {
-            BeardAch.droxAPI.promotePlayer(player.getName(), track);
-            BeardAch.getLogger().fine("Played Promoted");
-        }
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
     @Override
     public void configure(Achievement ach) {
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
 
     }
 

@@ -1,32 +1,13 @@
 package com.tehbeard.beardach.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.BlockCommandSender;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-
-import com.tehbeard.beardach.achievement.AchievementManager;
-
 /**
  * Command for testing via command block if a player has unlocked an achievement
  * @author James
  *
  */
-public class TestAchCommand implements CommandExecutor {
+public class TestAchCommand {
 
-    private final AchievementManager manager;
-    
-    
-    /**
-     * @param manager
-     */
-    public TestAchCommand(AchievementManager manager) {
-        this.manager = manager;
-    }
-
-
-    @Override
+    @Command(aliases = "help", desc = "Displays help information")
     public boolean onCommand(CommandSender sender, Command cmd, String cmdLbl, String[] args) {
         if(args.length != 2){
             sender.sendMessage("Must supply a player and achievement Id to check");

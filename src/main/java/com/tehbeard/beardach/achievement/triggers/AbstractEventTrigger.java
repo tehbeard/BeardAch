@@ -22,7 +22,7 @@ import com.tehbeard.beardach.achievement.Achievement;
  */
 public abstract class AbstractEventTrigger implements ITrigger {
 
-    private Set<String> active = new HashSet<String>();
+    private final Set<String> active = new HashSet<String>();
     private Achievement achievement;
 
     @Override

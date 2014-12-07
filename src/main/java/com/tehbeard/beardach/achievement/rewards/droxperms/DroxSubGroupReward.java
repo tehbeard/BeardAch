@@ -20,15 +20,12 @@ public class DroxSubGroupReward implements IReward {
 
     @Override
     public void giveReward(Player player) {
-        if (BeardAch.droxAPI != null) {
-            BeardAch.droxAPI.addPlayerSubgroup(player.getName(), subgroup);
-            BeardAch.getLogger().fine("Played added to subgroup");
-        }
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
     @Override
     public void configure(Achievement ach) {
-
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
 }

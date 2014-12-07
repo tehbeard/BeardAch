@@ -8,11 +8,9 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
-import com.tehbeard.utils.bukkit.misc.ItemSyntax;
 import java.util.HashMap;
 import org.spongepowered.api.entity.player.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+import org.spongepowered.api.item.inventory.ItemStack;
 
 @ComponentHelpDescription(description = "Gives a player an item, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a>")
 @Configurable(name = "Item reward", tag = "item")
@@ -36,30 +34,32 @@ public class ItemReward implements IReward {
 
     @Override
     public void configure(Achievement ach) {
-        item = ItemSyntax.getItem(itemStr);
+        //item = ItemSyntax.getItem(itemStr);
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
     @Override
     public void giveReward(Player player) {
 
-        ItemStack is = putIn(player.getInventory(), item);
-
-        if (tryEnderChest) {
-            is = putIn(player.getEnderChest(), is);
-        }
-
-        if (tryDrop && is != null) {
-            player.getWorld().dropItemNaturally(player.getLocation(), is);
-        }
+//        ItemStack is = putIn(player.getInventory(), item);
+//
+//        if (tryEnderChest) {
+//            is = putIn(player.getEnderChest(), is);
+//        }
+//
+//        if (tryDrop && is != null) {
+//            player.getWorld().dropItemNaturally(player.getLocation(), is);
+//        }
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
-    private ItemStack putIn(Inventory inv, ItemStack is) {
-        if (is == null)
-            return null;
-        HashMap<Integer, ItemStack> res = inv.addItem(is);
-        if (res.size() > 0)
-            return res.get(0);
-        return null;
-    }
+//    private ItemStack putIn(Inventory inv, ItemStack is) {
+//        if (is == null)
+//            return null;
+//        HashMap<Integer, ItemStack> res = inv.addItem(is);
+//        if (res.size() > 0)
+//            return res.get(0);
+//        return null;
+//    }
 
 }

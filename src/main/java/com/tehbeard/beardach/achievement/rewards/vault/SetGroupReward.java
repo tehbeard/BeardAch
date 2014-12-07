@@ -1,10 +1,6 @@
 package com.tehbeard.beardach.achievement.rewards.vault;
 
-import net.milkbowl.vault.permission.Permission;
-
-import org.bukkit.Bukkit;
 import org.spongepowered.api.entity.player.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.achievement.Achievement;
@@ -18,32 +14,18 @@ import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 @Configurable(tag = "vaultaddgroup", name = "(Vault) add/set group")
 public class SetGroupReward implements IReward {
 
-    private static Permission perms;
     @Expose
     @EditorField(alias = "Group to add")
     private String group = "";
 
-    private static Boolean setupPerms() {
-        if (perms == null) {
-            RegisteredServiceProvider<Permission> economyProvider = Bukkit.getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
-            if (economyProvider != null) {
-                perms = economyProvider.getProvider();
-            }
-        }
-        return perms != null;
-    }
-
     @Override
     public void giveReward(Player player) {
-        if (setupPerms()) {
-            perms.playerAddGroup(player, group);
-        }
+        
     }
 
     @Override
     public void configure(Achievement ach) {
-        setupPerms();
-
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
 }

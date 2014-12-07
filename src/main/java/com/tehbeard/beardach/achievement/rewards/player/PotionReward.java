@@ -1,9 +1,6 @@
 package com.tehbeard.beardach.achievement.rewards.player;
 
 import org.spongepowered.api.entity.player.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.achievement.Achievement;
@@ -12,6 +9,8 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import org.spongepowered.api.potion.PotionEffect;
+import org.spongepowered.api.potion.PotionEffectType;
 
 @ComponentHelpDescription(description = "Applies a potion effect to a player")
 @Configurable(tag = "potion", name = "Apply potion effect")
@@ -19,7 +18,8 @@ public class PotionReward implements IReward {
 
     @Expose
     @EditorField(alias = "Potion Type", type = EditorFieldType.selection, options = "org.bukkit.potion.PotionType")
-    private PotionType potionType;
+    private PotionEffectType potionType;
+    
     @Expose
     @EditorField(alias = "Amplifier")
     private int amplifier;
@@ -42,9 +42,7 @@ public class PotionReward implements IReward {
 
     @Override
     public void configure(Achievement ach) {
-        PotionEffectType type = PotionEffectType.getByName(potionType.name());
-        effect = new PotionEffect(type, duration, amplifier, ambient);
-
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
 }

@@ -1,6 +1,5 @@
 package com.tehbeard.beardach.achievement.rewards.player;
 
-import org.bukkit.World;
 import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
@@ -11,6 +10,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import org.spongepowered.api.world.World;
 
 @ComponentHelpDescription(description = "Throws a lightning bolt at the player")
 @Configurable(tag = "lightning", name = "Strike lightning on player")
@@ -24,16 +24,17 @@ public class LightningReward implements IReward {
     @Override
     public void giveReward(Player player) {
         World world = player.getWorld();
-        if (real) {
-            world.strikeLightning(player.getLocation());
-        } else {
-            world.strikeLightningEffect(player.getLocation());
-        }
-
+//        if (real) {
+//            world.strikeLightning(player.getLocation());
+//        } else {
+//            world.strikeLightningEffect(player.getLocation());
+//        }
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
     @Override
     public void configure(Achievement ach) {
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
 }

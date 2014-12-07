@@ -1,6 +1,5 @@
 package com.tehbeard.beardach.achievement.triggers.player;
 
-import org.bukkit.GameMode;
 import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
@@ -11,6 +10,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import org.spongepowered.api.entity.player.gamemode.GameMode;
 
 /**
  * Checks if a player is an OP
@@ -43,7 +43,8 @@ public class IsGamemodeTrigger implements ITrigger {
 
     @Override
     public boolean checkAchievement(Player player) {
-        return (player.getGameMode() == mode) != inverse;
+        //return (player.getGamemode() == mode) != inverse;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override

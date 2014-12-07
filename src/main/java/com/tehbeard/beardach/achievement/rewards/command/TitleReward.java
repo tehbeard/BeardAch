@@ -1,6 +1,5 @@
 package com.tehbeard.beardach.achievement.rewards.command;
 
-import org.bukkit.Bukkit;
 import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
@@ -11,6 +10,10 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.text.message.Messages;
+import org.spongepowered.api.text.title.Title;
+import org.spongepowered.api.text.title.Titles;
 
 @ComponentHelpDescription(description = "Sends a player a /title message")
 @Configurable(tag = "title", name = "Display /Title")
@@ -52,23 +55,30 @@ public class TitleReward implements IReward {
     @EditorField(alias = "Fade out time",type = EditorFieldType.number,min = 0,max=120)
     private int fadeOut = 1;
 
-    private static final String jsonTemplate = "{color:%s,text:\"%s\"}";
+    private Title title = null;
+    
     @Override
     public void giveReward(Player player) {
-
-        String comm = "title " + player.getName() + " ";
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), comm + "reset");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), comm + "times " + fadeIn + " " + stayTime + " "+ fadeOut);
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), comm + "subtitle " + String.format(jsonTemplate, subtitleColor,subtitleText));
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), comm + "title " + String.format(jsonTemplate, titleColor,titleText));
+        player.sendTitle(title);
     }
 
     @Override
     public void configure(Achievement ach) {
-        //Bump fade times from seconds to ticks
-        fadeIn *=20;
-        stayTime *=20;
-        fadeOut *=20;
+        title = Titles
+                .builder()
+                .reset()
+                .fadeIn(fadeIn*20)
+                .stay(stayTime*20)
+                .fadeOut(fadeOut*20)
+                .title(Messages.builder(titleText)
+                        .color(TextColors.valueOf(titleColor).or(TextColors.WHITE))
+                        .build()
+                )
+                .subtitle(Messages.builder(subtitleText)
+                        .color(TextColors.valueOf(subtitleColor).or(TextColors.WHITE))
+                        .build()
+                )
+                .build();
     }
 
 }

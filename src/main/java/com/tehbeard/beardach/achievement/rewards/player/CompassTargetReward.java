@@ -1,6 +1,5 @@
 package com.tehbeard.beardach.achievement.rewards.player;
 
-import org.bukkit.Location;
 import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
@@ -10,6 +9,7 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import org.spongepowered.api.world.Location;
 
 @ComponentHelpDescription(description = "Sets the player's compass target to new location")
 @Configurable(tag = "compass", name = "set compass target")
@@ -21,12 +21,14 @@ public class CompassTargetReward implements IReward {
 
     @Override
     public void giveReward(Player player) {
-        player.setCompassTarget(l);
+        //player.setCompassTarget(l);
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
 
     }
 
     @Override
     public void configure(Achievement ach) {
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
 }

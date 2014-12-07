@@ -1,6 +1,5 @@
 package com.tehbeard.beardach.achievement.rewards.player;
 
-import org.bukkit.World;
 import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
@@ -27,11 +26,13 @@ public class ExplodeReward implements IReward {
 
     @Override
     public void giveReward(Player player) {
-        World world = player.getWorld();
-        world.createExplosion(player.getLocation(), power, doFire);
+//        World world = player.getWorld();
+//        world.createExplosion(player.getLocation(), power, doFire);
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
     @Override
     public void configure(Achievement ach) {
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 }

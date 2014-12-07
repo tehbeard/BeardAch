@@ -1,9 +1,12 @@
 package com.tehbeard.beardach;
 
+import com.google.common.base.Optional;
+import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementManager;
 import com.tehbeard.beardach.achievement.BeardAchAddonLoader;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
+import com.tehbeard.beardach.achievement.triggers.player.IsGamemodeTrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.annotations.DataSourceDescriptor;
 import com.tehbeard.beardach.datasource.AchievementLoader;
@@ -27,11 +30,16 @@ import java.util.zip.ZipInputStream;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
+import org.spongepowered.api.entity.player.gamemode.GameMode;
+import org.spongepowered.api.entity.player.gamemode.GameModes;
 import org.spongepowered.api.event.state.InitializationEvent;
+import org.spongepowered.api.event.state.PostInitializationEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
+import org.spongepowered.api.event.state.ServerStoppedEvent;
 import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.permission.PermissionService;
+import org.spongepowered.api.service.scheduler.RepeatingTask;
 import org.spongepowered.api.util.event.Subscribe;
 
 @Plugin(id = "beardach",name = "BeardAch",version = "1.0.0")
@@ -150,37 +158,9 @@ public class BeardAch {
 
         getLogger().info("Loading addons");
         addonLoader.loadAddons();
-
-        getLogger().info("Loading Achievements");
-
-        achievementManager.loadAchievements();
-
-        // metrics code
-        if (!getConfig().statsOptOut){
-        }
-
-        getLogger().info("Starting achievement checker");
         
-        game.getScheduler().runRepeatingTask(game.getPluginManager().fromInstance(this).get(), new Runnable() {
-
-            @Override
-            public void run() {
-                achievementManager.checkPlayers();
-            }
-
-        }, 200L);
-        
-        exportEditor();
-
         // setup events
         game.getEventManager().register(this,getListener());
-        
-//        if(getConfig().noCreativeTrigger){
-//            getLogger().info("Adding no creative trigger to all achievements");
-//            for(Achievement ach : achievementManager.getAchievementsList()){
-//                ach.addTrigger(new IsGamemodeTrigger(GameMode.CREATIVE, true));
-//            }
-//        }
 
         getLogger().info("Loading commands");
         // commands
@@ -193,8 +173,34 @@ public class BeardAch {
         
 
     }
+    
+    public void postBoot(PostInitializationEvent event){
+        
+        
+        getLogger().info("Loading Achievements");
+        achievementManager.loadAchievements();
+        
+        if(getConfig().noCreativeTrigger){
+            getLogger().info("Adding no creative trigger to all achievements");
+            for(Achievement ach : achievementManager.getAchievementsList()){
+                ach.addTrigger(new IsGamemodeTrigger(GameModes.CREATIVE, true));
+            }
+        }
+        
+        getLogger().info("Starting achievement checker");
+        game.getScheduler().runRepeatingTask(game.getPluginManager().fromInstance(this).get(), new Runnable() {
+            @Override
+            public void run() {
+                achievementManager.checkPlayers();
+            }
 
-    public void shutdown(ServerStoppingEvent event) {
+        }, 200L);
+        
+        exportEditor();
+
+    }
+
+    public void shutdown(ServerStoppedEvent event) {
         achievementManager.flush();
     }
 
@@ -257,7 +263,7 @@ public class BeardAch {
 
     public static final int BUFFER_SIZE = 8192;
 
-    public void exportEditor() {
+    public static void exportEditor() {
         
         getLogger().info("Writing editor settings");
         new File(getDataFolder(), "editor").mkdirs();
@@ -306,7 +312,7 @@ public class BeardAch {
         }
     }
 
-    public BeardAchListener getListener() {
+    public static BeardAchListener getListener() {
         return cuboidListener;
     }
 
