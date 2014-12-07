@@ -27,18 +27,19 @@ public class xpReward implements IReward {
 
     @Override
     public void giveReward(Player player) {
-        player.giveExp(xp);
-        if(xpLevels != 0){
-          int newXpLevel = player.getLevel() - xpLevels;
-          if(newXpLevel >= 0){
-              player.setLevel(newXpLevel);
-          }
-        }
+//        player.giveExp(xp);
+//        if(xpLevels != 0){
+//          int newXpLevel = player.getLevel() - xpLevels;
+//          if(newXpLevel >= 0){
+//              player.setLevel(newXpLevel);
+//          }
+//        }
         
     }
 
     @Override
     public void configure(Achievement ach) {
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
 }

@@ -26,12 +26,13 @@ public class TimeTrigger implements ITrigger {
 
     @Override
     public boolean checkAchievement(Player p) {
-        Long t = p.getWorld().getTime();
+        Long t = 0L;//p.getWorld().
         return after < before ? after < t && before > t : after < t || before > t;
     }
 
     @Override
     public void configure(Achievement ach) {
+        throw new UnsupportedOperationException("NOT IMPLEMENTED");
     }
 
 }
