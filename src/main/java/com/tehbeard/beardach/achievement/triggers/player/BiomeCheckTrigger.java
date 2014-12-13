@@ -1,6 +1,5 @@
 package com.tehbeard.beardach.achievement.triggers.player;
 
-import org.bukkit.block.Biome;
 import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
@@ -11,6 +10,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import org.spongepowered.api.world.biome.BiomeType;
 
 /**
  * Checks if a player has a permission node
@@ -25,11 +25,11 @@ public class BiomeCheckTrigger implements ITrigger {
     @ComponentValueDescription(value = "Biome to check for")
     @Expose
     @EditorField(alias = "Biome", type = EditorFieldType.selection, options = "org.bukkit.block.Biome")
-    Biome biome;
+    BiomeType biome;
 
     @Override
     public boolean checkAchievement(Player player) {
-        return player.getWorld().getBiome(player.getLocation().getBlockX(), player.getLocation().getBlockX()).equals(biome);
+        return player.getLocation().getExtent().getBiome(player.getLocation().getPosition()).getType().equals(biome);
     }
 
     @Override

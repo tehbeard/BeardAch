@@ -13,8 +13,8 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
-import com.tehbeard.utils.bukkit.BukkitUtils;
 import com.tehbeard.utils.cuboid.Cuboid;
+import com.tehbeard.utils.sponge.SpongeUtils;
 
 /**
  * Checks if a players is in a cuboid
@@ -40,7 +40,7 @@ public class CuboidCheckTrigger implements ITrigger {
         // if player has stat
         // if(player.getWorld().getName().equals(world)){
 
-        return cuboid.isInside(BukkitUtils.fromLocation(player.getLocation()));
+        return cuboid.isInside(SpongeUtils.vectorToVec3(player.getLocation().getPosition()));
     }
 
     public ArrayList<String> getCache() {

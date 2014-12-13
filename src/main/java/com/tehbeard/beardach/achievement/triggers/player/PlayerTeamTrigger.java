@@ -1,8 +1,6 @@
 package com.tehbeard.beardach.achievement.triggers.player;
 
-import org.bukkit.Bukkit;
 import org.spongepowered.api.entity.player.Player;
-import org.bukkit.scoreboard.Team;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.achievement.Achievement;
@@ -33,7 +31,7 @@ public class PlayerTeamTrigger implements ITrigger {
 
     @Override
     public boolean checkAchievement(Player player) {
-        Team team = (useMain ? Bukkit.getScoreboardManager().getMainScoreboard() : player.getScoreboard()).getPlayerTeam(player);
+        Team team = null; //(useMain ? Bukkit.getScoreboardManager().getMainScoreboard() : player.getScoreboard()).getPlayerTeam(player);
         if (team == null)
             return false;
         return team.getName().equals(name);
