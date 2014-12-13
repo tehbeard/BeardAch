@@ -44,9 +44,9 @@
         </dependency>
         <!-- Annotation parser -->
         <dependency>
-            <groupId>tehbeard.annotate</groupId>
-            <artifactId>annotate</artifactId>
-            <version>3.0-SNAPSHOT</version>
+            <groupId>tehbeard.beardach</groupId>
+            <artifactId>buildtools</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <!-- BeardUtils -->
@@ -198,7 +198,7 @@
                 </executions>
                 <configuration>
                     <processors>
-                        <processor>com.tehbeard.annotations.ConfigurableAnnotationProcessor</processor>
+                        <processor>com.tehbeard.beardach.build.ConfigurableAnnotationProcessor</processor>
                     </processors>
                 </configuration>
             </plugin>
