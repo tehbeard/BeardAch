@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.spongepowered.api.entity.player.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
+
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.BeardAch;
@@ -17,10 +13,10 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
-import com.tehbeard.utils.bukkit.BukkitUtils;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import com.tehbeard.utils.cuboid.Cuboid;
+import org.spongepowered.api.entity.player.Player;
 
 /**
  * Checks if a players is in a cuboid for a specified amount of time
@@ -28,15 +24,15 @@ import com.tehbeard.utils.cuboid.Cuboid;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Player stays in an area for a certain amount of time. Timer resets when a player walks out the area",categories = "spatial")
+@ComponentDescription(description = "Player stays in an area for a certain amount of time. Timer resets when a player walks out the area",categories = "spatial")
 @Configurable(tag = "koth", name = "King of the hill")
-public class CuboidKingOfTheHillTrigger implements ITrigger, Listener {
+public class CuboidKingOfTheHillTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "Area player must be inside of")
+    @ComponentFieldDescription(value = "Area player must be inside of")
     @Expose
     @EditorField(alias = "cuboid", type = EditorFieldType.cuboid)
     private Cuboid cuboid = new Cuboid();
-    @ComponentValueDescription(value = "Time inside area")
+    @ComponentFieldDescription(value = "Time inside area")
     @Expose
     @EditorField(alias = "Time inside hill(seconds)")
     private int time = 0;

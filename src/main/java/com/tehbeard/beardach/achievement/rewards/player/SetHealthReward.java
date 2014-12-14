@@ -7,9 +7,9 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 
-@ComponentHelpDescription(description = "Sets the players health to certain value")
+@ComponentDescription(description = "Sets the players health to certain value")
 @Configurable(tag = "sethealth", name = "Heal player")
 public class SetHealthReward implements IReward {
 

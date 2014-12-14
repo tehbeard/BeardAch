@@ -15,16 +15,10 @@ public class HelpEntry {
     public String[] dependencies = {"none"};
     public String[] categories= {};
     public List<HelpFieldEntry> fields = new ArrayList<HelpFieldEntry>();
-    /**
-     * @param id
-     * @param name
-     * @param description
-     * @param dependencies
-     * @param fields
-     */
+
     public HelpEntry(Class<?> _class) {
         Configurable cfg = _class.getAnnotation(Configurable.class);
-        ComponentHelpDescription helpDesc = _class.getAnnotation(ComponentHelpDescription.class);
+        ComponentDescription helpDesc = _class.getAnnotation(ComponentDescription.class);
         if(cfg == null || helpDesc == null){throw new IllegalArgumentException();}
         name = cfg.name();
         description = helpDesc.description();
@@ -32,7 +26,7 @@ public class HelpEntry {
         categories = helpDesc.categories();
         for(Field f : _class.getDeclaredFields()){
             EditorField ff = f.getAnnotation(EditorField.class);
-            ComponentValueDescription v = f.getAnnotation(ComponentValueDescription.class);
+            ComponentFieldDescription v = f.getAnnotation(ComponentFieldDescription.class);
             if(v == ff){continue;}
             fields.add(new HelpFieldEntry(ff.alias(), v != null ? v.value() : ""));
         }

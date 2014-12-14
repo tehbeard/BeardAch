@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(value = ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ComponentValueDescription {
+public @interface ComponentFieldDescription {
     String value();
 }

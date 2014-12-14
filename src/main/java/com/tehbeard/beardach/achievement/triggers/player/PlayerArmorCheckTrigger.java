@@ -10,25 +10,25 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import com.tehbeard.utils.bukkit.misc.ItemSyntax;
 
-@ComponentHelpDescription(description = "Checks player is wearing an item, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a>",categories ={"inventory","player"})
+@ComponentDescription(description = "Checks player is wearing an item, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a>",categories ={"inventory","player"})
 @Configurable(name = "wearingitem", tag = "wearitem")
 public class PlayerArmorCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "Item stack to look for in an armor slot")
+    @ComponentFieldDescription(value = "Item stack to look for in an armor slot")
     @Expose
     @EditorField(alias = "Item String (CraftBook item syntax)", type = EditorFieldType.text)
     private String itemStr;
 
-    @ComponentValueDescription(value = "Whether to ignore the durability (damage) of the item")
+    @ComponentFieldDescription(value = "Whether to ignore the durability (damage) of the item")
     @Expose
     @EditorField(alias = "Ignore durability values", type = EditorFieldType.bool)
     private boolean ignoreDurability = false;
 
-    @ComponentValueDescription(value = "Ignore metadata such as enchantments, lore etc")
+    @ComponentFieldDescription(value = "Ignore metadata such as enchantments, lore etc")
     @Expose
     @EditorField(alias = "Ignore metadata (Enchantments, Lore)", type = EditorFieldType.bool)
     private boolean ignoreMetadata = false;

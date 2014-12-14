@@ -8,8 +8,8 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import com.tehbeard.beardstat.manager.EntityStatManager;
 
 /**
@@ -18,31 +18,31 @@ import com.tehbeard.beardstat.manager.EntityStatManager;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Triggers if statistic is between two values",dependencies="BeardStat",categories = "stat")
+@ComponentDescription(description = "Triggers if statistic is between two values",dependencies="BeardStat",categories = "stat")
 @Configurable(tag = "statwithin", name = "Stat within boundaries")
 public class StatWithinTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "domain to check, for the regular stats use default as the value")
+    @ComponentFieldDescription(value = "domain to check, for the regular stats use default as the value")
     @Expose
     @EditorField(alias = "Domain")
     String domain = "default";
-    @ComponentValueDescription(value = "World to check stats for (* matches all worlds)")
+    @ComponentFieldDescription(value = "World to check stats for (* matches all worlds)")
     @Expose
     @EditorField(alias = "World")
     String world = "*";
-    @ComponentValueDescription(value = "statistic category to check")
+    @ComponentFieldDescription(value = "statistic category to check")
     @Expose
     @EditorField(alias = "Category")
     String cat;
-    @ComponentValueDescription(value = "Statistic name to check")
+    @ComponentFieldDescription(value = "Statistic name to check")
     @Expose
     @EditorField(alias = "Statistic")
     String stat;
-    @ComponentValueDescription(value = "Threshold statistic must equal or greater than")
+    @ComponentFieldDescription(value = "Threshold statistic must equal or greater than")
     @Expose
     @EditorField(alias = "Lower bound threshold")
     int lowerThreshold;
-    @ComponentValueDescription(value = "Threshold statistic must equal or be less than")
+    @ComponentFieldDescription(value = "Threshold statistic must equal or be less than")
     @Expose
     @EditorField(alias = "Upper bound threshold")
     int upperThreshold;

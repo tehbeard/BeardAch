@@ -14,18 +14,18 @@ import com.tehbeard.beardach.achievement.triggers.AbstractEventTrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
 /**
  * 
  * @author James
  */
-@ComponentHelpDescription(description = "fires when killed by specific damage type",categories ={"evented","player"})
+@ComponentDescription(description = "fires when killed by specific damage type",categories ={"evented","player"})
 @Configurable(name = "Killed by damage", tag = "deathtype")
 public class PlayerDeathByTypeTrigger extends AbstractEventTrigger {
 
-    @ComponentValueDescription(value = "Damage type that killed the player")
+    @ComponentFieldDescription(value = "Damage type that killed the player")
     @Expose
     @EditorField(alias = "Damage type", type = EditorFieldType.selection, options = "org.bukkit.event.entity.EntityDamageEvent$DamageCause")
     private DamageCause cause;

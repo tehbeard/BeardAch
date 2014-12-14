@@ -8,8 +8,8 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import org.spongepowered.api.entity.player.gamemode.GameMode;
 
 /**
@@ -18,7 +18,7 @@ import org.spongepowered.api.entity.player.gamemode.GameMode;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Is the player in a certain gamemode",categories ={"player"})
+@ComponentDescription(description = "Is the player in a certain gamemode",categories ={"player"})
 @Configurable(tag = "isgamemode", name = "is player in a certain gamemode")
 public class IsGamemodeTrigger implements ITrigger {
     
@@ -31,12 +31,12 @@ public class IsGamemodeTrigger implements ITrigger {
         this.inverse = inverse;
     }
 
-    @ComponentValueDescription(value = "Invert this trigger to be NOT in this gamemode")
+    @ComponentFieldDescription(value = "Invert this trigger to be NOT in this gamemode")
     @Expose
     @EditorField(alias = "Invert (must NOT be in this mode)",type=EditorFieldType.bool)
     boolean inverse;
     
-    @ComponentValueDescription(value = "Invert this trigger to be NOT in this gamemode")
+    @ComponentFieldDescription(value = "Invert this trigger to be NOT in this gamemode")
     @Expose
     @EditorField(alias = "Gamemode to check",type=EditorFieldType.selection,options="org.bukkit.GameMode")
     GameMode mode;

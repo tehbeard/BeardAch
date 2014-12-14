@@ -16,14 +16,14 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
 @Configurable(tag = "interact", name = "Click block at location")
-@ComponentHelpDescription(description = "Player clicks a block",categories = "spatial")
+@ComponentDescription(description = "Player clicks a block",categories = "spatial")
 public class InteractTrigger implements ITrigger, Listener {
 
-    @ComponentValueDescription(value = "Block location to be clicked")
+    @ComponentFieldDescription(value = "Block location to be clicked")
     @Expose
     @EditorField(alias = "Block to interact", type = EditorFieldType.location)
     private Location l;

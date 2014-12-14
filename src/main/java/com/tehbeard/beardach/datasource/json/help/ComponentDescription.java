@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(value = ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ComponentHelpDescription {
+public @interface ComponentDescription {
     String description();
     String[] dependencies() default {};
     String[] categories() default {};

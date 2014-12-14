@@ -6,7 +6,7 @@ import org.spongepowered.api.entity.player.Player;
 
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.annotations.Configurable;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 
 /**
  * Always false
@@ -14,7 +14,7 @@ import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Locks an achievement ensuring it cannot be triggered")
+@ComponentDescription(description = "Locks an achievement ensuring it cannot be triggered")
 @Configurable(tag = "locked", name = "Lock this achievement")
 public class LockedTrigger implements ITrigger {
 

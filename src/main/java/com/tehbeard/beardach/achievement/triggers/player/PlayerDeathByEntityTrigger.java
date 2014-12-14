@@ -20,18 +20,18 @@ import com.tehbeard.beardach.achievement.triggers.AbstractEventTrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
 /**
  * 
  * @author James
  */
-@ComponentHelpDescription(description = "fires when killed by a specific entity",categories ={"evented","player"})
+@ComponentDescription(description = "fires when killed by a specific entity",categories ={"evented","player"})
 @Configurable(name = "Killed by entity", tag = "deathentity")
 public class PlayerDeathByEntityTrigger extends AbstractEventTrigger {
 
-    @ComponentValueDescription(value = "Entity type to kill player")
+    @ComponentFieldDescription(value = "Entity type to kill player")
     @Expose
     @EditorField(alias = "Entity", type = EditorFieldType.selection, options = "org.bukkit.entity.EntityType")
     private EntityType entityType;

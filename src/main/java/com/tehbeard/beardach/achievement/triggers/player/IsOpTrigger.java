@@ -8,8 +8,8 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
 /**
  * Checks if a player is an OP
@@ -17,11 +17,11 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Is the player a vanilla OP",categories ={"player"})
+@ComponentDescription(description = "Is the player a vanilla OP",categories ={"player"})
 @Configurable(tag = "isop", name = "is player an OP")
 public class IsOpTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "Is the player a vanilla Operator")
+    @ComponentFieldDescription(value = "Is the player a vanilla Operator")
     @Expose
     @EditorField(alias = "is OP",type=EditorFieldType.bool)
     boolean isop;

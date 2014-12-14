@@ -17,25 +17,26 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
-import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.help.HelpEntry;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Generates the json file for the achievements editor
- * 
+ *
  * @author James
- * 
+ *
  */
 public class EditorJSON {
 
     public List<EditorElement> triggers = new ArrayList<EditorElement>();
     public List<EditorElement> rewards = new ArrayList<EditorElement>();
 
-    public Map<String,HelpEntry> triggerHelp = new HashMap<String,HelpEntry>();
-    public Map<String,HelpEntry> rewardHelp = new HashMap<String,HelpEntry>();
+    public Map<String, HelpEntry> triggerHelp = new HashMap<String, HelpEntry>();
+    public Map<String, HelpEntry> rewardHelp = new HashMap<String, HelpEntry>();
 
     public class EditorElement {
 
@@ -46,9 +47,9 @@ public class EditorJSON {
 
     /**
      * Structural class for elements of a trigger/reward
-     * 
+     *
      * @author James
-     * 
+     *
      */
     public class EditorFormElement {
 
@@ -62,18 +63,19 @@ public class EditorJSON {
 
     public void addTrigger(Class<? extends ITrigger> t) {
         addItem(t, triggers);
-        addHelpEntry(t,triggerHelp);
+        addHelpEntry(t, triggerHelp);
     }
 
     public void addReward(Class<? extends IReward> r) {
         addItem(r, rewards);
-        addHelpEntry(r,rewardHelp);
+        addHelpEntry(r, rewardHelp);
     }
 
-    private void addHelpEntry(Class<?> _c,Map<String,HelpEntry> list){
-        try{
-            list.put(_c.getAnnotation(Configurable.class).tag(),new HelpEntry(_c));
-        }catch(Exception e){}
+    private void addHelpEntry(Class<?> _c, Map<String, HelpEntry> list) {
+        try {
+            list.put(_c.getAnnotation(Configurable.class).tag(), new HelpEntry(_c));
+        } catch (Exception e) {
+        }
 
     }
 
@@ -96,36 +98,52 @@ public class EditorJSON {
                     efe.name = a.alias();
                     efe.type = a.type().toString().toLowerCase();
                     //Parse selection
-                    if(a.type() == EditorFieldType.selection){
-                        if (a.options().length > 0) {
-                            if (a.options().length == 1) {
-                                @SuppressWarnings("unchecked")
-                                Class<Enum<?>> enumClass = (Class<Enum<?>>) Class.forName(a.options()[0]);
-                                @SuppressWarnings("rawtypes")
-                                Enum[] enums = (Enum[]) enumClass.getMethod("values").invoke(null);
-                                String[] options = new String[enums.length];
-                                for (int i = 0; i < enums.length; i++) {
-                                    options[i] = enums[i].name();
-                                }
-                                efe.values = options;
-                            } else {
-                                efe.values = a.options();
+                    if (a.type() == EditorFieldType.selection) {
+                        List<String> options = new ArrayList<String>();
+                        //Add hardwired strings
+                        if (f.isAnnotationPresent(EditorFieldDefault.class)) {
+                            options.addAll(Arrays.asList(f.getAnnotation(EditorFieldDefault.class).value()));
+                        }
+                        
+                        //Add an enum
+                        if (f.isAnnotationPresent(EditorFieldDefaultEnum.class)) {
+                            @SuppressWarnings("unchecked")
+                            Class<Enum<?>> enumClass = (Class<Enum<?>>) Class.forName(f.getAnnotation(EditorFieldDefaultEnum.class).value());
+                            @SuppressWarnings("rawtypes")
+                            Enum[] enums = (Enum[]) enumClass.getMethod("values").invoke(null);
+                            for (int i = 0; i < enums.length; i++) {
+                                options.add(enums[i].name());
                             }
                         }
+                        
+                        //Add a weird math based field thing
+                        if (f.isAnnotationPresent(EditorFieldDefaultMethod.class)) {
+                            EditorFieldDefaultMethod fieldData = f.getAnnotation(EditorFieldDefaultMethod.class);
+                            @SuppressWarnings("unchecked")
+                            Class<?> _class = Class.forName(fieldData.className());
+                            List _list = (List) _class.getMethod(fieldData.listMethodName()).invoke(null);
+                            for (Object o : _list) {
+                                options.add(o.getClass().getMethod(fieldData.nameMethod()).invoke(o).toString());
+                            }
+                        }
+                        efe.values = options.toArray(new String[0]);
                     }
-                    
-                    if(a.type() == EditorFieldType.number){
-                        efe.min = a.min() == Integer.MIN_VALUE ? false : a.min();
-                        efe.max = a.max() == Integer.MAX_VALUE ? false : a.max();
+
+                    if (a.type() == EditorFieldType.number) {
+                        if (f.isAnnotationPresent(EditorFieldMax.class)) {
+                            efe.min = f.getAnnotation(EditorFieldMin.class).value() == Integer.MIN_VALUE ? false : a.min();
+                        }
+                        if (f.isAnnotationPresent(EditorFieldMin.class)) {
+                            efe.max = f.getAnnotation(EditorFieldMax.class).value() == Integer.MAX_VALUE ? false : a.max();
+                        }
                     }
+                    ee.fields.add(efe);
                 }
-                ee.fields.add(efe);
             }
 
             list.add(ee);
         } catch (NoClassDefFoundError e) {
             Logger.getLogger(EditorJSON.class.getName()).log(Level.WARNING, "Skipping item {0}, class not found.", ee.name);
-            e.printStackTrace();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EditorJSON.class.getName()).log(Level.SEVERE, "Failed to load a class needed by " + ee.name, ex);
         } catch (IllegalArgumentException ex) {
@@ -155,4 +173,3 @@ public class EditorJSON {
         writer.close();
     }
 }
-

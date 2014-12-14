@@ -7,9 +7,9 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 
-@ComponentHelpDescription(description = "Sets the group of a player using vault, \\n Exact behaviour will depend on the permissions plugin, consult your permissions plugin as needed. \\n Should expected behaviour not occur, consider using the execute console command reward instead.", dependencies = {
+@ComponentDescription(description = "Sets the group of a player using vault, \\n Exact behaviour will depend on the permissions plugin, consult your permissions plugin as needed. \\n Should expected behaviour not occur, consider using the execute console command reward instead.", dependencies = {
         "Vault"})
 @Configurable(tag = "vaultaddgroup", name = "(Vault) add/set group")
 public class SetGroupReward implements IReward {

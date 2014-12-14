@@ -4,7 +4,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EditorField {
-    String alias();
-    EditorFieldType type() default EditorFieldType.text;
+public @interface EditorFieldDefaultMethod {
+    String className();
+    String listMethodName() default "getValues";
+    String nameMethod();
 }

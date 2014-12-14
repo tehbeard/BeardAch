@@ -13,25 +13,25 @@ import com.tehbeard.beardach.achievement.triggers.AbstractEventTrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import com.tehbeard.utils.bukkit.misc.ItemSyntax;
 
-@ComponentHelpDescription(description = "Triggers when a player fishes an item, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a> for the fish",categories ={"evented","player"})
+@ComponentDescription(description = "Triggers when a player fishes an item, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a> for the fish",categories ={"evented","player"})
 @Configurable(name = "Fished item", tag = "fisheditem")
 public class FishingTrigger extends AbstractEventTrigger{
 
-    @ComponentValueDescription(value = "Item stack fished")
+    @ComponentFieldDescription(value = "Item stack fished")
     @Expose
     @EditorField(alias = "Fished item String (CraftBook item syntax)", type = EditorFieldType.text)
     private String itemStr;
 
-    @ComponentValueDescription(value = "Whether to ignore the durability (damage) of the item")
+    @ComponentFieldDescription(value = "Whether to ignore the durability (damage) of the item")
     @Expose
     @EditorField(alias = "Ignore durability values", type = EditorFieldType.bool)
     private boolean ignoreDurability = false;
 
-    @ComponentValueDescription(value = "Ignore metadata such as enchantments, lore etc")
+    @ComponentFieldDescription(value = "Ignore metadata such as enchantments, lore etc")
     @Expose
     @EditorField(alias = "Ignore metadata (Enchantments, Lore)", type = EditorFieldType.bool)
     private boolean ignoreMetadata = false;

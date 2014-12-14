@@ -12,18 +12,18 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
 /**
  * 
  * @author James
  */
-@ComponentHelpDescription(description = "Meta trigger, will fire if all triggers under it return true")
+@ComponentDescription(description = "Meta trigger, will fire if all triggers under it return true")
 @Configurable(name = "Meta AND trigger", tag = "metaand")
 public class ANDTrigger implements MetaTrigger {
 
-    @ComponentValueDescription(value = "list of triggers")
+    @ComponentFieldDescription(value = "list of triggers")
     @Expose
     @EditorField(type = EditorFieldType.trigger, alias = "triggers")
     private ITrigger[] triggers;

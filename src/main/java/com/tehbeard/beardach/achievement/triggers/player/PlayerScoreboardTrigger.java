@@ -6,34 +6,34 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import org.bukkit.Bukkit;
 import org.spongepowered.api.entity.player.Player;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
-@ComponentHelpDescription(description = "Check if a scoreboard objective meets certain criteria",categories ={"player"})
+@ComponentDescription(description = "Check if a scoreboard objective meets certain criteria",categories ={"player"})
 @Configurable(name = "scoreboard value", tag = "scoreboard")
 public class PlayerScoreboardTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "Scoreboard value")
+    @ComponentFieldDescription(value = "Scoreboard value")
     @Expose
     @EditorField(alias = "Value", type = EditorFieldType.number)
     private int value;
 
-    @ComponentValueDescription(value = "Scoreboard value")
+    @ComponentFieldDescription(value = "Scoreboard value")
     @Expose
     @EditorField(alias = "Objective", type = EditorFieldType.text)
     private String objective;
 
-    @ComponentValueDescription(value = "Scoreboard value")
+    @ComponentFieldDescription(value = "Scoreboard value")
     @Expose
     @EditorField(alias = "Use main scoreboard", type = EditorFieldType.bool)
     private boolean useMain;
     
-    @ComponentValueDescription(value = "Scoreboard value")
+    @ComponentFieldDescription(value = "Scoreboard value")
     @Expose
     @EditorField(alias = "Operation", type = EditorFieldType.selection,options = "com.tehbeard.beardach.achievement.triggers.player.PlayerScoreboardTrigger$Operation")
     private Operation operation;

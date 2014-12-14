@@ -5,10 +5,10 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import org.spongepowered.api.entity.player.Player;
 
-@ComponentHelpDescription(description = "Gives a player some money", dependencies = { "Vault"})
+@ComponentDescription(description = "Gives a player some money", dependencies = { "Vault"})
 @Configurable(tag = "money", name = "(vault) Give money")
 public class EconomyReward implements IReward {
 

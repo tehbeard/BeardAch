@@ -11,8 +11,8 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import com.tehbeard.utils.cuboid.Cuboid;
 import com.tehbeard.utils.sponge.SpongeUtils;
 
@@ -22,11 +22,11 @@ import com.tehbeard.utils.sponge.SpongeUtils;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Is player inside an area",categories = "spatial")
+@ComponentDescription(description = "Is player inside an area",categories = "spatial")
 @Configurable(tag = "cuboid", name = "cuboid")
 public class CuboidCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "Area to check")
+    @ComponentFieldDescription(value = "Area to check")
     @Expose
     @EditorField(alias = "cuboid", type = EditorFieldType.cuboid)
     private Cuboid cuboid = new Cuboid();

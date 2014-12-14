@@ -6,13 +6,13 @@ import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import java.util.HashMap;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.item.inventory.ItemStack;
 
-@ComponentHelpDescription(description = "Gives a player an item, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a>")
+@ComponentDescription(description = "Gives a player an item, using <a href='http://wiki.sk89q.com/wiki/CraftBook/Item_Syntax'>CraftBook item syntax</a>")
 @Configurable(name = "Item reward", tag = "item")
 public class ItemReward implements IReward {
 
@@ -20,12 +20,12 @@ public class ItemReward implements IReward {
     @EditorField(alias = "Item String (CraftBook item syntax)", type = EditorFieldType.text)
     private String itemStr;
 
-    @ComponentValueDescription(value = "Attempts to place the item in the users enderchest if ticked")
+    @ComponentFieldDescription(value = "Attempts to place the item in the users enderchest if ticked")
     @Expose
     @EditorField(alias = "try placed in enderchest", type = EditorFieldType.bool)
     private boolean tryEnderChest = true;
 
-    @ComponentValueDescription(value = "Attempts to drop the item in world if inventory/s are full")
+    @ComponentFieldDescription(value = "Attempts to drop the item in world if inventory/s are full")
     @Expose
     @EditorField(alias = "drop item in world", type = EditorFieldType.bool)
     private boolean tryDrop = true;

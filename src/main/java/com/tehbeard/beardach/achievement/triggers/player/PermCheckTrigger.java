@@ -7,8 +7,8 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
 /**
  * Checks if a player has a permission node
@@ -16,11 +16,11 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Does the player have a permission node",categories ={"player"})
+@ComponentDescription(description = "Does the player have a permission node",categories ={"player"})
 @Configurable(tag = "perm", name = "has permission node")
 public class PermCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "Permission node to check, does not have to one declared by a plugin")
+    @ComponentFieldDescription(value = "Permission node to check, does not have to one declared by a plugin")
     @Expose
     @EditorField(alias = "permission node")
     String perm;

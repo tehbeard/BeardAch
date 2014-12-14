@@ -16,7 +16,7 @@ import com.tehbeard.beardach.datasource.JDBCAchievementDataSource;
 import com.tehbeard.beardach.datasource.NullDataSource;
 import com.tehbeard.beardach.datasource.configurable.IConfigurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorJSON;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import com.tehbeard.utils.addons.AddonLoader;
 import com.tehbeard.utils.factory.ConfigurableFactory;
 import java.io.BufferedOutputStream;
@@ -206,7 +206,7 @@ public class BeardAch {
 
     
     private static boolean hasDependencies(Class<?> c,String type){
-        ComponentHelpDescription desc = c.getAnnotation(ComponentHelpDescription.class);
+        ComponentDescription desc = c.getAnnotation(ComponentDescription.class);
         Configurable config = c.getAnnotation(Configurable.class);
         if(desc != null){
             for(String pluginName : desc.dependencies()){

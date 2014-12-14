@@ -8,8 +8,8 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import org.spongepowered.api.world.biome.BiomeType;
 
 /**
@@ -18,11 +18,11 @@ import org.spongepowered.api.world.biome.BiomeType;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Is player in a biome",categories ={"enviromental","player"})
+@ComponentDescription(description = "Is player in a biome",categories ={"enviromental","player"})
 @Configurable(tag = "biome", name = "Biome check")
 public class BiomeCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "Biome to check for")
+    @ComponentFieldDescription(value = "Biome to check for")
     @Expose
     @EditorField(alias = "Biome", type = EditorFieldType.selection, options = "org.bukkit.block.Biome")
     BiomeType biome;

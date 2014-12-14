@@ -5,8 +5,8 @@ import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,19 +15,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.spongepowered.api.entity.player.Player;
 
-@ComponentHelpDescription(description = "Executes a shell command, this reward IS DANGEROUS, AND MUST BE ENABLED VIA CONFIG (DEFAULTS TO OFF)")
+@ComponentDescription(description = "Executes a shell command, this reward IS DANGEROUS, AND MUST BE ENABLED VIA CONFIG (DEFAULTS TO OFF)")
 @Configurable(tag = "execshell", name = "Execute shell command")
 public class ExecShellReward implements IReward {
 
-    @ComponentValueDescription(value = "Command to execute, <PLAYER> token replaced with player name")
+    @ComponentFieldDescription(value = "Command to execute, <PLAYER> token replaced with player name")
     @Expose
     @EditorField(alias = "Command")
     String cmd = "";
-    @ComponentValueDescription(value = "Environment variables, using var=value&var2=value2 format, use \\& and \\\\ for & and \\ respectively")
+    @ComponentFieldDescription(value = "Environment variables, using var=value&var2=value2 format, use \\& and \\\\ for & and \\ respectively")
     @Expose
     @EditorField(alias = "Env. variables")
     String env = "";
-    @ComponentValueDescription(value = "Working directory, will default to however bukkit was started.")
+    @ComponentFieldDescription(value = "Working directory, will default to however bukkit was started.")
     @Expose
     @EditorField(alias = "Working directory")
     String workDir = "";

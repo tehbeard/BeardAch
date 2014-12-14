@@ -11,16 +11,16 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
-@ComponentHelpDescription(description = "Checks the players bank balance", dependencies = { "Vault"},categories ="player")
+@ComponentDescription(description = "Checks the players bank balance", dependencies = { "Vault"},categories ="player")
 @Configurable(tag = "bankbalance", name = "(Vault)Check bank balance")
 public class EconomyTrigger implements ITrigger {
 
     private static Economy economy = null;
 
-    @ComponentValueDescription(value = "Balance must be atleast this value to trigger, supports decimal values")
+    @ComponentFieldDescription(value = "Balance must be atleast this value to trigger, supports decimal values")
     @Expose
     @EditorField(alias = "Lower threshold")
     private double amount;

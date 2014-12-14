@@ -8,10 +8,10 @@ import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import org.spongepowered.api.world.Location;
 
-@ComponentHelpDescription(description = "Teleports a player to a particular location")
+@ComponentDescription(description = "Teleports a player to a particular location")
 @Configurable(tag = "teleport", name = "Teleport to location")
 public class TeleportReward implements IReward {
 

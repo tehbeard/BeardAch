@@ -12,29 +12,29 @@ import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import org.spongepowered.api.effect.Sound;
 
 /**
  * 
  * @author James
  */
-@ComponentHelpDescription(description = "plays a sound")
+@ComponentDescription(description = "plays a sound")
 @Configurable(name = "play sound", tag = "playsnd")
 public class PlaySoundReward implements IReward {
 
-    @ComponentValueDescription(value = "Name of the sound to play (same as playsound command)")
+    @ComponentFieldDescription(value = "Name of the sound to play (same as playsound command)")
     @EditorField(alias = "sound name", type = EditorFieldType.selection, options = "org.bukkit.Sound")
     @Expose
     Sound sound;
 
-    @ComponentValueDescription(value = "Volume to play at")
+    @ComponentFieldDescription(value = "Volume to play at")
     @EditorField(alias = "volume (decimal, 1.0 is normal)", type = EditorFieldType.text)
     @Expose
     float volume = 1.0f;
 
-    @ComponentValueDescription(value = "pitch to play at")
+    @ComponentFieldDescription(value = "pitch to play at")
     @EditorField(alias = "pitch (decimal, 1.0 is normal)", type = EditorFieldType.text)
     @Expose
     float pitch = 1.0f;

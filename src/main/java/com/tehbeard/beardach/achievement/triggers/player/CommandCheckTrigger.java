@@ -12,30 +12,30 @@ import com.tehbeard.beardach.achievement.triggers.AbstractEventTrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
-@ComponentHelpDescription(description = "Triggers when a user attempts to execute a command",categories ={"evented","player"})
+@ComponentDescription(description = "Triggers when a user attempts to execute a command",categories ={"evented","player"})
 @Configurable(name = "On command", tag = "oncommand")
 public class CommandCheckTrigger extends AbstractEventTrigger {
 
-    @ComponentValueDescription(value = "Certain commands use the preprocess event instead of Bukkit's command api, check this to allow those commands")
+    @ComponentFieldDescription(value = "Certain commands use the preprocess event instead of Bukkit's command api, check this to allow those commands")
     @Expose
     @EditorField(alias = "Include commands that have been cancelled by preprocess event", type = EditorFieldType.bool)
     private boolean includeIgnored = true;
 
-    @ComponentValueDescription(value = "Use a regex expression instead of checking if command starts with")
+    @ComponentFieldDescription(value = "Use a regex expression instead of checking if command starts with")
     @Expose
     @EditorField(alias = "Treat prefix as regex expression", type = EditorFieldType.bool)
     private boolean isRegex = false;
 
-    @ComponentValueDescription(value = "command prefix or regex expression to check")
+    @ComponentFieldDescription(value = "command prefix or regex expression to check")
     @Expose
     @EditorField(alias = "Command prefix to detect", type = EditorFieldType.text)
     private String commandText = "";
     
     
-    @ComponentValueDescription("Set this true to prevent the command executing.")
+    @ComponentFieldDescription("Set this true to prevent the command executing.")
     @Expose
     @EditorField(alias = "Stop command being processed by bukkit",type=EditorFieldType.bool)
     private boolean cancelCommand = false;

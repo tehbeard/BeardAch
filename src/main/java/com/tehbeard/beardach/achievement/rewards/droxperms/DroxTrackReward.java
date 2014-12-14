@@ -8,9 +8,9 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 
-@ComponentHelpDescription(description = "Track promotion player", dependencies = "DroxPerms")
+@ComponentDescription(description = "Track promotion player", dependencies = "DroxPerms")
 @Configurable(tag = "promote", name = "(DroxPerms) Promote along track")
 public class DroxTrackReward implements IReward {
     @Expose

@@ -16,20 +16,20 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.triggers.AbstractEventTrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
-@ComponentHelpDescription(description = "Player inside a worldGuard region", dependencies = "WorldGuard",categories = "spatial")
+@ComponentDescription(description = "Player inside a worldGuard region", dependencies = "WorldGuard",categories = "spatial")
 @Configurable(tag = "wgregion", name = "(WorldGuard) Inside region")
 public class WorldGuardRegionTrigger extends AbstractEventTrigger {
 
     private RegionManager rm;
 
-    @ComponentValueDescription(value = "name of region")
+    @ComponentFieldDescription(value = "name of region")
     @Expose
     @EditorField(alias = "Region name")
     private String region = "";
-    @ComponentValueDescription(value = "name of world")
+    @ComponentFieldDescription(value = "name of world")
     @Expose
     @EditorField(alias = "World name")
     private String world = "";

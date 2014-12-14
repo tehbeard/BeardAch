@@ -11,8 +11,8 @@ import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
 /**
  * Checks if a player has a permission node
@@ -20,11 +20,11 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Checks if the player has an achievement",categories = "achievements")
+@ComponentDescription(description = "Checks if the player has an achievement",categories = "achievements")
 @Configurable(tag = "ach", name = "has achievement")
 public class AchCheckTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "The achievement id (slug) to check for")
+    @ComponentFieldDescription(value = "The achievement id (slug) to check for")
     @Expose
     @EditorField(alias = "achievement slug")
     String ach;

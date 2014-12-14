@@ -8,10 +8,10 @@ import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import org.spongepowered.api.world.Location;
 
-@ComponentHelpDescription(description = "Sets the player's compass target to new location")
+@ComponentDescription(description = "Sets the player's compass target to new location")
 @Configurable(tag = "compass", name = "set compass target")
 public class CompassTargetReward implements IReward {
 

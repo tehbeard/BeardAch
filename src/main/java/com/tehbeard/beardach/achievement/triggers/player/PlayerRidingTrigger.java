@@ -10,14 +10,14 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
-@ComponentHelpDescription(description = "Is player riding an entity",categories ="player")
+@ComponentDescription(description = "Is player riding an entity",categories ="player")
 @Configurable(name = "Riding entity", tag = "riding")
 public class PlayerRidingTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "Entity type to check")
+    @ComponentFieldDescription(value = "Entity type to check")
     @Expose
     @EditorField(alias = "Entity", type = EditorFieldType.selection, options = "org.bukkit.entity.EntityType")
     private EntityType entityType;

@@ -9,17 +9,17 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.spongepowered.api.util.command.CommandException;
 
-@ComponentHelpDescription(description = "Execute a command as the console")
+@ComponentDescription(description = "Execute a command as the console")
 @Configurable(tag = "comm", name = "Execute console command")
 public class CommandReward implements IReward {
 
-    @ComponentValueDescription(value = "Command to execute, <PLAYER> is replaced with the player's name")
+    @ComponentFieldDescription(value = "Command to execute, <PLAYER> is replaced with the player's name")
     @Expose
     @EditorField(alias = "Command")
     String command = "";

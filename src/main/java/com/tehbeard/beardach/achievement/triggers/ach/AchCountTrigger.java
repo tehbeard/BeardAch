@@ -11,8 +11,8 @@ import com.tehbeard.beardach.achievement.AchievementPlayerLink;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 
 /**
  * Checks if a player has a certain number of achievements achcount|disc|20
@@ -22,15 +22,15 @@ import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
  * @author James
  * 
  */
-@ComponentHelpDescription(description = "Counts number of achievements with a specific id prefix",categories = "achievements")
+@ComponentDescription(description = "Counts number of achievements with a specific id prefix",categories = "achievements")
 @Configurable(tag = "achcount", name = "Achievement count")
 public class AchCountTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "Amount of achievements player must exceed, (Triggers if count > this value)")
+    @ComponentFieldDescription(value = "Amount of achievements player must exceed, (Triggers if count > this value)")
     @Expose
     @EditorField(alias = "achievement count threshold")
     int threshold;
-    @ComponentValueDescription(value = "The prefix of the ids of achievements to count")
+    @ComponentFieldDescription(value = "The prefix of the ids of achievements to count")
     @Expose
     @EditorField(alias = "achievement slug prefix")
     String prefix;

@@ -8,15 +8,15 @@ import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import org.spongepowered.api.world.World;
 
-@ComponentHelpDescription(description = "Throws a lightning bolt at the player")
+@ComponentDescription(description = "Throws a lightning bolt at the player")
 @Configurable(tag = "lightning", name = "Strike lightning on player")
 public class LightningReward implements IReward {
 
-    @ComponentValueDescription(value = "If false, uses bukkit's fake lightning that does not injure a player")
+    @ComponentFieldDescription(value = "If false, uses bukkit's fake lightning that does not injure a player")
     @Expose
     @EditorField(alias = "Real Lightning?", type = EditorFieldType.bool)
     private boolean real = false;

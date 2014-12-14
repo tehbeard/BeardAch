@@ -12,27 +12,27 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
-import com.tehbeard.beardach.datasource.json.help.ComponentHelpDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentValueDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 import com.tehbeard.utils.bukkit.BukkitUtils;
 import com.tehbeard.utils.cuboid.Cuboid;
 
 //TODO: Redo as worldguard based
-@ComponentHelpDescription(description = "Triggers if player gets between two points within the given time",categories = "spatial")
+@ComponentDescription(description = "Triggers if player gets between two points within the given time",categories = "spatial")
 @Configurable(tag = "speedrun", name = "Speed run")
 public class SpeedRunTrigger implements ITrigger {
 
-    @ComponentValueDescription(value = "Area player enters to start cuboid. NOTE: Entry into this area starts the timer, so for race areas with gates, place the cuboid immediately after the starting gate")
+    @ComponentFieldDescription(value = "Area player enters to start cuboid. NOTE: Entry into this area starts the timer, so for race areas with gates, place the cuboid immediately after the starting gate")
     @Expose
     @EditorField(alias = "start cuboid", type = EditorFieldType.cuboid)
     private Cuboid startCuboid = new Cuboid();
 
-    @ComponentValueDescription(value = "Area player must enter to finish the race")
+    @ComponentFieldDescription(value = "Area player must enter to finish the race")
     @Expose
     @EditorField(alias = "end cuboid", type = EditorFieldType.cuboid)
     private Cuboid endCuboid = new Cuboid();
 
-    @ComponentValueDescription(value = "Time player must beat in order to trigger this achievement")
+    @ComponentFieldDescription(value = "Time player must beat in order to trigger this achievement")
     @Expose
     @EditorField(alias = "time to beat (seconds)")
     long timing = 0L;
