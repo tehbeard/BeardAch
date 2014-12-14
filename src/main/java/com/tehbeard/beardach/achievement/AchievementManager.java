@@ -1,10 +1,6 @@
 package com.tehbeard.beardach.achievement;
 
 import com.tehbeard.beardach.BeardAch;
-import com.tehbeard.beardach.achievement.triggers.ITrigger;
-import com.tehbeard.beardach.achievement.triggers.meta.MetaTrigger;
-import com.tehbeard.beardach.achievement.triggers.spatial.CuboidCheckTrigger;
-import com.tehbeard.beardach.achievement.triggers.spatial.SpeedRunTrigger;
 import com.tehbeard.beardach.datasource.AchievementLoader;
 import com.tehbeard.beardach.datasource.IDataSource;
 import java.util.ArrayList;
@@ -17,7 +13,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Level;
 import org.spongepowered.api.entity.player.Player;
 
 /**

@@ -7,6 +7,9 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
+import com.tehbeard.beardach.datasource.json.editor.EditorFieldDefault;
+import com.tehbeard.beardach.datasource.json.editor.EditorFieldMax;
+import com.tehbeard.beardach.datasource.json.editor.EditorFieldMin;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
@@ -26,7 +29,8 @@ public class TitleReward implements IReward {
     
     @ComponentFieldDescription(value = "Title Text")
     @Expose
-    @EditorField(alias = "Title colour",type = EditorFieldType.selection, options = {"black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray", "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow", "white"})
+    @EditorField(alias = "Title colour",type = EditorFieldType.selection)
+    @EditorFieldDefault({"black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray", "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow", "white"})
     private String titleColor = "white";
     
     @ComponentFieldDescription(value = "Subtitle Text")
@@ -36,23 +40,30 @@ public class TitleReward implements IReward {
     
     @ComponentFieldDescription(value = "Subtitle Text")
     @Expose
-    @EditorField(alias = "Subtitle colour",type = EditorFieldType.selection, options = {"black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray", "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow", "white"})
+    @EditorField(alias = "Subtitle colour",type = EditorFieldType.selection)
+    @EditorFieldDefault({"black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray", "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow", "white"})
     private String subtitleColor = "white";
     
     
     @ComponentFieldDescription(value = "Fade in time")
     @Expose
-    @EditorField(alias = "Fade in time",type = EditorFieldType.number,min = 0,max=120)
+    @EditorField(alias = "Fade in time",type = EditorFieldType.number)
+    @EditorFieldMin(0)
+    @EditorFieldMax(120)
     private int fadeIn = 1;
     
     @ComponentFieldDescription(value = "Stay time")
     @Expose
-    @EditorField(alias = "Stay time",type = EditorFieldType.number,min = 0,max=120)
+    @EditorField(alias = "Stay time",type = EditorFieldType.number)
+    @EditorFieldMin(0)
+    @EditorFieldMax(120)
     private int stayTime = 3;
     
     @ComponentFieldDescription(value = "Fade out time")
     @Expose
-    @EditorField(alias = "Fade out time",type = EditorFieldType.number,min = 0,max=120)
+    @EditorField(alias = "Fade out time",type = EditorFieldType.number)
+    @EditorFieldMin(0)
+    @EditorFieldMax(120)
     private int fadeOut = 1;
 
     private Title title = null;

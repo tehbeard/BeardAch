@@ -7,6 +7,7 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
+import com.tehbeard.beardach.datasource.json.editor.EditorFieldMin;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
@@ -16,12 +17,14 @@ import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
 public class xpReward implements IReward {
 
     @Expose
-    @EditorField(alias = "Amount to give",type=EditorFieldType.number,min=0)
+    @EditorField(alias = "Amount to give",type=EditorFieldType.number)
+    @EditorFieldMin(0)
     @ComponentFieldDescription("Raw amount of XP to give a player (for example, a blaze drops 10 xp")
     int xp;
     
     @Expose
-    @EditorField(alias = "Amount of levels to add",type=EditorFieldType.number,min=0)
+    @EditorField(alias = "Amount of levels to add",type=EditorFieldType.number)
+    @EditorFieldMin(0)
     @ComponentFieldDescription("XP levels to add to a player (note: negative values will take away, and cap at 0)")
     int xpLevels = 0;
 

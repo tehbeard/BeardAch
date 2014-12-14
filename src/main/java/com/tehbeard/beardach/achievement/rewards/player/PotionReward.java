@@ -7,6 +7,7 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
+import com.tehbeard.beardach.datasource.json.editor.EditorFieldDefaultMethod;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import org.spongepowered.api.potion.PotionEffect;
@@ -17,7 +18,8 @@ import org.spongepowered.api.potion.PotionEffectType;
 public class PotionReward implements IReward {
 
     @Expose
-    @EditorField(alias = "Potion Type", type = EditorFieldType.selection, options = "org.bukkit.potion.PotionType")
+    @EditorField(alias = "Potion Type", type = EditorFieldType.selection)
+    @EditorFieldDefaultMethod(className = "org.spongepowered.api.potion.PotionEffectTypes",nameMethod = "")
     private PotionEffectType potionType;
     
     @Expose

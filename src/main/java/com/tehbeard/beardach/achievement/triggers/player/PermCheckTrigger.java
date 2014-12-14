@@ -3,6 +3,7 @@ package com.tehbeard.beardach.achievement.triggers.player;
 import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
+import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
@@ -28,7 +29,7 @@ public class PermCheckTrigger implements ITrigger {
     @Override
     public boolean checkAchievement(Player player) {
         // if player has stat
-        return player.hasPermission(perm);
+        return BeardAch.getPermissions().login(player).isPermitted(perm);
     }
 
     @Override

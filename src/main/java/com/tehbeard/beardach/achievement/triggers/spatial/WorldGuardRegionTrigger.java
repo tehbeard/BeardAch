@@ -1,79 +1,79 @@
-package com.tehbeard.beardach.achievement.triggers.spatial;
-
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.spongepowered.api.entity.player.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerMoveEvent;
-
-import com.google.gson.annotations.Expose;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.managers.RegionManager;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import com.tehbeard.beardach.BeardAch;
-import com.tehbeard.beardach.achievement.Achievement;
-import com.tehbeard.beardach.achievement.triggers.AbstractEventTrigger;
-import com.tehbeard.beardach.annotations.Configurable;
-import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
-import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
-
-@ComponentDescription(description = "Player inside a worldGuard region", dependencies = "WorldGuard",categories = "spatial")
-@Configurable(tag = "wgregion", name = "(WorldGuard) Inside region")
-public class WorldGuardRegionTrigger extends AbstractEventTrigger {
-
-    private RegionManager rm;
-
-    @ComponentFieldDescription(value = "name of region")
-    @Expose
-    @EditorField(alias = "Region name")
-    private String region = "";
-    @ComponentFieldDescription(value = "name of world")
-    @Expose
-    @EditorField(alias = "World name")
-    private String world = "";
-
-    @Override
-    public boolean checkAchievement(Player player) {
-        if (rm == null)
-            return false;
-        if (!player.getWorld().getName().equals(world))
-            return false;
-
-        ApplicableRegionSet zones = rm.getApplicableRegions(player.getLocation());
-        for (ProtectedRegion zone : zones) {
-            if (zone.getId().equals(region))
-                return true;
-        }
-        return false;
-    }
-
-    @EventHandler
-    public void move(PlayerMoveEvent event) {
-
-        if (event.getTo().getBlockX() != event.getFrom().getBlockX() || event.getTo().getBlockY() != event.getFrom().getBlockY() || event.getTo().getBlockZ() != event.getFrom().getBlockZ()) {
-            if (event.getPlayer().getWorld().getName().equals(world)) {
-                runCheck(event.getPlayer());
-            }
-        }
-    }
-
-    @Override
-    public void configure(Achievement ach) {
-        super.configure(ach);
-        World w = Bukkit.getWorld(world);
-        WorldGuardPlugin wg = BeardAch.getWorldGuard();
-        if (wg == null) {
-            BeardAch.getLogger().severe("[ERROR] " + "WorldGuard not loaded! trigger will fail!");
-            return;
-        }
-        rm = wg.getRegionManager(w);
-        if (rm == null) {
-            BeardAch.getLogger().severe("[ERROR] " + "World not found!");
-            return;
-        }
-
-    }
-
-}
+//package com.tehbeard.beardach.achievement.triggers.spatial;
+//
+//import org.bukkit.Bukkit;
+//import org.bukkit.World;
+//import org.spongepowered.api.entity.player.Player;
+//import org.bukkit.event.EventHandler;
+//import org.bukkit.event.player.PlayerMoveEvent;
+//
+//import com.google.gson.annotations.Expose;
+//import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+//import com.sk89q.worldguard.protection.ApplicableRegionSet;
+//import com.sk89q.worldguard.protection.managers.RegionManager;
+//import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+//import com.tehbeard.beardach.BeardAch;
+//import com.tehbeard.beardach.achievement.Achievement;
+//import com.tehbeard.beardach.achievement.triggers.AbstractEventTrigger;
+//import com.tehbeard.beardach.annotations.Configurable;
+//import com.tehbeard.beardach.datasource.json.editor.EditorField;
+//import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+//import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
+//
+//@ComponentDescription(description = "Player inside a worldGuard region", dependencies = "WorldGuard",categories = "spatial")
+//@Configurable(tag = "wgregion", name = "(WorldGuard) Inside region")
+//public class WorldGuardRegionTrigger extends AbstractEventTrigger {
+//
+//    private RegionManager rm;
+//
+//    @ComponentFieldDescription(value = "name of region")
+//    @Expose
+//    @EditorField(alias = "Region name")
+//    private String region = "";
+//    @ComponentFieldDescription(value = "name of world")
+//    @Expose
+//    @EditorField(alias = "World name")
+//    private String world = "";
+//
+//    @Override
+//    public boolean checkAchievement(Player player) {
+//        if (rm == null)
+//            return false;
+//        if (!player.getWorld().getName().equals(world))
+//            return false;
+//
+//        ApplicableRegionSet zones = rm.getApplicableRegions(player.getLocation());
+//        for (ProtectedRegion zone : zones) {
+//            if (zone.getId().equals(region))
+//                return true;
+//        }
+//        return false;
+//    }
+//
+//    @EventHandler
+//    public void move(PlayerMoveEvent event) {
+//
+//        if (event.getTo().getBlockX() != event.getFrom().getBlockX() || event.getTo().getBlockY() != event.getFrom().getBlockY() || event.getTo().getBlockZ() != event.getFrom().getBlockZ()) {
+//            if (event.getPlayer().getWorld().getName().equals(world)) {
+//                runCheck(event.getPlayer());
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public void configure(Achievement ach) {
+//        super.configure(ach);
+//        World w = Bukkit.getWorld(world);
+//        WorldGuardPlugin wg = BeardAch.getWorldGuard();
+//        if (wg == null) {
+//            BeardAch.getLogger().severe("[ERROR] " + "WorldGuard not loaded! trigger will fail!");
+//            return;
+//        }
+//        rm = wg.getRegionManager(w);
+//        if (rm == null) {
+//            BeardAch.getLogger().severe("[ERROR] " + "World not found!");
+//            return;
+//        }
+//
+//    }
+//
+//}

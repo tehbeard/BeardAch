@@ -38,7 +38,7 @@ public class IsGamemodeTrigger implements ITrigger {
     
     @ComponentFieldDescription(value = "Invert this trigger to be NOT in this gamemode")
     @Expose
-    @EditorField(alias = "Gamemode to check",type=EditorFieldType.selection,options="org.bukkit.GameMode")
+    @EditorField(alias = "Gamemode to check",type=EditorFieldType.selection)
     GameMode mode;
 
     @Override

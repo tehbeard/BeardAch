@@ -11,6 +11,7 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
+import com.tehbeard.beardach.datasource.json.editor.EditorFieldDefaultMethod;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
@@ -25,7 +26,8 @@ import org.spongepowered.api.effect.Sound;
 public class PlaySoundReward implements IReward {
 
     @ComponentFieldDescription(value = "Name of the sound to play (same as playsound command)")
-    @EditorField(alias = "sound name", type = EditorFieldType.selection, options = "org.bukkit.Sound")
+    @EditorField(alias = "sound name", type = EditorFieldType.selection)
+    @EditorFieldDefaultMethod(className = "org.spongepowered.api.effect.Sounds",nameMethod = "getName")
     @Expose
     Sound sound;
 
