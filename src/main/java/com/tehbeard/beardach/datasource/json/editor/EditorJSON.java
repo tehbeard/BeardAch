@@ -123,7 +123,13 @@ public class EditorJSON {
                             Class<?> _class = Class.forName(fieldData.className());
                             List _list = (List) _class.getMethod(fieldData.listMethodName()).invoke(null);
                             for (Object o : _list) {
+                                if(fieldData.nameMethod().length() == 0){
+                                    options.add(o.getClass().toString()); // Use class name
+                                }
+                                else
+                                {
                                 options.add(o.getClass().getMethod(fieldData.nameMethod()).invoke(o).toString());
+                                }
                             }
                         }
                         efe.values = options.toArray(new String[0]);

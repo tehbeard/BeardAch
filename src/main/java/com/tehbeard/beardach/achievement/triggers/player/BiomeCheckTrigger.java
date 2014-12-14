@@ -7,6 +7,7 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
+import com.tehbeard.beardach.datasource.json.editor.EditorFieldDefaultMethod;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
@@ -24,7 +25,8 @@ public class BiomeCheckTrigger implements ITrigger {
 
     @ComponentFieldDescription(value = "Biome to check for")
     @Expose
-    @EditorField(alias = "Biome", type = EditorFieldType.selection, options = "org.bukkit.block.Biome")
+    @EditorField(alias = "Biome", type = EditorFieldType.selection)
+    @EditorFieldDefaultMethod(className = "org.spongepowered.api.world.biome.BiomeType",nameMethod = "")
     BiomeType biome;
 
     @Override
