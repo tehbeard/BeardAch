@@ -1,4 +1,4 @@
-#BeardAch
+#BeardAch![](https://api.travis-ci.org/tehbeard/BeardAch.svg)
 BeardAch provides a powerful achievements framework for Bukkit.
 
 This framework allows server owners to quickly create custom achievements for their servers,
