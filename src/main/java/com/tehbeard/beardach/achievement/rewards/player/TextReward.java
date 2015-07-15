@@ -7,22 +7,29 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
+import com.tehbeard.beardach.datasource.json.editor.EditorFieldDefaultCatalog;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
+import org.spongepowered.api.text.chat.ChatType;
+import org.spongepowered.api.text.chat.ChatTypes;
 
 @ComponentDescription(description = "Display text to a player")
 @Configurable(tag = "text", name = "Display text")
 public class TextReward implements IReward {
 
-    @ComponentFieldDescription(value = "Text to display to a user")
+    @ComponentFieldDescription("How to display the message")
+    @Expose
+    @EditorFieldDefaultCatalog(ChatType.class)
+    private ChatType chatType = ChatTypes.CHAT;
+    @ComponentFieldDescription("Text to display to a user")
     @Expose
     @EditorField(alias = "message", type = EditorFieldType.text)
     private String text;
 
     @Override
     public void giveReward(Player player) {
-        player.sendMessage(text);
+        player.sendMessage(chatType , text);
     }
 
     @Override

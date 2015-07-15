@@ -240,7 +240,7 @@ public class AchievementManager {
         while (it.hasNext()) {
             UUID ply = it.next();
 
-            p = BeardAch.getGame().getPlayer(ply).orNull();
+            p = BeardAch.getGame().getServer().getPlayer(ply).orNull();
             if (p instanceof Player) {
                 BeardAch.getLogger().debug("Player {0} online", ply);
                 // check for bleep bloop

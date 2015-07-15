@@ -18,11 +18,13 @@ import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.datasource.json.AchievementParserException;
+import com.tehbeard.beardach.datasource.json.CatalogTypeParser;
 import com.tehbeard.beardach.datasource.json.ClassBasedParser;
 import com.tehbeard.beardach.datasource.json.ClassCatalogue;
 import com.tehbeard.beardach.datasource.json.CuboidJSONParser;
 import com.tehbeard.beardach.datasource.json.LocationJSONParser;
 import com.tehbeard.utils.cuboid.Cuboid;
+import org.spongepowered.api.CatalogType;
 import org.spongepowered.api.world.Location;
 
 /**
@@ -40,8 +42,15 @@ public class AchievementLoader {
      * Create prime Gson object, Only export annotated fields Pretty print for
      * human debugging. Also adds type adapters for trigger, reward and location
      */
-    private static Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().registerTypeAdapter(ITrigger.class, new ClassBasedParser<ITrigger>(triggerFactory))
-            .registerTypeAdapter(IReward.class, new ClassBasedParser<IReward>(rewardFactory)).registerTypeAdapter(Cuboid.class, new CuboidJSONParser()).registerTypeAdapter(Location.class, new LocationJSONParser()).create();
+    private static Gson gson = new GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
+            .setPrettyPrinting()
+            .registerTypeAdapter(ITrigger.class, new ClassBasedParser<ITrigger>(triggerFactory))
+            .registerTypeAdapter(IReward.class, new ClassBasedParser<IReward>(rewardFactory))
+            .registerTypeAdapter(Cuboid.class, new CuboidJSONParser())
+            .registerTypeAdapter(Location.class, new LocationJSONParser())
+            .registerTypeHierarchyAdapter(CatalogType.class, new CatalogTypeParser())
+            .create();
 
     private static List<Achievement> loadAchievementsFromJSONFile(File file) {
 

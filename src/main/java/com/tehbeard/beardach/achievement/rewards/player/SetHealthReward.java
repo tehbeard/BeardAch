@@ -19,7 +19,7 @@ public class SetHealthReward implements IReward {
 
     @Override
     public void giveReward(Player player) {
-        player.setHealth(health);
+        player.getHealthData().setHealth(health);
     }
 
     @Override

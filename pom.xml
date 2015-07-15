@@ -13,9 +13,15 @@
 
     <repositories>
         <repository>
-            <id>sponge</id>
-            <name>Spongey Goodness</name>
-            <url>http://repo.spongepowered.org/Sponge/maven/</url>
+            <id>sponge-maven-repo</id>
+            <name>Sponge maven repo</name>
+            <url>http://repo.spongepowered.org/maven</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
         
         <repository>
@@ -39,8 +45,7 @@
         <dependency>
             <groupId>org.spongepowered</groupId>
             <artifactId>spongeapi</artifactId>
-            <version>1.0</version>
-            <type>jar</type>
+            <version>2.1-SNAPSHOT</version>
         </dependency>
         <!-- Annotation parser -->
         <dependency>
@@ -53,7 +58,7 @@
         <dependency>
             <groupId>com.tehbeard</groupId>
             <artifactId>utils</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
+            <version>3.1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <!-- Gson: Java to Json conversion -->
@@ -69,6 +74,13 @@
         <!-- WorldGuard -->
         <!-- BeardStat -->
         <!-- Metrics -->
+<!--        
+        <dependency>
+          <groupId>org.spigotmc</groupId>
+          <artifactId>spigot-api</artifactId>
+          <version>1.8-R0.1-SNAPSHOT</version>
+          <scope>runtime</scope>
+        </dependency>-->
                 
         
     </dependencies>

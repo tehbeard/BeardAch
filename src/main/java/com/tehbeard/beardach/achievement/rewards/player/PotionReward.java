@@ -3,13 +3,15 @@ package com.tehbeard.beardach.achievement.rewards.player;
 import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
+import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
-import com.tehbeard.beardach.datasource.json.editor.EditorFieldDefaultMethod;
+import com.tehbeard.beardach.datasource.json.editor.EditorFieldDefaultCatalog;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
+import org.spongepowered.api.data.manipulator.PotionEffectData;
 import org.spongepowered.api.potion.PotionEffect;
 import org.spongepowered.api.potion.PotionEffectType;
 
@@ -19,7 +21,7 @@ public class PotionReward implements IReward {
 
     @Expose
     @EditorField(alias = "Potion Type", type = EditorFieldType.selection)
-    @EditorFieldDefaultMethod(className = "org.spongepowered.api.potion.PotionEffectTypes",nameMethod = "")
+    @EditorFieldDefaultCatalog(PotionEffectType.class)
     private PotionEffectType potionType;
     
     @Expose
@@ -38,13 +40,18 @@ public class PotionReward implements IReward {
     @Override
     public void giveReward(Player player) {
         if (effect != null) {
-            effect.apply(player);
+            player.getOrCreate(PotionEffectData.class).get().add(effect);
         }
     }
 
     @Override
     public void configure(Achievement ach) {
-        throw new UnsupportedOperationException("NOT IMPLEMENTED");
+        effect = BeardAch.getGame().getRegistry().getPotionEffectBuilder()
+                .potionType(potionType)
+                .amplifier(amplifier)
+                .duration(duration)
+                .ambience(ambient)
+                .build();
     }
 
 }

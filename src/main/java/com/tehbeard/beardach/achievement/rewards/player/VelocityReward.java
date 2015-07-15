@@ -1,5 +1,6 @@
 package com.tehbeard.beardach.achievement.rewards.player;
 
+import com.flowpowered.math.vector.Vector3d;
 import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
@@ -10,7 +11,7 @@ import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
-import org.spongepowered.api.math.Vectors;
+import org.spongepowered.api.data.manipulator.entity.VelocityData;
 
 @ComponentDescription(description = "Apply a force to a player")
 @Configurable(tag = "applyforce", name = "Apply force to player")
@@ -31,8 +32,7 @@ public class VelocityReward implements IReward {
 
     @Override
     public void giveReward(Player player) {
-        //player.setVelocity( Vectors.create3d(x, y, z));
-        
+        player.getOrCreate(VelocityData.class).get().setVelocity(new Vector3d(x, y, z));
     }
 
     @Override

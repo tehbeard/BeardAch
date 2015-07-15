@@ -1,6 +1,6 @@
 package com.tehbeard.beardach;
 
-import com.google.common.base.Optional;
+import com.google.inject.Inject;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.AchievementManager;
 import com.tehbeard.beardach.achievement.BeardAchAddonLoader;
@@ -30,19 +30,16 @@ import java.util.zip.ZipInputStream;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
-import org.spongepowered.api.entity.player.gamemode.GameMode;
 import org.spongepowered.api.entity.player.gamemode.GameModes;
+import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.PostInitializationEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
 import org.spongepowered.api.event.state.ServerStoppedEvent;
-import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.permission.PermissionService;
-import org.spongepowered.api.service.scheduler.RepeatingTask;
-import org.spongepowered.api.util.event.Subscribe;
 
-@Plugin(id = "beardach",name = "BeardAch",version = "1.0.0")
+@Plugin(id = "beardach", name = "BeardAch", version = "1.0.0")
 public class BeardAch {
     
     private static AddonLoader<IConfigurable> addonLoader;
@@ -54,6 +51,12 @@ public class BeardAch {
     private static final BeardAchListener cuboidListener = new BeardAchListener();
 
     private static Logger logger;
+ 
+    @Inject
+    private void setLogger(Logger logger) {
+        this.logger = logger;
+    }
+    
     public static Logger getLogger(){
         return logger;
     }
@@ -83,7 +86,6 @@ public class BeardAch {
     
     @Subscribe
     public void preBoot(PreInitializationEvent event) {
-        logger = event.getPluginLog(); //TODO - Fix when dependencies work
         getLogger().info("Starting BeardAch");
         game = event.getGame();
     }

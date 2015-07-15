@@ -11,8 +11,6 @@ import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.editor.EditorField;
 import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.spongepowered.api.util.command.CommandException;
 
 @ComponentDescription(description = "Execute a command as the console")

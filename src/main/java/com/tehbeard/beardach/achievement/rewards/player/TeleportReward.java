@@ -21,8 +21,7 @@ public class TeleportReward implements IReward {
 
     @Override
     public void giveReward(Player player) {
-        player.teleport(to);
-
+        player.setLocation(to);
     }
 
     @Override

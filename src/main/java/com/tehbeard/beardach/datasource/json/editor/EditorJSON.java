@@ -17,12 +17,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
+import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.annotations.Configurable;
 import com.tehbeard.beardach.datasource.json.help.HelpEntry;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
+import org.spongepowered.api.CatalogType;
 
 /**
  * Generates the json file for the achievements editor
@@ -131,6 +135,14 @@ public class EditorJSON {
                                 options.add(o.getClass().getMethod(fieldData.nameMethod()).invoke(o).toString());
                                 }
                             }
+                        }
+                        if(f.isAnnotationPresent(EditorFieldDefaultCatalog.class)){
+                            EditorFieldDefaultCatalog fieldData = f.getAnnotation(EditorFieldDefaultCatalog.class);
+                            Collection<? extends CatalogType> catalog = BeardAch.getGame().getRegistry().getAllOf(fieldData.value());
+                            for (CatalogType catalogEntry : catalog) {
+                                options.add(catalogEntry.getId());
+                            }
+                            
                         }
                         efe.values = options.toArray(new String[0]);
                     }

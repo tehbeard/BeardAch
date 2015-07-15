@@ -7,9 +7,8 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import java.util.HashSet;
 import java.util.Set;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColors;
-import org.spongepowered.api.text.format.TextStyle;
-import org.spongepowered.api.text.message.Messages;
 
 /**
  * Represents an achievement.
@@ -119,7 +118,7 @@ public class Achievement {
     }
 
     public void unlock(Player player) {
-        if (!BeardAch.getPermissions().login(player).isPermitted(exemptAll) && !BeardAch.getPermissions().login(player).isPermitted(exempt)) {
+        if (!player.hasPermission(exemptAll) && !player.hasPermission(exempt)) {
             for (IReward reward : rewards) {
                 if(reward == null){continue;}
                 reward.giveReward(player);
@@ -130,24 +129,25 @@ public class Achievement {
 
         switch (broadcast) {
             case BROADCAST: {
-                BeardAch.getGame().broadcastMessage(
-                Messages.builder(player.getName()).color(TextColors.AQUA).append(
-                        Messages.builder("Unlocked: ").color(TextColors.WHITE).build(),
-                        Messages.builder(name).color(TextColors.GOLD).build()
+                BeardAch.getGame().getServer().getBroadcastSink().sendMessage(
+                
+                Texts.builder(player.getName()).color(TextColors.AQUA).append(
+                        Texts.builder("Unlocked: ").color(TextColors.WHITE).build(),
+                        Texts.builder(name).color(TextColors.GOLD).build()
                 ).build()
                 );
                 
-                player.sendMessage(Messages.builder(descrip).color(TextColors.BLUE).build());
+                player.sendMessage(Texts.builder(descrip).color(TextColors.BLUE).build());
 
             }
                 break;
 
             case PERSON: {
                 player.sendMessage(
-                        Messages.builder("Achievement Get! ").append(
-                                Messages.builder(name).color(TextColors.GOLD).build()
+                        Texts.builder("Achievement Get! ").append(
+                                Texts.builder(name).color(TextColors.GOLD).build()
                         ).build());
-                player.sendMessage(Messages.builder(descrip).color(TextColors.BLUE).build());
+                player.sendMessage(Texts.builder(descrip).color(TextColors.BLUE).build());
             }
                 break;
             case NONE:
