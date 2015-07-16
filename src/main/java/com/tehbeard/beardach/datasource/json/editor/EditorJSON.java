@@ -148,10 +148,10 @@ public class EditorJSON {
                     }
 
                     if (a.type() == EditorFieldType.number) {
-                        if (f.isAnnotationPresent(EditorFieldMax.class)) {
+                        if (f.isAnnotationPresent(EditorFieldMin.class)) {
                             efe.min = f.getAnnotation(EditorFieldMin.class).value() == Integer.MIN_VALUE ? false : f.getAnnotation(EditorFieldMin.class).value();
                         }
-                        if (f.isAnnotationPresent(EditorFieldMin.class)) {
+                        if (f.isAnnotationPresent(EditorFieldMax.class)) {
                             efe.max = f.getAnnotation(EditorFieldMax.class).value() == Integer.MAX_VALUE ? false : f.getAnnotation(EditorFieldMax.class).value();
                         }
                     }
