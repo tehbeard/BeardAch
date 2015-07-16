@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -38,6 +39,7 @@ import org.spongepowered.api.event.state.PreInitializationEvent;
 import org.spongepowered.api.event.state.ServerStoppedEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.permission.PermissionService;
+import org.spongepowered.api.service.scheduler.Task;
 
 @Plugin(id = "beardach", name = "BeardAch", version = "1.0.0")
 public class BeardAch {
@@ -190,13 +192,12 @@ public class BeardAch {
         }
         
         getLogger().info("Starting achievement checker");
-        game.getScheduler().runRepeatingTask(game.getPluginManager().fromInstance(this).get(), new Runnable() {
+        game.getScheduler().getTaskBuilder().name("Achievement checker").execute(new Runnable() {
             @Override
             public void run() {
                 achievementManager.checkPlayers();
             }
-
-        }, 200L);
+        }).delay(20,TimeUnit.SECONDS).submit(this);
         
         exportEditor();
 

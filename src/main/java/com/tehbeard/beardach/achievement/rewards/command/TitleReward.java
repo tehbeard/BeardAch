@@ -3,6 +3,7 @@ package com.tehbeard.beardach.achievement.rewards.command;
 import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
+import com.tehbeard.beardach.BeardAch;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
@@ -13,8 +14,9 @@ import com.tehbeard.beardach.datasource.json.editor.EditorFieldMin;
 import com.tehbeard.beardach.datasource.json.editor.EditorFieldType;
 import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import com.tehbeard.beardach.datasource.json.help.ComponentFieldDescription;
+import org.spongepowered.api.text.Texts;
+import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
-import org.spongepowered.api.text.message.Messages;
 import org.spongepowered.api.text.title.Title;
 import org.spongepowered.api.text.title.Titles;
 
@@ -81,12 +83,12 @@ public class TitleReward implements IReward {
                 .fadeIn(fadeIn*20)
                 .stay(stayTime*20)
                 .fadeOut(fadeOut*20)
-                .title(Messages.builder(titleText)
-                        .color(TextColors.valueOf(titleColor).or(TextColors.WHITE))
+                .title(Texts.builder(titleText)
+                        .color(BeardAch.getGame().getRegistry().getType(TextColor.class,titleColor).or(TextColors.WHITE))
                         .build()
                 )
-                .subtitle(Messages.builder(subtitleText)
-                        .color(TextColors.valueOf(subtitleColor).or(TextColors.WHITE))
+                .subtitle(Texts.builder(subtitleText)
+                        .color(BeardAch.getGame().getRegistry().getType(TextColor.class,subtitleColor).or(TextColors.WHITE))
                         .build()
                 )
                 .build();

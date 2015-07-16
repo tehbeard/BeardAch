@@ -4,7 +4,6 @@ import org.spongepowered.api.entity.player.Player;
 
 import com.google.gson.annotations.Expose;
 import com.tehbeard.beardach.BeardAch;
-import com.tehbeard.beardach.FakeConsole;
 import com.tehbeard.beardach.achievement.Achievement;
 import com.tehbeard.beardach.achievement.rewards.IReward;
 import com.tehbeard.beardach.annotations.Configurable;
@@ -24,11 +23,7 @@ public class CommandReward implements IReward {
 
     @Override
     public void giveReward(Player player) {
-        try {
-            BeardAch.getGame().getCommandDispatcher().call(new FakeConsole(), command.replace("<PLAYER>", player.getName()), null);
-        } catch (CommandException ex) {
-            BeardAch.getLogger().error("CommandReward",ex);
-        }
+            BeardAch.getGame().getCommandDispatcher().process(new FakeConsole("CommandReward"), command.replace("<PLAYER>", player.getName()));
     }
 
     @Override

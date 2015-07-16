@@ -21,11 +21,8 @@ public class PlayerCommandReward implements IReward {
 
     @Override
     public void giveReward(Player player) {
-        try {
-            BeardAch.getGame().getCommandDispatcher().call(player, comm.replace("<PLAYER>", player.getName()),null);
-        } catch (CommandException ex) {
-            BeardAch.getLogger().error("PlayerCommandReward",ex);
-        }
+            BeardAch.getGame().getCommandDispatcher().process(player, comm.replace("<PLAYER>", player.getName()));
+
     }
 
     @Override
