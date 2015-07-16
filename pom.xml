@@ -165,7 +165,7 @@
                                 <includes>
                                     <include>com.tehbeard:utils</include>
                                     <include>com.google.code.gson:gson</include>
-                                    <include>tehbeard.annotate:annotate</include>
+                                    <include>tehbeard.beardach:buildtools</include>
                                     <include>org.mcstats.bukkit:metrics</include>
                                 </includes>
                             </artifactSet>
@@ -185,7 +185,7 @@
                             </relocations>
                             <filters>
                                 <filter>
-                                    <artifact>tehbeard.annotate:annotate</artifact>
+                                    <artifact>tehbeard.beardach:buildtools</artifact>
                                     <excludes>
                                         <exclude>*.html</exclude>
                                     </excludes>
