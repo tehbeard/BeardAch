@@ -95,6 +95,7 @@ public class BeardAch {
     public void bootup(InitializationEvent event) {
         //Load config
         //Set Logger level
+        configuration = new Configuration();
         
         if (configuration.allowExecRewards) {
             getLogger().info("ALERT, SHELL EXEC REWARD ACTIVE, BE CAREFUL WHO YOU GIVE ACCESS TO ACHIEVEMENT DEFINITIONS");

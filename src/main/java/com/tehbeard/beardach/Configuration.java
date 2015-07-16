@@ -18,11 +18,11 @@ public class Configuration {
     public boolean allowExecRewards = false;
     
     @InjectConfig("ach.database.type")
-    public String dbType;
+    public String dbType = "json";
     
     @InjectConfig("general.plugin-stats-opt-out")
-    public boolean statsOptOut;
+    public boolean statsOptOut = true;
     
     @InjectConfig("ach.add-no-creative-trigger")
-    public boolean noCreativeTrigger;
+    public boolean noCreativeTrigger = false;
 }
