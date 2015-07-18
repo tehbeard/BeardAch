@@ -37,12 +37,10 @@ import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.PostInitializationEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
 import org.spongepowered.api.event.state.ServerStartedEvent;
-import org.spongepowered.api.event.state.ServerStartingEvent;
 import org.spongepowered.api.event.state.ServerStoppedEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.config.ConfigDir;
 import org.spongepowered.api.service.permission.PermissionService;
-import org.spongepowered.api.text.Texts;
 
 @Plugin(id = "beardach", name = "BeardAch", version = "1.0.0")
 public class BeardAch {
@@ -206,7 +204,7 @@ public class BeardAch {
             public void run() {
                 achievementManager.checkPlayers();
             }
-        }).delay(20,TimeUnit.SECONDS).submit(this);
+        }).interval(20,TimeUnit.SECONDS).submit(this);
         
         
 
