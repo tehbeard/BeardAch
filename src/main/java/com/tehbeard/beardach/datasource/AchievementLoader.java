@@ -29,9 +29,9 @@ import org.spongepowered.api.world.Location;
 
 /**
  * Loads achievements from an external Gson file
- * 
+ *
  * @author James
- * 
+ *
  */
 public class AchievementLoader {
 
@@ -57,8 +57,8 @@ public class AchievementLoader {
         try {
             return gson.fromJson(new FileReader(file), new TypeToken<List<Achievement>>() {
             }.getType());
-        } catch (AchievementParserException e){
-            BeardAch.printError("Error occured parsing an achievement",e);
+        } catch (AchievementParserException e) {
+            BeardAch.printError("Error occured parsing an achievement", e);
         } catch (JsonIOException e) {
             BeardAch.printError("An error occured reading " + file.toString(), e);
         } catch (JsonSyntaxException e) {
@@ -76,28 +76,10 @@ public class AchievementLoader {
             File file = new File(BeardAch.getDataFolder(), "ach.json");
             file.createNewFile();
             List<Achievement> achievements = loadAchievementsFromJSONFile(file);
-            if(achievements == null){
+            if (achievements == null) {
                 BeardAch.getLogger().error("Failed to load achievements from " + file);
             }
             processAchievements(achievements);
-
-            File achDir = new File(BeardAch.getDataFolder(), "config");
-            if (achDir.isDirectory() && achDir.exists()) {
-                for (String f : achDir.list(new FilenameFilter() {
-
-                    @Override
-                    public boolean accept(File dir, String name) {
-                        return name.endsWith(".json");
-                    }
-                })) {
-                    achievements = loadAchievementsFromJSONFile(new File(achDir, f));
-                    if(achievements == null){
-                        BeardAch.getLogger().error("Failed to load achievements from " + file);
-                    }
-                    processAchievements(achievements);
-                }
-            }
-
         } catch (JsonIOException e) {
             BeardAch.printError("An error occured reading ach.json", e);
 
@@ -110,6 +92,33 @@ public class AchievementLoader {
             BeardAch.printError("An error occured reading ach.json", e);
             e.printStackTrace();
         }
+        loadFromFolder(new File(BeardAch.getDataFolder(), "config"));
+    }
+
+    public static void loadFromFolder(File achDir) {
+        try {
+            if (achDir.isDirectory() && achDir.exists()) {
+                for (String f : achDir.list(new FilenameFilter() {
+
+                    @Override
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith(".json");
+                    }
+                })) {
+                    List<Achievement> achievements = loadAchievementsFromJSONFile(new File(achDir, f));
+                    if (achievements == null) {
+                        BeardAch.getLogger().error("Failed to load achievements from " + f);
+                    }
+                    processAchievements(achievements);
+                }
+            }
+        } catch (JsonIOException e) {
+            BeardAch.printError("An error occured reading ach.json", e);
+
+        } catch (JsonSyntaxException e) {
+            BeardAch.printError("There is a problem with the syntax of ach.json", e);
+            e.printStackTrace();
+        } 
     }
 
     // Cycle each Achievement and postload as needed
