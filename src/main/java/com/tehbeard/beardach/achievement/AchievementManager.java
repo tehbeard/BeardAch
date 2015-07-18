@@ -41,12 +41,10 @@ public class AchievementManager {
         Achievement.resetId();
         // load achievements
         AchievementLoader.loadAchievements();
-
         // load each players
-        //TODO : Load all currently active players, (needed if reloaded while online)
-//        for (Player p : Bukkit.getOnlinePlayers()) {
-//            loadPlayersAchievements(p);
-//        }
+        for (Player p : BeardAch.getGame().getServer().getOnlinePlayers()) {
+            loadPlayersAchievements(p.getUniqueId());
+        }
     }
 
     /**
@@ -235,7 +233,6 @@ public class AchievementManager {
 
         Iterator<UUID> it = getListOfPlayersToCheck(ach).iterator();
         boolean keepChecking = false;
-//        TODO : Get players, check achievement, return if it succeeded
         Player p;
         while (it.hasNext()) {
             UUID ply = it.next();
