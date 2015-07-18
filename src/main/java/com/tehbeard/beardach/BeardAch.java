@@ -36,10 +36,13 @@ import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.PostInitializationEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
+import org.spongepowered.api.event.state.ServerStartedEvent;
+import org.spongepowered.api.event.state.ServerStartingEvent;
 import org.spongepowered.api.event.state.ServerStoppedEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.service.config.ConfigDir;
 import org.spongepowered.api.service.permission.PermissionService;
-import org.spongepowered.api.service.scheduler.Task;
+import org.spongepowered.api.text.Texts;
 
 @Plugin(id = "beardach", name = "BeardAch", version = "1.0.0")
 public class BeardAch {
@@ -53,13 +56,14 @@ public class BeardAch {
     private static final BeardAchListener cuboidListener = new BeardAchListener();
 
     private static Logger logger;
- 
-    @Inject
-    private void setLogger(Logger logger) {
-        this.logger = logger;
-    }
     
-    public static Logger getLogger(){
+    @Inject
+    public BeardAch(Logger logger, @ConfigDir(sharedRoot = false) File configFolder){
+        BeardAch.logger = logger;
+        BeardAch.configFolder = configFolder;
+    }
+ 
+        public static Logger getLogger(){
         return logger;
     }
     
@@ -93,6 +97,7 @@ public class BeardAch {
     }
     @Subscribe
     public void bootup(InitializationEvent event) {
+        getDataFolder().mkdirs();
         //Load config
         //Set Logger level
         configuration = new Configuration();
@@ -166,7 +171,9 @@ public class BeardAch {
         
         // setup events
         game.getEventManager().register(this,getListener());
-
+        
+        getLogger().info("Exporting editor");
+        exportEditor();
         getLogger().info("Loading commands");
         // commands
         
@@ -179,6 +186,7 @@ public class BeardAch {
 
     }
     
+    @Subscribe
     public void postBoot(PostInitializationEvent event){
         
         
@@ -200,10 +208,16 @@ public class BeardAch {
             }
         }).delay(20,TimeUnit.SECONDS).submit(this);
         
-        exportEditor();
+        
 
     }
 
+    @Subscribe
+    public void serverStart(ServerStartedEvent event){
+        //TODO: SHOULD LOAD ACHIEVEMENTS HERE
+    }
+    
+    @Subscribe
     public void shutdown(ServerStoppedEvent event) {
         achievementManager.flush();
     }
