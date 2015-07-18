@@ -36,4 +36,30 @@ public class AchievementPlayerLink {
     public Achievement getAch() {
         return BeardAch.getAchievementManager().getAchievementSlug(slug);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AchievementPlayerLink other = (AchievementPlayerLink) obj;
+        if ((this.slug == null) ? (other.slug != null) : !this.slug.equals(other.slug)) {
+            return false;
+        }
+        if (this.date != other.date && (this.date == null || !this.date.equals(other.date))) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

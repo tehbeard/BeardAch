@@ -19,15 +19,20 @@ import com.tehbeard.beardach.datasource.json.editor.EditorJSON;
 import com.tehbeard.beardach.datasource.json.help.ComponentDescription;
 import com.tehbeard.utils.addons.AddonLoader;
 import com.tehbeard.utils.factory.ConfigurableFactory;
+import com.tehbeard.utils.sponge.HOCONInjector;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import ninja.leaping.configurate.commented.CommentedConfigurationNode;
+import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
@@ -40,11 +45,12 @@ import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.event.state.ServerStoppedEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.config.ConfigDir;
-import org.spongepowered.api.service.permission.PermissionService;
+import org.spongepowered.api.service.config.DefaultConfig;
+import org.spongepowered.api.world.storage.WorldProperties;
 
 @Plugin(id = "beardach", name = "BeardAch", version = "1.0.0")
 public class BeardAch {
-    
+
     private static AddonLoader<IConfigurable> addonLoader;
 
     private static AchievementManager achievementManager;
@@ -54,59 +60,70 @@ public class BeardAch {
     private static final BeardAchListener cuboidListener = new BeardAchListener();
 
     private static Logger logger;
-    
+
     @Inject
-    public BeardAch(Logger logger, @ConfigDir(sharedRoot = false) File configFolder){
+    public BeardAch(Logger logger, @ConfigDir(sharedRoot = false) File configFolder, @DefaultConfig(sharedRoot = false) File configFile) {
         BeardAch.logger = logger;
         BeardAch.configFolder = configFolder;
+        if(!configFile.exists()){
+            exportResource("beardach.conf");
+        }
+        configuration = new Configuration();
+        try {
+            HoconConfigurationLoader loader = HoconConfigurationLoader.builder().setFile(configFile).build();
+            CommentedConfigurationNode cfg = loader.load();
+           
+            new HOCONInjector(
+                    cfg
+            ).inject(configuration);
+            
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(BeardAch.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
- 
-        public static Logger getLogger(){
+
+    public static Logger getLogger() {
         return logger;
     }
-    
+
     private static File configFolder;
-    public static File getDataFolder(){
+
+    public static File getDataFolder() {
         return configFolder;
     }
-    
+
     private static Game game;
-    public static Game getGame(){
+
+    public static Game getGame() {
         return game;
     }
-    
-    public static PermissionService getPermissions(){
-        return getGame().getServiceManager().provide(PermissionService.class).orNull();
-    }
-    
-    public static InputStream getResource(String path){
+
+    public static InputStream getResource(String path) {
         return BeardAch.class.getClassLoader().getResourceAsStream(path);
     }
-    
+
     private static Configuration configuration;
-    public static Configuration getConfig(){
+
+    public static Configuration getConfig() {
         return configuration;
     }
-    
+
     @Subscribe
     public void preBoot(PreInitializationEvent event) {
         getLogger().info("Starting BeardAch");
         game = event.getGame();
     }
+
     @Subscribe
     public void bootup(InitializationEvent event) {
         getDataFolder().mkdirs();
-        //Load config
-        //Set Logger level
-        configuration = new Configuration();
-        
+
         if (configuration.allowExecRewards) {
             getLogger().info("ALERT, SHELL EXEC REWARD ACTIVE, BE CAREFUL WHO YOU GIVE ACCESS TO ACHIEVEMENT DEFINITIONS");
         }
 
-
         //Bukkit.getPluginManager().registerEvents(cuboidListener, this);
-
         getLogger().info("Loading Data Adapters");
         ConfigurableFactory<IDataSource, DataSourceDescriptor> dataSourceFactory = new ConfigurableFactory<IDataSource, DataSourceDescriptor>(DataSourceDescriptor.class) {
 
@@ -124,22 +141,23 @@ public class BeardAch {
         IDataSource db = dataSourceFactory.getProduct(getConfig().dbType);
 
         if (db == null) {
+            getLogger().error(configuration.toString());
             getLogger().error("NO SUITABLE DATABASE SELECTED!!");
             getLogger().error("[DISABLING PLUGIN!!");
 
             // onDisable();
             return;
         }
-        
+
         //Do db migration if needed.
         achievementManager = new AchievementManager(db);
-        
+
         getLogger().info("Installing default triggers and rewards");
 
         Scanner s = new Scanner(getResource("components.txt"));
         while (s.hasNextLine()) {
             try {
-                
+
                 Class<?> c = Class.forName(s.nextLine());
                 if (ITrigger.class.isAssignableFrom(c)) {
                     addTrigger((Class<? extends ITrigger>) c);
@@ -166,67 +184,65 @@ public class BeardAch {
 
         getLogger().info("Loading addons");
         addonLoader.loadAddons();
-        
+
         // setup events
-        game.getEventManager().register(this,getListener());
-        
+        game.getEventManager().register(this, getListener());
+
         getLogger().info("Exporting editor");
         exportEditor();
         getLogger().info("Loading commands");
         // commands
-        
+
 //        getCommand("ach-reload").setExecutor(new AchReloadCommand());
 //        getCommand("ach").setExecutor(new AchCommand());
 //        getCommand("ach-fancy").setExecutor(new AchFancyCommand());
 //        getCommand("ach-export").setExecutor(new ExportEditorCommand());
 //        getCommand("testach").setExecutor(new TestAchCommand(achievementManager));
-        
-
     }
-    
+
     @Subscribe
-    public void postBoot(PostInitializationEvent event){
-        
-        
-        getLogger().info("Loading Achievements");
-        achievementManager.loadAchievements();
-        
-        if(getConfig().noCreativeTrigger){
-            getLogger().info("Adding no creative trigger to all achievements");
-            for(Achievement ach : achievementManager.getAchievementsList()){
-                ach.addTrigger(new IsGamemodeTrigger(GameModes.CREATIVE, true));
-            }
-        }
-        
+    public void postBoot(PostInitializationEvent event) {
+
         getLogger().info("Starting achievement checker");
         game.getScheduler().getTaskBuilder().name("Achievement checker").execute(new Runnable() {
             @Override
             public void run() {
+                getLogger().info("Running checker");
                 achievementManager.checkPlayers();
             }
-        }).interval(20,TimeUnit.SECONDS).submit(this);
-        
-        
+        }).interval(10, TimeUnit.SECONDS).submit(this);
 
     }
 
     @Subscribe
-    public void serverStart(ServerStartedEvent event){
+    public void serverStart(ServerStartedEvent event) {
         //TODO: SHOULD LOAD ACHIEVEMENTS HERE
+        for (WorldProperties world : event.getGame().getServer().getAllWorldProperties()) {
+            getLogger().info("Found world " + world.getWorldName());
+        }
+        
+        getLogger().info("Loading Achievements");
+        achievementManager.loadAchievements();
+
+        if (getConfig().noCreativeTrigger) {
+            getLogger().info("Adding no creative trigger to all achievements");
+            for (Achievement ach : achievementManager.getAchievementsList()) {
+                ach.addTrigger(new IsGamemodeTrigger(GameModes.CREATIVE, true));
+            }
+        }
     }
-    
+
     @Subscribe
     public void shutdown(ServerStoppedEvent event) {
         achievementManager.flush();
     }
 
-    
-    private static boolean hasDependencies(Class<?> c,String type){
+    private static boolean hasDependencies(Class<?> c, String type) {
         ComponentDescription desc = c.getAnnotation(ComponentDescription.class);
         Configurable config = c.getAnnotation(Configurable.class);
-        if(desc != null){
-            for(String pluginName : desc.dependencies()){
-                if(game.getPluginManager().getPlugin(pluginName) == null){
+        if (desc != null) {
+            for (String pluginName : desc.dependencies()) {
+                if (game.getPluginManager().getPlugin(pluginName) == null) {
                     getLogger().warn("[" + config.tag() + "] " + config.name() + " depends on " + pluginName + " which is not found, this " + type + " has been disabled. This may cause errors if an achievement is built using this.");
                     return false;
                 }
@@ -234,53 +250,58 @@ public class BeardAch {
         }
         return true;
     }
+
     /**
      * Add a trigger
-     * 
+     *
      * @param trigger
      */
     public static void addTrigger(Class<? extends ITrigger> trigger) {
-        if(!hasDependencies(trigger,"trigger")){return;}
+        if (!hasDependencies(trigger, "trigger")) {
+            return;
+        }
         AchievementLoader.triggerFactory.addProduct(trigger);
         jsonEditorSettings.addTrigger(trigger);
     }
 
     /**
      * Add a reward
-     * 
+     *
      * @param reward
      */
     public static void addReward(Class<? extends IReward> reward) {
-        if(!hasDependencies(reward,"reward")){return;}
+        if (!hasDependencies(reward, "reward")) {
+            return;
+        }
         AchievementLoader.rewardFactory.addProduct(reward);
         jsonEditorSettings.addReward(reward);
     }
 
     /**
      * Print error message with an exception
-     * 
+     *
      * @param errMsg
      * @param e
      */
     public static void printError(String errMsg, Exception e) {
         getLogger().error("[ERROR] " + errMsg);
-        getLogger().error("[ERROR] ==Stack trace dump==",e);
+        getLogger().error("[ERROR] ==Stack trace dump==", e);
         getLogger().error("[ERROR] ==Stack trace dump==");
     }
 
     /**
      * return the achievement manager
-     * 
+     *
      * @return
      */
     public static AchievementManager getAchievementManager() {
         return achievementManager;
     }
 
-    public static final int BUFFER_SIZE = 8192;
+    public static final int BUFFER_SIZE = 65536;//64K buffer size for copying files
 
     public static void exportEditor() {
-        
+
         getLogger().info("Writing editor settings");
         new File(getDataFolder(), "editor").mkdirs();
         try {
@@ -292,7 +313,7 @@ public class BeardAch {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        
+
         try {
             ZipInputStream zis = new ZipInputStream(getResource("editor.zip"));
             ZipEntry entry = null;
@@ -330,6 +351,37 @@ public class BeardAch {
 
     public static BeardAchListener getListener() {
         return cuboidListener;
+    }
+
+    public static void exportResource(String name) {
+        exportResource(name, new File(getDataFolder(), name));
+    }
+
+    public static void exportResource(String name, File to) {
+        FileOutputStream fos = null;
+        try {
+            InputStream in = getResource(name);
+            byte data[] = new byte[BUFFER_SIZE];
+            // write the file to the disk
+            fos = new FileOutputStream(to);
+            BufferedOutputStream dest = new BufferedOutputStream(fos, BUFFER_SIZE);
+            int count;
+            while ((count = in.read(data, 0, BUFFER_SIZE)) != -1) {
+                dest.write(data, 0, count);
+            }
+            dest.flush();
+        } catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(BeardAch.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(BeardAch.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(BeardAch.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
 }
