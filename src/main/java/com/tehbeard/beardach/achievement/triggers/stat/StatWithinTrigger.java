@@ -53,7 +53,7 @@ public class StatWithinTrigger implements ITrigger {
     public boolean checkAchievement(Player player) {
         if (manager != null) {
             // if player has stat
-            int value = manager.getPlayer(player).getValue().getStat(domain, world, cat, stat).getValue();
+            int value = manager.getPlayer(player.getName(), player.getUniqueId()).getValue().getStat(domain, world, cat, stat).getValue();
             return value >= lowerThreshold && value <= upperThreshold;
         }
         return false;

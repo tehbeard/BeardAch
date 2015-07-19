@@ -51,7 +51,7 @@ public class StatCheckTrigger implements ITrigger {
         // if player has stat
         if (manager != null)
             // if player exceeds threshold
-            return manager.getPlayer(player).getValue().getStats(domain, world, cat, stat).getValue() >= threshold;
+            return manager.getPlayer(player.getName(), player.getUniqueId()).getValue().getStats(domain, world, cat, stat).getValue() >= threshold;
         else {
             if (!warningLock) {
                 BeardAch.instance().getLogger().warning("BeardStat was not loaded, stat check failed.");
