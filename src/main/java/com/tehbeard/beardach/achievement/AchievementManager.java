@@ -26,6 +26,8 @@ import com.tehbeard.beardach.achievement.triggers.ITrigger;
 import com.tehbeard.beardach.achievement.triggers.meta.MetaTrigger;
 import com.tehbeard.beardach.achievement.triggers.spatial.CuboidCheckTrigger;
 import com.tehbeard.beardach.achievement.triggers.spatial.SpeedRunTrigger;
+import com.tehbeard.beardach.annotations.Configurable;
+import com.tehbeard.beardach.annotations.ReplacedWith;
 import com.tehbeard.beardach.datasource.AchievementLoader;
 import com.tehbeard.beardach.datasource.IDataSource;
 import com.tehbeard.beardach.datasource.configurable.RunnableTime;
@@ -122,6 +124,12 @@ public class AchievementManager implements Listener {
     public void addAchievement(Achievement ach) {
         achievements.add(ach);
         for (ITrigger t : ach.getTrigs()) {
+            if(t.getClass().isAnnotationPresent(Deprecated.class)){
+                BeardAch.instance().getLogger().log(Level.WARNING, "Achievement {0} uses deprecated trigger {1}", new Object[]{ach.getName(), t.getClass().getAnnotation(Configurable.class).name()});
+                if(t.getClass().isAnnotationPresent(ReplacedWith.class)){
+                    BeardAch.instance().getLogger().log(Level.WARNING, "Please use {0} instead", t.getClass().getAnnotation(ReplacedWith.class).value());
+                }
+            }
             processSpecialTriggers(t, ach);
         }
 
