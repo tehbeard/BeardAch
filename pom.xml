@@ -16,8 +16,6 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
-        <!--<repository> <id>vault-repo</id> <url>http://ci.herocraftonline.com/plugin/repository/everything</url> 
-        </repository> -->
         <repository>
             <id>SK89Q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
@@ -30,6 +28,10 @@
         <repository>
             <id>mcStats</id>
             <url>http://repo.mcstats.org/content/repositories/public</url>
+        </repository>
+        <repository>
+            <id>tehbeard-repo</id>
+            <url>http://maven.tehbeard.com</url>
         </repository>
     </repositories>
 
