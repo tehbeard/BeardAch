@@ -183,7 +183,6 @@
                                 <includes>
                                     <include>com.tehbeard:utils</include>
                                     <include>com.google.code.gson:gson</include>
-                                    <include>tehbeard.annotate:annotate</include>
                                     <include>org.mcstats.bukkit:metrics</include>
                                 </includes>
                             </artifactSet>
@@ -201,14 +200,6 @@
                                     <shadedPattern>com.tehbeard.beardach.metrics</shadedPattern>
                                 </relocation>
                             </relocations>
-                            <filters>
-                                <filter>
-                                    <artifact>tehbeard.annotate:annotate</artifact>
-                                    <excludes>
-                                        <exclude>*.html</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
                             <minimizeJar>true</minimizeJar>
                         </configuration>
                     </execution>
@@ -228,7 +219,7 @@
                 </executions>
                 <configuration>
                     <processors>
-                        <processor>com.tehbeard.annotations.ConfigurableAnnotationProcessor</processor>
+                        <processor>com.tehbeard.beardach.build.ConfigurableAnnotationProcessor</processor>
                     </processors>
                 </configuration>
             </plugin>
